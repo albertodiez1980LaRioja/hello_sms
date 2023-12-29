@@ -1,0 +1,190 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.4.0 #14549 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	.optsdcc -mz80
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl ___SMS__SDSC_signature
+                                     12 	.globl ___SMS__SDSC_descr
+                                     13 	.globl ___SMS__SDSC_name
+                                     14 	.globl ___SMS__SDSC_author
+                                     15 	.globl ___SMS__SEGA_signature
+                                     16 	.globl _main
+                                     17 	.globl _loadGrapVRAM
+                                     18 	.globl _init
+                                     19 	.globl _SMS_VRAMmemsetW
+                                     20 	.globl _SMS_VRAMmemcpy
+                                     21 	.globl _SMS_loadBGPalette
+                                     22 	.globl _SMS_VDPturnOnFeature
+                                     23 	.globl _SMS_init
+                                     24 	.globl _printf
+                                     25 	.globl _SMS_SRAM
+                                     26 	.globl _SRAM_bank_to_be_mapped_on_slot2
+                                     27 	.globl _ROM_bank_to_be_mapped_on_slot0
+                                     28 	.globl _ROM_bank_to_be_mapped_on_slot1
+                                     29 	.globl _ROM_bank_to_be_mapped_on_slot2
+                                     30 ;--------------------------------------------------------
+                                     31 ; special function registers
+                                     32 ;--------------------------------------------------------
+                                     33 ;--------------------------------------------------------
+                                     34 ; ram data
+                                     35 ;--------------------------------------------------------
+                                     36 	.area _DATA
+                           00FFFF    37 _ROM_bank_to_be_mapped_on_slot2	=	0xffff
+                           00FFFE    38 _ROM_bank_to_be_mapped_on_slot1	=	0xfffe
+                           00FFFD    39 _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
+                           00FFFC    40 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
+                           008000    41 _SMS_SRAM	=	0x8000
+                                     42 ;--------------------------------------------------------
+                                     43 ; ram data
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _INITIALIZED
+                                     46 ;--------------------------------------------------------
+                                     47 ; absolute external ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _DABS (ABS)
+                                     50 ;--------------------------------------------------------
+                                     51 ; global & static initialisations
+                                     52 ;--------------------------------------------------------
+                                     53 	.area _HOME
+                                     54 	.area _GSINIT
+                                     55 	.area _GSFINAL
+                                     56 	.area _GSINIT
+                                     57 ;--------------------------------------------------------
+                                     58 ; Home
+                                     59 ;--------------------------------------------------------
+                                     60 	.area _HOME
+                                     61 	.area _HOME
+                                     62 ;--------------------------------------------------------
+                                     63 ; code
+                                     64 ;--------------------------------------------------------
+                                     65 	.area _CODE
+                                     66 ;main.c:5: void init(){
+                                     67 ;	---------------------------------
+                                     68 ; Function init
+                                     69 ; ---------------------------------
+      000000                         70 _init::
+                                     71 ;main.c:6: SMS_init();
+                                     72 ;main.c:7: }
+      000000 C3r00r00         [10]   73 	jp	_SMS_init
+                                     74 ;main.c:9: void loadGrapVRAM(){
+                                     75 ;	---------------------------------
+                                     76 ; Function loadGrapVRAM
+                                     77 ; ---------------------------------
+      000003                         78 _loadGrapVRAM::
+                                     79 ;main.c:10: SMS_loadBGPalette(sonicpalette_inc);
+      000003 21r00r00         [10]   80 	ld	hl, #_sonicpalette_inc
+      000006 CDr00r00         [17]   81 	call	_SMS_loadBGPalette
+                                     82 ;main.c:11: SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
+      000009 21 C0 14         [10]   83 	ld	hl, #0x14c0
+      00000C E5               [11]   84 	push	hl
+      00000D 11r00r00         [10]   85 	ld	de, #_sonictiles_inc
+      000010 21 00 40         [10]   86 	ld	hl, #0x4000
+      000013 CDr00r00         [17]   87 	call	_SMS_VRAMmemcpy
+                                     88 ;main.c:12: SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
+      000016 21 00 06         [10]   89 	ld	hl, #0x0600
+      000019 E5               [11]   90 	push	hl
+      00001A 11r00r00         [10]   91 	ld	de, #_sonictilemap_inc
+      00001D 26 78            [ 7]   92 	ld	h, #0x78
+      00001F CDr00r00         [17]   93 	call	_SMS_VRAMmemcpy
+                                     94 ;main.c:13: }
+      000022 C9               [10]   95 	ret
+                                     96 ;main.c:15: void main(void)
+                                     97 ;	---------------------------------
+                                     98 ; Function main
+                                     99 ; ---------------------------------
+      000023                        100 _main::
+                                    101 ;main.c:18: SMS_VRAMmemsetW(0, 0x0000, 16384);
+      000023 21 00 40         [10]  102 	ld	hl, #0x4000
+      000026 E5               [11]  103 	push	hl
+      000027 11 00 00         [10]  104 	ld	de, #0x0000
+      00002A 65               [ 4]  105 	ld	h, l
+      00002B CDr00r00         [17]  106 	call	_SMS_VRAMmemsetW
+                                    107 ;main.c:28: printf("Hello, World! [1/3]");
+      00002E 21r41r00         [10]  108 	ld	hl, #___str_0
+      000031 E5               [11]  109 	push	hl
+      000032 CDr00r00         [17]  110 	call	_printf
+      000035 F1               [10]  111 	pop	af
+                                    112 ;main.c:39: loadGrapVRAM();
+      000036 CDr03r00         [17]  113 	call	_loadGrapVRAM
+                                    114 ;main.c:41: SMS_displayOn();
+      000039 21 40 01         [10]  115 	ld	hl, #0x0140
+      00003C CDr00r00         [17]  116 	call	_SMS_VDPturnOnFeature
+      00003F                        117 00103$:
+                                    118 ;main.c:48: }
+      00003F 18 FE            [12]  119 	jr	00103$
+      000041                        120 ___str_0:
+      000041 48 65 6C 6C 6F 2C 20   121 	.ascii "Hello, World! [1/3]"
+             57 6F 72 6C 64 21 20
+             5B 31 2F 33 5D
+      000054 00                     122 	.db 0x00
+                                    123 	.area _CODE
+      000055                        124 __str_1:
+      000055 72 61 70 68 6E 65 74   125 	.ascii "raphnet"
+      00005C 00                     126 	.db 0x00
+      00005D                        127 __str_2:
+      00005D 62 61 73 69 63 20 65   128 	.ascii "basic example"
+             78 61 6D 70 6C 65
+      00006A 00                     129 	.db 0x00
+      00006B                        130 __str_3:
+      00006B 41 20 73 69 6D 70 6C   131 	.ascii "A simple example"
+             65 20 65 78 61 6D 70
+             6C 65
+      00007B 00                     132 	.db 0x00
+                                    133 	.area _INITIALIZER
+                                    134 	.area _CABS (ABS)
+      007FF0                        135 	.org 0x7FF0
+      007FF0                        136 ___SMS__SEGA_signature:
+      007FF0 54                     137 	.db #0x54	; 84	'T'
+      007FF1 4D                     138 	.db #0x4d	; 77	'M'
+      007FF2 52                     139 	.db #0x52	; 82	'R'
+      007FF3 20                     140 	.db #0x20	; 32
+      007FF4 53                     141 	.db #0x53	; 83	'S'
+      007FF5 45                     142 	.db #0x45	; 69	'E'
+      007FF6 47                     143 	.db #0x47	; 71	'G'
+      007FF7 41                     144 	.db #0x41	; 65	'A'
+      007FF8 FF                     145 	.db #0xff	; 255
+      007FF9 FF                     146 	.db #0xff	; 255
+      007FFA FF                     147 	.db #0xff	; 255
+      007FFB FF                     148 	.db #0xff	; 255
+      007FFC 99                     149 	.db #0x99	; 153
+      007FFD 99                     150 	.db #0x99	; 153
+      007FFE 00                     151 	.db #0x00	; 0
+      007FFF 4C                     152 	.db #0x4c	; 76	'L'
+      007FD8                        153 	.org 0x7FD8
+      007FD8                        154 ___SMS__SDSC_author:
+      007FD8 72 61 70 68 6E 65 74   155 	.ascii "raphnet"
+      007FDF 00                     156 	.db 0x00
+      007FCA                        157 	.org 0x7FCA
+      007FCA                        158 ___SMS__SDSC_name:
+      007FCA 62 61 73 69 63 20 65   159 	.ascii "basic example"
+             78 61 6D 70 6C 65
+      007FD7 00                     160 	.db 0x00
+      007FB9                        161 	.org 0x7FB9
+      007FB9                        162 ___SMS__SDSC_descr:
+      007FB9 41 20 73 69 6D 70 6C   163 	.ascii "A simple example"
+             65 20 65 78 61 6D 70
+             6C 65
+      007FC9 00                     164 	.db 0x00
+      007FE0                        165 	.org 0x7FE0
+      007FE0                        166 ___SMS__SDSC_signature:
+      007FE0 53                     167 	.db #0x53	; 83	'S'
+      007FE1 44                     168 	.db #0x44	; 68	'D'
+      007FE2 53                     169 	.db #0x53	; 83	'S'
+      007FE3 43                     170 	.db #0x43	; 67	'C'
+      007FE4 01                     171 	.db #0x01	; 1
+      007FE5 00                     172 	.db #0x00	; 0
+      007FE6 00                     173 	.db #0x00	; 0
+      007FE7 00                     174 	.db #0x00	; 0
+      007FE8 00                     175 	.db #0x00	; 0
+      007FE9 00                     176 	.db #0x00	; 0
+      007FEA D8                     177 	.db #0xd8	; 216
+      007FEB 7F                     178 	.db #0x7f	; 127
+      007FEC CA                     179 	.db #0xca	; 202
+      007FED 7F                     180 	.db #0x7f	; 127
+      007FEE B9                     181 	.db #0xb9	; 185
+      007FEF 7F                     182 	.db #0x7f	; 127

@@ -1,0 +1,100 @@
+2023-12-20 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* doc/sdccman.lyx:
+	  Remove comment on non-compliance with C2X draft N3047 wrt. tag compatibility: current C23 draft N3149 matches SDCC behaviour.
+
+2023-12-20 Benedikt Freisen <b.freisen AT gmx.net>
+
+	* doc/sdccman.lyx:
+	  Various updates to the manual.
+
+2023-12-20 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* .version,
+	  doc/INSTALL.txt,
+	  sdcc.spec:
+	  Set version to 4.4.0 to prepare for release.
+	* sdcc/support/scripts/sdcc.nsi
+	  Enable mos65c02 port.
+
+2023-12-19 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* sdcc/configure,
+	  sdcc/configure.ac:
+	  Enable mos65c02 port.
+
+2023-12-18 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* src/z80/gen.c:
+	  Fix bug #3681.
+	* src/z80/peeph.def:
+	  Whitespace fix.
+	* src/stm8/gen.c:
+	  Fix bug #3683.
+
+2023-12-17 Gabriele Gorla <gorlik@yahoo.com>
+
+  	* src/mos6502/main.c
+  	  fix bra in the opcode table. Use strncmp in the opcode search to support 65C02 bit manipulation instructions.
+	* src/mos6502/gen.c
+	  fix wrong offset for struct return in mos6502-stack-auto port
+	  indentation changes
+
+2023-12-14 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* support/regression/tests/bug-3685.c:
+	  Provide extern declartion to make test compile on hosts that choose not to inline.
+
+2023-12-13 Gabriele Gorla <gorlik@yahoo.com>
+
+	* support/regression/tests/stack-restore.c.in
+	  partially disable test for mos6502-stack-auto due to stack size limitations
+
+2023-12-13 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* configure.ac,
+	  configure:
+	  Fix bug #3508, patch by Steve Schnepp.
+
+2023-12-12 Gabriele Gorla <gorlik@yahoo.com>
+
+  	* src/mos6502/gen.c
+  	  fix bug3223041 regression failure for mos6502-stack-auto port
+  	  fix bug3531687 regression failure for mos6502-stack-auto port
+  	* device/lib/mos65c02/Makefile.in,
+  	  device/lib/mos65c02/__memcpy.s,
+  	  device/lib/mos65c02/_memcmp.s,
+  	  device/lib/mos65c02/_memset.s,
+  	  device/lib/mos65c02/_mullong.s,
+  	  device/lib/mos65c02/_mulschar.s,
+  	  device/lib/mos65c02/_muluchar.s,
+  	  device/lib/mos65c02/_setjmp.s,
+  	  device/lib/mos65c02/_strcmp.s,
+  	  device/lib/mos65c02/_strcpy.s,
+  	  device/lib/mos65c02/_strlen.s,
+  	  device/lib/mos65c02/abs.s,
+  	  device/lib/mos65c02/crt0.s,
+  	  device/lib/mos65c02/memcpy.s
+      add mos6502 improvements to mos65c02 port 
+
+2023-12-12 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* src/SDCCopt.c:
+	  Enable elimination of dead RECEIVE iCodes. Fixs the rest of bug #3482.
+
+2023-12-12 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* src/z80/gen.c,
+	  tests/bug-3482.c:
+	  Fix the worst part of bug #3482.
+
+2023-12-12 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* src/z80/gen.c,
+	  support/regression/tests/bug-3685.c:
+	  Fix bug #3685.
+
+2023-12-11 Philipp Klaus Krause <philipp@colecovision.eu>
+
+	* device/lib/pic16/libc/Makefile.am,
+	  device/lib/pic16/libc/Makefile.in,

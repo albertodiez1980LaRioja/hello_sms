@@ -1,0 +1,11 @@
+-mjwx
+-i bank1.ihx
+-b _CODE = 0x0200
+-b _DATA = 0x8000
+-k ./sdcc/bin/../share/sdcc/lib/z80
+-k /usr/local/share/sdcc/lib/z80
+-l z80
+./sdcc/bin/../share/sdcc/lib/z80/crt0.rel
+bank1.rel
+
+-e

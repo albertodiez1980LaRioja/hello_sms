@@ -1,0 +1,13 @@
+-mjwx
+-i output.ihx
+-b _CODE = 0x0200
+-b _DATA = 0xc000
+-k ./sdcc/bin/../share/sdcc/lib/z80
+-k /usr/local/share/sdcc/lib/z80
+-l SMSlib.lib
+-l z80
+crt0_sms.rel
+main.rel
+bank1.rel
+
+-e
