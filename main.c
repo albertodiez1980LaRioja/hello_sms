@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "SMSlib.h"
+#include "PSGlib.h"
 #include "bank1.h"
+#include "bank2.h"
 
 void init(){
   SMS_init();
@@ -14,6 +16,8 @@ void loadGrapVRAM(){
 
 void main(void)
 {
+  unsigned char scroll_x;
+  unsigned char scroll_y;
   /* Clear VRAM */
   SMS_VRAMmemsetW(0, 0x0000, 16384);
 
@@ -39,11 +43,27 @@ void main(void)
   loadGrapVRAM();
   /* Turn on the display */
   SMS_displayOn();
-
-
+  SMS_setBGScrollX(scroll_x);
+  SMS_setBGScrollY(scroll_y);
+  SMS_init();
+  SMS_setSpriteMode(SPRITEMODE_NORMAL);
   /* Do nothing */
+  //PSGPlay(titulo_psg);
+  //PSGPlay(nuestro_psg);
+  PSGPlay(special_psg);
   for(;;) {
-
+    unsigned int index=0;
+    SMS_waitForVBlank();
+    PSGFrame();
+    SMS_displayOff();
+    if(scroll_y%4==0)
+      scroll_x += 1;
+    scroll_y++;
+    if(scroll_y==224)
+      scroll_y=0;
+    //SMS_setBGScrollX(scroll_x);
+    //SMS_setBGScrollY(scroll_y);
+    SMS_displayOn();
   }
 }
 

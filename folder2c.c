@@ -148,8 +148,14 @@ int main(int argc, char const* *argv) {
             }
             else
               fprintf (fc,"0x%c%c",buf[i+1],buf[i+2]);
-            if(size%32==0)
-              fprintf(fc,"\n");
+            if(isInt){
+              if(size % 64==0)
+                fprintf(fc,"\n");
+            }
+            else
+              if(size % 32==0)
+                fprintf(fc,"\n");
+
           }
         }
       }

@@ -7,25 +7,32 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000000 L
+    _PSGFrame                                                      ****** GX
+    _PSGPlay                                                       ****** GX
     _ROM_bank_to_be_mapped_on_slot0                             =  00FFFD G
     _ROM_bank_to_be_mapped_on_slot1                             =  00FFFE G
     _ROM_bank_to_be_mapped_on_slot2                             =  00FFFF G
     _SMS_SRAM                                                   =  008000 G
+    _SMS_VDPturnOffFeature                                         ****** GX
     _SMS_VDPturnOnFeature                                          ****** GX
     _SMS_VRAMmemcpy                                                ****** GX
     _SMS_VRAMmemsetW                                               ****** GX
     _SMS_init                                                      ****** GX
     _SMS_loadBGPalette                                             ****** GX
+    _SMS_setBGScrollX                                              ****** GX
+    _SMS_setBGScrollY                                              ****** GX
+    _SMS_setSpriteMode                                             ****** GX
+    _SMS_waitForVBlank                                             ****** GX
     _SRAM_bank_to_be_mapped_on_slot2                            =  00FFFC G
   A ___SMS__SDSC_author                                            007FD8 GR
   C ___SMS__SDSC_descr                                             007FB9 GR
   B ___SMS__SDSC_name                                              007FCA GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       000041 R
-  0 __str_1                                                        000055 R
-  0 __str_2                                                        00005D R
-  0 __str_3                                                        00006B R
+  0 ___str_0                                                       000094 R
+  0 __str_1                                                        0000A8 R
+  0 __str_2                                                        0000B0 R
+  0 __str_3                                                        0000BE R
   0 _init                                                          000000 GR
   0 _loadGrapVRAM                                                  000003 GR
   0 _main                                                          000023 GR
@@ -33,13 +40,15 @@ Symbol Table
     _sonicpalette_inc                                              ****** GX
     _sonictilemap_inc                                              ****** GX
     _sonictiles_inc                                                ****** GX
+    _special_psg                                                   ****** GX
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size     7C   flags    0
+   0 _CODE                                      size     CF   flags    0
    1 _DATA                                      size      0   flags    0
    2 _INITIALIZED                               size      0   flags    0
    3 _DABS                                      size      0   flags    8

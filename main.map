@@ -8,15 +8,23 @@ Area                                    Addr        Size        Decimal Bytes (A
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000000  .__.ABS.                           
+     00000000  _PSGFrame                       
+     00000000  _PSGPlay                        
+     00000000  _SMS_VDPturnOffFeature          
      00000000  _SMS_VDPturnOnFeature           
      00000000  _SMS_VRAMmemcpy                 
      00000000  _SMS_VRAMmemsetW                
      00000000  _SMS_init                       
      00000000  _SMS_loadBGPalette              
+     00000000  _SMS_setBGScrollX               
+     00000000  _SMS_setBGScrollY               
+     00000000  _SMS_setSpriteMode              
+     00000000  _SMS_waitForVBlank              
      00000000  _putchar                        
      00000000  _sonicpalette_inc               
      00000000  _sonictilemap_inc               
      00000000  _sonictiles_inc                 
+     00000000  _special_psg                    
      00000000  l__BSEG                         
      00000000  l__BSS                          
      00000000  l__CABS                         
@@ -49,14 +57,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000003  l__HEADER1                      
      00000003  l__HEADER2                      
      00000003  l__HEADER3                      
-     00000003  l__HEADER4                      
-     00000003  l__HEADER5                      
-     00000003  l__HEADER6                      
-     00000003  l__HEADER7                      
-     00000008  l__CABS1                        
-     0000000E  l__CABS2                        
-     00000010  l__CABS0                        
-     00000010  l__CABS4                        
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
@@ -66,15 +66,23 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     00000003  l__HEADER4                      
+     00000003  l__HEADER5                      
+     00000003  l__HEADER6                      
+     00000003  l__HEADER7                      
+     00000008  l__CABS1                        
+     0000000E  l__CABS2                        
+     00000010  l__CABS0                        
+     00000010  l__CABS4                        
      00000010  l__HEADER8                      
      00000011  l__CABS3                        
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00000C07  l__CODE                         
-     00000E07  s__HOME                         
-     00000E09  s__GSINIT                       
-     00000E09  s__INITIALIZER                  
-     00000E2E  s__GSFINAL                      
+     00000C5A  l__CODE                         
+     00000E5A  s__HOME                         
+     00000E5C  s__GSINIT                       
+     00000E5C  s__INITIALIZER                  
+     00000E81  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
      00008000  s__BSEG                         
      00008000  s__BSS                          
@@ -85,12 +93,13 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000FFFD  _ROM_bank_to_be_mapped_on_slot0    main
      0000FFFE  _ROM_bank_to_be_mapped_on_slot1    main
      0000FFFF  _ROM_bank_to_be_mapped_on_slot2    main
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00000C07 =        3079. bytes (REL,CON)
+_CODE                               00000200    00000C5A =        3162. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -99,11 +108,11 @@ _CODE                               00000200    00000C07 =        3079. bytes (R
      0000020A  _init                              main
      0000020D  _loadGrapVRAM                      main
      0000022D  _main                              main
-     0000028C  _vprintf                           vprintf
-     00000298  _printf                            vprintf
-     0000038E  __print_format                     printf_large
-     00000DFA  ___sdcc_call_hl                    
-     00000DFB  _strlen                            
+     000002DF  _vprintf                           vprintf
+     000002EB  _printf                            vprintf
+     000003E1  __print_format                     printf_large
+     00000E4D  ___sdcc_call_hl                    
+     00000E4E  _strlen                            
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
@@ -191,29 +200,29 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00000E07    00000002 =           2. bytes (REL,CON)
+_HOME                               00000E5A    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000E07  ___sdcc_external_startup           _startup
+     00000E5A  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00000E09    00000025 =          37. bytes (REL,CON)
+_GSINIT                             00000E5C    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000E09  gsinit                             crt0
+     00000E5C  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00000E2E    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00000E81    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -303,14 +312,30 @@ _DATA = 0x8000
 
 ?ASlink-Warning-Undefined Global '_SMS_VRAMmemsetW' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_SMS_waitForVBlank' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_VDPturnOffFeature' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_setBGScrollX' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_setBGScrollY' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_putchar' referenced by module 'vprintf'
+
+?ASlink-Warning-Undefined Global '_PSGPlay' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_init' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_loadBGPalette' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_special_psg' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_SMS_VDPturnOnFeature' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_VRAMmemcpy' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_PSGFrame' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_sonictiles_inc' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_setSpriteMode' referenced by module 'main'
