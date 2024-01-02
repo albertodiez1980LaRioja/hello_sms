@@ -11,11 +11,11 @@ DEF _SMS_setBGScrollX 0x0
 DEF _SMS_setBGScrollY 0x0
 DEF _SMS_setSpriteMode 0x0
 DEF _SMS_waitForVBlank 0x0
+DEF _greenhill_psg 0x0
 DEF _putchar 0x0
 DEF _sonicpalette_inc 0x0
 DEF _sonictilemap_inc 0x0
 DEF _sonictiles_inc 0x0
-DEF _special_psg 0x0
 DEF l__BSEG 0x0
 DEF l__BSS 0x0
 DEF l__CABS 0x0

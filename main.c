@@ -50,7 +50,7 @@ void main(void)
   /* Do nothing */
   //PSGPlay(titulo_psg);
   //PSGPlay(nuestro_psg);
-  PSGPlay(special_psg);
+  PSGPlay(greenhill_psg);
   for(;;) {
     unsigned int index=0;
     SMS_waitForVBlank();

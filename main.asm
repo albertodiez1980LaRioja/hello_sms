@@ -144,8 +144,8 @@ _main::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setSpriteMode
-;main.c:53: PSGPlay(special_psg);
-	ld	hl, #_special_psg
+;main.c:53: PSGPlay(greenhill_psg);
+	ld	hl, #_greenhill_psg
 	call	_PSGPlay
 00106$:
 ;main.c:56: SMS_waitForVBlank();

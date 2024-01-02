@@ -20,11 +20,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  _SMS_setBGScrollY               
      00000000  _SMS_setSpriteMode              
      00000000  _SMS_waitForVBlank              
+     00000000  _greenhill_psg                  
      00000000  _putchar                        
      00000000  _sonicpalette_inc               
      00000000  _sonictilemap_inc               
      00000000  _sonictiles_inc                 
-     00000000  _special_psg                    
      00000000  l__BSEG                         
      00000000  l__BSS                          
      00000000  l__CABS                         
@@ -308,6 +308,8 @@ _DATA = 0x8000
 
 ?ASlink-Warning-Undefined Global '_sonictilemap_inc' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_greenhill_psg' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_sonicpalette_inc' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_VRAMmemsetW' referenced by module 'main'
@@ -327,8 +329,6 @@ _DATA = 0x8000
 ?ASlink-Warning-Undefined Global '_SMS_init' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_loadBGPalette' referenced by module 'main'
-
-?ASlink-Warning-Undefined Global '_special_psg' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_VDPturnOnFeature' referenced by module 'main'
 

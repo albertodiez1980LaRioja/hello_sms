@@ -33,6 +33,7 @@ Symbol Table
   0 __str_1                                                        0000A8 R
   0 __str_2                                                        0000B0 R
   0 __str_3                                                        0000BE R
+    _greenhill_psg                                                 ****** GX
   0 _init                                                          000000 GR
   0 _loadGrapVRAM                                                  000003 GR
   0 _main                                                          000023 GR
@@ -40,7 +41,6 @@ Symbol Table
     _sonicpalette_inc                                              ****** GX
     _sonictilemap_inc                                              ****** GX
     _sonictiles_inc                                                ****** GX
-    _special_psg                                                   ****** GX
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
