@@ -14,12 +14,19 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  _SMS_VDPturnOnFeature           
      00000000  _SMS_VRAMmemcpy                 
      00000000  _SMS_VRAMmemsetW                
+     00000000  _SMS_addSprite_f                
+     00000000  _SMS_copySpritestoSAT           
+     00000000  _SMS_finalizeSprites            
      00000000  _SMS_init                       
+     00000000  _SMS_initSprites                
      00000000  _SMS_loadBGPalette              
+     00000000  _SMS_loadSpritePalette          
      00000000  _SMS_setBGScrollX               
      00000000  _SMS_setBGScrollY               
      00000000  _SMS_setSpriteMode              
      00000000  _SMS_waitForVBlank              
+     00000000  _alexAndando_inc                
+     00000000  _alexVariosPaleta_inc           
      00000000  _greenhill_psg                  
      00000000  _putchar                        
      00000000  _sonicpalette_inc               
@@ -32,8 +39,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  l__DATA                         
      00000000  l__HEADER                       
      00000000  l__HEAP                         
-     00000000  l__INITIALIZED                  
-     00000000  l__INITIALIZER                  
      00000000  s__CABS                         
      00000000  s__CABS0                        
      00000000  s__CABS1                        
@@ -52,11 +57,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  s__HEADER7                      
      00000000  s__HEADER8                      
      00000001  l__GSFINAL                      
-     00000002  l__HOME                         
-     00000003  l__HEADER0                      
-     00000003  l__HEADER1                      
-     00000003  l__HEADER2                      
-     00000003  l__HEADER3                      
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
@@ -66,11 +66,18 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     00000002  l__HOME                         
+     00000003  l__HEADER0                      
+     00000003  l__HEADER1                      
+     00000003  l__HEADER2                      
+     00000003  l__HEADER3                      
      00000003  l__HEADER4                      
      00000003  l__HEADER5                      
      00000003  l__HEADER6                      
      00000003  l__HEADER7                      
      00000008  l__CABS1                        
+     00000008  l__INITIALIZED                  
+     00000008  l__INITIALIZER                  
      0000000E  l__CABS2                        
      00000010  l__CABS0                        
      00000010  l__CABS4                        
@@ -78,28 +85,27 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000011  l__CABS3                        
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00000C5A  l__CODE                         
-     00000E5A  s__HOME                         
-     00000E5C  s__GSINIT                       
-     00000E5C  s__INITIALIZER                  
-     00000E81  s__GSFINAL                      
+     00000F07  l__CODE                         
+     00001107  s__HOME                         
+     00001109  s__INITIALIZER                  
+     00001111  s__GSINIT                       
+     00001136  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
-     00008000  s__BSEG                         
-     00008000  s__BSS                          
      00008000  s__DATA                         
-     00008000  s__HEAP                         
      00008000  s__INITIALIZED                  
+     00008008  s__BSEG                         
+     00008008  s__BSS                          
+     00008008  s__HEAP                         
      0000FFFC  _SRAM_bank_to_be_mapped_on_slot2   main
      0000FFFD  _ROM_bank_to_be_mapped_on_slot0    main
      0000FFFE  _ROM_bank_to_be_mapped_on_slot1    main
      0000FFFF  _ROM_bank_to_be_mapped_on_slot2    main
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00000C5A =        3162. bytes (REL,CON)
+_CODE                               00000200    00000F07 =        3847. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -107,12 +113,25 @@ _CODE                               00000200    00000C5A =        3162. bytes (R
      00000204  _exit                              crt0
      0000020A  _init                              main
      0000020D  _loadGrapVRAM                      main
-     0000022D  _main                              main
-     000002DF  _vprintf                           vprintf
-     000002EB  _printf                            vprintf
-     000003E1  __print_format                     printf_large
-     00000E4D  ___sdcc_call_hl                    
-     00000E4E  _strlen                            
+     00000259  _draw_main_character               main
+     00000409  _main                              main
+     00000510  _vprintf                           vprintf
+     0000051C  _printf                            vprintf
+     00000533  __modschar                         
+     0000053B  __modsint                          
+     00000620  __print_format                     printf_large
+     0000108C  __divschar                         
+     0000108E  __div8                             
+     00001092  __div_signexte                     
+     00001096  __div16                            
+     00001096  __divsint                          
+     000010BC  __get_remainder                    
+     000010C6  __divuchar                         
+     000010C8  __divu8                            
+     000010CB  __divu16                           
+     000010CB  __divuint                          
+     000010FA  ___sdcc_call_hl                    
+     000010FB  _strlen                            
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
@@ -200,33 +219,56 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00000E5A    00000002 =           2. bytes (REL,CON)
+_HOME                               00001107    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000E5A  ___sdcc_external_startup           _startup
+     00001107  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00000E5C    00000025 =          37. bytes (REL,CON)
+_INITIALIZER                        00001109    00000008 =           8. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000E5C  gsinit                             crt0
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00000E81    00000001 =           1. bytes (REL,CON)
+_GSINIT                             00001111    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     00001111  gsinit                             crt0
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_GSFINAL                            00001136    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_INITIALIZED                        00008000    00000008 =           8. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008000  _player_x                          main
+     00008002  _player_y                          main
+     00008004  _frame_player                      main
+     00008006  _delay_frame_player                main
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 18.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -237,7 +279,7 @@ _CABS0                              00000000    00000010 =          16. bytes (A
       -----  --------------------------------   ------------------------
      00007FF0  ___SMS__SEGA_signature             main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -248,7 +290,7 @@ _CABS1                              00000000    00000008 =           8. bytes (A
       -----  --------------------------------   ------------------------
      00007FD8  ___SMS__SDSC_author                main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 18.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 20.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -259,7 +301,7 @@ _CABS2                              00000000    0000000E =          14. bytes (A
       -----  --------------------------------   ------------------------
      00007FCA  ___SMS__SDSC_name                  main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 21.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -270,7 +312,7 @@ _CABS3                              00000000    00000011 =          17. bytes (A
       -----  --------------------------------   ------------------------
      00007FB9  ___SMS__SDSC_descr                 main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 20.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 22.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -281,7 +323,7 @@ _CABS4                              00000000    00000010 =          16. bytes (A
       -----  --------------------------------   ------------------------
      00007FE0  ___SMS__SDSC_signature             main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 21.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 23.
 
 Files Linked                              [ module(s) ]
 
@@ -294,11 +336,14 @@ Libraries Linked                          [ object file ]
 
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ _startup.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ vprintf.rel ]
+./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ modsigned.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ printf_large.rel ]
+./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ divsigned.rel ]
+./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ divunsigned.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ __sdcc_call_hl.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ strlen.rel ]
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 22.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 24.
 
 User Base Address Definitions
 
@@ -322,15 +367,29 @@ _DATA = 0x8000
 
 ?ASlink-Warning-Undefined Global '_SMS_setBGScrollY' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_SMS_initSprites' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_putchar' referenced by module 'vprintf'
 
+?ASlink-Warning-Undefined Global '_SMS_addSprite_f' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_loadSpritePalette' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_alexAndando_inc' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_PSGPlay' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_SMS_copySpritestoSAT' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_init' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_loadBGPalette' referenced by module 'main'
 
+?ASlink-Warning-Undefined Global '_SMS_finalizeSprites' referenced by module 'main'
+
 ?ASlink-Warning-Undefined Global '_SMS_VDPturnOnFeature' referenced by module 'main'
+
+?ASlink-Warning-Undefined Global '_alexVariosPaleta_inc' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_VRAMmemcpy' referenced by module 'main'
 

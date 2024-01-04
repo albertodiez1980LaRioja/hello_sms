@@ -4,14 +4,45 @@
 #include "bank1.h"
 #include "bank2.h"
 
+#define SPRITE_TILES_POSITION sonictiles_inc_size/32
+
+
 void init(){
   SMS_init();
 }
 
 void loadGrapVRAM(){
+  SMS_init();
+  SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+  SMS_displayOn();
+  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   SMS_loadBGPalette(sonicpalette_inc);
+  SMS_loadSpritePalette(alexVariosPaleta_inc);
   SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
+  SMS_loadTiles(alexAndando_inc,256/*SPRITE_TILES_POSITION*/,alexAndando_inc_size);
   SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
+}
+
+int player_x=50;
+int player_y=50;
+int frame_player = 0;
+int delay_frame_player = 4;
+
+draw_main_character(){
+  unsigned char i,j;
+  unsigned char numSprites;
+  for(numSprites=0;numSprites<2;numSprites++){
+    for(j=0;j<3;j++) {
+      for(i=0;i<2;i++) {
+        SMS_addSprite(player_x+(i<<3),player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        //SMS_addSprite(player_x+(i<<3)+80,player_y+(j<<3),2*frame_player + 8*j + i);  
+      }   
+    }
+  }
 }
 
 void main(void)
@@ -51,17 +82,32 @@ void main(void)
   //PSGPlay(titulo_psg);
   //PSGPlay(nuestro_psg);
   PSGPlay(greenhill_psg);
+  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   for(;;) {
     unsigned int index=0;
+    player_x++;
+    delay_frame_player++;
+    if(delay_frame_player%16==0){
+      frame_player++;
+      if(frame_player>3){
+        frame_player=0;
+        
+      }
+    }
+    SMS_initSprites();
+    draw_main_character();
+    SMS_finalizeSprites();
     SMS_waitForVBlank();
+    SMS_copySpritestoSAT();
     PSGFrame();
     SMS_displayOff();
-    if(scroll_y%4==0)
+    if(scroll_y%2==0)
       scroll_x += 1;
     scroll_y++;
     if(scroll_y==224)
       scroll_y=0;
-    //SMS_setBGScrollX(scroll_x);
+    
+    SMS_setBGScrollX(scroll_x);
     //SMS_setBGScrollY(scroll_y);
     SMS_displayOn();
   }
