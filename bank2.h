@@ -1,3 +1,6 @@
+extern const unsigned char	emeraldhill_psg[];
+#define				emeraldhill_psg_size 742
+
 extern const unsigned char	special_psg[];
 #define				special_psg_size 10473
 

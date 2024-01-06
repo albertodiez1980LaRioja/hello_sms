@@ -7691,11 +7691,11 @@ _alexVariosPaleta_inc:
 	.db #0x3f	; 63
 _alexAndando_inc:
 	.db #0x00	; 0
-	.db #0xf8	; 248
-	.db #0xf8	; 248
 	.db #0x00	; 0
 	.db #0x00	; 0
-	.db #0xe0	; 224
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
 	.db #0xe7	; 231
 	.db #0x00	; 0
 	.db #0x00	; 0

@@ -21,6 +21,9 @@
 	.globl _PSGPlay
 	.globl _SMS_VRAMmemsetW
 	.globl _SMS_VRAMmemcpy
+	.globl _SMS_resetPauseRequest
+	.globl _SMS_queryPauseRequested
+	.globl _SMS_getKeysHeld
 	.globl _SMS_loadSpritePalette
 	.globl _SMS_loadBGPalette
 	.globl _SMS_copySpritestoSAT
@@ -38,6 +41,7 @@
 	.globl _delay_frame_player
 	.globl _frame_player
 	.globl _player_y
+	.globl _player_v_x
 	.globl _player_x
 	.globl _SMS_SRAM
 	.globl _SRAM_bank_to_be_mapped_on_slot2
@@ -61,6 +65,8 @@ _SMS_SRAM	=	0x8000
 ;--------------------------------------------------------
 	.area _INITIALIZED
 _player_x::
+	.ds 2
+_player_v_x::
 	.ds 2
 _player_y::
 	.ds 2
@@ -143,7 +149,7 @@ _loadGrapVRAM::
 	call	_SMS_VRAMmemcpy
 ;main.c:25: }
 	ret
-;main.c:32: draw_main_character(){
+;main.c:33: draw_main_character(){
 ;	---------------------------------
 ; Function draw_main_character
 ; ---------------------------------
@@ -154,16 +160,16 @@ _draw_main_character::
 	ld	hl, #-9
 	add	hl, sp
 	ld	sp, hl
-;main.c:35: for(numSprites=0;numSprites<2;numSprites++){
+;main.c:36: for(numSprites=0;numSprites<2;numSprites++){
 	ld	-1 (ix), #0x00
-;main.c:36: for(j=0;j<3;j++) {
+;main.c:37: for(j=0;j<3;j++) {
 00114$:
 	ld	c, #0x00
-;main.c:37: for(i=0;i<2;i++) {
+;main.c:38: for(i=0;i<2;i++) {
 00112$:
 	ld	b, #0x00
 00104$:
-;main.c:38: SMS_addSprite(player_x+(i<<3),player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+;main.c:39: SMS_addSprite(player_x+(i<<3),player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
 	ld	-9 (ix), b
 	ld	-8 (ix), #0x00
 	ld	a, -9 (ix)
@@ -252,7 +258,7 @@ _draw_main_character::
 	pop	de
 	call	_SMS_addSprite_f
 	pop	bc
-;main.c:39: SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+;main.c:40: SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
 	ld	a, (_player_x+0)
 	add	a, -7 (ix)
 	ld	e, a
@@ -295,7 +301,7 @@ _draw_main_character::
 	pop	de
 	call	_SMS_addSprite_f
 	pop	bc
-;main.c:40: SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+;main.c:41: SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
 	ld	a, (_player_x+0)
 	add	a, -7 (ix)
 	ld	e, a
@@ -338,7 +344,7 @@ _draw_main_character::
 	pop	de
 	call	_SMS_addSprite_f
 	pop	bc
-;main.c:41: SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+;main.c:42: SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
 	ld	a, -7 (ix)
 	ld	hl, #_player_x
 	add	a, (hl)
@@ -391,26 +397,26 @@ _draw_main_character::
 	push	bc
 	call	_SMS_addSprite_f
 	pop	bc
-;main.c:37: for(i=0;i<2;i++) {
+;main.c:38: for(i=0;i<2;i++) {
 	inc	b
 	ld	a, b
 	sub	a, #0x02
 	jp	C, 00104$
-;main.c:36: for(j=0;j<3;j++) {
+;main.c:37: for(j=0;j<3;j++) {
 	inc	c
 	ld	a, c
 	sub	a, #0x03
 	jp	C, 00112$
-;main.c:35: for(numSprites=0;numSprites<2;numSprites++){
+;main.c:36: for(numSprites=0;numSprites<2;numSprites++){
 	inc	-1 (ix)
 	ld	a, -1 (ix)
 	sub	a, #0x02
 	jp	C, 00114$
-;main.c:46: }
+;main.c:47: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:48: void main(void)
+;main.c:49: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
@@ -419,7 +425,7 @@ _main::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:53: SMS_VRAMmemsetW(0, 0x0000, 16384);
+;main.c:54: SMS_VRAMmemsetW(0, 0x0000, 16384);
 	ld	-1 (ix), #0x00
 	ld	-2 (ix), #0x00
 	ld	hl, #0x4000
@@ -427,113 +433,178 @@ _main::
 	ld	de, #0x0000
 	ld	h, l
 	call	_SMS_VRAMmemsetW
-;main.c:63: printf("Hello, World! [1/3]");
+;main.c:64: printf("Hello, World! [1/3]");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	pop	af
-;main.c:74: loadGrapVRAM();
+;main.c:75: loadGrapVRAM();
 	call	_loadGrapVRAM
-;main.c:76: SMS_displayOn();
+;main.c:77: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:77: SMS_setBGScrollX(scroll_x);
+;main.c:78: SMS_setBGScrollX(scroll_x);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:78: SMS_setBGScrollY(scroll_y);
+;main.c:79: SMS_setBGScrollY(scroll_y);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollY
-;main.c:79: SMS_init();
+;main.c:80: SMS_init();
 	call	_SMS_init
-;main.c:80: SMS_setSpriteMode(SPRITEMODE_NORMAL);
+;main.c:81: SMS_setSpriteMode(SPRITEMODE_NORMAL);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setSpriteMode
-;main.c:84: PSGPlay(greenhill_psg);
-	ld	hl, #_greenhill_psg
+;main.c:85: PSGPlay(titulo_psg);
+	ld	hl, #_titulo_psg
 	call	_PSGPlay
-;main.c:85: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+;main.c:86: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
 	ld	hl, #0x0020
 	call	_SMS_VDPturnOnFeature
+00124$:
+;main.c:88: if(SMS_queryPauseRequested ()){
+	call	_SMS_queryPauseRequested
+	bit	0,a
+	jr	Z, 00105$
+;main.c:89: SMS_resetPauseRequest ();
+	call	_SMS_resetPauseRequest
+;main.c:90: while(!SMS_queryPauseRequested ()){
+00101$:
+	call	_SMS_queryPauseRequested
+	bit	0,a
+	jr	NZ, 00103$
+;main.c:91: SMS_waitForVBlank();
+	call	_SMS_waitForVBlank
+;main.c:92: PSGFrame();
+	call	_PSGFrame
+	jr	00101$
+00103$:
+;main.c:94: SMS_resetPauseRequest();
+	call	_SMS_resetPauseRequest
+00105$:
+;main.c:98: int keys = SMS_getKeysHeld();
+	call	_SMS_getKeysHeld
+;main.c:99: if(keys & PORT_A_KEY_LEFT){
+	bit	2, e
+	jr	Z, 00110$
+;main.c:100: player_v_x=-1; 
+	ld	hl, #0xffff
+	ld	(_player_v_x), hl
+	jr	00111$
 00110$:
-;main.c:88: player_x++;
-	ld	hl, (_player_x)
+;main.c:102: else if(keys & PORT_A_KEY_RIGHT){
+	bit	3, e
+	jr	Z, 00107$
+;main.c:103: player_v_x=1; 
+	ld	hl, #0x0001
+	ld	(_player_v_x), hl
+	jr	00111$
+00107$:
+;main.c:106: player_v_x=0; 
+	ld	hl, #0x0000
+	ld	(_player_v_x), hl
+00111$:
+;main.c:108: player_x = player_x + player_v_x;
+	ld	hl, #_player_v_x
+	push	de
+	ld	de, #_player_x
+	ld	a, (de)
+	add	a, (hl)
 	inc	hl
-	ld	(_player_x), hl
-;main.c:89: delay_frame_player++;
+	ld	(de), a
+	inc	de
+	ld	a, (de)
+	adc	a, (hl)
+	ld	(de), a
+	pop	de
+;main.c:109: if(player_v_x != 0)
+	ld	a, (_player_v_x+1)
+	ld	hl, #_player_v_x
+	or	a, (hl)
+	jr	Z, 00113$
+;main.c:110: delay_frame_player++;
 	ld	hl, (_delay_frame_player)
 	inc	hl
 	ld	(_delay_frame_player), hl
-;main.c:90: if(delay_frame_player%16==0){
+	jr	00114$
+00113$:
+;main.c:112: delay_frame_player=15;
+	ld	hl, #0x000f
+	ld	(_delay_frame_player), hl
+;main.c:113: frame_player=1;
+	ld	l, #0x01
+	ld	(_frame_player), hl
+00114$:
+;main.c:115: if(delay_frame_player%16==0){
 	ld	de, #0x0010
 	ld	hl, (_delay_frame_player)
 	call	__modsint
 	ld	a, d
 	or	a, e
-	jr	NZ, 00104$
-;main.c:91: frame_player++;
+	jr	NZ, 00118$
+;main.c:116: frame_player++;
 	ld	hl, (_frame_player)
 	inc	hl
 	ld	(_frame_player), hl
-;main.c:92: if(frame_player>3){
+;main.c:117: if(frame_player>3){
 	ld	a, #0x03
 	ld	iy, #_frame_player
 	cp	a, 0 (iy)
 	ld	a, #0x00
 	sbc	a, 1 (iy)
-	jp	PO, 00149$
+	jp	PO, 00207$
 	xor	a, #0x80
-00149$:
-	jp	P, 00104$
-;main.c:93: frame_player=0;
+00207$:
+	jp	P, 00118$
+;main.c:118: frame_player=0;
 	ld	hl, #0x0000
 	ld	(_frame_player), hl
-00104$:
-;main.c:97: SMS_initSprites();
+00118$:
+;main.c:122: SMS_initSprites();
 	call	_SMS_initSprites
-;main.c:98: draw_main_character();
+;main.c:123: draw_main_character();
 	call	_draw_main_character
-;main.c:99: SMS_finalizeSprites();
+;main.c:124: SMS_finalizeSprites();
 	call	_SMS_finalizeSprites
-;main.c:100: SMS_waitForVBlank();
+;main.c:125: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
-;main.c:101: SMS_copySpritestoSAT();
+;main.c:126: SMS_copySpritestoSAT();
 	call	_SMS_copySpritestoSAT
-;main.c:102: PSGFrame();
+;main.c:127: PSGFrame();
 	call	_PSGFrame
-;main.c:103: SMS_displayOff();
+;main.c:128: SMS_displayOff();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOffFeature
-;main.c:104: if(scroll_y%2==0)
+;main.c:129: if(scroll_y%2==0)
 	bit	0, -1 (ix)
-	jr	NZ, 00106$
-;main.c:105: scroll_x += 1;
+	jr	NZ, 00120$
+;main.c:130: scroll_x += 1;
 	inc	-2 (ix)
-00106$:
-;main.c:106: scroll_y++;
+00120$:
+;main.c:131: scroll_y++;
 	inc	-1 (ix)
-;main.c:107: if(scroll_y==224)
+;main.c:132: if(scroll_y==224)
 	ld	a, -1 (ix)
 	sub	a, #0xe0
-	jr	NZ, 00108$
-;main.c:108: scroll_y=0;
+	jr	NZ, 00122$
+;main.c:133: scroll_y=0;
 	ld	-1 (ix), #0x00
-00108$:
-;main.c:110: SMS_setBGScrollX(scroll_x);
+00122$:
+;main.c:135: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:112: SMS_displayOn();
+;main.c:137: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:114: }
-	jr	00110$
+;main.c:139: }
+	jp	00124$
 ___str_0:
 	.ascii "Hello, World! [1/3]"
 	.db 0x00
@@ -550,12 +621,14 @@ __str_3:
 	.area _INITIALIZER
 __xinit__player_x:
 	.dw #0x0032
+__xinit__player_v_x:
+	.dw #0x0000
 __xinit__player_y:
 	.dw #0x0032
 __xinit__frame_player:
-	.dw #0x0000
+	.dw #0x0002
 __xinit__delay_frame_player:
-	.dw #0x0004
+	.dw #0x000f
 	.area _CABS (ABS)
 	.org 0x7FF0
 ___SMS__SEGA_signature:

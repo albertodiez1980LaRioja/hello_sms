@@ -25,9 +25,10 @@ void loadGrapVRAM(){
 }
 
 int player_x=50;
+int player_v_x=0;
 int player_y=50;
-int frame_player = 0;
-int delay_frame_player = 4;
+int frame_player = 2;
+int delay_frame_player = 15;
 
 draw_main_character(){
   unsigned char i,j;
@@ -81,12 +82,36 @@ void main(void)
   /* Do nothing */
   //PSGPlay(titulo_psg);
   //PSGPlay(nuestro_psg);
-  PSGPlay(greenhill_psg);
+  PSGPlay(titulo_psg);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   for(;;) {
+    if(SMS_queryPauseRequested ()){
+      SMS_resetPauseRequest ();
+      while(!SMS_queryPauseRequested ()){
+        SMS_waitForVBlank();
+        PSGFrame();
+      }
+      SMS_resetPauseRequest();
+    }
     unsigned int index=0;
-    player_x++;
-    delay_frame_player++;
+
+    int keys = SMS_getKeysHeld();
+    if(keys & PORT_A_KEY_LEFT){
+      player_v_x=-1; 
+    }
+    else if(keys & PORT_A_KEY_RIGHT){
+      player_v_x=1; 
+    }
+    else
+      player_v_x=0; 
+    //player_v_x=1; 
+    player_x = player_x + player_v_x;
+    if(player_v_x != 0)
+      delay_frame_player++;
+    else{
+      delay_frame_player=15;
+      frame_player=1;
+    }
     if(delay_frame_player%16==0){
       frame_player++;
       if(frame_player>3){

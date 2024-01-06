@@ -7,18 +7,18 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000000 L
-  0 _greenhill_psg                                                 002D34 GR
-  0 _nuestro_psg                                                   0028E9 GR
-  0 _special_psg                                                   000000 GR
-  0 _titulo_psg                                                    00316F GR
-
+  0 _emeraldhill_psg                                               000000 GR
+  0 _greenhill_psg                                                 00301A GR
+  0 _nuestro_psg                                                   002BCF GR
+  0 _special_psg                                                   0002E6 GR
+  0 _titulo_psg                                                    003455 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size   3ADA   flags    0
+   0 _CODE                                      size   3DC0   flags    0
    1 _DATA                                      size      0   flags    0
    2 _INITIALIZED                               size      0   flags    0
    3 _DABS                                      size      0   flags    8
