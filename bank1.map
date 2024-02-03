@@ -43,11 +43,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000010  l__HEADER8                      
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     000023E0  l__CODE                         
-     000025E0  s__HOME                         
-     000025E2  s__GSINIT                       
-     000025E2  s__INITIALIZER                  
-     00002607  s__GSFINAL                      
+     000027E8  l__CODE                         
+     000029E8  s__HOME                         
+     000029EA  s__GSINIT                       
+     000029EA  s__INITIALIZER                  
+     00002A0F  s__GSFINAL                      
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
@@ -59,7 +59,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000023E0 =        9184. bytes (REL,CON)
+_CODE                               00000200    000027E8 =       10216. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -68,9 +68,11 @@ _CODE                               00000200    000023E0 =        9184. bytes (R
      0000020A  _alexVarios_inc                    bank1
      0000080A  _sonicpalette_inc                  bank1
      00000818  _sonictilemap_inc                  bank1
-     00000E18  _sonictiles_inc                    bank1
-     000022D8  _alexVariosPaleta_inc              bank1
-     000022E0  _alexAndando_inc                   bank1
+     00000E18  _spriteAlex_inc                    bank1
+     00001218  _sonictiles_inc                    bank1
+     000026D8  _palleteAlex_inc                   bank1
+     000026E0  _alexVariosPaleta_inc              bank1
+     000026E8  _alexAndando_inc                   bank1
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -158,29 +160,29 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               000025E0    00000002 =           2. bytes (REL,CON)
+_HOME                               000029E8    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000025E0  ___sdcc_external_startup           _startup
+     000029E8  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             000025E2    00000025 =          37. bytes (REL,CON)
+_GSINIT                             000029EA    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000025E2  gsinit                             crt0
+     000029EA  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00002607    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00002A0F    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

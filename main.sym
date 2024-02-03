@@ -37,36 +37,36 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCA GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       000322 R
+  0 ___str_0                                                       00031D R
     __modsint                                                      ****** GX
-  0 __str_1                                                        000336 R
-  0 __str_2                                                        00033E R
-  0 __str_3                                                        00034C R
+  0 __str_1                                                        000331 R
+  0 __str_2                                                        000339 R
+  0 __str_3                                                        000347 R
   7 __xinit__delay_frame_player                                    000008 R
   7 __xinit__frame_player                                          000006 R
   7 __xinit__player_v_x                                            000002 R
   7 __xinit__player_x                                              000000 R
   7 __xinit__player_y                                              000004 R
-    _alexAndando_inc                                               ****** GX
-    _alexVariosPaleta_inc                                          ****** GX
   2 _delay_frame_player                                            000008 GR
   0 _draw_main_character                                           00004F GR
   2 _frame_player                                                  000006 GR
   0 _init                                                          000000 GR
   0 _loadGrapVRAM                                                  000003 GR
   0 _main                                                          0001FF GR
+    _palleteAlex_inc                                               ****** GX
   2 _player_v_x                                                    000002 GR
   2 _player_x                                                      000000 GR
   2 _player_y                                                      000004 GR
+    _printf                                                        ****** GX
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Symbol Table
 
-    _printf                                                        ****** GX
     _sonicpalette_inc                                              ****** GX
     _sonictilemap_inc                                              ****** GX
     _sonictiles_inc                                                ****** GX
+    _spriteAlex_inc                                                ****** GX
     _titulo_psg                                                    ****** GX
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
@@ -74,7 +74,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    35D   flags    0
+   0 _CODE                                      size    358   flags    0
    1 _DATA                                      size      0   flags    0
    2 _INITIALIZED                               size      A   flags    0
    3 _DABS                                      size      0   flags    8

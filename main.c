@@ -13,14 +13,17 @@ void init(){
 
 void loadGrapVRAM(){
   SMS_init();
-  SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  //SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  SMS_setSpriteMode(SPRITEMODE_TALL);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   SMS_displayOn();
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   SMS_loadBGPalette(sonicpalette_inc);
-  SMS_loadSpritePalette(alexVariosPaleta_inc);
+  //SMS_loadSpritePalette(alexVariosPaleta_inc);
+  SMS_loadSpritePalette(palleteAlex_inc);
   SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
-  SMS_loadTiles(alexAndando_inc,256/*SPRITE_TILES_POSITION*/,alexAndando_inc_size);
+  //SMS_loadTiles(alexAndando_inc,256/*SPRITE_TILES_POSITION*/,alexAndando_inc_size);
+  SMS_loadTiles(spriteAlex_inc,256/*SPRITE_TILES_POSITION*/,spriteAlex_inc_size);
   SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
 }
 
@@ -78,7 +81,8 @@ void main(void)
   SMS_setBGScrollX(scroll_x);
   SMS_setBGScrollY(scroll_y);
   SMS_init();
-  SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  //SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  //SMS_setSpriteMode(SPRITEMODE_TALL);
   /* Do nothing */
   //PSGPlay(titulo_psg);
   //PSGPlay(nuestro_psg);
