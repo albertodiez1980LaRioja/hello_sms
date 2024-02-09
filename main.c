@@ -30,19 +30,21 @@ void loadGrapVRAM(){
 int player_x=50;
 int player_v_x=0;
 int player_y=50;
-int frame_player = 2;
+int frame_player = 0;
 int delay_frame_player = 15;
 
 draw_main_character(){
   unsigned char i,j;
   unsigned char numSprites;
-  for(numSprites=0;numSprites<2;numSprites++){
-    for(j=0;j<3;j++) {
+  //frame_player=0;
+  for(numSprites=0;numSprites<1;numSprites++){
+    for(j=0;j<2;j++) {
       for(i=0;i<2;i++) {
-        SMS_addSprite(player_x+(i<<3),player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
-        SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
-        SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
-        SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        //SMS_addSprite(player_x+(i<<3),player_y+(j<<4)+numSprites*30, 2*frame_player + 2*j + i);  
+        SMS_addSprite(player_x+(i<<3),player_y+(j<<4)+numSprites*30, 8*frame_player + 4*j + i*2 );  
+        //SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        //SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
+        //SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<3)+numSprites*30,2*frame_player + 8*j + i);  
         //SMS_addSprite(player_x+(i<<3)+80,player_y+(j<<3),2*frame_player + 8*j + i);  
       }   
     }

@@ -88,11 +88,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000011  l__CABS3                        
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00000F5F  l__CODE                         
-     0000115F  s__HOME                         
-     00001161  s__INITIALIZER                  
-     0000116B  s__GSINIT                       
-     00001190  s__GSFINAL                      
+     00000E2E  l__CODE                         
+     0000102E  s__HOME                         
+     00001030  s__INITIALIZER                  
+     0000103A  s__GSINIT                       
+     0000105F  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
      00008000  s__DATA                         
      00008000  s__INITIALIZED                  
@@ -108,7 +108,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00000F5F =        3935. bytes (REL,CON)
+_CODE                               00000200    00000E2E =        3630. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -117,24 +117,24 @@ _CODE                               00000200    00000F5F =        3935. bytes (R
      0000020A  _init                              main
      0000020D  _loadGrapVRAM                      main
      00000259  _draw_main_character               main
-     00000409  _main                              main
-     00000568  _vprintf                           vprintf
-     00000574  _printf                            vprintf
-     0000058B  __modschar                         
-     00000593  __modsint                          
-     00000678  __print_format                     printf_large
-     000010E4  __divschar                         
-     000010E6  __div8                             
-     000010EA  __div_signexte                     
-     000010EE  __div16                            
-     000010EE  __divsint                          
-     00001114  __get_remainder                    
-     0000111E  __divuchar                         
-     00001120  __divu8                            
-     00001123  __divu16                           
-     00001123  __divuint                          
-     00001152  ___sdcc_call_hl                    
-     00001153  _strlen                            
+     000002D8  _main                              main
+     00000437  _vprintf                           vprintf
+     00000443  _printf                            vprintf
+     0000045A  __modschar                         
+     00000462  __modsint                          
+     00000547  __print_format                     printf_large
+     00000FB3  __divschar                         
+     00000FB5  __div8                             
+     00000FB9  __div_signexte                     
+     00000FBD  __div16                            
+     00000FBD  __divsint                          
+     00000FE3  __get_remainder                    
+     00000FED  __divuchar                         
+     00000FEF  __divu8                            
+     00000FF2  __divu16                           
+     00000FF2  __divuint                          
+     00001021  ___sdcc_call_hl                    
+     00001022  _strlen                            
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
@@ -222,18 +222,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               0000115F    00000002 =           2. bytes (REL,CON)
+_HOME                               0000102E    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000115F  ___sdcc_external_startup           _startup
+     0000102E  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00001161    0000000A =          10. bytes (REL,CON)
+_INITIALIZER                        00001030    0000000A =          10. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -242,18 +242,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             0000116B    00000025 =          37. bytes (REL,CON)
+_GSINIT                             0000103A    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000116B  gsinit                             crt0
+     0000103A  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00001190    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            0000105F    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
