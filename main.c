@@ -6,6 +6,17 @@
 
 #define SPRITE_TILES_POSITION sonictiles_inc_size/32
 
+typedef struct{
+  unsigned char alto, ancho; // sprites de alto y ancho
+  unsigned char tamano; // alto*ancho*(2 si es tall)
+}T_sprite;
+
+typedef struct{
+  unsigned char x,y,frame;
+}T_entidad;
+
+T_entidad alex = {10,10, 0};
+T_sprite spriteAlex = {2,2,8};
 
 void init(){
   SMS_init();
@@ -32,6 +43,15 @@ int player_v_x=0;
 int player_y=20;
 unsigned char frame_player = 0;
 int delay_frame_player = 15;
+
+draw_entidad(T_entidad *entidad, T_sprite *sprite){
+  unsigned char i,j;
+    for(j=0;j<sprite->alto;j++) {
+      for(i=0;i<sprite->ancho;i++) {
+        SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), sprite->tamano*entidad->frame + (j<<2) + (i<<1) );  
+      }   
+    }
+}
 
 draw_main_character(){
   unsigned char i,j;
@@ -125,7 +145,11 @@ void main(void)
       }
     }
     SMS_initSprites();
-    draw_main_character();
+    //draw_main_character();
+    alex.x = player_x;
+    alex.y = player_y;
+    alex.frame = frame_player;
+    draw_entidad(&alex, &spriteAlex);
     SMS_finalizeSprites();
     SMS_waitForVBlank();
     SMS_copySpritestoSAT();
