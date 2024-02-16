@@ -18,874 +18,1056 @@
                                      18 	.globl _draw_entidad
                                      19 	.globl _loadGrapVRAM
                                      20 	.globl _init
-                                     21 	.globl _PSGFrame
-                                     22 	.globl _PSGPlay
-                                     23 	.globl _SMS_VRAMmemsetW
-                                     24 	.globl _SMS_VRAMmemcpy
-                                     25 	.globl _SMS_resetPauseRequest
-                                     26 	.globl _SMS_queryPauseRequested
-                                     27 	.globl _SMS_getKeysHeld
-                                     28 	.globl _SMS_loadSpritePalette
-                                     29 	.globl _SMS_loadBGPalette
-                                     30 	.globl _SMS_copySpritestoSAT
-                                     31 	.globl _SMS_finalizeSprites
-                                     32 	.globl _SMS_addSprite_f
-                                     33 	.globl _SMS_initSprites
-                                     34 	.globl _SMS_waitForVBlank
-                                     35 	.globl _SMS_setSpriteMode
-                                     36 	.globl _SMS_setBGScrollY
-                                     37 	.globl _SMS_setBGScrollX
-                                     38 	.globl _SMS_VDPturnOffFeature
-                                     39 	.globl _SMS_VDPturnOnFeature
-                                     40 	.globl _SMS_init
-                                     41 	.globl _printf
-                                     42 	.globl _delay_frame_player
-                                     43 	.globl _frame_player
-                                     44 	.globl _player_y
-                                     45 	.globl _player_v_x
-                                     46 	.globl _player_x
-                                     47 	.globl _spriteAlex
-                                     48 	.globl _alex
-                                     49 	.globl _SMS_SRAM
-                                     50 	.globl _SRAM_bank_to_be_mapped_on_slot2
-                                     51 	.globl _ROM_bank_to_be_mapped_on_slot0
-                                     52 	.globl _ROM_bank_to_be_mapped_on_slot1
-                                     53 	.globl _ROM_bank_to_be_mapped_on_slot2
-                                     54 ;--------------------------------------------------------
-                                     55 ; special function registers
+                                     21 	.globl _generateSprite
+                                     22 	.globl _PSGFrame
+                                     23 	.globl _PSGPlay
+                                     24 	.globl _SMS_VRAMmemsetW
+                                     25 	.globl _SMS_VRAMmemcpy
+                                     26 	.globl _SMS_resetPauseRequest
+                                     27 	.globl _SMS_queryPauseRequested
+                                     28 	.globl _SMS_getKeysHeld
+                                     29 	.globl _SMS_loadSpritePalette
+                                     30 	.globl _SMS_loadBGPalette
+                                     31 	.globl _SMS_copySpritestoSAT
+                                     32 	.globl _SMS_finalizeSprites
+                                     33 	.globl _SMS_addSprite_f
+                                     34 	.globl _SMS_initSprites
+                                     35 	.globl _SMS_waitForVBlank
+                                     36 	.globl _SMS_setSpriteMode
+                                     37 	.globl _SMS_setBGScrollY
+                                     38 	.globl _SMS_setBGScrollX
+                                     39 	.globl _SMS_VDPturnOffFeature
+                                     40 	.globl _SMS_VDPturnOnFeature
+                                     41 	.globl _SMS_init
+                                     42 	.globl _printf
+                                     43 	.globl _delay_frame_player
+                                     44 	.globl _frame_player
+                                     45 	.globl _player_y
+                                     46 	.globl _player_v_x
+                                     47 	.globl _player_x
+                                     48 	.globl _spriteAlex
+                                     49 	.globl _alex
+                                     50 	.globl _nextVRAMsprites
+                                     51 	.globl _SMS_SRAM
+                                     52 	.globl _SRAM_bank_to_be_mapped_on_slot2
+                                     53 	.globl _ROM_bank_to_be_mapped_on_slot0
+                                     54 	.globl _ROM_bank_to_be_mapped_on_slot1
+                                     55 	.globl _ROM_bank_to_be_mapped_on_slot2
                                      56 ;--------------------------------------------------------
-                                     57 ;--------------------------------------------------------
-                                     58 ; ram data
+                                     57 ; special function registers
+                                     58 ;--------------------------------------------------------
                                      59 ;--------------------------------------------------------
-                                     60 	.area _DATA
-                           00FFFF    61 _ROM_bank_to_be_mapped_on_slot2	=	0xffff
-                           00FFFE    62 _ROM_bank_to_be_mapped_on_slot1	=	0xfffe
-                           00FFFD    63 _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
-                           00FFFC    64 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
-                           008000    65 _SMS_SRAM	=	0x8000
-                                     66 ;--------------------------------------------------------
-                                     67 ; ram data
+                                     60 ; ram data
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _DATA
+                           00FFFF    63 _ROM_bank_to_be_mapped_on_slot2	=	0xffff
+                           00FFFE    64 _ROM_bank_to_be_mapped_on_slot1	=	0xfffe
+                           00FFFD    65 _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
+                           00FFFC    66 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
+                           008000    67 _SMS_SRAM	=	0x8000
                                      68 ;--------------------------------------------------------
-                                     69 	.area _INITIALIZED
-      000000                         70 _alex::
-      000000                         71 	.ds 3
-      000003                         72 _spriteAlex::
-      000003                         73 	.ds 3
-      000006                         74 _player_x::
-      000006                         75 	.ds 2
-      000008                         76 _player_v_x::
-      000008                         77 	.ds 2
-      00000A                         78 _player_y::
-      00000A                         79 	.ds 2
-      00000C                         80 _frame_player::
-      00000C                         81 	.ds 1
-      00000D                         82 _delay_frame_player::
-      00000D                         83 	.ds 2
-                                     84 ;--------------------------------------------------------
-                                     85 ; absolute external ram data
-                                     86 ;--------------------------------------------------------
-                                     87 	.area _DABS (ABS)
+                                     69 ; ram data
+                                     70 ;--------------------------------------------------------
+                                     71 	.area _INITIALIZED
+      000000                         72 _nextVRAMsprites::
+      000000                         73 	.ds 2
+      000002                         74 _alex::
+      000002                         75 	.ds 3
+      000005                         76 _spriteAlex::
+      000005                         77 	.ds 6
+      00000B                         78 _player_x::
+      00000B                         79 	.ds 2
+      00000D                         80 _player_v_x::
+      00000D                         81 	.ds 2
+      00000F                         82 _player_y::
+      00000F                         83 	.ds 2
+      000011                         84 _frame_player::
+      000011                         85 	.ds 1
+      000012                         86 _delay_frame_player::
+      000012                         87 	.ds 2
                                      88 ;--------------------------------------------------------
-                                     89 ; global & static initialisations
+                                     89 ; absolute external ram data
                                      90 ;--------------------------------------------------------
-                                     91 	.area _HOME
-                                     92 	.area _GSINIT
-                                     93 	.area _GSFINAL
-                                     94 	.area _GSINIT
-                                     95 ;--------------------------------------------------------
-                                     96 ; Home
-                                     97 ;--------------------------------------------------------
-                                     98 	.area _HOME
-                                     99 	.area _HOME
-                                    100 ;--------------------------------------------------------
-                                    101 ; code
-                                    102 ;--------------------------------------------------------
-                                    103 	.area _CODE
-                                    104 ;main.c:21: void init(){
-                                    105 ;	---------------------------------
-                                    106 ; Function init
-                                    107 ; ---------------------------------
-      000000                        108 _init::
-                                    109 ;main.c:22: SMS_init();
-                                    110 ;main.c:23: }
-      000000 C3r00r00         [10]  111 	jp	_SMS_init
-                                    112 ;main.c:25: void loadGrapVRAM(){
-                                    113 ;	---------------------------------
-                                    114 ; Function loadGrapVRAM
-                                    115 ; ---------------------------------
-      000003                        116 _loadGrapVRAM::
-                                    117 ;main.c:26: SMS_init();
-      000003 CDr00r00         [17]  118 	call	_SMS_init
-                                    119 ;main.c:28: SMS_setSpriteMode(SPRITEMODE_TALL);
-      000006 2E 01            [ 7]  120 	ld	l, #0x01
-                                    121 ;	spillPairReg hl
-                                    122 ;	spillPairReg hl
-      000008 CDr00r00         [17]  123 	call	_SMS_setSpriteMode
-                                    124 ;main.c:29: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-      00000B 21 20 00         [10]  125 	ld	hl, #0x0020
-      00000E CDr00r00         [17]  126 	call	_SMS_VDPturnOnFeature
-                                    127 ;main.c:30: SMS_displayOn();
-      000011 21 40 01         [10]  128 	ld	hl, #0x0140
-      000014 CDr00r00         [17]  129 	call	_SMS_VDPturnOnFeature
-                                    130 ;main.c:31: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-      000017 21 20 00         [10]  131 	ld	hl, #0x0020
-      00001A CDr00r00         [17]  132 	call	_SMS_VDPturnOnFeature
-                                    133 ;main.c:32: SMS_loadBGPalette(sonicpalette_inc);
-      00001D 21r00r00         [10]  134 	ld	hl, #_sonicpalette_inc
-      000020 CDr00r00         [17]  135 	call	_SMS_loadBGPalette
-                                    136 ;main.c:34: SMS_loadSpritePalette(palleteAlex_inc);
-      000023 21r00r00         [10]  137 	ld	hl, #_palleteAlex_inc
-      000026 CDr00r00         [17]  138 	call	_SMS_loadSpritePalette
-                                    139 ;main.c:35: SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
-      000029 21 C0 14         [10]  140 	ld	hl, #0x14c0
-      00002C E5               [11]  141 	push	hl
-      00002D 11r00r00         [10]  142 	ld	de, #_sonictiles_inc
-      000030 21 00 40         [10]  143 	ld	hl, #0x4000
-      000033 CDr00r00         [17]  144 	call	_SMS_VRAMmemcpy
-                                    145 ;main.c:37: SMS_loadTiles(spriteAlex_inc,256/*SPRITE_TILES_POSITION*/,spriteAlex_inc_size);
-      000036 21 00 04         [10]  146 	ld	hl, #0x0400
-      000039 E5               [11]  147 	push	hl
-      00003A 11r00r00         [10]  148 	ld	de, #_spriteAlex_inc
-      00003D 26 60            [ 7]  149 	ld	h, #0x60
-      00003F CDr00r00         [17]  150 	call	_SMS_VRAMmemcpy
-                                    151 ;main.c:38: SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
-      000042 21 00 06         [10]  152 	ld	hl, #0x0600
-      000045 E5               [11]  153 	push	hl
-      000046 11r00r00         [10]  154 	ld	de, #_sonictilemap_inc
-      000049 26 78            [ 7]  155 	ld	h, #0x78
-      00004B CDr00r00         [17]  156 	call	_SMS_VRAMmemcpy
-                                    157 ;main.c:39: }
-      00004E C9               [10]  158 	ret
-                                    159 ;main.c:47: draw_entidad(T_entidad *entidad, T_sprite *sprite){
-                                    160 ;	---------------------------------
-                                    161 ; Function draw_entidad
-                                    162 ; ---------------------------------
-      00004F                        163 _draw_entidad::
-      00004F DD E5            [15]  164 	push	ix
-      000051 DD 21 00 00      [14]  165 	ld	ix,#0
-      000055 DD 39            [15]  166 	add	ix,sp
-      000057 FD 21 EE FF      [14]  167 	ld	iy, #-18
-      00005B FD 39            [15]  168 	add	iy, sp
-      00005D FD F9            [10]  169 	ld	sp, iy
-      00005F DD 75 FC         [19]  170 	ld	-4 (ix), l
-      000062 DD 74 FD         [19]  171 	ld	-3 (ix), h
-      000065 DD 73 FA         [19]  172 	ld	-6 (ix), e
-      000068 DD 72 FB         [19]  173 	ld	-5 (ix), d
-                                    174 ;main.c:49: for(j=0;j<sprite->alto;j++) {
-      00006B DD 7E FA         [19]  175 	ld	a, -6 (ix)
-      00006E DD 77 EE         [19]  176 	ld	-18 (ix), a
-      000071 DD 7E FB         [19]  177 	ld	a, -5 (ix)
-      000074 DD 77 EF         [19]  178 	ld	-17 (ix), a
-      000077 DD 7E FC         [19]  179 	ld	a, -4 (ix)
-      00007A DD 77 F0         [19]  180 	ld	-16 (ix), a
-      00007D DD 7E FD         [19]  181 	ld	a, -3 (ix)
-      000080 DD 77 F1         [19]  182 	ld	-15 (ix), a
-      000083 DD 7E FC         [19]  183 	ld	a, -4 (ix)
-      000086 DD 77 F2         [19]  184 	ld	-14 (ix), a
-      000089 DD 7E FD         [19]  185 	ld	a, -3 (ix)
-      00008C DD 77 F3         [19]  186 	ld	-13 (ix), a
-      00008F DD 7E FA         [19]  187 	ld	a, -6 (ix)
-      000092 DD 77 F4         [19]  188 	ld	-12 (ix), a
-      000095 DD 7E FB         [19]  189 	ld	a, -5 (ix)
-      000098 DD 77 F5         [19]  190 	ld	-11 (ix), a
-      00009B DD 36 FE 00      [19]  191 	ld	-2 (ix), #0x00
-      00009F                        192 00107$:
-      00009F DD 6E FA         [19]  193 	ld	l, -6 (ix)
-      0000A2 DD 66 FB         [19]  194 	ld	h, -5 (ix)
-      0000A5 DD 7E FE         [19]  195 	ld	a,-2 (ix)
-      0000A8 96               [ 7]  196 	sub	a,(hl)
-      0000A9 D2r37r01         [10]  197 	jp	NC, 00109$
-                                    198 ;main.c:50: for(i=0;i<sprite->ancho;i++) {
-      0000AC DD 36 FF 00      [19]  199 	ld	-1 (ix), #0x00
-      0000B0                        200 00104$:
-      0000B0 DD 6E F4         [19]  201 	ld	l, -12 (ix)
-      0000B3 DD 66 F5         [19]  202 	ld	h, -11 (ix)
-      0000B6 23               [ 6]  203 	inc	hl
-      0000B7 DD 7E FF         [19]  204 	ld	a,-1 (ix)
-      0000BA 96               [ 7]  205 	sub	a,(hl)
-      0000BB 30 74            [12]  206 	jr	NC, 00108$
-                                    207 ;main.c:51: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), sprite->tamano*entidad->frame + (j<<2) + (i<<1) );  
-      0000BD DD 6E FC         [19]  208 	ld	l, -4 (ix)
-      0000C0 DD 66 FD         [19]  209 	ld	h, -3 (ix)
-      0000C3 4E               [ 7]  210 	ld	c, (hl)
-      0000C4 06 00            [ 7]  211 	ld	b, #0x00
-      0000C6 DD 7E FF         [19]  212 	ld	a, -1 (ix)
-      0000C9 DD 77 F6         [19]  213 	ld	-10 (ix), a
-      0000CC DD 36 F7 00      [19]  214 	ld	-9 (ix), #0x00
-      0000D0 6F               [ 4]  215 	ld	l, a
-      0000D1 26 00            [ 7]  216 	ld	h, #0x00
-      0000D3 29               [11]  217 	add	hl, hl
-      0000D4 29               [11]  218 	add	hl, hl
-      0000D5 29               [11]  219 	add	hl, hl
-      0000D6 09               [11]  220 	add	hl, bc
-                                    221 ;	spillPairReg hl
-                                    222 ;	spillPairReg hl
-      0000D7 45               [ 4]  223 	ld	b, l
-      0000D8 0E 00            [ 7]  224 	ld	c, #0x00
-      0000DA E1               [10]  225 	pop	hl
-      0000DB E5               [11]  226 	push	hl
-      0000DC 23               [ 6]  227 	inc	hl
-      0000DD 23               [ 6]  228 	inc	hl
-      0000DE 5E               [ 7]  229 	ld	e, (hl)
-      0000DF DD 6E F0         [19]  230 	ld	l, -16 (ix)
-      0000E2 DD 66 F1         [19]  231 	ld	h, -15 (ix)
-      0000E5 23               [ 6]  232 	inc	hl
-      0000E6 23               [ 6]  233 	inc	hl
-      0000E7 66               [ 7]  234 	ld	h, (hl)
-                                    235 ;	spillPairReg hl
-      0000E8 C5               [11]  236 	push	bc
-      0000E9 2E 00            [ 7]  237 	ld	l, #0x00
-      0000EB 55               [ 4]  238 	ld	d, l
-      0000EC 06 08            [ 7]  239 	ld	b, #0x08
-      0000EE                        240 00141$:
-      0000EE 29               [11]  241 	add	hl, hl
-      0000EF 30 01            [12]  242 	jr	NC, 00142$
-      0000F1 19               [11]  243 	add	hl, de
-      0000F2                        244 00142$:
-      0000F2 10 FA            [13]  245 	djnz	00141$
-      0000F4 C1               [10]  246 	pop	bc
-      0000F5 EB               [ 4]  247 	ex	de, hl
-      0000F6 DD 7E FE         [19]  248 	ld	a, -2 (ix)
-      0000F9 DD 77 F8         [19]  249 	ld	-8 (ix), a
-      0000FC DD 36 F9 00      [19]  250 	ld	-7 (ix), #0x00
-      000100 6F               [ 4]  251 	ld	l, a
-      000101 26 00            [ 7]  252 	ld	h, #0x00
-      000103 29               [11]  253 	add	hl, hl
-      000104 29               [11]  254 	add	hl, hl
-      000105 19               [11]  255 	add	hl, de
-      000106 EB               [ 4]  256 	ex	de, hl
-      000107 DD 6E F6         [19]  257 	ld	l, -10 (ix)
-      00010A DD 66 F7         [19]  258 	ld	h, -9 (ix)
-      00010D 29               [11]  259 	add	hl, hl
-      00010E 19               [11]  260 	add	hl, de
-                                    261 ;	spillPairReg hl
-                                    262 ;	spillPairReg hl
-      00010F 79               [ 4]  263 	ld	a, c
-      000110 B5               [ 4]  264 	or	a, l
-      000111 5F               [ 4]  265 	ld	e, a
-      000112 50               [ 4]  266 	ld	d, b
-      000113 DD 6E F2         [19]  267 	ld	l, -14 (ix)
-      000116 DD 66 F3         [19]  268 	ld	h, -13 (ix)
-      000119 23               [ 6]  269 	inc	hl
-      00011A 4E               [ 7]  270 	ld	c, (hl)
-      00011B 06 00            [ 7]  271 	ld	b, #0x00
-      00011D DD 6E F8         [19]  272 	ld	l, -8 (ix)
-      000120 DD 66 F9         [19]  273 	ld	h, -7 (ix)
-      000123 29               [11]  274 	add	hl, hl
-      000124 29               [11]  275 	add	hl, hl
-      000125 29               [11]  276 	add	hl, hl
-      000126 29               [11]  277 	add	hl, hl
-      000127 09               [11]  278 	add	hl, bc
-      000128 CDr00r00         [17]  279 	call	_SMS_addSprite_f
-                                    280 ;main.c:50: for(i=0;i<sprite->ancho;i++) {
-      00012B DD 34 FF         [23]  281 	inc	-1 (ix)
-      00012E C3rB0r00         [10]  282 	jp	00104$
-      000131                        283 00108$:
-                                    284 ;main.c:49: for(j=0;j<sprite->alto;j++) {
-      000131 DD 34 FE         [23]  285 	inc	-2 (ix)
-      000134 C3r9Fr00         [10]  286 	jp	00107$
-      000137                        287 00109$:
-                                    288 ;main.c:54: }
-      000137 DD F9            [10]  289 	ld	sp, ix
-      000139 DD E1            [14]  290 	pop	ix
-      00013B C9               [10]  291 	ret
-                                    292 ;main.c:56: draw_main_character(){
-                                    293 ;	---------------------------------
-                                    294 ; Function draw_main_character
-                                    295 ; ---------------------------------
-      00013C                        296 _draw_main_character::
-      00013C DD E5            [15]  297 	push	ix
-      00013E DD 21 00 00      [14]  298 	ld	ix,#0
-      000142 DD 39            [15]  299 	add	ix,sp
-      000144 21 F2 FF         [10]  300 	ld	hl, #-14
-      000147 39               [11]  301 	add	hl, sp
-      000148 F9               [ 6]  302 	ld	sp, hl
-                                    303 ;main.c:59: unsigned char sumy=0;
-      000149 DD 36 F2 00      [19]  304 	ld	-14 (ix), #0x00
-                                    305 ;main.c:60: for(numSprites=0;numSprites<4;numSprites++){
-      00014D DD 36 FF 00      [19]  306 	ld	-1 (ix), #0x00
-                                    307 ;main.c:61: for(j=0;j<2;j++) {
-      000151                        308 00114$:
-      000151 0E 00            [ 7]  309 	ld	c, #0x00
-                                    310 ;main.c:62: for(i=0;i<2;i++) {
-      000153                        311 00112$:
-      000153 06 00            [ 7]  312 	ld	b, #0x00
-      000155                        313 00104$:
-                                    314 ;main.c:63: SMS_addSprite(player_x+(i<<3),player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
-      000155 50               [ 4]  315 	ld	d, b
-      000156 1E 00            [ 7]  316 	ld	e, #0x00
-      000158 DD 72 F3         [19]  317 	ld	-13 (ix), d
-      00015B DD 73 F4         [19]  318 	ld	-12 (ix), e
-      00015E 3E 03            [ 7]  319 	ld	a, #0x03
-      000160                        320 00150$:
-      000160 DD CB F3 26      [23]  321 	sla	-13 (ix)
-      000164 DD CB F4 16      [23]  322 	rl	-12 (ix)
-      000168 3D               [ 4]  323 	dec	a
-      000169 20 F5            [12]  324 	jr	NZ, 00150$
-      00016B 3Ar06r00         [13]  325 	ld	a, (_player_x+0)
-      00016E DD 86 F3         [19]  326 	add	a, -13 (ix)
-      000171 DD 77 FD         [19]  327 	ld	-3 (ix), a
-      000174 3Ar07r00         [13]  328 	ld	a, (_player_x+1)
-      000177 DD 8E F4         [19]  329 	adc	a, -12 (ix)
-      00017A DD 77 FE         [19]  330 	ld	-2 (ix), a
-      00017D DD 6E FD         [19]  331 	ld	l, -3 (ix)
-                                    332 ;	spillPairReg hl
-                                    333 ;	spillPairReg hl
-      000180 DD 75 FE         [19]  334 	ld	-2 (ix), l
-      000183 DD 36 FD 00      [19]  335 	ld	-3 (ix), #0x00
-      000187 3Ar0Cr00         [13]  336 	ld	a, (_frame_player+0)
-      00018A 6F               [ 4]  337 	ld	l, a
-                                    338 ;	spillPairReg hl
-                                    339 ;	spillPairReg hl
-      00018B 26 00            [ 7]  340 	ld	h, #0x00
-                                    341 ;	spillPairReg hl
-                                    342 ;	spillPairReg hl
-      00018D 29               [11]  343 	add	hl, hl
-      00018E 29               [11]  344 	add	hl, hl
-      00018F 29               [11]  345 	add	hl, hl
-      000190 E5               [11]  346 	push	hl
-      000191 FD E1            [14]  347 	pop	iy
-      000193 69               [ 4]  348 	ld	l, c
-                                    349 ;	spillPairReg hl
-                                    350 ;	spillPairReg hl
-      000194 26 00            [ 7]  351 	ld	h, #0x00
-                                    352 ;	spillPairReg hl
-                                    353 ;	spillPairReg hl
-      000196 DD 75 F5         [19]  354 	ld	-11 (ix), l
-      000199 DD 74 F6         [19]  355 	ld	-10 (ix), h
-      00019C 3E 02            [ 7]  356 	ld	a, #0x02
-      00019E                        357 00151$:
-      00019E DD CB F5 26      [23]  358 	sla	-11 (ix)
-      0001A2 DD CB F6 16      [23]  359 	rl	-10 (ix)
-      0001A6 3D               [ 4]  360 	dec	a
-      0001A7 20 F5            [12]  361 	jr	NZ, 00151$
-      0001A9 C5               [11]  362 	push	bc
-      0001AA DD 4E F5         [19]  363 	ld	c, -11 (ix)
-      0001AD DD 46 F6         [19]  364 	ld	b, -10 (ix)
-      0001B0 FD 09            [15]  365 	add	iy, bc
-      0001B2 C1               [10]  366 	pop	bc
-      0001B3 CB 22            [ 8]  367 	sla	d
-      0001B5 CB 13            [ 8]  368 	rl	e
-      0001B7 DD 72 F7         [19]  369 	ld	-9 (ix), d
-      0001BA DD 73 F8         [19]  370 	ld	-8 (ix), e
-      0001BD DD 5E F7         [19]  371 	ld	e, -9 (ix)
-      0001C0 DD 56 F8         [19]  372 	ld	d, -8 (ix)
-      0001C3 FD 19            [15]  373 	add	iy, de
-      0001C5 1E 00            [ 7]  374 	ld	e, #0x00
-      0001C7 DD 7E FE         [19]  375 	ld	a, -2 (ix)
-      0001CA B3               [ 4]  376 	or	a, e
-      0001CB FD E5            [15]  377 	push	iy
-      0001CD DD 77 F1         [19]  378 	ld	-15 (ix), a
-      0001D0 FD E1            [14]  379 	pop	iy
-      0001D2 29               [11]  380 	add	hl, hl
-      0001D3 29               [11]  381 	add	hl, hl
-      0001D4 29               [11]  382 	add	hl, hl
-      0001D5 29               [11]  383 	add	hl, hl
-      0001D6 DD 75 F9         [19]  384 	ld	-7 (ix), l
-      0001D9 DD 74 FA         [19]  385 	ld	-6 (ix), h
-      0001DC 3Ar0Ar00         [13]  386 	ld	a, (_player_y+0)
-      0001DF DD 86 F9         [19]  387 	add	a, -7 (ix)
-      0001E2 5F               [ 4]  388 	ld	e, a
-      0001E3 3Ar0Br00         [13]  389 	ld	a, (_player_y+1)
-      0001E6 DD 8E FA         [19]  390 	adc	a, -6 (ix)
-      0001E9 57               [ 4]  391 	ld	d, a
-      0001EA DD 7E F2         [19]  392 	ld	a, -14 (ix)
-      0001ED DD 77 FB         [19]  393 	ld	-5 (ix), a
-      0001F0 DD 36 FC 00      [19]  394 	ld	-4 (ix), #0x00
-      0001F4 DD 6E FB         [19]  395 	ld	l, -5 (ix)
-                                    396 ;	spillPairReg hl
-                                    397 ;	spillPairReg hl
-      0001F7 26 00            [ 7]  398 	ld	h, #0x00
-                                    399 ;	spillPairReg hl
-                                    400 ;	spillPairReg hl
-      0001F9 19               [11]  401 	add	hl, de
-      0001FA C5               [11]  402 	push	bc
-      0001FB FD E5            [15]  403 	push	iy
-      0001FD D1               [10]  404 	pop	de
-      0001FE CDr00r00         [17]  405 	call	_SMS_addSprite_f
-      000201 C1               [10]  406 	pop	bc
-                                    407 ;main.c:64: SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
-      000202 3Ar06r00         [13]  408 	ld	a, (_player_x+0)
-      000205 DD 86 F3         [19]  409 	add	a, -13 (ix)
-      000208 5F               [ 4]  410 	ld	e, a
-      000209 3Ar07r00         [13]  411 	ld	a, (_player_x+1)
-      00020C DD 8E F4         [19]  412 	adc	a, -12 (ix)
-      00020F 57               [ 4]  413 	ld	d, a
-      000210 21 14 00         [10]  414 	ld	hl, #0x0014
-      000213 19               [11]  415 	add	hl, de
-      000214 55               [ 4]  416 	ld	d, l
-      000215 3Ar0Cr00         [13]  417 	ld	a, (_frame_player+0)
-      000218 26 00            [ 7]  418 	ld	h, #0x00
-                                    419 ;	spillPairReg hl
-                                    420 ;	spillPairReg hl
-      00021A 6F               [ 4]  421 	ld	l, a
-      00021B 29               [11]  422 	add	hl, hl
-      00021C 29               [11]  423 	add	hl, hl
-      00021D 29               [11]  424 	add	hl, hl
-      00021E 7D               [ 4]  425 	ld	a, l
-      00021F DD 86 F5         [19]  426 	add	a, -11 (ix)
-      000222 6F               [ 4]  427 	ld	l, a
-                                    428 ;	spillPairReg hl
-                                    429 ;	spillPairReg hl
-      000223 7C               [ 4]  430 	ld	a, h
-      000224 DD 8E F6         [19]  431 	adc	a, -10 (ix)
-      000227 67               [ 4]  432 	ld	h, a
-                                    433 ;	spillPairReg hl
-                                    434 ;	spillPairReg hl
-      000228 7D               [ 4]  435 	ld	a, l
-      000229 DD 86 F7         [19]  436 	add	a, -9 (ix)
-      00022C 6F               [ 4]  437 	ld	l, a
-                                    438 ;	spillPairReg hl
-                                    439 ;	spillPairReg hl
-      00022D 7C               [ 4]  440 	ld	a, h
-      00022E DD 8E F8         [19]  441 	adc	a, -8 (ix)
-      000231 26 00            [ 7]  442 	ld	h, #0x00
-                                    443 ;	spillPairReg hl
-                                    444 ;	spillPairReg hl
-      000233 DD 75 FD         [19]  445 	ld	-3 (ix), l
-      000236 7A               [ 4]  446 	ld	a, d
-      000237 B4               [ 4]  447 	or	a, h
-      000238 DD 77 FE         [19]  448 	ld	-2 (ix), a
-      00023B 3Ar0Ar00         [13]  449 	ld	a, (_player_y+0)
-      00023E DD 86 F9         [19]  450 	add	a, -7 (ix)
-      000241 5F               [ 4]  451 	ld	e, a
-      000242 3Ar0Br00         [13]  452 	ld	a, (_player_y+1)
-      000245 DD 8E FA         [19]  453 	adc	a, -6 (ix)
-      000248 57               [ 4]  454 	ld	d, a
-      000249 DD 6E FB         [19]  455 	ld	l, -5 (ix)
-                                    456 ;	spillPairReg hl
-                                    457 ;	spillPairReg hl
-      00024C 26 00            [ 7]  458 	ld	h, #0x00
-                                    459 ;	spillPairReg hl
-                                    460 ;	spillPairReg hl
-      00024E 19               [11]  461 	add	hl, de
-      00024F C5               [11]  462 	push	bc
-      000250 DD 5E FD         [19]  463 	ld	e, -3 (ix)
-      000253 DD 56 FE         [19]  464 	ld	d, -2 (ix)
-      000256 CDr00r00         [17]  465 	call	_SMS_addSprite_f
-      000259 C1               [10]  466 	pop	bc
-                                    467 ;main.c:65: SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
-      00025A 3Ar06r00         [13]  468 	ld	a, (_player_x+0)
-      00025D DD 86 F3         [19]  469 	add	a, -13 (ix)
-      000260 5F               [ 4]  470 	ld	e, a
-      000261 3Ar07r00         [13]  471 	ld	a, (_player_x+1)
-      000264 DD 8E F4         [19]  472 	adc	a, -12 (ix)
-      000267 57               [ 4]  473 	ld	d, a
-      000268 21 28 00         [10]  474 	ld	hl, #0x0028
-      00026B 19               [11]  475 	add	hl, de
-      00026C 55               [ 4]  476 	ld	d, l
-      00026D 3Ar0Cr00         [13]  477 	ld	a, (_frame_player+0)
-      000270 6F               [ 4]  478 	ld	l, a
-                                    479 ;	spillPairReg hl
-                                    480 ;	spillPairReg hl
-      000271 26 00            [ 7]  481 	ld	h, #0x00
-                                    482 ;	spillPairReg hl
-                                    483 ;	spillPairReg hl
-      000273 29               [11]  484 	add	hl, hl
-      000274 29               [11]  485 	add	hl, hl
-      000275 29               [11]  486 	add	hl, hl
-      000276 7D               [ 4]  487 	ld	a, l
-      000277 DD 86 F5         [19]  488 	add	a, -11 (ix)
-      00027A 6F               [ 4]  489 	ld	l, a
-                                    490 ;	spillPairReg hl
-                                    491 ;	spillPairReg hl
-      00027B 7C               [ 4]  492 	ld	a, h
-      00027C DD 8E F6         [19]  493 	adc	a, -10 (ix)
-      00027F 67               [ 4]  494 	ld	h, a
-                                    495 ;	spillPairReg hl
-                                    496 ;	spillPairReg hl
-      000280 7D               [ 4]  497 	ld	a, l
-      000281 DD 86 F7         [19]  498 	add	a, -9 (ix)
-      000284 6F               [ 4]  499 	ld	l, a
-                                    500 ;	spillPairReg hl
-                                    501 ;	spillPairReg hl
-      000285 7C               [ 4]  502 	ld	a, h
-      000286 DD 8E F8         [19]  503 	adc	a, -8 (ix)
-      000289 26 00            [ 7]  504 	ld	h, #0x00
-                                    505 ;	spillPairReg hl
-                                    506 ;	spillPairReg hl
-      00028B DD 75 FD         [19]  507 	ld	-3 (ix), l
-      00028E 7A               [ 4]  508 	ld	a, d
-      00028F B4               [ 4]  509 	or	a, h
-      000290 DD 77 FE         [19]  510 	ld	-2 (ix), a
-      000293 3Ar0Ar00         [13]  511 	ld	a, (_player_y+0)
-      000296 DD 86 F9         [19]  512 	add	a, -7 (ix)
-      000299 5F               [ 4]  513 	ld	e, a
-      00029A 3Ar0Br00         [13]  514 	ld	a, (_player_y+1)
-      00029D DD 8E FA         [19]  515 	adc	a, -6 (ix)
-      0002A0 57               [ 4]  516 	ld	d, a
-      0002A1 DD 6E FB         [19]  517 	ld	l, -5 (ix)
-                                    518 ;	spillPairReg hl
+                                     91 	.area _DABS (ABS)
+                                     92 ;--------------------------------------------------------
+                                     93 ; global & static initialisations
+                                     94 ;--------------------------------------------------------
+                                     95 	.area _HOME
+                                     96 	.area _GSINIT
+                                     97 	.area _GSFINAL
+                                     98 	.area _GSINIT
+                                     99 ;--------------------------------------------------------
+                                    100 ; Home
+                                    101 ;--------------------------------------------------------
+                                    102 	.area _HOME
+                                    103 	.area _HOME
+                                    104 ;--------------------------------------------------------
+                                    105 ; code
+                                    106 ;--------------------------------------------------------
+                                    107 	.area _CODE
+                                    108 ;main.c:18: T_sprite generateSprite(unsigned char alto, unsigned char ancho, int tam,const unsigned char data[]) {
+                                    109 ;	---------------------------------
+                                    110 ; Function generateSprite
+                                    111 ; ---------------------------------
+      000000                        112 _generateSprite::
+      000000 DD E5            [15]  113 	push	ix
+      000002 DD 21 00 00      [14]  114 	ld	ix,#0
+      000006 DD 39            [15]  115 	add	ix,sp
+      000008 F5               [11]  116 	push	af
+      000009 F5               [11]  117 	push	af
+      00000A F5               [11]  118 	push	af
+      00000B 57               [ 4]  119 	ld	d, a
+      00000C 5D               [ 4]  120 	ld	e, l
+                                    121 ;main.c:19: unsigned char tamano = alto*ancho*2;
+      00000D D5               [11]  122 	push	de
+      00000E 62               [ 4]  123 	ld	h, d
+                                    124 ;	spillPairReg hl
+                                    125 ;	spillPairReg hl
+      00000F 2E 00            [ 7]  126 	ld	l, #0x00
+      000011 55               [ 4]  127 	ld	d, l
+      000012 06 08            [ 7]  128 	ld	b, #0x08
+      000014                        129 00103$:
+      000014 29               [11]  130 	add	hl, hl
+      000015 30 01            [12]  131 	jr	NC, 00104$
+      000017 19               [11]  132 	add	hl, de
+      000018                        133 00104$:
+      000018 10 FA            [13]  134 	djnz	00103$
+      00001A D1               [10]  135 	pop	de
+      00001B 4D               [ 4]  136 	ld	c, l
+      00001C CB 21            [ 8]  137 	sla	c
+                                    138 ;main.c:20: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites};
+      00001E DD 72 FA         [19]  139 	ld	-6 (ix), d
+      000021 DD 73 FB         [19]  140 	ld	-5 (ix), e
+      000024 DD 71 FC         [19]  141 	ld	-4 (ix), c
+      000027 69               [ 4]  142 	ld	l, c
+                                    143 ;	spillPairReg hl
+                                    144 ;	spillPairReg hl
+      000028 26 00            [ 7]  145 	ld	h, #0x00
+                                    146 ;	spillPairReg hl
+                                    147 ;	spillPairReg hl
+      00002A 29               [11]  148 	add	hl, hl
+      00002B 29               [11]  149 	add	hl, hl
+      00002C 29               [11]  150 	add	hl, hl
+      00002D 29               [11]  151 	add	hl, hl
+      00002E 29               [11]  152 	add	hl, hl
+      00002F EB               [ 4]  153 	ex	de, hl
+      000030 DD 6E 06         [19]  154 	ld	l, 6 (ix)
+                                    155 ;	spillPairReg hl
+                                    156 ;	spillPairReg hl
+      000033 DD 66 07         [19]  157 	ld	h, 7 (ix)
+                                    158 ;	spillPairReg hl
+                                    159 ;	spillPairReg hl
+      000036 CDr00r00         [17]  160 	call	__divsint
+      000039 DD 73 FD         [19]  161 	ld	-3 (ix), e
+      00003C 3Ar00r00         [13]  162 	ld	a, (_nextVRAMsprites+0)
+      00003F DD 77 FE         [19]  163 	ld	-2 (ix), a
+      000042 3Ar01r00         [13]  164 	ld	a, (_nextVRAMsprites+1)
+      000045 DD 77 FF         [19]  165 	ld	-1 (ix), a
+                                    166 ;main.c:21: SMS_loadTiles(data,nextVRAMsprites,tam);
+      000048 DD 5E 08         [19]  167 	ld	e, 8 (ix)
+      00004B DD 56 09         [19]  168 	ld	d, 9 (ix)
+      00004E 2Ar00r00         [16]  169 	ld	hl, (_nextVRAMsprites)
+      000051 29               [11]  170 	add	hl, hl
+      000052 29               [11]  171 	add	hl, hl
+      000053 29               [11]  172 	add	hl, hl
+      000054 29               [11]  173 	add	hl, hl
+      000055 29               [11]  174 	add	hl, hl
+      000056 CB F4            [ 8]  175 	set	6, h
+      000058 DD 4E 06         [19]  176 	ld	c, 6 (ix)
+      00005B DD 46 07         [19]  177 	ld	b, 7 (ix)
+      00005E C5               [11]  178 	push	bc
+      00005F CDr00r00         [17]  179 	call	_SMS_VRAMmemcpy
+                                    180 ;main.c:22: nextVRAMsprites += tam;
+      000062 21r00r00         [10]  181 	ld	hl, #_nextVRAMsprites
+      000065 7E               [ 7]  182 	ld	a, (hl)
+      000066 DD 86 06         [19]  183 	add	a, 6 (ix)
+      000069 77               [ 7]  184 	ld	(hl), a
+      00006A 23               [ 6]  185 	inc	hl
+      00006B 7E               [ 7]  186 	ld	a, (hl)
+      00006C DD 8E 07         [19]  187 	adc	a, 7 (ix)
+      00006F 77               [ 7]  188 	ld	(hl), a
+                                    189 ;main.c:23: return sprite;
+      000070 21 0A 00         [10]  190 	ld	hl, #10
+      000073 39               [11]  191 	add	hl, sp
+      000074 5E               [ 7]  192 	ld	e, (hl)
+      000075 23               [ 6]  193 	inc	hl
+      000076 56               [ 7]  194 	ld	d, (hl)
+      000077 21 00 00         [10]  195 	ld	hl, #0
+      00007A 39               [11]  196 	add	hl, sp
+      00007B 01 06 00         [10]  197 	ld	bc, #6
+      00007E ED B0            [21]  198 	ldir
+                                    199 ;main.c:24: }
+      000080 DD F9            [10]  200 	ld	sp, ix
+      000082 DD E1            [14]  201 	pop	ix
+      000084 C9               [10]  202 	ret
+                                    203 ;main.c:33: void init(){
+                                    204 ;	---------------------------------
+                                    205 ; Function init
+                                    206 ; ---------------------------------
+      000085                        207 _init::
+                                    208 ;main.c:34: SMS_init();
+                                    209 ;main.c:35: }
+      000085 C3r00r00         [10]  210 	jp	_SMS_init
+                                    211 ;main.c:37: void loadGrapVRAM(){
+                                    212 ;	---------------------------------
+                                    213 ; Function loadGrapVRAM
+                                    214 ; ---------------------------------
+      000088                        215 _loadGrapVRAM::
+      000088 DD E5            [15]  216 	push	ix
+      00008A DD 21 00 00      [14]  217 	ld	ix,#0
+      00008E DD 39            [15]  218 	add	ix,sp
+      000090 21 F4 FF         [10]  219 	ld	hl, #-12
+      000093 39               [11]  220 	add	hl, sp
+      000094 F9               [ 6]  221 	ld	sp, hl
+                                    222 ;main.c:38: SMS_init();
+      000095 CDr00r00         [17]  223 	call	_SMS_init
+                                    224 ;main.c:40: SMS_setSpriteMode(SPRITEMODE_TALL);
+      000098 2E 01            [ 7]  225 	ld	l, #0x01
+                                    226 ;	spillPairReg hl
+                                    227 ;	spillPairReg hl
+      00009A CDr00r00         [17]  228 	call	_SMS_setSpriteMode
+                                    229 ;main.c:41: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+      00009D 21 20 00         [10]  230 	ld	hl, #0x0020
+      0000A0 CDr00r00         [17]  231 	call	_SMS_VDPturnOnFeature
+                                    232 ;main.c:42: SMS_displayOn();
+      0000A3 21 40 01         [10]  233 	ld	hl, #0x0140
+      0000A6 CDr00r00         [17]  234 	call	_SMS_VDPturnOnFeature
+                                    235 ;main.c:43: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+      0000A9 21 20 00         [10]  236 	ld	hl, #0x0020
+      0000AC CDr00r00         [17]  237 	call	_SMS_VDPturnOnFeature
+                                    238 ;main.c:44: SMS_loadBGPalette(sonicpalette_inc);
+      0000AF 21r00r00         [10]  239 	ld	hl, #_sonicpalette_inc
+      0000B2 CDr00r00         [17]  240 	call	_SMS_loadBGPalette
+                                    241 ;main.c:46: SMS_loadSpritePalette(palleteAlex_inc);
+      0000B5 21r00r00         [10]  242 	ld	hl, #_palleteAlex_inc
+      0000B8 CDr00r00         [17]  243 	call	_SMS_loadSpritePalette
+                                    244 ;main.c:47: SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
+      0000BB 21 C0 14         [10]  245 	ld	hl, #0x14c0
+      0000BE E5               [11]  246 	push	hl
+      0000BF 11r00r00         [10]  247 	ld	de, #_sonictiles_inc
+      0000C2 21 00 40         [10]  248 	ld	hl, #0x4000
+      0000C5 CDr00r00         [17]  249 	call	_SMS_VRAMmemcpy
+                                    250 ;main.c:50: spriteAlex = generateSprite(2,2,spriteAlex_inc_size, spriteAlex_inc);
+      0000C8 21r00r00         [10]  251 	ld	hl, #_spriteAlex_inc
+      0000CB E5               [11]  252 	push	hl
+      0000CC 21 00 04         [10]  253 	ld	hl, #0x0400
+      0000CF E5               [11]  254 	push	hl
+                                    255 ;	spillPairReg hl
+                                    256 ;	spillPairReg hl
+      0000D0 3E 02            [ 7]  257 	ld	a,#0x02
+      0000D2 6F               [ 4]  258 	ld	l,a
+      0000D3 E5               [11]  259 	push	hl
+      0000D4 21 06 00         [10]  260 	ld	hl, #0x0006
+      0000D7 39               [11]  261 	add	hl, sp
+      0000D8 EB               [ 4]  262 	ex	de,hl
+      0000D9 E1               [10]  263 	pop	hl
+      0000DA D5               [11]  264 	push	de
+      0000DB CDr00r00         [17]  265 	call	_generateSprite
+      0000DE F1               [10]  266 	pop	af
+      0000DF F1               [10]  267 	pop	af
+      0000E0 F1               [10]  268 	pop	af
+      0000E1 11r05r00         [10]  269 	ld	de, #_spriteAlex
+      0000E4 21 00 00         [10]  270 	ld	hl, #0
+      0000E7 39               [11]  271 	add	hl, sp
+      0000E8 01 06 00         [10]  272 	ld	bc, #0x0006
+      0000EB ED B0            [21]  273 	ldir
+                                    274 ;main.c:51: spriteAlex = generateSprite(2,2,spriteAlex_inc_size, spriteAlex_inc);
+      0000ED 21r00r00         [10]  275 	ld	hl, #_spriteAlex_inc
+      0000F0 E5               [11]  276 	push	hl
+      0000F1 21 00 04         [10]  277 	ld	hl, #0x0400
+      0000F4 E5               [11]  278 	push	hl
+                                    279 ;	spillPairReg hl
+                                    280 ;	spillPairReg hl
+      0000F5 3E 02            [ 7]  281 	ld	a,#0x02
+      0000F7 6F               [ 4]  282 	ld	l,a
+      0000F8 E5               [11]  283 	push	hl
+      0000F9 21 0C 00         [10]  284 	ld	hl, #0x000c
+      0000FC 39               [11]  285 	add	hl, sp
+      0000FD EB               [ 4]  286 	ex	de,hl
+      0000FE E1               [10]  287 	pop	hl
+      0000FF D5               [11]  288 	push	de
+      000100 CDr00r00         [17]  289 	call	_generateSprite
+      000103 F1               [10]  290 	pop	af
+      000104 F1               [10]  291 	pop	af
+      000105 F1               [10]  292 	pop	af
+      000106 11r05r00         [10]  293 	ld	de, #_spriteAlex
+      000109 21 06 00         [10]  294 	ld	hl, #6
+      00010C 39               [11]  295 	add	hl, sp
+      00010D 01 06 00         [10]  296 	ld	bc, #0x0006
+      000110 ED B0            [21]  297 	ldir
+                                    298 ;main.c:52: SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
+      000112 21 00 06         [10]  299 	ld	hl, #0x0600
+      000115 E5               [11]  300 	push	hl
+      000116 11r00r00         [10]  301 	ld	de, #_sonictilemap_inc
+      000119 26 78            [ 7]  302 	ld	h, #0x78
+      00011B CDr00r00         [17]  303 	call	_SMS_VRAMmemcpy
+                                    304 ;main.c:53: }
+      00011E DD F9            [10]  305 	ld	sp, ix
+      000120 DD E1            [14]  306 	pop	ix
+      000122 C9               [10]  307 	ret
+                                    308 ;main.c:61: draw_entidad(T_entidad *entidad, T_sprite *sprite){
+                                    309 ;	---------------------------------
+                                    310 ; Function draw_entidad
+                                    311 ; ---------------------------------
+      000123                        312 _draw_entidad::
+      000123 DD E5            [15]  313 	push	ix
+      000125 DD 21 00 00      [14]  314 	ld	ix,#0
+      000129 DD 39            [15]  315 	add	ix,sp
+      00012B FD 21 F2 FF      [14]  316 	ld	iy, #-14
+      00012F FD 39            [15]  317 	add	iy, sp
+      000131 FD F9            [10]  318 	ld	sp, iy
+      000133 DD 75 FC         [19]  319 	ld	-4 (ix), l
+      000136 DD 74 FD         [19]  320 	ld	-3 (ix), h
+      000139 DD 73 FA         [19]  321 	ld	-6 (ix), e
+      00013C DD 72 FB         [19]  322 	ld	-5 (ix), d
+                                    323 ;main.c:63: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
+      00013F DD 7E FA         [19]  324 	ld	a, -6 (ix)
+      000142 DD 77 F8         [19]  325 	ld	-8 (ix), a
+      000145 DD 7E FB         [19]  326 	ld	a, -5 (ix)
+      000148 DD 77 F9         [19]  327 	ld	-7 (ix), a
+      00014B DD 6E F8         [19]  328 	ld	l, -8 (ix)
+      00014E DD 66 F9         [19]  329 	ld	h, -7 (ix)
+      000151 23               [ 6]  330 	inc	hl
+      000152 23               [ 6]  331 	inc	hl
+      000153 7E               [ 7]  332 	ld	a, (hl)
+      000154 DD 77 FE         [19]  333 	ld	-2 (ix), a
+      000157 DD 7E FC         [19]  334 	ld	a, -4 (ix)
+      00015A DD 77 F8         [19]  335 	ld	-8 (ix), a
+      00015D DD 7E FD         [19]  336 	ld	a, -3 (ix)
+      000160 DD 77 F9         [19]  337 	ld	-7 (ix), a
+      000163 DD 6E F8         [19]  338 	ld	l, -8 (ix)
+      000166 DD 66 F9         [19]  339 	ld	h, -7 (ix)
+      000169 23               [ 6]  340 	inc	hl
+      00016A 23               [ 6]  341 	inc	hl
+      00016B 7E               [ 7]  342 	ld	a, (hl)
+      00016C DD 77 FF         [19]  343 	ld	-1 (ix), a
+      00016F 5F               [ 4]  344 	ld	e, a
+      000170 DD 66 FE         [19]  345 	ld	h, -2 (ix)
+                                    346 ;	spillPairReg hl
+                                    347 ;	spillPairReg hl
+      000173 2E 00            [ 7]  348 	ld	l, #0x00
+      000175 55               [ 4]  349 	ld	d, l
+      000176 06 08            [ 7]  350 	ld	b, #0x08
+      000178                        351 00141$:
+      000178 29               [11]  352 	add	hl, hl
+      000179 30 01            [12]  353 	jr	NC, 00142$
+      00017B 19               [11]  354 	add	hl, de
+      00017C                        355 00142$:
+      00017C 10 FA            [13]  356 	djnz	00141$
+      00017E DD 75 F8         [19]  357 	ld	-8 (ix), l
+      000181 DD 74 F9         [19]  358 	ld	-7 (ix), h
+      000184 DD 7E FA         [19]  359 	ld	a, -6 (ix)
+      000187 DD 77 FE         [19]  360 	ld	-2 (ix), a
+      00018A DD 7E FB         [19]  361 	ld	a, -5 (ix)
+      00018D DD 77 FF         [19]  362 	ld	-1 (ix), a
+      000190 DD 6E FE         [19]  363 	ld	l, -2 (ix)
+      000193 DD 66 FF         [19]  364 	ld	h, -1 (ix)
+      000196 11 04 00         [10]  365 	ld	de, #0x0004
+      000199 19               [11]  366 	add	hl, de
+      00019A 7E               [ 7]  367 	ld	a, (hl)
+      00019B DD 77 FE         [19]  368 	ld	-2 (ix), a
+      00019E 23               [ 6]  369 	inc	hl
+      00019F 7E               [ 7]  370 	ld	a, (hl)
+      0001A0 DD 77 FF         [19]  371 	ld	-1 (ix), a
+      0001A3 DD 7E F8         [19]  372 	ld	a, -8 (ix)
+      0001A6 DD 86 FE         [19]  373 	add	a, -2 (ix)
+      0001A9 DD 77 F2         [19]  374 	ld	-14 (ix), a
+      0001AC DD 7E F9         [19]  375 	ld	a, -7 (ix)
+      0001AF DD 8E FF         [19]  376 	adc	a, -1 (ix)
+      0001B2 DD 77 F3         [19]  377 	ld	-13 (ix), a
+                                    378 ;main.c:64: for(j=0;j<sprite->alto;j++) {
+      0001B5 DD 7E FC         [19]  379 	ld	a, -4 (ix)
+      0001B8 DD 77 F4         [19]  380 	ld	-12 (ix), a
+      0001BB DD 7E FD         [19]  381 	ld	a, -3 (ix)
+      0001BE DD 77 F5         [19]  382 	ld	-11 (ix), a
+      0001C1 DD 7E FA         [19]  383 	ld	a, -6 (ix)
+      0001C4 DD 77 F6         [19]  384 	ld	-10 (ix), a
+      0001C7 DD 7E FB         [19]  385 	ld	a, -5 (ix)
+      0001CA DD 77 F7         [19]  386 	ld	-9 (ix), a
+      0001CD DD 36 FE 00      [19]  387 	ld	-2 (ix), #0x00
+      0001D1                        388 00107$:
+      0001D1 DD 6E FA         [19]  389 	ld	l, -6 (ix)
+      0001D4 DD 66 FB         [19]  390 	ld	h, -5 (ix)
+      0001D7 DD 7E FE         [19]  391 	ld	a,-2 (ix)
+      0001DA 96               [ 7]  392 	sub	a,(hl)
+      0001DB 30 6B            [12]  393 	jr	NC, 00109$
+                                    394 ;main.c:65: for(i=0;i<sprite->ancho;i++) {
+      0001DD DD 36 FF 00      [19]  395 	ld	-1 (ix), #0x00
+      0001E1                        396 00104$:
+      0001E1 DD 6E F6         [19]  397 	ld	l, -10 (ix)
+      0001E4 DD 66 F7         [19]  398 	ld	h, -9 (ix)
+      0001E7 23               [ 6]  399 	inc	hl
+      0001E8 DD 7E FF         [19]  400 	ld	a,-1 (ix)
+      0001EB 96               [ 7]  401 	sub	a,(hl)
+      0001EC 30 55            [12]  402 	jr	NC, 00108$
+                                    403 ;main.c:66: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), frame + (j<<2) + (i<<1) );  
+      0001EE DD 6E FC         [19]  404 	ld	l, -4 (ix)
+      0001F1 DD 66 FD         [19]  405 	ld	h, -3 (ix)
+      0001F4 5E               [ 7]  406 	ld	e, (hl)
+      0001F5 16 00            [ 7]  407 	ld	d, #0x00
+      0001F7 DD 4E FF         [19]  408 	ld	c, -1 (ix)
+      0001FA 06 00            [ 7]  409 	ld	b, #0x00
+      0001FC 69               [ 4]  410 	ld	l, c
+      0001FD 60               [ 4]  411 	ld	h, b
+      0001FE 29               [11]  412 	add	hl, hl
+      0001FF 29               [11]  413 	add	hl, hl
+      000200 29               [11]  414 	add	hl, hl
+      000201 19               [11]  415 	add	hl, de
+                                    416 ;	spillPairReg hl
+                                    417 ;	spillPairReg hl
+      000202 55               [ 4]  418 	ld	d, l
+      000203 1E 00            [ 7]  419 	ld	e, #0x00
+      000205 DD 7E FE         [19]  420 	ld	a, -2 (ix)
+      000208 DD 77 F8         [19]  421 	ld	-8 (ix), a
+      00020B DD 36 F9 00      [19]  422 	ld	-7 (ix), #0x00
+      00020F 6F               [ 4]  423 	ld	l, a
+      000210 26 00            [ 7]  424 	ld	h, #0x00
+      000212 29               [11]  425 	add	hl, hl
+      000213 29               [11]  426 	add	hl, hl
+      000214 7D               [ 4]  427 	ld	a, l
+      000215 DD 86 F2         [19]  428 	add	a, -14 (ix)
+      000218 6F               [ 4]  429 	ld	l, a
+                                    430 ;	spillPairReg hl
+                                    431 ;	spillPairReg hl
+      000219 7C               [ 4]  432 	ld	a, h
+      00021A DD 8E F3         [19]  433 	adc	a, -13 (ix)
+      00021D 67               [ 4]  434 	ld	h, a
+                                    435 ;	spillPairReg hl
+                                    436 ;	spillPairReg hl
+      00021E CB 21            [ 8]  437 	sla	c
+      000220 CB 10            [ 8]  438 	rl	b
+      000222 09               [11]  439 	add	hl, bc
+                                    440 ;	spillPairReg hl
+                                    441 ;	spillPairReg hl
+      000223 7B               [ 4]  442 	ld	a, e
+      000224 B5               [ 4]  443 	or	a, l
+      000225 5F               [ 4]  444 	ld	e, a
+      000226 DD 6E F4         [19]  445 	ld	l, -12 (ix)
+      000229 DD 66 F5         [19]  446 	ld	h, -11 (ix)
+      00022C 23               [ 6]  447 	inc	hl
+      00022D 4E               [ 7]  448 	ld	c, (hl)
+      00022E 06 00            [ 7]  449 	ld	b, #0x00
+      000230 DD 6E F8         [19]  450 	ld	l, -8 (ix)
+      000233 DD 66 F9         [19]  451 	ld	h, -7 (ix)
+      000236 29               [11]  452 	add	hl, hl
+      000237 29               [11]  453 	add	hl, hl
+      000238 29               [11]  454 	add	hl, hl
+      000239 29               [11]  455 	add	hl, hl
+      00023A 09               [11]  456 	add	hl, bc
+      00023B CDr00r00         [17]  457 	call	_SMS_addSprite_f
+                                    458 ;main.c:65: for(i=0;i<sprite->ancho;i++) {
+      00023E DD 34 FF         [23]  459 	inc	-1 (ix)
+      000241 18 9E            [12]  460 	jr	00104$
+      000243                        461 00108$:
+                                    462 ;main.c:64: for(j=0;j<sprite->alto;j++) {
+      000243 DD 34 FE         [23]  463 	inc	-2 (ix)
+      000246 18 89            [12]  464 	jr	00107$
+      000248                        465 00109$:
+                                    466 ;main.c:69: }
+      000248 DD F9            [10]  467 	ld	sp, ix
+      00024A DD E1            [14]  468 	pop	ix
+      00024C C9               [10]  469 	ret
+                                    470 ;main.c:71: draw_main_character(){
+                                    471 ;	---------------------------------
+                                    472 ; Function draw_main_character
+                                    473 ; ---------------------------------
+      00024D                        474 _draw_main_character::
+      00024D DD E5            [15]  475 	push	ix
+      00024F DD 21 00 00      [14]  476 	ld	ix,#0
+      000253 DD 39            [15]  477 	add	ix,sp
+      000255 21 F2 FF         [10]  478 	ld	hl, #-14
+      000258 39               [11]  479 	add	hl, sp
+      000259 F9               [ 6]  480 	ld	sp, hl
+                                    481 ;main.c:74: unsigned char sumy=0;
+      00025A DD 36 F2 00      [19]  482 	ld	-14 (ix), #0x00
+                                    483 ;main.c:75: for(numSprites=0;numSprites<4;numSprites++){
+      00025E DD 36 FF 00      [19]  484 	ld	-1 (ix), #0x00
+                                    485 ;main.c:76: for(j=0;j<2;j++) {
+      000262                        486 00114$:
+      000262 0E 00            [ 7]  487 	ld	c, #0x00
+                                    488 ;main.c:77: for(i=0;i<2;i++) {
+      000264                        489 00112$:
+      000264 06 00            [ 7]  490 	ld	b, #0x00
+      000266                        491 00104$:
+                                    492 ;main.c:78: SMS_addSprite(player_x+(i<<3),player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
+      000266 50               [ 4]  493 	ld	d, b
+      000267 1E 00            [ 7]  494 	ld	e, #0x00
+      000269 DD 72 F3         [19]  495 	ld	-13 (ix), d
+      00026C DD 73 F4         [19]  496 	ld	-12 (ix), e
+      00026F 3E 03            [ 7]  497 	ld	a, #0x03
+      000271                        498 00150$:
+      000271 DD CB F3 26      [23]  499 	sla	-13 (ix)
+      000275 DD CB F4 16      [23]  500 	rl	-12 (ix)
+      000279 3D               [ 4]  501 	dec	a
+      00027A 20 F5            [12]  502 	jr	NZ, 00150$
+      00027C 3Ar0Br00         [13]  503 	ld	a, (_player_x+0)
+      00027F DD 86 F3         [19]  504 	add	a, -13 (ix)
+      000282 DD 77 FD         [19]  505 	ld	-3 (ix), a
+      000285 3Ar0Cr00         [13]  506 	ld	a, (_player_x+1)
+      000288 DD 8E F4         [19]  507 	adc	a, -12 (ix)
+      00028B DD 77 FE         [19]  508 	ld	-2 (ix), a
+      00028E DD 6E FD         [19]  509 	ld	l, -3 (ix)
+                                    510 ;	spillPairReg hl
+                                    511 ;	spillPairReg hl
+      000291 DD 75 FE         [19]  512 	ld	-2 (ix), l
+      000294 DD 36 FD 00      [19]  513 	ld	-3 (ix), #0x00
+      000298 3Ar11r00         [13]  514 	ld	a, (_frame_player+0)
+      00029B 6F               [ 4]  515 	ld	l, a
+                                    516 ;	spillPairReg hl
+                                    517 ;	spillPairReg hl
+      00029C 26 00            [ 7]  518 	ld	h, #0x00
                                     519 ;	spillPairReg hl
-      0002A4 26 00            [ 7]  520 	ld	h, #0x00
-                                    521 ;	spillPairReg hl
-                                    522 ;	spillPairReg hl
-      0002A6 19               [11]  523 	add	hl, de
-      0002A7 C5               [11]  524 	push	bc
-      0002A8 DD 5E FD         [19]  525 	ld	e, -3 (ix)
-      0002AB DD 56 FE         [19]  526 	ld	d, -2 (ix)
-      0002AE CDr00r00         [17]  527 	call	_SMS_addSprite_f
-      0002B1 C1               [10]  528 	pop	bc
-                                    529 ;main.c:66: SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
-      0002B2 DD 7E F3         [19]  530 	ld	a, -13 (ix)
-      0002B5 21r06r00         [10]  531 	ld	hl, #_player_x
-      0002B8 86               [ 7]  532 	add	a, (hl)
-      0002B9 5F               [ 4]  533 	ld	e, a
-      0002BA DD 7E F4         [19]  534 	ld	a, -12 (ix)
-      0002BD 23               [ 6]  535 	inc	hl
-      0002BE 8E               [ 7]  536 	adc	a, (hl)
-      0002BF 57               [ 4]  537 	ld	d, a
-      0002C0 21 3C 00         [10]  538 	ld	hl, #0x003c
-      0002C3 19               [11]  539 	add	hl, de
-                                    540 ;	spillPairReg hl
-                                    541 ;	spillPairReg hl
-      0002C4 65               [ 4]  542 	ld	h, l
-                                    543 ;	spillPairReg hl
-                                    544 ;	spillPairReg hl
-                                    545 ;	spillPairReg hl
-                                    546 ;	spillPairReg hl
-      0002C5 3Ar0Cr00         [13]  547 	ld	a, (_frame_player+0)
-      0002C8 16 00            [ 7]  548 	ld	d, #0x00
-      0002CA 87               [ 4]  549 	add	a, a
-      0002CB CB 12            [ 8]  550 	rl	d
-      0002CD 87               [ 4]  551 	add	a, a
-      0002CE CB 12            [ 8]  552 	rl	d
-      0002D0 87               [ 4]  553 	add	a, a
-      0002D1 CB 12            [ 8]  554 	rl	d
-      0002D3 DD 86 F5         [19]  555 	add	a, -11 (ix)
-      0002D6 5F               [ 4]  556 	ld	e, a
-      0002D7 7A               [ 4]  557 	ld	a, d
-      0002D8 DD 8E F6         [19]  558 	adc	a, -10 (ix)
-      0002DB DD 7E F7         [19]  559 	ld	a, -9 (ix)
-      0002DE 83               [ 4]  560 	add	a, e
-      0002DF 5F               [ 4]  561 	ld	e, a
-      0002E0 AF               [ 4]  562 	xor	a, a
-      0002E1 B4               [ 4]  563 	or	a, h
-      0002E2 57               [ 4]  564 	ld	d, a
-      0002E3 DD 7E F9         [19]  565 	ld	a, -7 (ix)
-      0002E6 21r0Ar00         [10]  566 	ld	hl, #_player_y
-      0002E9 86               [ 7]  567 	add	a, (hl)
-      0002EA DD 77 FD         [19]  568 	ld	-3 (ix), a
-      0002ED DD 7E FA         [19]  569 	ld	a, -6 (ix)
-      0002F0 23               [ 6]  570 	inc	hl
-      0002F1 8E               [ 7]  571 	adc	a, (hl)
-      0002F2 DD 77 FE         [19]  572 	ld	-2 (ix), a
-      0002F5 DD 7E FB         [19]  573 	ld	a, -5 (ix)
-      0002F8 DD 86 FD         [19]  574 	add	a, -3 (ix)
-      0002FB 6F               [ 4]  575 	ld	l, a
-                                    576 ;	spillPairReg hl
+                                    520 ;	spillPairReg hl
+      00029E 29               [11]  521 	add	hl, hl
+      00029F 29               [11]  522 	add	hl, hl
+      0002A0 29               [11]  523 	add	hl, hl
+      0002A1 E5               [11]  524 	push	hl
+      0002A2 FD E1            [14]  525 	pop	iy
+      0002A4 69               [ 4]  526 	ld	l, c
+                                    527 ;	spillPairReg hl
+                                    528 ;	spillPairReg hl
+      0002A5 26 00            [ 7]  529 	ld	h, #0x00
+                                    530 ;	spillPairReg hl
+                                    531 ;	spillPairReg hl
+      0002A7 DD 75 F5         [19]  532 	ld	-11 (ix), l
+      0002AA DD 74 F6         [19]  533 	ld	-10 (ix), h
+      0002AD 3E 02            [ 7]  534 	ld	a, #0x02
+      0002AF                        535 00151$:
+      0002AF DD CB F5 26      [23]  536 	sla	-11 (ix)
+      0002B3 DD CB F6 16      [23]  537 	rl	-10 (ix)
+      0002B7 3D               [ 4]  538 	dec	a
+      0002B8 20 F5            [12]  539 	jr	NZ, 00151$
+      0002BA C5               [11]  540 	push	bc
+      0002BB DD 4E F5         [19]  541 	ld	c, -11 (ix)
+      0002BE DD 46 F6         [19]  542 	ld	b, -10 (ix)
+      0002C1 FD 09            [15]  543 	add	iy, bc
+      0002C3 C1               [10]  544 	pop	bc
+      0002C4 CB 22            [ 8]  545 	sla	d
+      0002C6 CB 13            [ 8]  546 	rl	e
+      0002C8 DD 72 F7         [19]  547 	ld	-9 (ix), d
+      0002CB DD 73 F8         [19]  548 	ld	-8 (ix), e
+      0002CE DD 5E F7         [19]  549 	ld	e, -9 (ix)
+      0002D1 DD 56 F8         [19]  550 	ld	d, -8 (ix)
+      0002D4 FD 19            [15]  551 	add	iy, de
+      0002D6 1E 00            [ 7]  552 	ld	e, #0x00
+      0002D8 DD 7E FE         [19]  553 	ld	a, -2 (ix)
+      0002DB B3               [ 4]  554 	or	a, e
+      0002DC FD E5            [15]  555 	push	iy
+      0002DE DD 77 F1         [19]  556 	ld	-15 (ix), a
+      0002E1 FD E1            [14]  557 	pop	iy
+      0002E3 29               [11]  558 	add	hl, hl
+      0002E4 29               [11]  559 	add	hl, hl
+      0002E5 29               [11]  560 	add	hl, hl
+      0002E6 29               [11]  561 	add	hl, hl
+      0002E7 DD 75 F9         [19]  562 	ld	-7 (ix), l
+      0002EA DD 74 FA         [19]  563 	ld	-6 (ix), h
+      0002ED 3Ar0Fr00         [13]  564 	ld	a, (_player_y+0)
+      0002F0 DD 86 F9         [19]  565 	add	a, -7 (ix)
+      0002F3 5F               [ 4]  566 	ld	e, a
+      0002F4 3Ar10r00         [13]  567 	ld	a, (_player_y+1)
+      0002F7 DD 8E FA         [19]  568 	adc	a, -6 (ix)
+      0002FA 57               [ 4]  569 	ld	d, a
+      0002FB DD 7E F2         [19]  570 	ld	a, -14 (ix)
+      0002FE DD 77 FB         [19]  571 	ld	-5 (ix), a
+      000301 DD 36 FC 00      [19]  572 	ld	-4 (ix), #0x00
+      000305 DD 6E FB         [19]  573 	ld	l, -5 (ix)
+                                    574 ;	spillPairReg hl
+                                    575 ;	spillPairReg hl
+      000308 26 00            [ 7]  576 	ld	h, #0x00
                                     577 ;	spillPairReg hl
-      0002FC 3E 00            [ 7]  578 	ld	a, #0x00
-      0002FE DD 8E FE         [19]  579 	adc	a, -2 (ix)
-      000301 67               [ 4]  580 	ld	h, a
-                                    581 ;	spillPairReg hl
-                                    582 ;	spillPairReg hl
-      000302 C5               [11]  583 	push	bc
-      000303 CDr00r00         [17]  584 	call	_SMS_addSprite_f
-      000306 C1               [10]  585 	pop	bc
-                                    586 ;main.c:62: for(i=0;i<2;i++) {
-      000307 04               [ 4]  587 	inc	b
-      000308 78               [ 4]  588 	ld	a, b
-      000309 D6 02            [ 7]  589 	sub	a, #0x02
-      00030B DAr55r01         [10]  590 	jp	C, 00104$
-                                    591 ;main.c:61: for(j=0;j<2;j++) {
-      00030E 0C               [ 4]  592 	inc	c
-      00030F 79               [ 4]  593 	ld	a, c
-      000310 D6 02            [ 7]  594 	sub	a, #0x02
-      000312 DAr53r01         [10]  595 	jp	C, 00112$
-                                    596 ;main.c:69: sumy = numSprites*30;
-      000315 DD 7E FF         [19]  597 	ld	a, -1 (ix)
-      000318 4F               [ 4]  598 	ld	c, a
-      000319 87               [ 4]  599 	add	a, a
-      00031A 87               [ 4]  600 	add	a, a
-      00031B 87               [ 4]  601 	add	a, a
-      00031C 87               [ 4]  602 	add	a, a
-      00031D 91               [ 4]  603 	sub	a, c
-      00031E 87               [ 4]  604 	add	a, a
-      00031F DD 77 F2         [19]  605 	ld	-14 (ix), a
-                                    606 ;main.c:60: for(numSprites=0;numSprites<4;numSprites++){
-      000322 DD 34 FF         [23]  607 	inc	-1 (ix)
-      000325 DD 7E FF         [19]  608 	ld	a, -1 (ix)
-      000328 D6 04            [ 7]  609 	sub	a, #0x04
-      00032A DAr51r01         [10]  610 	jp	C, 00114$
-                                    611 ;main.c:71: }
-      00032D DD F9            [10]  612 	ld	sp, ix
-      00032F DD E1            [14]  613 	pop	ix
-      000331 C9               [10]  614 	ret
-                                    615 ;main.c:73: void main(void)
-                                    616 ;	---------------------------------
-                                    617 ; Function main
-                                    618 ; ---------------------------------
-      000332                        619 _main::
-      000332 DD E5            [15]  620 	push	ix
-      000334 DD 21 00 00      [14]  621 	ld	ix,#0
-      000338 DD 39            [15]  622 	add	ix,sp
-      00033A F5               [11]  623 	push	af
-                                    624 ;main.c:78: SMS_VRAMmemsetW(0, 0x0000, 16384);
-      00033B DD 36 FF 00      [19]  625 	ld	-1 (ix), #0x00
-      00033F DD 36 FE 00      [19]  626 	ld	-2 (ix), #0x00
-      000343 21 00 40         [10]  627 	ld	hl, #0x4000
-      000346 E5               [11]  628 	push	hl
-      000347 11 00 00         [10]  629 	ld	de, #0x0000
-      00034A 65               [ 4]  630 	ld	h, l
-      00034B CDr00r00         [17]  631 	call	_SMS_VRAMmemsetW
-                                    632 ;main.c:88: printf("Hello, World! [1/3]");
-      00034E 21r58r04         [10]  633 	ld	hl, #___str_0
-      000351 E5               [11]  634 	push	hl
-      000352 CDr00r00         [17]  635 	call	_printf
-      000355 F1               [10]  636 	pop	af
-                                    637 ;main.c:99: loadGrapVRAM();
-      000356 CDr03r00         [17]  638 	call	_loadGrapVRAM
-                                    639 ;main.c:101: SMS_displayOn();
-      000359 21 40 01         [10]  640 	ld	hl, #0x0140
-      00035C CDr00r00         [17]  641 	call	_SMS_VDPturnOnFeature
-                                    642 ;main.c:102: SMS_setBGScrollX(scroll_x);
-      00035F 2E 00            [ 7]  643 	ld	l, #0x00
-                                    644 ;	spillPairReg hl
-                                    645 ;	spillPairReg hl
-      000361 CDr00r00         [17]  646 	call	_SMS_setBGScrollX
-                                    647 ;main.c:103: SMS_setBGScrollY(scroll_y);
-      000364 2E 00            [ 7]  648 	ld	l, #0x00
-                                    649 ;	spillPairReg hl
-                                    650 ;	spillPairReg hl
-      000366 CDr00r00         [17]  651 	call	_SMS_setBGScrollY
-                                    652 ;main.c:104: SMS_init();
-      000369 CDr00r00         [17]  653 	call	_SMS_init
-                                    654 ;main.c:110: PSGPlay(titulo_psg);
-      00036C 21r00r00         [10]  655 	ld	hl, #_titulo_psg
-      00036F CDr00r00         [17]  656 	call	_PSGPlay
-                                    657 ;main.c:111: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-      000372 21 20 00         [10]  658 	ld	hl, #0x0020
-      000375 CDr00r00         [17]  659 	call	_SMS_VDPturnOnFeature
-      000378                        660 00124$:
-                                    661 ;main.c:113: if(SMS_queryPauseRequested ()){
-      000378 CDr00r00         [17]  662 	call	_SMS_queryPauseRequested
-      00037B CB 47            [ 8]  663 	bit	0,a
-      00037D 28 15            [12]  664 	jr	Z, 00105$
-                                    665 ;main.c:114: SMS_resetPauseRequest ();
-      00037F CDr00r00         [17]  666 	call	_SMS_resetPauseRequest
-                                    667 ;main.c:115: while(!SMS_queryPauseRequested ()){
-      000382                        668 00101$:
-      000382 CDr00r00         [17]  669 	call	_SMS_queryPauseRequested
-      000385 CB 47            [ 8]  670 	bit	0,a
-      000387 20 08            [12]  671 	jr	NZ, 00103$
-                                    672 ;main.c:116: SMS_waitForVBlank();
-      000389 CDr00r00         [17]  673 	call	_SMS_waitForVBlank
-                                    674 ;main.c:117: PSGFrame();
-      00038C CDr00r00         [17]  675 	call	_PSGFrame
-      00038F 18 F1            [12]  676 	jr	00101$
-      000391                        677 00103$:
-                                    678 ;main.c:119: SMS_resetPauseRequest();
-      000391 CDr00r00         [17]  679 	call	_SMS_resetPauseRequest
-      000394                        680 00105$:
-                                    681 ;main.c:123: int keys = SMS_getKeysHeld();
-      000394 CDr00r00         [17]  682 	call	_SMS_getKeysHeld
-                                    683 ;main.c:124: if(keys & PORT_A_KEY_LEFT){
-      000397 CB 53            [ 8]  684 	bit	2, e
-      000399 28 08            [12]  685 	jr	Z, 00110$
-                                    686 ;main.c:125: player_v_x=-1; 
-      00039B 21 FF FF         [10]  687 	ld	hl, #0xffff
-      00039E 22r08r00         [16]  688 	ld	(_player_v_x), hl
-      0003A1 18 12            [12]  689 	jr	00111$
-      0003A3                        690 00110$:
-                                    691 ;main.c:127: else if(keys & PORT_A_KEY_RIGHT){
-      0003A3 CB 5B            [ 8]  692 	bit	3, e
-      0003A5 28 08            [12]  693 	jr	Z, 00107$
-                                    694 ;main.c:128: player_v_x=1; 
-      0003A7 21 01 00         [10]  695 	ld	hl, #0x0001
-      0003AA 22r08r00         [16]  696 	ld	(_player_v_x), hl
-      0003AD 18 06            [12]  697 	jr	00111$
-      0003AF                        698 00107$:
-                                    699 ;main.c:131: player_v_x=0; 
-      0003AF 21 00 00         [10]  700 	ld	hl, #0x0000
-      0003B2 22r08r00         [16]  701 	ld	(_player_v_x), hl
-      0003B5                        702 00111$:
-                                    703 ;main.c:133: player_x = player_x + player_v_x;
-      0003B5 21r08r00         [10]  704 	ld	hl, #_player_v_x
-      0003B8 D5               [11]  705 	push	de
-      0003B9 11r06r00         [10]  706 	ld	de, #_player_x
-      0003BC 1A               [ 7]  707 	ld	a, (de)
-      0003BD 86               [ 7]  708 	add	a, (hl)
-      0003BE 23               [ 6]  709 	inc	hl
-      0003BF 12               [ 7]  710 	ld	(de), a
-      0003C0 13               [ 6]  711 	inc	de
-      0003C1 1A               [ 7]  712 	ld	a, (de)
-      0003C2 8E               [ 7]  713 	adc	a, (hl)
-      0003C3 12               [ 7]  714 	ld	(de), a
-      0003C4 D1               [10]  715 	pop	de
-                                    716 ;main.c:134: if(player_v_x != 0)
-      0003C5 3Ar09r00         [13]  717 	ld	a, (_player_v_x+1)
-      0003C8 21r08r00         [10]  718 	ld	hl, #_player_v_x
-      0003CB B6               [ 7]  719 	or	a, (hl)
-      0003CC 28 09            [12]  720 	jr	Z, 00113$
-                                    721 ;main.c:135: delay_frame_player++;
-      0003CE 2Ar0Dr00         [16]  722 	ld	hl, (_delay_frame_player)
-      0003D1 23               [ 6]  723 	inc	hl
-      0003D2 22r0Dr00         [16]  724 	ld	(_delay_frame_player), hl
-      0003D5 18 0B            [12]  725 	jr	00114$
-      0003D7                        726 00113$:
-                                    727 ;main.c:137: delay_frame_player=15;
-      0003D7 21 0F 00         [10]  728 	ld	hl, #0x000f
-      0003DA 22r0Dr00         [16]  729 	ld	(_delay_frame_player), hl
-                                    730 ;main.c:138: frame_player=1;
-      0003DD 21r0Cr00         [10]  731 	ld	hl, #_frame_player
-      0003E0 36 01            [10]  732 	ld	(hl), #0x01
-      0003E2                        733 00114$:
-                                    734 ;main.c:140: if(delay_frame_player%16==0){
-      0003E2 11 10 00         [10]  735 	ld	de, #0x0010
-      0003E5 2Ar0Dr00         [16]  736 	ld	hl, (_delay_frame_player)
-      0003E8 CDr00r00         [17]  737 	call	__modsint
-      0003EB 7A               [ 4]  738 	ld	a, d
-      0003EC B3               [ 4]  739 	or	a, e
-      0003ED 20 12            [12]  740 	jr	NZ, 00118$
-                                    741 ;main.c:141: frame_player++;
-      0003EF FD 21r0Cr00      [14]  742 	ld	iy, #_frame_player
-      0003F3 FD 34 00         [23]  743 	inc	0 (iy)
-                                    744 ;main.c:142: if(frame_player>3){
-      0003F6 3E 03            [ 7]  745 	ld	a, #0x03
-      0003F8 FD 96 00         [19]  746 	sub	a, 0 (iy)
-      0003FB 30 04            [12]  747 	jr	NC, 00118$
-                                    748 ;main.c:143: frame_player=0;
-      0003FD FD 36 00 00      [19]  749 	ld	0 (iy), #0x00
-      000401                        750 00118$:
-                                    751 ;main.c:147: SMS_initSprites();
-      000401 CDr00r00         [17]  752 	call	_SMS_initSprites
-                                    753 ;main.c:149: alex.x = player_x;
-      000404 3Ar06r00         [13]  754 	ld	a, (_player_x+0)
-      000407 32r00r00         [13]  755 	ld	(#_alex),a
-                                    756 ;main.c:150: alex.y = player_y;
-      00040A 3Ar0Ar00         [13]  757 	ld	a, (_player_y+0)
-      00040D 32r01r00         [13]  758 	ld	(#(_alex + 1)),a
-                                    759 ;main.c:151: alex.frame = frame_player;
-      000410 21r02r00         [10]  760 	ld	hl, #(_alex + 2)
-      000413 3Ar0Cr00         [13]  761 	ld	a, (_frame_player+0)
-      000416 77               [ 7]  762 	ld	(hl), a
-                                    763 ;main.c:152: draw_entidad(&alex, &spriteAlex);
-      000417 11r03r00         [10]  764 	ld	de, #_spriteAlex
-      00041A 21r00r00         [10]  765 	ld	hl, #_alex
-      00041D CDr4Fr00         [17]  766 	call	_draw_entidad
-                                    767 ;main.c:153: SMS_finalizeSprites();
-      000420 CDr00r00         [17]  768 	call	_SMS_finalizeSprites
-                                    769 ;main.c:154: SMS_waitForVBlank();
-      000423 CDr00r00         [17]  770 	call	_SMS_waitForVBlank
-                                    771 ;main.c:155: SMS_copySpritestoSAT();
-      000426 CDr00r00         [17]  772 	call	_SMS_copySpritestoSAT
-                                    773 ;main.c:156: PSGFrame();
-      000429 CDr00r00         [17]  774 	call	_PSGFrame
-                                    775 ;main.c:157: SMS_displayOff();
-      00042C 21 40 01         [10]  776 	ld	hl, #0x0140
-      00042F CDr00r00         [17]  777 	call	_SMS_VDPturnOffFeature
-                                    778 ;main.c:158: if(scroll_y%2==0)
-      000432 DD CB FF 46      [20]  779 	bit	0, -1 (ix)
-      000436 20 03            [12]  780 	jr	NZ, 00120$
-                                    781 ;main.c:159: scroll_x += 1;
-      000438 DD 34 FE         [23]  782 	inc	-2 (ix)
-      00043B                        783 00120$:
-                                    784 ;main.c:160: scroll_y++;
-      00043B DD 34 FF         [23]  785 	inc	-1 (ix)
-                                    786 ;main.c:161: if(scroll_y==224)
-      00043E DD 7E FF         [19]  787 	ld	a, -1 (ix)
-      000441 D6 E0            [ 7]  788 	sub	a, #0xe0
-      000443 20 04            [12]  789 	jr	NZ, 00122$
-                                    790 ;main.c:162: scroll_y=0;
-      000445 DD 36 FF 00      [19]  791 	ld	-1 (ix), #0x00
-      000449                        792 00122$:
-                                    793 ;main.c:164: SMS_setBGScrollX(scroll_x);
-      000449 DD 6E FE         [19]  794 	ld	l, -2 (ix)
-                                    795 ;	spillPairReg hl
-                                    796 ;	spillPairReg hl
-      00044C CDr00r00         [17]  797 	call	_SMS_setBGScrollX
-                                    798 ;main.c:166: SMS_displayOn();
-      00044F 21 40 01         [10]  799 	ld	hl, #0x0140
-      000452 CDr00r00         [17]  800 	call	_SMS_VDPturnOnFeature
-                                    801 ;main.c:168: }
-      000455 C3r78r03         [10]  802 	jp	00124$
-      000458                        803 ___str_0:
-      000458 48 65 6C 6C 6F 2C 20   804 	.ascii "Hello, World! [1/3]"
+                                    578 ;	spillPairReg hl
+      00030A 19               [11]  579 	add	hl, de
+      00030B C5               [11]  580 	push	bc
+      00030C FD E5            [15]  581 	push	iy
+      00030E D1               [10]  582 	pop	de
+      00030F CDr00r00         [17]  583 	call	_SMS_addSprite_f
+      000312 C1               [10]  584 	pop	bc
+                                    585 ;main.c:79: SMS_addSprite(player_x+(i<<3)+20,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
+      000313 3Ar0Br00         [13]  586 	ld	a, (_player_x+0)
+      000316 DD 86 F3         [19]  587 	add	a, -13 (ix)
+      000319 5F               [ 4]  588 	ld	e, a
+      00031A 3Ar0Cr00         [13]  589 	ld	a, (_player_x+1)
+      00031D DD 8E F4         [19]  590 	adc	a, -12 (ix)
+      000320 57               [ 4]  591 	ld	d, a
+      000321 21 14 00         [10]  592 	ld	hl, #0x0014
+      000324 19               [11]  593 	add	hl, de
+      000325 55               [ 4]  594 	ld	d, l
+      000326 3Ar11r00         [13]  595 	ld	a, (_frame_player+0)
+      000329 26 00            [ 7]  596 	ld	h, #0x00
+                                    597 ;	spillPairReg hl
+                                    598 ;	spillPairReg hl
+      00032B 6F               [ 4]  599 	ld	l, a
+      00032C 29               [11]  600 	add	hl, hl
+      00032D 29               [11]  601 	add	hl, hl
+      00032E 29               [11]  602 	add	hl, hl
+      00032F 7D               [ 4]  603 	ld	a, l
+      000330 DD 86 F5         [19]  604 	add	a, -11 (ix)
+      000333 6F               [ 4]  605 	ld	l, a
+                                    606 ;	spillPairReg hl
+                                    607 ;	spillPairReg hl
+      000334 7C               [ 4]  608 	ld	a, h
+      000335 DD 8E F6         [19]  609 	adc	a, -10 (ix)
+      000338 67               [ 4]  610 	ld	h, a
+                                    611 ;	spillPairReg hl
+                                    612 ;	spillPairReg hl
+      000339 7D               [ 4]  613 	ld	a, l
+      00033A DD 86 F7         [19]  614 	add	a, -9 (ix)
+      00033D 6F               [ 4]  615 	ld	l, a
+                                    616 ;	spillPairReg hl
+                                    617 ;	spillPairReg hl
+      00033E 7C               [ 4]  618 	ld	a, h
+      00033F DD 8E F8         [19]  619 	adc	a, -8 (ix)
+      000342 26 00            [ 7]  620 	ld	h, #0x00
+                                    621 ;	spillPairReg hl
+                                    622 ;	spillPairReg hl
+      000344 DD 75 FD         [19]  623 	ld	-3 (ix), l
+      000347 7A               [ 4]  624 	ld	a, d
+      000348 B4               [ 4]  625 	or	a, h
+      000349 DD 77 FE         [19]  626 	ld	-2 (ix), a
+      00034C 3Ar0Fr00         [13]  627 	ld	a, (_player_y+0)
+      00034F DD 86 F9         [19]  628 	add	a, -7 (ix)
+      000352 5F               [ 4]  629 	ld	e, a
+      000353 3Ar10r00         [13]  630 	ld	a, (_player_y+1)
+      000356 DD 8E FA         [19]  631 	adc	a, -6 (ix)
+      000359 57               [ 4]  632 	ld	d, a
+      00035A DD 6E FB         [19]  633 	ld	l, -5 (ix)
+                                    634 ;	spillPairReg hl
+                                    635 ;	spillPairReg hl
+      00035D 26 00            [ 7]  636 	ld	h, #0x00
+                                    637 ;	spillPairReg hl
+                                    638 ;	spillPairReg hl
+      00035F 19               [11]  639 	add	hl, de
+      000360 C5               [11]  640 	push	bc
+      000361 DD 5E FD         [19]  641 	ld	e, -3 (ix)
+      000364 DD 56 FE         [19]  642 	ld	d, -2 (ix)
+      000367 CDr00r00         [17]  643 	call	_SMS_addSprite_f
+      00036A C1               [10]  644 	pop	bc
+                                    645 ;main.c:80: SMS_addSprite(player_x+(i<<3)+40,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
+      00036B 3Ar0Br00         [13]  646 	ld	a, (_player_x+0)
+      00036E DD 86 F3         [19]  647 	add	a, -13 (ix)
+      000371 5F               [ 4]  648 	ld	e, a
+      000372 3Ar0Cr00         [13]  649 	ld	a, (_player_x+1)
+      000375 DD 8E F4         [19]  650 	adc	a, -12 (ix)
+      000378 57               [ 4]  651 	ld	d, a
+      000379 21 28 00         [10]  652 	ld	hl, #0x0028
+      00037C 19               [11]  653 	add	hl, de
+      00037D 55               [ 4]  654 	ld	d, l
+      00037E 3Ar11r00         [13]  655 	ld	a, (_frame_player+0)
+      000381 6F               [ 4]  656 	ld	l, a
+                                    657 ;	spillPairReg hl
+                                    658 ;	spillPairReg hl
+      000382 26 00            [ 7]  659 	ld	h, #0x00
+                                    660 ;	spillPairReg hl
+                                    661 ;	spillPairReg hl
+      000384 29               [11]  662 	add	hl, hl
+      000385 29               [11]  663 	add	hl, hl
+      000386 29               [11]  664 	add	hl, hl
+      000387 7D               [ 4]  665 	ld	a, l
+      000388 DD 86 F5         [19]  666 	add	a, -11 (ix)
+      00038B 6F               [ 4]  667 	ld	l, a
+                                    668 ;	spillPairReg hl
+                                    669 ;	spillPairReg hl
+      00038C 7C               [ 4]  670 	ld	a, h
+      00038D DD 8E F6         [19]  671 	adc	a, -10 (ix)
+      000390 67               [ 4]  672 	ld	h, a
+                                    673 ;	spillPairReg hl
+                                    674 ;	spillPairReg hl
+      000391 7D               [ 4]  675 	ld	a, l
+      000392 DD 86 F7         [19]  676 	add	a, -9 (ix)
+      000395 6F               [ 4]  677 	ld	l, a
+                                    678 ;	spillPairReg hl
+                                    679 ;	spillPairReg hl
+      000396 7C               [ 4]  680 	ld	a, h
+      000397 DD 8E F8         [19]  681 	adc	a, -8 (ix)
+      00039A 26 00            [ 7]  682 	ld	h, #0x00
+                                    683 ;	spillPairReg hl
+                                    684 ;	spillPairReg hl
+      00039C DD 75 FD         [19]  685 	ld	-3 (ix), l
+      00039F 7A               [ 4]  686 	ld	a, d
+      0003A0 B4               [ 4]  687 	or	a, h
+      0003A1 DD 77 FE         [19]  688 	ld	-2 (ix), a
+      0003A4 3Ar0Fr00         [13]  689 	ld	a, (_player_y+0)
+      0003A7 DD 86 F9         [19]  690 	add	a, -7 (ix)
+      0003AA 5F               [ 4]  691 	ld	e, a
+      0003AB 3Ar10r00         [13]  692 	ld	a, (_player_y+1)
+      0003AE DD 8E FA         [19]  693 	adc	a, -6 (ix)
+      0003B1 57               [ 4]  694 	ld	d, a
+      0003B2 DD 6E FB         [19]  695 	ld	l, -5 (ix)
+                                    696 ;	spillPairReg hl
+                                    697 ;	spillPairReg hl
+      0003B5 26 00            [ 7]  698 	ld	h, #0x00
+                                    699 ;	spillPairReg hl
+                                    700 ;	spillPairReg hl
+      0003B7 19               [11]  701 	add	hl, de
+      0003B8 C5               [11]  702 	push	bc
+      0003B9 DD 5E FD         [19]  703 	ld	e, -3 (ix)
+      0003BC DD 56 FE         [19]  704 	ld	d, -2 (ix)
+      0003BF CDr00r00         [17]  705 	call	_SMS_addSprite_f
+      0003C2 C1               [10]  706 	pop	bc
+                                    707 ;main.c:81: SMS_addSprite(player_x+(i<<3)+60,player_y+(j<<4)+sumy, (frame_player<<3) + (j<<2) + (i<<1) );  
+      0003C3 DD 7E F3         [19]  708 	ld	a, -13 (ix)
+      0003C6 21r0Br00         [10]  709 	ld	hl, #_player_x
+      0003C9 86               [ 7]  710 	add	a, (hl)
+      0003CA 5F               [ 4]  711 	ld	e, a
+      0003CB DD 7E F4         [19]  712 	ld	a, -12 (ix)
+      0003CE 23               [ 6]  713 	inc	hl
+      0003CF 8E               [ 7]  714 	adc	a, (hl)
+      0003D0 57               [ 4]  715 	ld	d, a
+      0003D1 21 3C 00         [10]  716 	ld	hl, #0x003c
+      0003D4 19               [11]  717 	add	hl, de
+                                    718 ;	spillPairReg hl
+                                    719 ;	spillPairReg hl
+      0003D5 65               [ 4]  720 	ld	h, l
+                                    721 ;	spillPairReg hl
+                                    722 ;	spillPairReg hl
+                                    723 ;	spillPairReg hl
+                                    724 ;	spillPairReg hl
+      0003D6 3Ar11r00         [13]  725 	ld	a, (_frame_player+0)
+      0003D9 16 00            [ 7]  726 	ld	d, #0x00
+      0003DB 87               [ 4]  727 	add	a, a
+      0003DC CB 12            [ 8]  728 	rl	d
+      0003DE 87               [ 4]  729 	add	a, a
+      0003DF CB 12            [ 8]  730 	rl	d
+      0003E1 87               [ 4]  731 	add	a, a
+      0003E2 CB 12            [ 8]  732 	rl	d
+      0003E4 DD 86 F5         [19]  733 	add	a, -11 (ix)
+      0003E7 5F               [ 4]  734 	ld	e, a
+      0003E8 7A               [ 4]  735 	ld	a, d
+      0003E9 DD 8E F6         [19]  736 	adc	a, -10 (ix)
+      0003EC DD 7E F7         [19]  737 	ld	a, -9 (ix)
+      0003EF 83               [ 4]  738 	add	a, e
+      0003F0 5F               [ 4]  739 	ld	e, a
+      0003F1 AF               [ 4]  740 	xor	a, a
+      0003F2 B4               [ 4]  741 	or	a, h
+      0003F3 57               [ 4]  742 	ld	d, a
+      0003F4 DD 7E F9         [19]  743 	ld	a, -7 (ix)
+      0003F7 21r0Fr00         [10]  744 	ld	hl, #_player_y
+      0003FA 86               [ 7]  745 	add	a, (hl)
+      0003FB DD 77 FD         [19]  746 	ld	-3 (ix), a
+      0003FE DD 7E FA         [19]  747 	ld	a, -6 (ix)
+      000401 23               [ 6]  748 	inc	hl
+      000402 8E               [ 7]  749 	adc	a, (hl)
+      000403 DD 77 FE         [19]  750 	ld	-2 (ix), a
+      000406 DD 7E FB         [19]  751 	ld	a, -5 (ix)
+      000409 DD 86 FD         [19]  752 	add	a, -3 (ix)
+      00040C 6F               [ 4]  753 	ld	l, a
+                                    754 ;	spillPairReg hl
+                                    755 ;	spillPairReg hl
+      00040D 3E 00            [ 7]  756 	ld	a, #0x00
+      00040F DD 8E FE         [19]  757 	adc	a, -2 (ix)
+      000412 67               [ 4]  758 	ld	h, a
+                                    759 ;	spillPairReg hl
+                                    760 ;	spillPairReg hl
+      000413 C5               [11]  761 	push	bc
+      000414 CDr00r00         [17]  762 	call	_SMS_addSprite_f
+      000417 C1               [10]  763 	pop	bc
+                                    764 ;main.c:77: for(i=0;i<2;i++) {
+      000418 04               [ 4]  765 	inc	b
+      000419 78               [ 4]  766 	ld	a, b
+      00041A D6 02            [ 7]  767 	sub	a, #0x02
+      00041C DAr66r02         [10]  768 	jp	C, 00104$
+                                    769 ;main.c:76: for(j=0;j<2;j++) {
+      00041F 0C               [ 4]  770 	inc	c
+      000420 79               [ 4]  771 	ld	a, c
+      000421 D6 02            [ 7]  772 	sub	a, #0x02
+      000423 DAr64r02         [10]  773 	jp	C, 00112$
+                                    774 ;main.c:84: sumy = numSprites*30;
+      000426 DD 7E FF         [19]  775 	ld	a, -1 (ix)
+      000429 4F               [ 4]  776 	ld	c, a
+      00042A 87               [ 4]  777 	add	a, a
+      00042B 87               [ 4]  778 	add	a, a
+      00042C 87               [ 4]  779 	add	a, a
+      00042D 87               [ 4]  780 	add	a, a
+      00042E 91               [ 4]  781 	sub	a, c
+      00042F 87               [ 4]  782 	add	a, a
+      000430 DD 77 F2         [19]  783 	ld	-14 (ix), a
+                                    784 ;main.c:75: for(numSprites=0;numSprites<4;numSprites++){
+      000433 DD 34 FF         [23]  785 	inc	-1 (ix)
+      000436 DD 7E FF         [19]  786 	ld	a, -1 (ix)
+      000439 D6 04            [ 7]  787 	sub	a, #0x04
+      00043B DAr62r02         [10]  788 	jp	C, 00114$
+                                    789 ;main.c:86: }
+      00043E DD F9            [10]  790 	ld	sp, ix
+      000440 DD E1            [14]  791 	pop	ix
+      000442 C9               [10]  792 	ret
+                                    793 ;main.c:88: void main(void)
+                                    794 ;	---------------------------------
+                                    795 ; Function main
+                                    796 ; ---------------------------------
+      000443                        797 _main::
+      000443 DD E5            [15]  798 	push	ix
+      000445 DD 21 00 00      [14]  799 	ld	ix,#0
+      000449 DD 39            [15]  800 	add	ix,sp
+      00044B F5               [11]  801 	push	af
+                                    802 ;main.c:93: SMS_VRAMmemsetW(0, 0x0000, 16384);
+      00044C DD 36 FF 00      [19]  803 	ld	-1 (ix), #0x00
+      000450 DD 36 FE 00      [19]  804 	ld	-2 (ix), #0x00
+      000454 21 00 40         [10]  805 	ld	hl, #0x4000
+      000457 E5               [11]  806 	push	hl
+      000458 11 00 00         [10]  807 	ld	de, #0x0000
+      00045B 65               [ 4]  808 	ld	h, l
+      00045C CDr00r00         [17]  809 	call	_SMS_VRAMmemsetW
+                                    810 ;main.c:103: printf("Hello, World! [1/3]");
+      00045F 21r69r05         [10]  811 	ld	hl, #___str_0
+      000462 E5               [11]  812 	push	hl
+      000463 CDr00r00         [17]  813 	call	_printf
+      000466 F1               [10]  814 	pop	af
+                                    815 ;main.c:114: loadGrapVRAM();
+      000467 CDr88r00         [17]  816 	call	_loadGrapVRAM
+                                    817 ;main.c:116: SMS_displayOn();
+      00046A 21 40 01         [10]  818 	ld	hl, #0x0140
+      00046D CDr00r00         [17]  819 	call	_SMS_VDPturnOnFeature
+                                    820 ;main.c:117: SMS_setBGScrollX(scroll_x);
+      000470 2E 00            [ 7]  821 	ld	l, #0x00
+                                    822 ;	spillPairReg hl
+                                    823 ;	spillPairReg hl
+      000472 CDr00r00         [17]  824 	call	_SMS_setBGScrollX
+                                    825 ;main.c:118: SMS_setBGScrollY(scroll_y);
+      000475 2E 00            [ 7]  826 	ld	l, #0x00
+                                    827 ;	spillPairReg hl
+                                    828 ;	spillPairReg hl
+      000477 CDr00r00         [17]  829 	call	_SMS_setBGScrollY
+                                    830 ;main.c:119: SMS_init();
+      00047A CDr00r00         [17]  831 	call	_SMS_init
+                                    832 ;main.c:125: PSGPlay(titulo_psg);
+      00047D 21r00r00         [10]  833 	ld	hl, #_titulo_psg
+      000480 CDr00r00         [17]  834 	call	_PSGPlay
+                                    835 ;main.c:126: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+      000483 21 20 00         [10]  836 	ld	hl, #0x0020
+      000486 CDr00r00         [17]  837 	call	_SMS_VDPturnOnFeature
+      000489                        838 00124$:
+                                    839 ;main.c:128: if(SMS_queryPauseRequested ()){
+      000489 CDr00r00         [17]  840 	call	_SMS_queryPauseRequested
+      00048C CB 47            [ 8]  841 	bit	0,a
+      00048E 28 15            [12]  842 	jr	Z, 00105$
+                                    843 ;main.c:129: SMS_resetPauseRequest ();
+      000490 CDr00r00         [17]  844 	call	_SMS_resetPauseRequest
+                                    845 ;main.c:130: while(!SMS_queryPauseRequested ()){
+      000493                        846 00101$:
+      000493 CDr00r00         [17]  847 	call	_SMS_queryPauseRequested
+      000496 CB 47            [ 8]  848 	bit	0,a
+      000498 20 08            [12]  849 	jr	NZ, 00103$
+                                    850 ;main.c:131: SMS_waitForVBlank();
+      00049A CDr00r00         [17]  851 	call	_SMS_waitForVBlank
+                                    852 ;main.c:132: PSGFrame();
+      00049D CDr00r00         [17]  853 	call	_PSGFrame
+      0004A0 18 F1            [12]  854 	jr	00101$
+      0004A2                        855 00103$:
+                                    856 ;main.c:134: SMS_resetPauseRequest();
+      0004A2 CDr00r00         [17]  857 	call	_SMS_resetPauseRequest
+      0004A5                        858 00105$:
+                                    859 ;main.c:138: int keys = SMS_getKeysHeld();
+      0004A5 CDr00r00         [17]  860 	call	_SMS_getKeysHeld
+                                    861 ;main.c:139: if(keys & PORT_A_KEY_LEFT){
+      0004A8 CB 53            [ 8]  862 	bit	2, e
+      0004AA 28 08            [12]  863 	jr	Z, 00110$
+                                    864 ;main.c:140: player_v_x=-1; 
+      0004AC 21 FF FF         [10]  865 	ld	hl, #0xffff
+      0004AF 22r0Dr00         [16]  866 	ld	(_player_v_x), hl
+      0004B2 18 12            [12]  867 	jr	00111$
+      0004B4                        868 00110$:
+                                    869 ;main.c:142: else if(keys & PORT_A_KEY_RIGHT){
+      0004B4 CB 5B            [ 8]  870 	bit	3, e
+      0004B6 28 08            [12]  871 	jr	Z, 00107$
+                                    872 ;main.c:143: player_v_x=1; 
+      0004B8 21 01 00         [10]  873 	ld	hl, #0x0001
+      0004BB 22r0Dr00         [16]  874 	ld	(_player_v_x), hl
+      0004BE 18 06            [12]  875 	jr	00111$
+      0004C0                        876 00107$:
+                                    877 ;main.c:146: player_v_x=0; 
+      0004C0 21 00 00         [10]  878 	ld	hl, #0x0000
+      0004C3 22r0Dr00         [16]  879 	ld	(_player_v_x), hl
+      0004C6                        880 00111$:
+                                    881 ;main.c:148: player_x = player_x + player_v_x;
+      0004C6 21r0Dr00         [10]  882 	ld	hl, #_player_v_x
+      0004C9 D5               [11]  883 	push	de
+      0004CA 11r0Br00         [10]  884 	ld	de, #_player_x
+      0004CD 1A               [ 7]  885 	ld	a, (de)
+      0004CE 86               [ 7]  886 	add	a, (hl)
+      0004CF 23               [ 6]  887 	inc	hl
+      0004D0 12               [ 7]  888 	ld	(de), a
+      0004D1 13               [ 6]  889 	inc	de
+      0004D2 1A               [ 7]  890 	ld	a, (de)
+      0004D3 8E               [ 7]  891 	adc	a, (hl)
+      0004D4 12               [ 7]  892 	ld	(de), a
+      0004D5 D1               [10]  893 	pop	de
+                                    894 ;main.c:149: if(player_v_x != 0)
+      0004D6 3Ar0Er00         [13]  895 	ld	a, (_player_v_x+1)
+      0004D9 21r0Dr00         [10]  896 	ld	hl, #_player_v_x
+      0004DC B6               [ 7]  897 	or	a, (hl)
+      0004DD 28 09            [12]  898 	jr	Z, 00113$
+                                    899 ;main.c:150: delay_frame_player++;
+      0004DF 2Ar12r00         [16]  900 	ld	hl, (_delay_frame_player)
+      0004E2 23               [ 6]  901 	inc	hl
+      0004E3 22r12r00         [16]  902 	ld	(_delay_frame_player), hl
+      0004E6 18 0B            [12]  903 	jr	00114$
+      0004E8                        904 00113$:
+                                    905 ;main.c:152: delay_frame_player=15;
+      0004E8 21 0F 00         [10]  906 	ld	hl, #0x000f
+      0004EB 22r12r00         [16]  907 	ld	(_delay_frame_player), hl
+                                    908 ;main.c:153: frame_player=1;
+      0004EE 21r11r00         [10]  909 	ld	hl, #_frame_player
+      0004F1 36 01            [10]  910 	ld	(hl), #0x01
+      0004F3                        911 00114$:
+                                    912 ;main.c:155: if(delay_frame_player%16==0){
+      0004F3 11 10 00         [10]  913 	ld	de, #0x0010
+      0004F6 2Ar12r00         [16]  914 	ld	hl, (_delay_frame_player)
+      0004F9 CDr00r00         [17]  915 	call	__modsint
+      0004FC 7A               [ 4]  916 	ld	a, d
+      0004FD B3               [ 4]  917 	or	a, e
+      0004FE 20 12            [12]  918 	jr	NZ, 00118$
+                                    919 ;main.c:156: frame_player++;
+      000500 FD 21r11r00      [14]  920 	ld	iy, #_frame_player
+      000504 FD 34 00         [23]  921 	inc	0 (iy)
+                                    922 ;main.c:157: if(frame_player>3){
+      000507 3E 03            [ 7]  923 	ld	a, #0x03
+      000509 FD 96 00         [19]  924 	sub	a, 0 (iy)
+      00050C 30 04            [12]  925 	jr	NC, 00118$
+                                    926 ;main.c:158: frame_player=0;
+      00050E FD 36 00 00      [19]  927 	ld	0 (iy), #0x00
+      000512                        928 00118$:
+                                    929 ;main.c:162: SMS_initSprites();
+      000512 CDr00r00         [17]  930 	call	_SMS_initSprites
+                                    931 ;main.c:164: alex.x = player_x;
+      000515 3Ar0Br00         [13]  932 	ld	a, (_player_x+0)
+      000518 32r02r00         [13]  933 	ld	(#_alex),a
+                                    934 ;main.c:165: alex.y = player_y;
+      00051B 3Ar0Fr00         [13]  935 	ld	a, (_player_y+0)
+      00051E 32r03r00         [13]  936 	ld	(#(_alex + 1)),a
+                                    937 ;main.c:166: alex.frame = frame_player;
+      000521 21r04r00         [10]  938 	ld	hl, #(_alex + 2)
+      000524 3Ar11r00         [13]  939 	ld	a, (_frame_player+0)
+      000527 77               [ 7]  940 	ld	(hl), a
+                                    941 ;main.c:167: draw_entidad(&alex, &spriteAlex);
+      000528 11r05r00         [10]  942 	ld	de, #_spriteAlex
+      00052B 21r02r00         [10]  943 	ld	hl, #_alex
+      00052E CDr23r01         [17]  944 	call	_draw_entidad
+                                    945 ;main.c:168: SMS_finalizeSprites();
+      000531 CDr00r00         [17]  946 	call	_SMS_finalizeSprites
+                                    947 ;main.c:169: SMS_waitForVBlank();
+      000534 CDr00r00         [17]  948 	call	_SMS_waitForVBlank
+                                    949 ;main.c:170: SMS_copySpritestoSAT();
+      000537 CDr00r00         [17]  950 	call	_SMS_copySpritestoSAT
+                                    951 ;main.c:171: PSGFrame();
+      00053A CDr00r00         [17]  952 	call	_PSGFrame
+                                    953 ;main.c:172: SMS_displayOff();
+      00053D 21 40 01         [10]  954 	ld	hl, #0x0140
+      000540 CDr00r00         [17]  955 	call	_SMS_VDPturnOffFeature
+                                    956 ;main.c:173: if(scroll_y%2==0)
+      000543 DD CB FF 46      [20]  957 	bit	0, -1 (ix)
+      000547 20 03            [12]  958 	jr	NZ, 00120$
+                                    959 ;main.c:174: scroll_x += 1;
+      000549 DD 34 FE         [23]  960 	inc	-2 (ix)
+      00054C                        961 00120$:
+                                    962 ;main.c:175: scroll_y++;
+      00054C DD 34 FF         [23]  963 	inc	-1 (ix)
+                                    964 ;main.c:176: if(scroll_y==224)
+      00054F DD 7E FF         [19]  965 	ld	a, -1 (ix)
+      000552 D6 E0            [ 7]  966 	sub	a, #0xe0
+      000554 20 04            [12]  967 	jr	NZ, 00122$
+                                    968 ;main.c:177: scroll_y=0;
+      000556 DD 36 FF 00      [19]  969 	ld	-1 (ix), #0x00
+      00055A                        970 00122$:
+                                    971 ;main.c:179: SMS_setBGScrollX(scroll_x);
+      00055A DD 6E FE         [19]  972 	ld	l, -2 (ix)
+                                    973 ;	spillPairReg hl
+                                    974 ;	spillPairReg hl
+      00055D CDr00r00         [17]  975 	call	_SMS_setBGScrollX
+                                    976 ;main.c:181: SMS_displayOn();
+      000560 21 40 01         [10]  977 	ld	hl, #0x0140
+      000563 CDr00r00         [17]  978 	call	_SMS_VDPturnOnFeature
+                                    979 ;main.c:183: }
+      000566 C3r89r04         [10]  980 	jp	00124$
+      000569                        981 ___str_0:
+      000569 48 65 6C 6C 6F 2C 20   982 	.ascii "Hello, World! [1/3]"
              57 6F 72 6C 64 21 20
              5B 31 2F 33 5D
-      00046B 00                     805 	.db 0x00
-                                    806 	.area _CODE
-      00046C                        807 __str_1:
-      00046C 72 61 70 68 6E 65 74   808 	.ascii "raphnet"
-      000473 00                     809 	.db 0x00
-      000474                        810 __str_2:
-      000474 62 61 73 69 63 20 65   811 	.ascii "basic example"
+      00057C 00                     983 	.db 0x00
+                                    984 	.area _CODE
+      00057D                        985 __str_1:
+      00057D 72 61 70 68 6E 65 74   986 	.ascii "raphnet"
+      000584 00                     987 	.db 0x00
+      000585                        988 __str_2:
+      000585 62 61 73 69 63 20 65   989 	.ascii "basic example"
              78 61 6D 70 6C 65
-      000481 00                     812 	.db 0x00
-      000482                        813 __str_3:
-      000482 41 20 73 69 6D 70 6C   814 	.ascii "A simple example"
+      000592 00                     990 	.db 0x00
+      000593                        991 __str_3:
+      000593 41 20 73 69 6D 70 6C   992 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      000492 00                     815 	.db 0x00
-                                    816 	.area _INITIALIZER
-      000000                        817 __xinit__alex:
-      000000 0A                     818 	.db #0x0a	; 10
-      000001 0A                     819 	.db #0x0a	; 10
-      000002 00                     820 	.db #0x00	; 0
-      000003                        821 __xinit__spriteAlex:
-      000003 02                     822 	.db #0x02	; 2
-      000004 02                     823 	.db #0x02	; 2
-      000005 08                     824 	.db #0x08	; 8
-      000006                        825 __xinit__player_x:
-      000006 32 00                  826 	.dw #0x0032
-      000008                        827 __xinit__player_v_x:
-      000008 00 00                  828 	.dw #0x0000
-      00000A                        829 __xinit__player_y:
-      00000A 14 00                  830 	.dw #0x0014
-      00000C                        831 __xinit__frame_player:
-      00000C 00                     832 	.db #0x00	; 0
-      00000D                        833 __xinit__delay_frame_player:
-      00000D 0F 00                  834 	.dw #0x000f
-                                    835 	.area _CABS (ABS)
-      007FF0                        836 	.org 0x7FF0
-      007FF0                        837 ___SMS__SEGA_signature:
-      007FF0 54                     838 	.db #0x54	; 84	'T'
-      007FF1 4D                     839 	.db #0x4d	; 77	'M'
-      007FF2 52                     840 	.db #0x52	; 82	'R'
-      007FF3 20                     841 	.db #0x20	; 32
-      007FF4 53                     842 	.db #0x53	; 83	'S'
-      007FF5 45                     843 	.db #0x45	; 69	'E'
-      007FF6 47                     844 	.db #0x47	; 71	'G'
-      007FF7 41                     845 	.db #0x41	; 65	'A'
-      007FF8 FF                     846 	.db #0xff	; 255
-      007FF9 FF                     847 	.db #0xff	; 255
-      007FFA FF                     848 	.db #0xff	; 255
-      007FFB FF                     849 	.db #0xff	; 255
-      007FFC 99                     850 	.db #0x99	; 153
-      007FFD 99                     851 	.db #0x99	; 153
-      007FFE 00                     852 	.db #0x00	; 0
-      007FFF 4C                     853 	.db #0x4c	; 76	'L'
-      007FD8                        854 	.org 0x7FD8
-      007FD8                        855 ___SMS__SDSC_author:
-      007FD8 72 61 70 68 6E 65 74   856 	.ascii "raphnet"
-      007FDF 00                     857 	.db 0x00
-      007FCA                        858 	.org 0x7FCA
-      007FCA                        859 ___SMS__SDSC_name:
-      007FCA 62 61 73 69 63 20 65   860 	.ascii "basic example"
+      0005A3 00                     993 	.db 0x00
+                                    994 	.area _INITIALIZER
+      000000                        995 __xinit__nextVRAMsprites:
+      000000 00 01                  996 	.dw #0x0100
+      000002                        997 __xinit__alex:
+      000002 0A                     998 	.db #0x0a	; 10
+      000003 0A                     999 	.db #0x0a	; 10
+      000004 00                    1000 	.db #0x00	; 0
+      000005                       1001 __xinit__spriteAlex:
+      000005 02                    1002 	.db #0x02	; 2
+      000006 02                    1003 	.db #0x02	; 2
+      000007 08                    1004 	.db #0x08	; 8
+      000008 00                    1005 	.db #0x00	; 0
+      000009 00 00                 1006 	.dw #0x0000
+      00000B                       1007 __xinit__player_x:
+      00000B 32 00                 1008 	.dw #0x0032
+      00000D                       1009 __xinit__player_v_x:
+      00000D 00 00                 1010 	.dw #0x0000
+      00000F                       1011 __xinit__player_y:
+      00000F 14 00                 1012 	.dw #0x0014
+      000011                       1013 __xinit__frame_player:
+      000011 00                    1014 	.db #0x00	; 0
+      000012                       1015 __xinit__delay_frame_player:
+      000012 0F 00                 1016 	.dw #0x000f
+                                   1017 	.area _CABS (ABS)
+      007FF0                       1018 	.org 0x7FF0
+      007FF0                       1019 ___SMS__SEGA_signature:
+      007FF0 54                    1020 	.db #0x54	; 84	'T'
+      007FF1 4D                    1021 	.db #0x4d	; 77	'M'
+      007FF2 52                    1022 	.db #0x52	; 82	'R'
+      007FF3 20                    1023 	.db #0x20	; 32
+      007FF4 53                    1024 	.db #0x53	; 83	'S'
+      007FF5 45                    1025 	.db #0x45	; 69	'E'
+      007FF6 47                    1026 	.db #0x47	; 71	'G'
+      007FF7 41                    1027 	.db #0x41	; 65	'A'
+      007FF8 FF                    1028 	.db #0xff	; 255
+      007FF9 FF                    1029 	.db #0xff	; 255
+      007FFA FF                    1030 	.db #0xff	; 255
+      007FFB FF                    1031 	.db #0xff	; 255
+      007FFC 99                    1032 	.db #0x99	; 153
+      007FFD 99                    1033 	.db #0x99	; 153
+      007FFE 00                    1034 	.db #0x00	; 0
+      007FFF 4C                    1035 	.db #0x4c	; 76	'L'
+      007FD8                       1036 	.org 0x7FD8
+      007FD8                       1037 ___SMS__SDSC_author:
+      007FD8 72 61 70 68 6E 65 74  1038 	.ascii "raphnet"
+      007FDF 00                    1039 	.db 0x00
+      007FCA                       1040 	.org 0x7FCA
+      007FCA                       1041 ___SMS__SDSC_name:
+      007FCA 62 61 73 69 63 20 65  1042 	.ascii "basic example"
              78 61 6D 70 6C 65
-      007FD7 00                     861 	.db 0x00
-      007FB9                        862 	.org 0x7FB9
-      007FB9                        863 ___SMS__SDSC_descr:
-      007FB9 41 20 73 69 6D 70 6C   864 	.ascii "A simple example"
+      007FD7 00                    1043 	.db 0x00
+      007FB9                       1044 	.org 0x7FB9
+      007FB9                       1045 ___SMS__SDSC_descr:
+      007FB9 41 20 73 69 6D 70 6C  1046 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      007FC9 00                     865 	.db 0x00
-      007FE0                        866 	.org 0x7FE0
-      007FE0                        867 ___SMS__SDSC_signature:
-      007FE0 53                     868 	.db #0x53	; 83	'S'
-      007FE1 44                     869 	.db #0x44	; 68	'D'
-      007FE2 53                     870 	.db #0x53	; 83	'S'
-      007FE3 43                     871 	.db #0x43	; 67	'C'
-      007FE4 01                     872 	.db #0x01	; 1
-      007FE5 00                     873 	.db #0x00	; 0
-      007FE6 00                     874 	.db #0x00	; 0
-      007FE7 00                     875 	.db #0x00	; 0
-      007FE8 00                     876 	.db #0x00	; 0
-      007FE9 00                     877 	.db #0x00	; 0
-      007FEA D8                     878 	.db #0xd8	; 216
-      007FEB 7F                     879 	.db #0x7f	; 127
-      007FEC CA                     880 	.db #0xca	; 202
-      007FED 7F                     881 	.db #0x7f	; 127
-      007FEE B9                     882 	.db #0xb9	; 185
-      007FEF 7F                     883 	.db #0x7f	; 127
+      007FC9 00                    1047 	.db 0x00
+      007FE0                       1048 	.org 0x7FE0
+      007FE0                       1049 ___SMS__SDSC_signature:
+      007FE0 53                    1050 	.db #0x53	; 83	'S'
+      007FE1 44                    1051 	.db #0x44	; 68	'D'
+      007FE2 53                    1052 	.db #0x53	; 83	'S'
+      007FE3 43                    1053 	.db #0x43	; 67	'C'
+      007FE4 01                    1054 	.db #0x01	; 1
+      007FE5 00                    1055 	.db #0x00	; 0
+      007FE6 00                    1056 	.db #0x00	; 0
+      007FE7 00                    1057 	.db #0x00	; 0
+      007FE8 00                    1058 	.db #0x00	; 0
+      007FE9 00                    1059 	.db #0x00	; 0
+      007FEA D8                    1060 	.db #0xd8	; 216
+      007FEB 7F                    1061 	.db #0x7f	; 127
+      007FEC CA                    1062 	.db #0xca	; 202
+      007FED 7F                    1063 	.db #0x7f	; 127
+      007FEE B9                    1064 	.db #0xb9	; 185
+      007FEF 7F                    1065 	.db #0x7f	; 127

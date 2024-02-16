@@ -4,19 +4,31 @@
 #include "bank1.h"
 #include "bank2.h"
 
-#define SPRITE_TILES_POSITION sonictiles_inc_size/32
+#define SPRITE_TILES_POSITION 256
+int nextVRAMsprites = SPRITE_TILES_POSITION;
 
 typedef struct{
   unsigned char alto, ancho; // sprites de alto y ancho
   unsigned char tamano; // alto*ancho*(2 si es tall)
+  unsigned char numFrames;
+  int beginVRAM;
 }T_sprite;
+
+
+T_sprite generateSprite(unsigned char alto, unsigned char ancho, int tam,const unsigned char data[]) {
+  unsigned char tamano = alto*ancho*2;
+  T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites};
+  SMS_loadTiles(data,nextVRAMsprites,tam);
+  nextVRAMsprites += tam;
+  return sprite;
+}
 
 typedef struct{
   unsigned char x,y,frame;
 }T_entidad;
 
 T_entidad alex = {10,10, 0};
-T_sprite spriteAlex = {2,2,8};
+T_sprite spriteAlex = {2,2,8,0,0};
 
 void init(){
   SMS_init();
@@ -34,7 +46,9 @@ void loadGrapVRAM(){
   SMS_loadSpritePalette(palleteAlex_inc);
   SMS_loadTiles(sonictiles_inc,0,sonictiles_inc_size);
   //SMS_loadTiles(alexAndando_inc,256/*SPRITE_TILES_POSITION*/,alexAndando_inc_size);
-  SMS_loadTiles(spriteAlex_inc,256/*SPRITE_TILES_POSITION*/,spriteAlex_inc_size);
+  //SMS_loadTiles(spriteAlex_inc,SPRITE_TILES_POSITION,spriteAlex_inc_size);
+  spriteAlex = generateSprite(2,2,spriteAlex_inc_size, spriteAlex_inc);
+  spriteAlex = generateSprite(2,2,spriteAlex_inc_size, spriteAlex_inc);
   SMS_loadTileMap(0,0,sonictilemap_inc,sonictilemap_inc_size);
 }
 
@@ -46,9 +60,10 @@ int delay_frame_player = 15;
 
 draw_entidad(T_entidad *entidad, T_sprite *sprite){
   unsigned char i,j;
+  int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
     for(j=0;j<sprite->alto;j++) {
       for(i=0;i<sprite->ancho;i++) {
-        SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), sprite->tamano*entidad->frame + (j<<2) + (i<<1) );  
+        SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), frame + (j<<2) + (i<<1) );  
       }   
     }
 }
