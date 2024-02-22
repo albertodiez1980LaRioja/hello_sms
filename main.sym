@@ -37,60 +37,59 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCA GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       000569 R
+  0 ___str_0                                                       000706 R
     __divsint                                                      ****** GX
-    __modsint                                                      ****** GX
-  0 __str_1                                                        00057D R
-  0 __str_2                                                        000585 R
-  0 __str_3                                                        000593 R
-  7 __xinit__alex                                                  000002 R
-  7 __xinit__delay_frame_player                                    000012 R
-  7 __xinit__frame_player                                          000011 R
+  0 __str_1                                                        00071A R
+  0 __str_2                                                        000722 R
+  0 __str_3                                                        000730 R
+  7 __xinit__alex                                                  000004 R
   7 __xinit__nextVRAMsprites                                       000000 R
-  7 __xinit__player_v_x                                            00000D R
-  7 __xinit__player_x                                              00000B R
-  7 __xinit__player_y                                              00000F R
-  7 __xinit__spriteAlex                                            000005 R
-  2 _alex                                                          000002 GR
-  2 _delay_frame_player                                            000012 GR
-  0 _draw_entidad                                                  000123 GR
-  0 _draw_main_character                                           00024D GR
-  2 _frame_player                                                  000011 GR
+  7 __xinit__spriteAlex                                            00000A R
+  7 __xinit__spritePajaro                                          000014 R
+  7 __xinit__vY                                                    000002 R
+  2 _alex                                                          000004 GR
+  0 _dibujaPajaros                                                 000600 GR
+  0 _draw_entidad                                                  000159 GR
+  1 _finSalto                                                      000000 GR
   0 _generateSprite                                                000000 GR
-  0 _init                                                          000085 GR
+  0 _generateSpriteNoRAM                                           0000AA GR
+  0 _inicializaPajaros                                             00051F GR
+  0 _loadGrapVRAM                                                  000567 GR
+  0 _main                                                          000657 GR
+  0 _moveAlex                                                      000389 GR
+  2 _nextVRAMsprites                                               000000 GR
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Symbol Table
 
-  0 _loadGrapVRAM                                                  000088 GR
-  0 _main                                                          000443 GR
-  2 _nextVRAMsprites                                               000000 GR
+  1 _pajaros                                                       000002 GR
     _palleteAlex_inc                                               ****** GX
-  2 _player_v_x                                                    00000D GR
-  2 _player_x                                                      00000B GR
-  2 _player_y                                                      00000F GR
     _printf                                                        ****** GX
     _sonicpalette_inc                                              ****** GX
     _sonictilemap_inc                                              ****** GX
     _sonictiles_inc                                                ****** GX
-  2 _spriteAlex                                                    000005 GR
+  2 _spriteAlex                                                    00000A GR
     _spriteAlex_inc                                                ****** GX
+  2 _spritePajaro                                                  000014 GR
+    _spritePajaro_inc                                              ****** GX
     _titulo_psg                                                    ****** GX
+  2 _vY                                                            000002 GR
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
 Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    5A4   flags    0
-   1 _DATA                                      size      0   flags    0
-   2 _INITIALIZED                               size     14   flags    0
+   0 _CODE                                      size    741   flags    0
+   1 _DATA                                      size     56   flags    0
+   2 _INITIALIZED                               size     1E   flags    0
    3 _DABS                                      size      0   flags    8
    4 _HOME                                      size      0   flags    0
    5 _GSINIT                                    size      0   flags    0
    6 _GSFINAL                                   size      0   flags    0
-   7 _INITIALIZER                               size     14   flags    0
+   7 _INITIALIZER                               size     1E   flags    0
    8 _CABS                                      size      0   flags    8
    9 _CABS0                                     size     10   flags    8
    A _CABS1                                     size      8   flags    8
