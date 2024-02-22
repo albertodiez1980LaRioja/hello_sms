@@ -7,7 +7,7 @@
 #include "./alex.c"
 
 
-#define NUM_PAJAROS 14
+#define NUM_PAJAROS 10
 T_entidad pajaros[NUM_PAJAROS];
 T_sprite spriteAlex = {2, 2, 8, 0, 0, 0};
 T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
