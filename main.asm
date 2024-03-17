@@ -24,7 +24,6 @@
 	.globl _canLeft
 	.globl _canDown
 	.globl _canUp
-	.globl _moveAlexOLD
 	.globl _SMS_VRAMmemsetW
 	.globl _SMS_VRAMmemcpy
 	.globl _SMS_resetPauseRequest
@@ -49,10 +48,8 @@
 	.globl _spriteAlex
 	.globl _alex
 	.globl _maxSalto
-	.globl _vY
 	.globl _nextVRAMsprites
 	.globl _pajaros
-	.globl _finSalto
 	.globl _SMS_SRAM
 	.globl _SRAM_bank_to_be_mapped_on_slot2
 	.globl _ROM_bank_to_be_mapped_on_slot0
@@ -73,8 +70,6 @@ _ROM_bank_to_be_mapped_on_slot1	=	0xfffe
 _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
 _SMS_SRAM	=	0x8000
-_finSalto::
-	.ds 2
 _pajaros::
 	.ds 60
 ;--------------------------------------------------------
@@ -82,8 +77,6 @@ _pajaros::
 ;--------------------------------------------------------
 	.area _INITIALIZED
 _nextVRAMsprites::
-	.ds 2
-_vY::
 	.ds 2
 _maxSalto::
 	.ds 1
@@ -699,505 +692,79 @@ _draw_entidad::
 	ld	sp, ix
 	pop	ix
 	ret
-;./alex.c:18: void moveAlexOLD(int keys)
-;	---------------------------------
-; Function moveAlexOLD
-; ---------------------------------
-_moveAlexOLD::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-	push	af
-	push	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-;./alex.c:21: if (keys & PORT_A_KEY_LEFT)
-	ld	a, -2 (ix)
-	and	a, #0x04
-	ld	-6 (ix), a
-	ld	-5 (ix), #0x00
-;./alex.c:23: if (keys & PORT_A_KEY_RIGHT)
-	ld	a, -2 (ix)
-	and	a, #0x08
-	ld	-4 (ix), a
-	ld	-3 (ix), #0x00
-;./alex.c:20: if ((keys & PORT_A_KEY_DOWN) && alex.state == EN_SUELO){
-	bit	1, -2 (ix)
-	jr	Z, 00109$
-	ld	a, (#_alex + 5)
-	sub	a, #0x02
-	jr	NZ, 00109$
-;./alex.c:22: alex.oriented = 1;
-	ld	hl, #_alex + 4
-;./alex.c:21: if (keys & PORT_A_KEY_LEFT)
-	xor	a, a
-	or	a, -6 (ix)
-	jr	Z, 00102$
-;./alex.c:22: alex.oriented = 1;
-	ld	(hl), #0x01
-00102$:
-;./alex.c:23: if (keys & PORT_A_KEY_RIGHT)
-	xor	a, a
-	or	a, -4 (ix)
-	jr	Z, 00104$
-;./alex.c:24: alex.oriented = 0;
-	ld	(hl), #0x00
-00104$:
-;./alex.c:25: if (!alex.oriented)
-	ld	a, (hl)
-;./alex.c:26: alex.frame = 7;
-;./alex.c:25: if (!alex.oriented)
-	ld	-3 (ix), a
-	or	a, a
-	jr	NZ, 00106$
-;./alex.c:26: alex.frame = 7;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x07
-	jr	00107$
-00106$:
-;./alex.c:28: alex.frame = 15;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x0f
-00107$:
-;./alex.c:29: alex.lastChangeFrame = 15;
-	ld	hl, #_alex + 3
-	ld	(hl), #0x0f
-;./alex.c:30: return; // not move
-	jp	00180$
-00109$:
-;./alex.c:34: if (alex.state == PUÑETAZO) {
-	ld	hl, #(_alex + 5)
-	ld	c, (hl)
-;./alex.c:35: alex.lastChangeFrame++;
-;./alex.c:39: if (!alex.oriented)
-;./alex.c:40: alex.frame = 0;
-;./alex.c:34: if (alex.state == PUÑETAZO) {
-	ld	a, c
-	sub	a, #0x08
-	jr	NZ, 00118$
-;./alex.c:35: alex.lastChangeFrame++;
-	ld	a, (#(_alex + 3) + 0)
-	inc	a
-	ld	(#(_alex + 3)),a
-;./alex.c:36: if (alex.lastChangeFrame % 16 == 0)
-	and	a, #0x0f
-	jp	NZ,00180$
-;./alex.c:38: alex.state = EN_SUELO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x02
-;./alex.c:39: if (!alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	NZ, 00112$
-;./alex.c:40: alex.frame = 0;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x00
-00112$:
-;./alex.c:41: if (alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jp	Z,00180$
-;./alex.c:42: alex.frame = 8;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x08
-;./alex.c:44: return;
-	jp	00180$
-00118$:
-;./alex.c:47: if (alex.state == PUÑETAZO_SALTANDO) {
-	ld	a, c
-	sub	a, #0x10
-	jr	NZ, 00125$
-;./alex.c:48: alex.lastChangeFrame++;
-	ld	a, (#(_alex + 3) + 0)
-	inc	a
-	ld	(#(_alex + 3)),a
-;./alex.c:49: if (alex.lastChangeFrame % 16 == 0)
-	and	a, #0x0f
-	jp	NZ,00180$
-;./alex.c:51: alex.state = SALTANDO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x04
-;./alex.c:52: if (!alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	NZ, 00120$
-;./alex.c:53: alex.frame = 5;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x05
-	jp	00180$
-00120$:
-;./alex.c:55: alex.frame = 13; 
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x0d
-;./alex.c:57: return;
-	jp	00180$
-00125$:
-;./alex.c:61: if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
-	xor	a, a
-	or	a, -6 (ix)
-	jr	Z, 00136$
-	ld	hl, #_alex
-	ld	c, (hl)
-	ld	a, #0x08
-	sub	a, c
-	jr	NC, 00136$
-;./alex.c:63: player_v_x = -1;
-	ld	-3 (ix), #0xff
-;./alex.c:64: alex.oriented = 1;
-	ld	hl, #(_alex + 4)
-	ld	(hl), #0x01
-;./alex.c:65: if (alex.frame < 8 || alex.frame > 11)
-	ld	hl, #(_alex + 2)
-	ld	c, (hl)
-	ld	a, c
-	sub	a, #0x08
-	jr	C, 00126$
-	ld	a, #0x0b
-	sub	a, c
-	jr	NC, 00137$
-00126$:
-;./alex.c:66: alex.frame = 8;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x08
-	jr	00137$
-00136$:
-;./alex.c:68: else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
-	xor	a, a
-	or	a, -4 (ix)
-	jr	Z, 00132$
-	ld	a, (#_alex + 0)
-	sub	a, #0xf0
-	jr	NC, 00132$
-;./alex.c:70: player_v_x = 1;
-	ld	-3 (ix), #0x01
-;./alex.c:71: alex.oriented = 0;
-	ld	hl, #(_alex + 4)
-	ld	(hl), #0x00
-	jr	00137$
-00132$:
-;./alex.c:74: player_v_x = 0;
-	ld	-3 (ix), #0x00
-;./alex.c:75: alex.frame = 4;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x04
-;./alex.c:76: if (alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	Z, 00130$
-;./alex.c:77: alex.frame = 12;
-	ld	(hl), #0x0c
-00130$:
-;./alex.c:78: alex.lastChangeFrame = 15;
-	ld	hl, #(_alex + 3)
-	ld	(hl), #0x0f
-00137$:
-;./alex.c:80: alex.x = alex.x + player_v_x;
-	ld	a, (#_alex + 0)
-	ld	c, -3 (ix)
-	add	a, c
-	ld	(#_alex),a
-;./alex.c:81: if (player_v_x != 0){
-	ld	a, -3 (ix)
-	or	a, a
-	jr	Z, 00148$
-;./alex.c:82: alex.lastChangeFrame++;
-	ld	a, (#(_alex + 3) + 0)
-	ld	-3 (ix), a
-	inc	-3 (ix)
-	ld	hl, #(_alex + 3)
-	ld	a, -3 (ix)
-	ld	(hl), a
-;./alex.c:83: if (alex.lastChangeFrame % 16 == 0)
-	ld	a, -3 (ix)
-	and	a, #0x0f
-	jr	NZ, 00148$
-;./alex.c:85: alex.frame++;
-	ld	hl, #(_alex + 2)
-	ld	c, (hl)
-	inc	c
-	ld	hl, #(_alex + 2)
-	ld	(hl), c
-;./alex.c:86: if (alex.frame > 3 && !alex.oriented)
-	ld	a, #0x03
-	sub	a, c
-	jr	NC, 00140$
-	ld	a, (#(_alex + 4) + 0)
-;./alex.c:87: alex.frame = 0;
-	or	a,a
-	jr	NZ, 00140$
-	ld	(hl),a
-00140$:
-;./alex.c:88: if (alex.frame > 11 && alex.oriented)
-	ld	hl, #(_alex + 2)
-	ld	c, (hl)
-	ld	a, #0x0b
-	sub	a, c
-	jr	NC, 00148$
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	Z, 00148$
-;./alex.c:89: alex.frame = 8;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x08
-00148$:
-;./alex.c:95: finSalto = alex.y - 70;
-;./alex.c:93: if ((keys & PORT_A_KEY_1) && alex.state == EN_SUELO) {
-	bit	4, -2 (ix)
-	jr	Z, 00150$
-	ld	a, (#(_alex + 5) + 0)
-	sub	a, #0x02
-	jr	NZ, 00150$
-;./alex.c:94: alex.state = SALTANDO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x04
-;./alex.c:95: finSalto = alex.y - 70;
-	ld	a, (#(_alex + 1) + 0)
-	ld	-3 (ix), a
-	ld	-4 (ix), a
-	ld	-3 (ix), #0x00
-	ld	hl, #_finSalto
-	ld	a, -4 (ix)
-	add	a, #0xba
-	ld	(hl), a
-	inc	hl
-	ld	a, #0x00
-	adc	a, #0xff
-	ld	(hl), a
-;./alex.c:96: vY = -2;
-	ld	hl, #0xfffe
-	ld	(_vY), hl
-00150$:
-;./alex.c:34: if (alex.state == PUÑETAZO) {
-	ld	a, (#(_alex + 5) + 0)
-;./alex.c:98: if (alex.state == SALTANDO || alex.state == PUÑETAZO_SALTANDO) {
-	ld	-4 (ix), a
-	sub	a, #0x04
-	ld	a, #0x01
-	jr	Z, 00472$
-	xor	a, a
-00472$:
-	ld	-3 (ix), a
-	or	a, a
-	jr	NZ, 00165$
-	ld	a, -4 (ix)
-	sub	a, #0x10
-	jr	NZ, 00166$
-00165$:
-;./alex.c:99: if(alex.state == SALTANDO) {
-	ld	a, -3 (ix)
-	or	a, a
-	jr	Z, 00156$
-;./alex.c:100: if (!alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	ld	-3 (ix), a
-	or	a, a
-	jr	NZ, 00153$
-;./alex.c:101: alex.frame = 6;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x06
-	jr	00156$
-00153$:
-;./alex.c:103: alex.frame = 14;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x0e
-00156$:
-;./alex.c:105: if(alex.y == EN_SUELO || alex.y == 1 || alex.y < finSalto) {
-	ld	hl, #(_alex + 1)
-	ld	e, (hl)
-	ld	a,e
-	cp	a,#0x02
-	jr	Z, 00157$
-	dec	a
-	jr	Z, 00157$
-	ld	c, #0x00
-	ld	hl, #_finSalto
-	ld	a, e
-	sub	a, (hl)
-	inc	hl
-	ld	a, c
-	sbc	a, (hl)
-	jp	PO, 00477$
-	xor	a, #0x80
-00477$:
-	jp	P, 00158$
-00157$:
-;./alex.c:106: vY = 2;
-	ld	hl, #0x0002
-	ld	(_vY), hl
-00158$:
-;./alex.c:108: if ((alex.y == 150 || alex.y == 151) && vY > 0) {
-	ld	a, (#(_alex + 1) + 0)
-	cp	a, #0x96
-	jr	Z, 00164$
-	sub	a, #0x97
-	jr	NZ, 00166$
-00164$:
-	xor	a, a
-	ld	iy, #_vY
-	cp	a, 0 (iy)
-	sbc	a, 1 (iy)
-	jp	PO, 00481$
-	xor	a, #0x80
-00481$:
-	jp	P, 00166$
-;./alex.c:109: alex.state = EN_SUELO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x02
-;./alex.c:110: vY = 0;
-	ld	hl, #0x0000
-	ld	(_vY), hl
-;./alex.c:111: alex.frame = 0;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x00
-00166$:
-;./alex.c:114: alex.y += vY;
-	ld	hl, #(_alex + 1)
-	ld	c, (hl)
-	ld	a, (_vY+0)
-	ld	-5 (ix), a
-	ld	-3 (ix), c
-	ld	a, c
-	add	a, -5 (ix)
-	ld	-3 (ix), a
-	ld	hl, #(_alex + 1)
-	ld	a, -3 (ix)
-	ld	(hl), a
-;./alex.c:115: if ((keys & PORT_A_KEY_2) && alex.state == EN_SUELO){
-	ld	a, -2 (ix)
-	and	a, #0x20
-	ld	-4 (ix), a
-	ld	-3 (ix), #0x00
-	xor	a, a
-	or	a, -4 (ix)
-	jr	Z, 00172$
-	ld	a, (#(_alex + 5) + 0)
-	sub	a, #0x02
-	jr	NZ, 00172$
-;./alex.c:116: alex.state = PUÑETAZO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x08
-;./alex.c:117: if (!alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	NZ, 00169$
-;./alex.c:118: alex.frame = 5;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x05
-	jr	00170$
-00169$:
-;./alex.c:120: alex.frame = 13; 
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x0d
-00170$:
-;./alex.c:121: alex.lastChangeFrame = 0;
-	ld	hl, #(_alex + 3)
-	ld	(hl), #0x00
-00172$:
-;./alex.c:123: if ((keys & PORT_A_KEY_2) && alex.state == SALTANDO){
-	xor	a, a
-	or	a, -4 (ix)
-	jr	Z, 00180$
-	ld	a, (#(_alex + 5) + 0)
-	sub	a, #0x04
-	jr	NZ, 00180$
-;./alex.c:124: alex.state = PUÑETAZO_SALTANDO;
-	ld	hl, #(_alex + 5)
-	ld	(hl), #0x10
-;./alex.c:125: if (!alex.oriented)
-	ld	a, (#(_alex + 4) + 0)
-	or	a, a
-	jr	NZ, 00175$
-;./alex.c:126: alex.frame = 5;
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x05
-	jr	00176$
-00175$:
-;./alex.c:128: alex.frame = 13; 
-	ld	hl, #(_alex + 2)
-	ld	(hl), #0x0d
-00176$:
-;./alex.c:129: alex.lastChangeFrame = 0;
-	ld	hl, #(_alex + 3)
-	ld	(hl), #0x00
-00180$:
-;./alex.c:132: }
-	ld	sp, ix
-	pop	ix
-	ret
-;./alex.c:135: unsigned char canUp(){
+;./alex.c:17: unsigned char canUp(){
 ;	---------------------------------
 ; Function canUp
 ; ---------------------------------
 _canUp::
-;./alex.c:136: if (alex.x < 2)
+;./alex.c:18: if (alex.x < 2)
 	ld	a, (#_alex + 0)
 	sub	a, #0x02
 	jr	NC, 00102$
-;./alex.c:137: return 0;
+;./alex.c:19: return 0;
 	xor	a, a
 	ret
 00102$:
-;./alex.c:138: return 1;
+;./alex.c:20: return 1;
 	ld	a, #0x01
-;./alex.c:139: }
+;./alex.c:21: }
 	ret
-;./alex.c:141: unsigned char canDown() {
+;./alex.c:23: unsigned char canDown() {
 ;	---------------------------------
 ; Function canDown
 ; ---------------------------------
 _canDown::
-;./alex.c:142: if (alex.y > 155)
+;./alex.c:24: if (alex.y > 155)
 	ld	hl, #_alex+1
 	ld	c, (hl)
 	ld	a, #0x9b
 	sub	a, c
 	jr	NC, 00102$
-;./alex.c:143: return 0;
+;./alex.c:25: return 0;
 	xor	a, a
 	ret
 00102$:
-;./alex.c:144: return 1;
+;./alex.c:26: return 1;
 	ld	a, #0x01
-;./alex.c:145: }
+;./alex.c:27: }
 	ret
-;./alex.c:147: unsigned char canLeft() {
+;./alex.c:29: unsigned char canLeft() {
 ;	---------------------------------
 ; Function canLeft
 ; ---------------------------------
 _canLeft::
-;./alex.c:148: if (alex.x < 9)
+;./alex.c:30: if (alex.x < 9)
 	ld	a, (#_alex + 0)
 	sub	a, #0x09
 	jr	NC, 00102$
-;./alex.c:149: return 0;
+;./alex.c:31: return 0;
 	xor	a, a
 	ret
 00102$:
-;./alex.c:150: return 1;
+;./alex.c:32: return 1;
 	ld	a, #0x01
-;./alex.c:151: }
+;./alex.c:33: }
 	ret
-;./alex.c:153: unsigned char canRight() {
+;./alex.c:35: unsigned char canRight() {
 ;	---------------------------------
 ; Function canRight
 ; ---------------------------------
 _canRight::
-;./alex.c:154: if (alex.x > 238)
+;./alex.c:36: if (alex.x > 238)
 	ld	hl, #_alex+0
 	ld	c, (hl)
 	ld	a, #0xee
 	sub	a, c
 	jr	NC, 00102$
-;./alex.c:155: return 0;
+;./alex.c:37: return 0;
 	xor	a, a
 	ret
 00102$:
-;./alex.c:156: return 1;
+;./alex.c:38: return 1;
 	ld	a, #0x01
-;./alex.c:157: }
+;./alex.c:39: }
 	ret
-;./alex.c:159: void moveAlexSuelo(int keys) {
+;./alex.c:41: void moveAlexSuelo(int keys) {
 ;	---------------------------------
 ; Function moveAlexSuelo
 ; ---------------------------------
@@ -1210,86 +777,86 @@ _moveAlexSuelo::
 	push	af
 	ld	-2 (ix), l
 	ld	-1 (ix), h
-;./alex.c:161: if (keys & PORT_A_KEY_LEFT)
+;./alex.c:43: if (keys & PORT_A_KEY_LEFT)
 	ld	a, -2 (ix)
 	and	a, #0x04
 	ld	-6 (ix), a
 	ld	-5 (ix), #0x00
-;./alex.c:163: if (keys & PORT_A_KEY_RIGHT)
+;./alex.c:45: if (keys & PORT_A_KEY_RIGHT)
 	ld	a, -2 (ix)
 	and	a, #0x08
 	ld	-4 (ix), a
 	ld	-3 (ix), #0x00
-;./alex.c:160: if ((keys & PORT_A_KEY_DOWN)){
+;./alex.c:42: if ((keys & PORT_A_KEY_DOWN)){
 	bit	1, -2 (ix)
 	jr	Z, 00109$
-;./alex.c:161: if (keys & PORT_A_KEY_LEFT)
+;./alex.c:43: if (keys & PORT_A_KEY_LEFT)
 	xor	a, a
 	or	a, -6 (ix)
 	jr	Z, 00102$
-;./alex.c:162: alex.oriented = 1;
+;./alex.c:44: alex.oriented = 1;
 	ld	hl, #_alex+4
 	ld	(hl), #0x01
 00102$:
-;./alex.c:163: if (keys & PORT_A_KEY_RIGHT)
+;./alex.c:45: if (keys & PORT_A_KEY_RIGHT)
 	xor	a, a
 	or	a, -4 (ix)
 	jr	Z, 00104$
-;./alex.c:164: alex.oriented = 0;
+;./alex.c:46: alex.oriented = 0;
 	ld	hl, #_alex+4
 	ld	(hl), #0x00
 00104$:
-;./alex.c:165: if (!alex.oriented)
+;./alex.c:47: if (!alex.oriented)
 	ld	a,(#_alex + 4)
-;./alex.c:166: alex.frame = 7;
-;./alex.c:165: if (!alex.oriented)
+;./alex.c:48: alex.frame = 7;
+;./alex.c:47: if (!alex.oriented)
 	ld	-3 (ix), a
 	or	a, a
 	jr	NZ, 00106$
-;./alex.c:166: alex.frame = 7;
+;./alex.c:48: alex.frame = 7;
 	ld	hl, #(_alex + 2)
 	ld	(hl), #0x07
 	jr	00107$
 00106$:
-;./alex.c:168: alex.frame = 15;
+;./alex.c:50: alex.frame = 15;
 	ld	hl, #(_alex + 2)
 	ld	(hl), #0x0f
 00107$:
-;./alex.c:169: alex.lastChangeFrame = 15;
+;./alex.c:51: alex.lastChangeFrame = 15;
 	ld	hl, #_alex + 3
 	ld	(hl), #0x0f
-;./alex.c:170: return; // not move
+;./alex.c:52: return; // not move
 	jp	00135$
 00109$:
-;./alex.c:173: if (keys & PORT_A_KEY_2) {
+;./alex.c:55: if (keys & PORT_A_KEY_2) {
 	bit	5, -2 (ix)
 	jr	Z, 00114$
-;./alex.c:174: if (alex.y > 100)
+;./alex.c:56: if (alex.y > 100)
 	ld	bc, #_alex+1
 	ld	a, (bc)
 	ld	e, a
 	ld	a, #0x64
 	sub	a, e
 	jr	NC, 00111$
-;./alex.c:175: maxSalto = alex.y - 100;
+;./alex.c:57: maxSalto = alex.y - 100;
 	ld	a, e
 	ld	hl, #_maxSalto
 	add	a, #0x9c
 	ld	(hl), a
 	jr	00112$
 00111$:
-;./alex.c:177: maxSalto = 0;
+;./alex.c:59: maxSalto = 0;
 	ld	hl, #_maxSalto
 	ld	(hl), #0x00
 00112$:
-;./alex.c:178: alex.y--;
+;./alex.c:60: alex.y--;
 	ld	a, (bc)
 	dec	a
 	ld	(bc), a
-;./alex.c:179: return;
+;./alex.c:61: return;
 	jr	00135$
 00114$:
-;./alex.c:181: if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
+;./alex.c:63: if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
 	xor	a, a
 	or	a, -6 (ix)
 	jr	Z, 00132$
@@ -1298,29 +865,29 @@ _moveAlexSuelo::
 	ld	a, #0x08
 	sub	a, c
 	jr	NC, 00132$
-;./alex.c:183: alex.x -= 1;
+;./alex.c:65: alex.x -= 1;
 	dec	c
 	ld	(hl), c
-;./alex.c:184: alex.oriented = 1;
+;./alex.c:66: alex.oriented = 1;
 	ld	hl, #_alex + 4
 	ld	(hl), #0x01
-;./alex.c:185: alex.lastChangeFrame++;
+;./alex.c:67: alex.lastChangeFrame++;
 	ld	hl, #_alex + 3
 	inc	(hl)
 	ld	a, (hl)
-;./alex.c:188: alex.frame++;
+;./alex.c:70: alex.frame++;
 	ld	de, #_alex + 2
-;./alex.c:186: if (alex.lastChangeFrame == 11) {
-;./alex.c:187: alex.lastChangeFrame = 0;
+;./alex.c:68: if (alex.lastChangeFrame == 11) {
+;./alex.c:69: alex.lastChangeFrame = 0;
 	sub	a, #0x0b
 	jr	NZ, 00116$
 	ld	(hl), a
-;./alex.c:188: alex.frame++;
+;./alex.c:70: alex.frame++;
 	ld	a, (de)
 	inc	a
 	ld	(de), a
 00116$:
-;./alex.c:190: if (alex.frame > 11 || alex.frame < 8)
+;./alex.c:72: if (alex.frame > 11 || alex.frame < 8)
 	ld	a, (de)
 	ld	c, a
 	ld	a, #0x0b
@@ -1330,12 +897,12 @@ _moveAlexSuelo::
 	sub	a, #0x08
 	jr	NC, 00135$
 00117$:
-;./alex.c:191: alex.frame = 8;
+;./alex.c:73: alex.frame = 8;
 	ld	a, #0x08
 	ld	(de), a
 	jr	00135$
 00132$:
-;./alex.c:193: else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
+;./alex.c:75: else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
 	xor	a, a
 	or	a, -4 (ix)
 	jr	Z, 00128$
@@ -1343,58 +910,58 @@ _moveAlexSuelo::
 	ld	a, (bc)
 	cp	a, #0xf0
 	jr	NC, 00128$
-;./alex.c:195: alex.x += 1;
+;./alex.c:77: alex.x += 1;
 	inc	a
 	ld	(bc), a
-;./alex.c:196: alex.oriented = 0;
+;./alex.c:78: alex.oriented = 0;
 	ld	hl, #_alex + 4
 	ld	(hl), #0x00
-;./alex.c:197: alex.lastChangeFrame++;
+;./alex.c:79: alex.lastChangeFrame++;
 	ld	hl, #_alex + 3
 	inc	(hl)
 	ld	a, (hl)
-;./alex.c:200: alex.frame++;
+;./alex.c:82: alex.frame++;
 	ld	de, #_alex + 2
-;./alex.c:198: if (alex.lastChangeFrame == 11) {
-;./alex.c:199: alex.lastChangeFrame = 0;
+;./alex.c:80: if (alex.lastChangeFrame == 11) {
+;./alex.c:81: alex.lastChangeFrame = 0;
 	sub	a, #0x0b
 	jr	NZ, 00121$
 	ld	(hl), a
-;./alex.c:200: alex.frame++;
+;./alex.c:82: alex.frame++;
 	ld	a, (de)
 	inc	a
 	ld	(de), a
 00121$:
-;./alex.c:202: if (alex.frame > 3 || alex.frame < 0)
+;./alex.c:84: if (alex.frame > 3 || alex.frame < 0)
 	ld	a, (de)
 	ld	c, a
 	ld	a, #0x03
 	sub	a, c
 	jr	NC, 00135$
-;./alex.c:203: alex.frame = 0;
+;./alex.c:85: alex.frame = 0;
 	xor	a, a
 	ld	(de), a
 	jr	00135$
 00128$:
-;./alex.c:207: alex.frame = 4;
+;./alex.c:89: alex.frame = 4;
 	ld	hl, #(_alex + 2)
 	ld	(hl), #0x04
-;./alex.c:208: if (alex.oriented)
+;./alex.c:90: if (alex.oriented)
 	ld	a, (#_alex + 4)
 	or	a, a
 	jr	Z, 00126$
-;./alex.c:209: alex.frame = 12;
+;./alex.c:91: alex.frame = 12;
 	ld	(hl), #0x0c
 00126$:
-;./alex.c:210: alex.lastChangeFrame = 10;
+;./alex.c:92: alex.lastChangeFrame = 10;
 	ld	hl, #_alex + 3
 	ld	(hl), #0x0a
 00135$:
-;./alex.c:212: }
+;./alex.c:94: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./alex.c:214: void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
+;./alex.c:96: void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
 ;	---------------------------------
 ; Function moveAlexAire
 ; ---------------------------------
@@ -1403,88 +970,88 @@ _moveAlexAire::
 	ld	ix,#0
 	add	ix,sp
 	ex	de, hl
-;./alex.c:215: if (keys & PORT_A_KEY_LEFT) {
+;./alex.c:97: if (keys & PORT_A_KEY_LEFT) {
 	bit	2, e
 	jr	Z, 00104$
-;./alex.c:216: alex.oriented = 1;
+;./alex.c:98: alex.oriented = 1;
 	ld	bc, #_alex+0
 	ld	hl, #(_alex + 4)
 	ld	(hl), #0x01
-;./alex.c:217: if (puedeIzquieda)
+;./alex.c:99: if (puedeIzquieda)
 	ld	a, 6 (ix)
 	or	a, a
 	jr	Z, 00104$
-;./alex.c:218: alex.x -= 2;
+;./alex.c:100: alex.x -= 2;
 	ld	a, (bc)
 	dec	a
 	dec	a
 	ld	(bc), a
 00104$:
-;./alex.c:220: if (keys & PORT_A_KEY_RIGHT) {
+;./alex.c:102: if (keys & PORT_A_KEY_RIGHT) {
 	bit	3, e
 	jr	Z, 00108$
-;./alex.c:221: alex.oriented = 0;
+;./alex.c:103: alex.oriented = 0;
 	ld	bc, #_alex+0
 	ld	hl, #(_alex + 4)
 	ld	(hl), #0x00
-;./alex.c:222: if (puedeDerecha)
+;./alex.c:104: if (puedeDerecha)
 	ld	a, 5 (ix)
 	or	a, a
 	jr	Z, 00108$
-;./alex.c:223: alex.x += 2;
+;./alex.c:105: alex.x += 2;
 	ld	a, (bc)
 	add	a, #0x02
 	ld	(bc), a
 00108$:
-;./alex.c:225: if (!alex.oriented)
+;./alex.c:107: if (!alex.oriented)
 	ld	hl, #_alex + 4
 	ld	b, (hl)
-;./alex.c:226: alex.frame = 6;
+;./alex.c:108: alex.frame = 6;
 	ld	hl, #_alex + 2
-;./alex.c:225: if (!alex.oriented)
+;./alex.c:107: if (!alex.oriented)
 	ld	a, b
 	or	a, a
 	jr	NZ, 00110$
-;./alex.c:226: alex.frame = 6;
+;./alex.c:108: alex.frame = 6;
 	ld	(hl), #0x06
 	jr	00111$
 00110$:
-;./alex.c:228: alex.frame = 14;
+;./alex.c:110: alex.frame = 14;
 	ld	(hl), #0x0e
 00111$:
-;./alex.c:229: if (alex.y > maxSalto) {
+;./alex.c:111: if (alex.y > maxSalto) {
 	ld	bc, #_alex + 1
 	ld	a, (bc)
 	ld	d, a
-;./alex.c:230: alex.y -= 2;
+;./alex.c:112: alex.y -= 2;
 	ld	e, d
-;./alex.c:229: if (alex.y > maxSalto) {
+;./alex.c:111: if (alex.y > maxSalto) {
 	ld	a, (_maxSalto+0)
 	sub	a, d
 	jr	NC, 00113$
-;./alex.c:230: alex.y -= 2;
+;./alex.c:112: alex.y -= 2;
 	ld	a, e
 	dec	a
 	dec	a
 	ld	(bc), a
 	jr	00115$
 00113$:
-;./alex.c:233: alex.y += 2; // bajando
+;./alex.c:115: alex.y += 2; // bajando
 	ld	a, e
 	inc	a
 	inc	a
 	ld	(bc), a
-;./alex.c:234: maxSalto = 255;
+;./alex.c:116: maxSalto = 255;
 	ld	iy, #_maxSalto
 	ld	0 (iy), #0xff
 00115$:
-;./alex.c:236: }
+;./alex.c:118: }
 	pop	ix
 	pop	hl
 	pop	af
 	inc	sp
 	jp	(hl)
-;./alex.c:239: void moveAlex(int keys) {
+;./alex.c:121: void moveAlex(int keys) {
 ;	---------------------------------
 ; Function moveAlex
 ; ---------------------------------
@@ -1493,7 +1060,7 @@ _moveAlex::
 	ld	ix,#0
 	add	ix,sp
 	dec	sp
-;./alex.c:240: unsigned char puedeBajar = canDown();
+;./alex.c:122: unsigned char puedeBajar = canDown();
 	push	hl
 	call	_canDown
 	ld	c, a
@@ -1507,11 +1074,11 @@ _moveAlex::
 	pop	de
 	pop	bc
 	pop	hl
-;./alex.c:244: if (puedeBajar)
+;./alex.c:126: if (puedeBajar)
 	inc	c
 	dec	c
 	jr	Z, 00102$
-;./alex.c:245: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
+;./alex.c:127: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
 	ld	d,a
 	push	de
 	ld	a, -1 (ix)
@@ -1520,10 +1087,10 @@ _moveAlex::
 	call	_moveAlexAire
 	jr	00104$
 00102$:
-;./alex.c:247: moveAlexSuelo(keys);
+;./alex.c:129: moveAlexSuelo(keys);
 	call	_moveAlexSuelo
 00104$:
-;./alex.c:248: }
+;./alex.c:130: }
 	inc	sp
 	pop	ix
 	ret
@@ -1899,8 +1466,6 @@ __str_3:
 	.area _INITIALIZER
 __xinit__nextVRAMsprites:
 	.dw #0x0100
-__xinit__vY:
-	.dw #0x0000
 __xinit__maxSalto:
 	.db #0xff	; 255
 __xinit__alex:
@@ -1908,7 +1473,7 @@ __xinit__alex:
 	.db #0x14	; 20
 	.db #0x00	; 0
 	.db #0x00	; 0
-	.db #0x02	; 2
+	.db #0x00	; 0
 	.db #0x00	; 0
 __xinit__spriteAlex:
 	.db #0x02	; 2
