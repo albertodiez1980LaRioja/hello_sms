@@ -37,11 +37,11 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCA GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       00080E R
+  0 ___str_0                                                       00087C R
     __divsint                                                      ****** GX
-  0 __str_1                                                        000822 R
-  0 __str_2                                                        00082A R
-  0 __str_3                                                        000838 R
+  0 __str_1                                                        000890 R
+  0 __str_2                                                        000898 R
+  0 __str_3                                                        0008A6 R
   7 __xinit__alex                                                  000003 R
   7 __xinit__maxSalto                                              000002 R
   7 __xinit__nextVRAMsprites                                       000000 R
@@ -53,7 +53,7 @@ Symbol Table
   0 _canLeft                                                       0003A3 GR
   0 _canRight                                                      0003AF GR
   0 _canUp                                                         000389 GR
-  0 _dibujaPajaros                                                 0006FA GR
+  0 _dibujaPajaros                                                 000768 GR
   0 _draw_entidad                                                  000159 GR
     _emeraldhill_psg                                               ****** GX
   0 _generateSprite                                                000000 GR
@@ -63,12 +63,12 @@ Hexadecimal [24-Bits]
 
 Symbol Table
 
-  0 _inicializaPajaros                                             0005F3 GR
-  0 _loadGrapVRAM                                                  00063B GR
-  0 _main                                                          000751 GR
+  0 _inicializaPajaros                                             000661 GR
+  0 _loadGrapVRAM                                                  0006A9 GR
+  0 _main                                                          0007BF GR
   2 _maxSalto                                                      000002 GR
-  0 _moveAlex                                                      0005BC GR
-  0 _moveAlexAire                                                  0004C0 GR
+  0 _moveAlex                                                      00062A GR
+  0 _moveAlexAire                                                  00052E GR
   0 _moveAlexSuelo                                                 0003BD GR
   2 _nextVRAMsprites                                               000000 GR
   1 _pajaros                                                       000000 GR
@@ -91,7 +91,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    849   flags    0
+   0 _CODE                                      size    8B7   flags    0
    1 _DATA                                      size     3C   flags    0
    2 _INITIALIZED                               size     27   flags    0
    3 _DABS                                      size      0   flags    8

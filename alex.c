@@ -5,6 +5,7 @@
 
 #define PUÑETAZO 8
 #define PUÑETAZO_SALTANDO 16
+#define PUÑETAZO_SUELO 32
 
 
 
@@ -60,37 +61,57 @@ void moveAlexSuelo(int keys) {
     alex.y--;
     return;
   }
-  if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
-  {
-    alex.x -= 1;
-    alex.oriented = 1;
-    alex.lastChangeFrame++;
-    if (alex.lastChangeFrame == 11) {
-      alex.lastChangeFrame = 0;
-      alex.frame++;
-    }
-    if (alex.frame > 11 || alex.frame < 8)
-        alex.frame = 8;
+  else if (keys & PORT_A_KEY_1) {
+    alex.state = PUÑETAZO_SUELO;
+    alex.lastChangeFrame = 15;
   }
-  else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
-  {
-    alex.x += 1;
-    alex.oriented = 0;
-    alex.lastChangeFrame++;
-    if (alex.lastChangeFrame == 11) {
-      alex.lastChangeFrame = 0;
-      alex.frame++;
+  if(alex.state != PUÑETAZO_SUELO) {
+    if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
+    {
+      alex.x -= 1;
+      alex.oriented = 1;
+      alex.lastChangeFrame++;
+      if (alex.lastChangeFrame == 11) {
+        alex.lastChangeFrame = 0;
+        alex.frame++;
+      }
+      if (alex.frame > 11 || alex.frame < 8)
+          alex.frame = 8;
     }
-    if (alex.frame > 3 || alex.frame < 0)
-        alex.frame = 0;
+    else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
+    {
+      alex.x += 1;
+      alex.oriented = 0;
+      alex.lastChangeFrame++;
+      if (alex.lastChangeFrame == 11) {
+        alex.lastChangeFrame = 0;
+        alex.frame++;
+      }
+      if (alex.frame > 3 || alex.frame < 0)
+          alex.frame = 0;
+    }
+    
+    else { // parado
+      alex.frame = 4;
+      if (alex.oriented)
+          alex.frame = 12;
+      alex.lastChangeFrame = 10;
+    }  
   }
-  
-  else { // parado
-    alex.frame = 4;
-    if (alex.oriented)
-        alex.frame = 12;
-    alex.lastChangeFrame = 10;
-  }  
+  else{
+    if (!alex.oriented) {
+      alex.frame = 5;
+      SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+    }
+    else {
+      alex.frame = 13;
+      SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+    }
+    alex.lastChangeFrame--;
+    if(!alex.lastChangeFrame) {
+      alex.state = 0;
+    }
+  }
 }
 
 void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
