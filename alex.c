@@ -94,20 +94,6 @@ void moveAlexSuelo(int keys) {
 }
 
 void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
-  if (keys & PORT_A_KEY_LEFT) {
-    alex.oriented = 1;
-    if (puedeIzquieda)
-      alex.x -= 2;
-  }
-  if (keys & PORT_A_KEY_RIGHT) {
-    alex.oriented = 0;
-    if (puedeDerecha)
-      alex.x += 2;
-  }
-  if (!alex.oriented)
-    alex.frame = 6;
-  else
-    alex.frame = 14;
   if (alex.y > maxSalto) {
     alex.y -= 2;
   }
@@ -115,6 +101,43 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
     alex.y += 2; // bajando
     maxSalto = 255;
   }
+  if (keys & PORT_A_KEY_LEFT) {
+    if (alex.state != PUÑETAZO_SALTANDO)
+      alex.oriented = 1;
+    if (puedeIzquieda)
+      alex.x -= 2;
+  }
+  if (keys & PORT_A_KEY_RIGHT) {
+    if (alex.state != PUÑETAZO_SALTANDO)
+      alex.oriented = 0;
+    if (puedeDerecha)
+      alex.x += 2;
+  }
+  if (alex.state == PUÑETAZO_SALTANDO) {
+    alex.lastChangeFrame--;
+    if  (!alex.lastChangeFrame) {
+      alex.state = 0;
+    }
+    if (!alex.oriented) {
+      alex.frame = 5;
+      SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+    }
+    else {
+      alex.frame = 13;
+      SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+    }
+  }
+  else {
+    if (!alex.oriented)
+      alex.frame = 6;
+    else
+      alex.frame = 14;
+    if (keys & PORT_A_KEY_1) {
+      alex.state = PUÑETAZO_SALTANDO;
+      alex.lastChangeFrame = 20;
+    }
+  }
+  
 }
 
 

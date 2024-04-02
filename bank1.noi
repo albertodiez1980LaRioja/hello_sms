@@ -34,11 +34,11 @@ DEF l__HEADER7 0x3
 DEF l__HEADER8 0x10
 DEF l__GSINIT 0x25
 DEF s__CODE 0x200
-DEF l__CODE 0x2C60
-DEF s__HOME 0x2E60
-DEF s__GSINIT 0x2E62
-DEF s__INITIALIZER 0x2E62
-DEF s__GSFINAL 0x2E87
+DEF l__CODE 0x2CE0
+DEF s__HOME 0x2EE0
+DEF s__GSINIT 0x2EE2
+DEF s__INITIALIZER 0x2EE2
+DEF s__GSFINAL 0x2F07
 DEF s__BSEG 0x8000
 DEF s__BSS 0x8000
 DEF s__DATA 0x8000
@@ -48,10 +48,11 @@ DEF __clock 0x200
 DEF _exit 0x204
 DEF _sonicpalette_inc 0x20A
 DEF _sonictilemap_inc 0x218
-DEF _spriteAlex_inc 0x818
-DEF _sonictiles_inc 0x1818
-DEF _palleteAlex_inc 0x2CD8
-DEF _spritePajaro_inc 0x2CE0
-DEF ___sdcc_external_startup 0x2E60
-DEF gsinit 0x2E62
+DEF _puno_inc 0x818
+DEF _spriteAlex_inc 0x898
+DEF _sonictiles_inc 0x1898
+DEF _palleteAlex_inc 0x2D58
+DEF _spritePajaro_inc 0x2D60
+DEF ___sdcc_external_startup 0x2EE0
+DEF gsinit 0x2EE2
 LOAD bank1.ihx

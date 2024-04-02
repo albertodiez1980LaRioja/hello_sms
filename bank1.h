@@ -4,6 +4,9 @@ extern const unsigned char	sonicpalette_inc[];
 extern const unsigned char	sonictilemap_inc[];
 #define				sonictilemap_inc_size 1536
 
+extern const unsigned char	puno_inc[];
+#define				puno_inc_size 128
+
 extern const unsigned char	spriteAlex_inc[];
 #define				spriteAlex_inc_size 4096
 

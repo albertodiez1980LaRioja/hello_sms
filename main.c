@@ -12,6 +12,9 @@ T_entidad pajaros[NUM_PAJAROS];
 T_sprite spriteAlex = {2, 2, 8, 0, 0, 0};
 T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
 
+T_sprite spritePuno = {2, 2, 8, 0, 0, 0};
+
+
 void inicializaPajaros()
 {
   unsigned char i;
@@ -35,7 +38,9 @@ void loadGrapVRAM()
   SMS_loadSpritePalette(palleteAlex_inc);
   SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
   spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
+  spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
   spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+  
   SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
 }
 
@@ -96,6 +101,7 @@ void main(void)
 
     if (SMS_queryPauseRequested())
     {
+      PSGPlay(emeraldhill_psg);
       SMS_resetPauseRequest();
       while (!SMS_queryPauseRequested())
       {
@@ -103,12 +109,14 @@ void main(void)
         PSGFrame();
       }
       SMS_resetPauseRequest();
+      PSGPlay(titulo_psg);
     }
     unsigned int index = 0;
 
     int keys = SMS_getKeysHeld();
-    moveAlex(keys);
+    
     SMS_initSprites();
+    moveAlex(keys);
     draw_entidad(&alex, &spriteAlex);
     dibujaPajaros();
 

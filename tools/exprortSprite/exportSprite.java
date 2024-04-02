@@ -217,7 +217,7 @@ public class exportSprite {
             return;
         }
         try {
-            FileWriter myWriter2 = new FileWriter("spriteAlex.inc");
+            FileWriter myWriter2 = new FileWriter("puno.inc");
             height = height / 16;
             width = width / 8;
             int tileIndex = 0;
