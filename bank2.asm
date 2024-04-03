@@ -11,6 +11,7 @@
 	.globl _titulo_psg
 	.globl _greenhill_psg
 	.globl _nuestro_psg
+	.globl _salto_psg
 	.globl _special_psg
 	.globl _emeraldhill_psg
 ;--------------------------------------------------------
@@ -11261,6 +11262,70 @@ _special_psg:
 	.db #0x12	; 18
 	.db #0x71	; 113	'q'
 	.db #0x28	; 40
+	.db #0x00	; 0
+_salto_psg:
+	.db #0x8c	; 140
+	.db #0x5a	; 90	'Z'
+	.db #0x90	; 144
+	.db #0xbf	; 191
+	.db #0xdf	; 223
+	.db #0xff	; 255
+	.db #0x38	; 56	'8'
+	.db #0x84	; 132
+	.db #0x59	; 89	'Y'
+	.db #0x91	; 145
+	.db #0x38	; 56	'8'
+	.db #0x8d	; 141
+	.db #0x57	; 87	'W'
+	.db #0x92	; 146
+	.db #0x38	; 56	'8'
+	.db #0x88	; 136
+	.db #0x56	; 86	'V'
+	.db #0x93	; 147
+	.db #0x38	; 56	'8'
+	.db #0x83	; 131
+	.db #0x55	; 85	'U'
+	.db #0x94	; 148
+	.db #0x38	; 56	'8'
+	.db #0x80	; 128
+	.db #0x54	; 84	'T'
+	.db #0x95	; 149
+	.db #0x38	; 56	'8'
+	.db #0x8e	; 142
+	.db #0x52	; 82	'R'
+	.db #0x96	; 150
+	.db #0x38	; 56	'8'
+	.db #0x8d	; 141
+	.db #0x51	; 81	'Q'
+	.db #0x97	; 151
+	.db #0x38	; 56	'8'
+	.db #0x8d	; 141
+	.db #0x50	; 80	'P'
+	.db #0x98	; 152
+	.db #0x38	; 56	'8'
+	.db #0x8e	; 142
+	.db #0x4f	; 79	'O'
+	.db #0x99	; 153
+	.db #0x38	; 56	'8'
+	.db #0x80	; 128
+	.db #0x9a	; 154
+	.db #0x38	; 56	'8'
+	.db #0x83	; 131
+	.db #0x4e	; 78	'N'
+	.db #0x9b	; 155
+	.db #0x38	; 56	'8'
+	.db #0x86	; 134
+	.db #0x4d	; 77	'M'
+	.db #0x9c	; 156
+	.db #0x38	; 56	'8'
+	.db #0x8a	; 138
+	.db #0x4c	; 76	'L'
+	.db #0x9d	; 157
+	.db #0x38	; 56	'8'
+	.db #0x8e	; 142
+	.db #0x4b	; 75	'K'
+	.db #0x9e	; 158
+	.db #0x38	; 56	'8'
 	.db #0x00	; 0
 _nuestro_psg:
 	.db #0x8e	; 142

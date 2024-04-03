@@ -1,5 +1,7 @@
 #include "SMSlib.h" 
 //#include "./lib/entities.c"
+#include "bank2.h"
+#include "PSGlib.h"
 
 
 
@@ -59,6 +61,8 @@ void moveAlexSuelo(int keys) {
     else 
       maxSalto = 0;
     alex.y--;
+    alex.y--;
+    PSGSFXPlay(salto_psg, SFX_CHANNEL1);
     return;
   }
   else if (keys & PORT_A_KEY_1) {

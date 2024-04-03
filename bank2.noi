@@ -34,11 +34,11 @@ DEF l__HEADER7 0x3
 DEF l__HEADER8 0x10
 DEF l__GSINIT 0x25
 DEF s__CODE 0x200
-DEF l__CODE 0x3DCA
-DEF s__HOME 0x3FCA
-DEF s__GSINIT 0x3FCC
-DEF s__INITIALIZER 0x3FCC
-DEF s__GSFINAL 0x3FF1
+DEF l__CODE 0x3E09
+DEF s__HOME 0x4009
+DEF s__GSINIT 0x400B
+DEF s__INITIALIZER 0x400B
+DEF s__GSFINAL 0x4030
 DEF s__BSEG 0x8000
 DEF s__BSS 0x8000
 DEF s__DATA 0x8000
@@ -48,9 +48,10 @@ DEF __clock 0x200
 DEF _exit 0x204
 DEF _emeraldhill_psg 0x20A
 DEF _special_psg 0x4F0
-DEF _nuestro_psg 0x2DD9
-DEF _greenhill_psg 0x3224
-DEF _titulo_psg 0x365F
-DEF ___sdcc_external_startup 0x3FCA
-DEF gsinit 0x3FCC
+DEF _salto_psg 0x2DD9
+DEF _nuestro_psg 0x2E18
+DEF _greenhill_psg 0x3263
+DEF _titulo_psg 0x369E
+DEF ___sdcc_external_startup 0x4009
+DEF gsinit 0x400B
 LOAD bank2.ihx

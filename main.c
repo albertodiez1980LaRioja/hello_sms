@@ -62,6 +62,10 @@ void dibujaPajaros()
   }
 }
 
+void playMusic() {
+  PSGFrame();
+  PSGSFXFrame();
+}
 
 void main(void)
 {
@@ -93,9 +97,9 @@ void main(void)
   /* Do nothing */
   // PSGPlay(titulo_psg);
   // PSGPlay(nuestro_psg);
-  PSGPlay(titulo_psg);
+  PSGPlay(special_psg);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-
+  SMS_setFrameInterruptHandler(playMusic);
   for (;;)
   {
 
@@ -106,7 +110,8 @@ void main(void)
       while (!SMS_queryPauseRequested())
       {
         SMS_waitForVBlank();
-        PSGFrame();
+        //PSGFrame();
+        //PSGFXFrame();
       }
       SMS_resetPauseRequest();
       PSGPlay(titulo_psg);
@@ -114,6 +119,12 @@ void main(void)
     unsigned int index = 0;
 
     int keys = SMS_getKeysHeld();
+    if(keys & PORT_A_KEY_2)
+      keys = keys  ^ PORT_A_KEY_2;
+    if(keys & PORT_A_KEY_1)
+      keys = keys  ^ PORT_A_KEY_1;
+
+    keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
     
     SMS_initSprites();
     moveAlex(keys);
@@ -125,7 +136,8 @@ void main(void)
     // SMS_printatXY(4,12,"Hello, World! [3/3]");
     SMS_waitForVBlank();
     SMS_copySpritestoSAT();
-    PSGFrame();
+    //PSGFrame();
+    //PSGSFXFrame();
     SMS_displayOff();
     if (scroll_y % 2 == 0)
       scroll_x += 1;

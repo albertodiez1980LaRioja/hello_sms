@@ -43,11 +43,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000010  l__HEADER8                      
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00003DCA  l__CODE                         
-     00003FCA  s__HOME                         
-     00003FCC  s__GSINIT                       
-     00003FCC  s__INITIALIZER                  
-     00003FF1  s__GSFINAL                      
+     00003E09  l__CODE                         
+     00004009  s__HOME                         
+     0000400B  s__GSINIT                       
+     0000400B  s__INITIALIZER                  
+     00004030  s__GSFINAL                      
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
@@ -59,7 +59,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00003DCA =       15818. bytes (REL,CON)
+_CODE                               00000200    00003E09 =       15881. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -67,9 +67,10 @@ _CODE                               00000200    00003DCA =       15818. bytes (R
      00000204  _exit                              crt0
      0000020A  _emeraldhill_psg                   bank2
      000004F0  _special_psg                       bank2
-     00002DD9  _nuestro_psg                       bank2
-     00003224  _greenhill_psg                     bank2
-     0000365F  _titulo_psg                        bank2
+     00002DD9  _salto_psg                         bank2
+     00002E18  _nuestro_psg                       bank2
+     00003263  _greenhill_psg                     bank2
+     0000369E  _titulo_psg                        bank2
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -157,29 +158,29 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00003FCA    00000002 =           2. bytes (REL,CON)
+_HOME                               00004009    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00003FCA  ___sdcc_external_startup           _startup
+     00004009  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00003FCC    00000025 =          37. bytes (REL,CON)
+_GSINIT                             0000400B    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00003FCC  gsinit                             crt0
+     0000400B  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00003FF1    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00004030    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
