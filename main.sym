@@ -21,7 +21,6 @@ Symbol Table
     _SMS_VRAMmemsetW                                               ****** GX
     _SMS_addSprite_f                                               ****** GX
     _SMS_copySpritestoSAT                                          ****** GX
-    _SMS_finalizeSprites                                           ****** GX
     _SMS_getKeysHeld                                               ****** GX
     _SMS_getKeysPressed                                            ****** GX
     _SMS_init                                                      ****** GX
@@ -34,50 +33,62 @@ Symbol Table
     _SMS_setBGScrollY                                              ****** GX
     _SMS_setFrameInterruptHandler                                  ****** GX
     _SMS_setSpriteMode                                             ****** GX
+    _SMS_updateSpritePosition                                      ****** GX
     _SMS_waitForVBlank                                             ****** GX
     _SRAM_bank_to_be_mapped_on_slot2                            =  00FFFC G
-  A ___SMS__SDSC_author                                            007FD8 GR
-  C ___SMS__SDSC_descr                                             007FB9 GR
-  B ___SMS__SDSC_name                                              007FCA GR
+    _SpriteNextFree                                                ****** GX
+  1 _SpriteNextFree2                                               000304 GR
+    _SpriteTableXN                                                 ****** GX
+  1 _SpriteTableXN2                                                000302 GR
+    _SpriteTableY                                                  ****** GX
+  1 _SpriteTableY2                                                 000300 GR
+  A ___SMS__SDSC_author                                            007FDB GR
+  C ___SMS__SDSC_descr                                             007FBC GR
+  B ___SMS__SDSC_name                                              007FCD GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       0008A9 R
+  0 ___str_0                                                       0009CD R
     __divsint                                                      ****** GX
-  0 __str_1                                                        0008BD R
-  0 __str_2                                                        0008C5 R
-  0 __str_3                                                        0008D3 R
+  0 __str_1                                                        0009E1 R
+  0 __str_2                                                        0009E6 R
+  0 __str_3                                                        0009F4 R
   7 __xinit__alex                                                  000003 R
   7 __xinit__maxSalto                                              000002 R
   7 __xinit__nextVRAMsprites                                       000000 R
   7 __xinit__spriteAlex                                            000009 R
   7 __xinit__spritePajaro                                          000013 R
   7 __xinit__spritePuno                                            00001D R
-  2 _alex                                                          000003 GR
-  0 _canDown                                                       000395 GR
-  0 _canLeft                                                       0003A3 GR
-  0 _canRight                                                      0003AF GR
-  0 _canUp                                                         000389 GR
-  0 _dibujaPajaros                                                 000774 GR
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Symbol Table
 
-  0 _draw_entidad                                                  000159 GR
+  0 _addHardwareSprite                                             000159 GR
+  2 _alex                                                          000003 GR
+  0 _canDown                                                       000490 GR
+  0 _canLeft                                                       00049E GR
+  0 _canRight                                                      0004AA GR
+  0 _canUp                                                         000484 GR
+  0 _dibujaPajaros                                                 000869 GR
+  0 _disableSprites                                                0008CF GR
+  0 _draw_entidad                                                  00023A GR
     _emeraldhill_psg                                               ****** GX
   0 _generateSprite                                                000000 GR
   0 _generateSpriteNoRAM                                           0000AA GR
-  0 _inicializaPajaros                                             00066D GR
-  0 _loadGrapVRAM                                                  0006B5 GR
-  0 _main                                                          0007D1 GR
+  1 _hardwareSprites                                               000000 GR
+  0 _inicializaPajaros                                             000768 GR
+  0 _initSpritesVariables                                          00020B GR
+  0 _loadGrapVRAM                                                  0007B0 GR
+  0 _main                                                          0008ED GR
   2 _maxSalto                                                      000002 GR
-  0 _moveAlex                                                      000636 GR
-  0 _moveAlexAire                                                  00053A GR
-  0 _moveAlexSuelo                                                 0003BD GR
+  0 _moveAlex                                                      000731 GR
+  0 _moveAlexAire                                                  000635 GR
+  0 _moveAlexSuelo                                                 0004B8 GR
   2 _nextVRAMsprites                                               000000 GR
-  1 _pajaros                                                       000000 GR
+  1 _numSprites                                                    000342 GR
+  1 _pajaros                                                       000306 GR
     _palleteAlex_inc                                               ****** GX
-  0 _playMusic                                                     0007CB GR
+  0 _playMusic                                                     0008C9 GR
     _printf                                                        ****** GX
     _puno_inc                                                      ****** GX
     _salto_psg                                                     ****** GX
@@ -98,8 +109,8 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    8E4   flags    0
-   1 _DATA                                      size     3C   flags    0
+   0 _CODE                                      size    A05   flags    0
+   1 _DATA                                      size    344   flags    0
    2 _INITIALIZED                               size     27   flags    0
    3 _DABS                                      size      0   flags    8
    4 _HOME                                      size      0   flags    0
@@ -108,7 +119,7 @@ Area Table
    7 _INITIALIZER                               size     27   flags    0
    8 _CABS                                      size      0   flags    8
    9 _CABS0                                     size     10   flags    8
-   A _CABS1                                     size      8   flags    8
+   A _CABS1                                     size      5   flags    8
    B _CABS2                                     size      E   flags    8
    C _CABS3                                     size     11   flags    8
    D _CABS4                                     size     10   flags    8

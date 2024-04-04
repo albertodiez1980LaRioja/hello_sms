@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SMSlib.h"
+
 #include "PSGlib.h"
 #include "bank1.h"
 #include "bank2.h"
@@ -13,6 +14,7 @@ T_sprite spriteAlex = {2, 2, 8, 0, 0, 0};
 T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
 
 T_sprite spritePuno = {2, 2, 8, 0, 0, 0};
+unsigned int numSprites;
 
 
 void inicializaPajaros()
@@ -33,7 +35,6 @@ void loadGrapVRAM()
   // SMS_setSpriteMode(SPRITEMODE_NORMAL);
   SMS_setSpriteMode(SPRITEMODE_TALL);
   SMS_displayOn();
-  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   SMS_loadBGPalette(sonicpalette_inc);
   SMS_loadSpritePalette(palleteAlex_inc);
   SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
@@ -58,13 +59,23 @@ void dibujaPajaros()
         pajaros[i].frame = 0;
       pajaros[i].lastChangeFrame = 0;
     }
-    draw_entidad(&(pajaros[i]), &spritePajaro);
+    numSprites = draw_entidad(&(pajaros[i]), &spritePajaro, numSprites);
   }
 }
 
 void playMusic() {
   PSGFrame();
   PSGSFXFrame();
+}
+
+void disableSprites() {
+  unsigned int i = 0;
+  ///i = 10;
+  while (i < 64) {
+    SMS_updateSpritePosition(i,10,240); 
+    i++;
+  }
+  numSprites = 0;
 }
 
 void main(void)
@@ -99,7 +110,11 @@ void main(void)
   // PSGPlay(nuestro_psg);
   PSGPlay(special_psg);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+  //SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+  //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
+  //SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
   SMS_setFrameInterruptHandler(playMusic);
+  initSpritesVariables();
   for (;;)
   {
 
@@ -128,14 +143,19 @@ void main(void)
     
     SMS_initSprites();
     moveAlex(keys);
-    draw_entidad(&alex, &spriteAlex);
+    numSprites = draw_entidad(&alex, &spriteAlex, numSprites);
     dibujaPajaros();
 
-    SMS_finalizeSprites();
     // SMS_autoSetUpTextRenderer();
     // SMS_printatXY(4,12,"Hello, World! [3/3]");
+    
     SMS_waitForVBlank();
+
+    //SMS_initSprites();
+   
     SMS_copySpritestoSAT();
+    //copySpritestoSAT();
+    //disableSprites();
     //PSGFrame();
     //PSGSFXFrame();
     SMS_displayOff();
@@ -151,5 +171,5 @@ void main(void)
   }
 }
 
-SMS_EMBED_SEGA_ROM_HEADER(9999, 0);
-SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "raphnet", "basic example", "A simple example");
+SMS_EMBED_SEGA_ROM_HEADER(999, 0);
+SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "SEGA", "basic example", "A simple example");

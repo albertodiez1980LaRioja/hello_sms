@@ -14,6 +14,7 @@
 	.globl ___SMS__SDSC_author
 	.globl ___SMS__SEGA_signature
 	.globl _main
+	.globl _disableSprites
 	.globl _playMusic
 	.globl _dibujaPajaros
 	.globl _loadGrapVRAM
@@ -39,7 +40,7 @@
 	.globl _SMS_loadSpritePalette
 	.globl _SMS_loadBGPalette
 	.globl _SMS_copySpritestoSAT
-	.globl _SMS_finalizeSprites
+	.globl _SMS_updateSpritePosition
 	.globl _SMS_addSprite_f
 	.globl _SMS_initSprites
 	.globl _SMS_waitForVBlank
@@ -49,6 +50,8 @@
 	.globl _SMS_VDPturnOffFeature
 	.globl _SMS_VDPturnOnFeature
 	.globl _SMS_init
+	.globl _addHardwareSprite
+	.globl _generateSpriteNoRAM
 	.globl _printf
 	.globl _spritePuno
 	.globl _spritePajaro
@@ -56,14 +59,19 @@
 	.globl _alex
 	.globl _maxSalto
 	.globl _nextVRAMsprites
+	.globl _numSprites
 	.globl _pajaros
 	.globl _SMS_SRAM
 	.globl _SRAM_bank_to_be_mapped_on_slot2
 	.globl _ROM_bank_to_be_mapped_on_slot0
 	.globl _ROM_bank_to_be_mapped_on_slot1
 	.globl _ROM_bank_to_be_mapped_on_slot2
+	.globl _SpriteNextFree2
+	.globl _SpriteTableXN2
+	.globl _SpriteTableY2
+	.globl _hardwareSprites
 	.globl _generateSprite
-	.globl _generateSpriteNoRAM
+	.globl _initSpritesVariables
 	.globl _draw_entidad
 ;--------------------------------------------------------
 ; special function registers
@@ -72,6 +80,14 @@
 ; ram data
 ;--------------------------------------------------------
 	.area _DATA
+_hardwareSprites::
+	.ds 768
+_SpriteTableY2::
+	.ds 2
+_SpriteTableXN2::
+	.ds 2
+_SpriteNextFree2::
+	.ds 2
 _ROM_bank_to_be_mapped_on_slot2	=	0xffff
 _ROM_bank_to_be_mapped_on_slot1	=	0xfffe
 _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
@@ -79,6 +95,8 @@ _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
 _SMS_SRAM	=	0x8000
 _pajaros::
 	.ds 60
+_numSprites::
+	.ds 2
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -115,7 +133,7 @@ _spritePuno::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;./lib/./sprite.c:18: T_sprite generateSprite(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
+;./lib/./sprite.c:20: T_sprite generateSprite(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
 ;	---------------------------------
 ; Function generateSprite
 ; ---------------------------------
@@ -128,7 +146,7 @@ _generateSprite::
 	ld	sp, iy
 	ld	e, a
 	ld	d, l
-;./lib/./sprite.c:19: unsigned char tamano = alto*ancho*2;
+;./lib/./sprite.c:21: unsigned char tamano = alto*ancho*2;
 	push	de
 	ld	h, d
 ;	spillPairReg hl
@@ -145,7 +163,7 @@ _generateSprite::
 	pop	de
 	ld	c, l
 	sla	c
-;./lib/./sprite.c:20: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 1,0};
+;./lib/./sprite.c:22: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 1,0};
 	ld	-10 (ix), d
 	ld	-9 (ix), e
 	ld	-8 (ix), c
@@ -180,7 +198,7 @@ _generateSprite::
 	ld	-3 (ix), a
 	ld	-2 (ix), a
 	ld	-1 (ix), #0x00
-;./lib/./sprite.c:21: SMS_loadTiles(data,nextVRAMsprites,tam);
+;./lib/./sprite.c:23: SMS_loadTiles(data,nextVRAMsprites,tam);
 	ld	e, 8 (ix)
 	ld	d, 9 (ix)
 	ld	hl, (_nextVRAMsprites)
@@ -201,7 +219,7 @@ _generateSprite::
 	ex	(sp), hl
 	call	_SMS_VRAMmemcpy
 	pop	bc
-;./lib/./sprite.c:22: nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
+;./lib/./sprite.c:24: nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
 	ld	e, -7 (ix)
 	ld	h, c
 ;	spillPairReg hl
@@ -224,7 +242,7 @@ _generateSprite::
 	ld	a, (hl)
 	adc	a, d
 	ld	(hl), a
-;./lib/./sprite.c:23: return sprite;
+;./lib/./sprite.c:25: return sprite;
 	ld	hl, #14
 	add	hl, sp
 	ld	e, (hl)
@@ -234,11 +252,11 @@ _generateSprite::
 	add	hl, sp
 	ld	bc, #10
 	ldir
-;./lib/./sprite.c:24: }
+;./lib/./sprite.c:26: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./lib/./sprite.c:26: T_sprite generateSpriteNoRAM(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
+;./lib/./sprite.c:29: T_sprite generateSpriteNoRAM(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
 ;	---------------------------------
 ; Function generateSpriteNoRAM
 ; ---------------------------------
@@ -251,7 +269,7 @@ _generateSpriteNoRAM::
 	ld	sp, iy
 	ld	e, a
 	ld	d, l
-;./lib/./sprite.c:27: unsigned char tamano = alto*ancho*2;
+;./lib/./sprite.c:30: unsigned char tamano = alto*ancho*2;
 	push	de
 	ld	h, d
 ;	spillPairReg hl
@@ -268,7 +286,7 @@ _generateSpriteNoRAM::
 	pop	de
 	ld	c, l
 	sla	c
-;./lib/./sprite.c:28: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 0,0};
+;./lib/./sprite.c:31: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 0,0};
 	ld	-12 (ix), d
 	ld	-11 (ix), e
 	ld	-10 (ix), c
@@ -306,14 +324,14 @@ _generateSpriteNoRAM::
 	ld	-5 (ix), a
 	ld	-4 (ix), a
 	ld	-3 (ix), #0x00
-;./lib/./sprite.c:29: sprite.data = data;
+;./lib/./sprite.c:32: sprite.data = data;
 	ld	a, 8 (ix)
 	ld	-5 (ix), a
 	ld	a, 9 (ix)
 	ld	-4 (ix), a
-;./lib/./sprite.c:30: sprite.frameInVRAM = 0;
+;./lib/./sprite.c:33: sprite.frameInVRAM = 0;
 	ld	-3 (ix), #0x00
-;./lib/./sprite.c:31: SMS_loadTiles(data,nextVRAMsprites,tamano*32);
+;./lib/./sprite.c:34: SMS_loadTiles(data,nextVRAMsprites,tamano*32);
 	ld	c, 8 (ix)
 	ld	b, 9 (ix)
 	ld	hl, (_nextVRAMsprites)
@@ -327,7 +345,7 @@ _generateSpriteNoRAM::
 	ld	e, c
 	ld	d, b
 	call	_SMS_VRAMmemcpy
-;./lib/./sprite.c:32: nextVRAMsprites = nextVRAMsprites + (tamano);
+;./lib/./sprite.c:35: nextVRAMsprites = nextVRAMsprites + (tamano);
 	ld	hl, #_nextVRAMsprites
 	ld	a, (hl)
 	add	a, -2 (ix)
@@ -336,7 +354,7 @@ _generateSpriteNoRAM::
 	ld	a, (hl)
 	adc	a, -1 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:33: return sprite;
+;./lib/./sprite.c:36: return sprite;
 	ld	hl, #16
 	add	hl, sp
 	ld	e, (hl)
@@ -346,11 +364,183 @@ _generateSpriteNoRAM::
 	add	hl, sp
 	ld	bc, #10
 	ldir
-;./lib/./sprite.c:34: }
+;./lib/./sprite.c:37: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./lib/entities.c:10: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
+;./lib/./sprite.c:48: unsigned int addHardwareSprite(unsigned int x,unsigned int y,unsigned int vx,unsigned int vy,unsigned int lx,
+;	---------------------------------
+; Function addHardwareSprite
+; ---------------------------------
+_addHardwareSprite::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	push	af
+	push	af
+	push	af
+	ld	-4 (ix), l
+	ld	-3 (ix), h
+;./lib/./sprite.c:50: unsigned int i = MAX_HARDWARE_SPRITES;
+	ld	hl, #0x0040
+	ex	(sp), hl
+;./lib/./sprite.c:51: while (i) {
+	ld	bc, #0x0040
+00105$:
+	ld	a, b
+	or	a, c
+	jp	Z, 00114$
+;./lib/./sprite.c:52: if (!hardwareSprites[i].len) {
+	ld	l, c
+	ld	h, b
+	add	hl, hl
+	add	hl, bc
+	add	hl, hl
+	add	hl, hl
+	ld	iy, #_hardwareSprites
+	push	bc
+	ld	c, l
+	ld	b, h
+	add	iy, bc
+	pop	bc
+	push	iy
+	pop	hl
+	push	bc
+	ld	bc, #0x000b
+	add	hl, bc
+	pop	bc
+	ld	a, (hl)
+	dec	hl
+	ld	l, (hl)
+;	spillPairReg hl
+	or	a, l
+	jr	NZ, 00104$
+;./lib/./sprite.c:53: T_HardwareSprite *p = &hardwareSprites[i]; 
+	push	iy
+	pop	bc
+;./lib/./sprite.c:54: p->x = x;
+	ld	hl, #0x0004
+	add	hl, bc
+	ld	a, -4 (ix)
+	ld	(hl), a
+	inc	hl
+	ld	a, -3 (ix)
+	ld	(hl), a
+;./lib/./sprite.c:55: p->y = y;
+	ld	hl, #0x0006
+	add	hl, bc
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+;./lib/./sprite.c:56: p->vx = vx;
+	ld	l, c
+	ld	h, b
+	ld	a, 4 (ix)
+	ld	(hl), a
+	inc	hl
+	ld	a, 5 (ix)
+	ld	(hl), a
+;./lib/./sprite.c:57: p->vy = vy;
+	inc	bc
+	inc	bc
+	ld	a, 6 (ix)
+	ld	(bc), a
+	inc	bc
+	ld	a, 7 (ix)
+	ld	(bc), a
+;./lib/./sprite.c:59: for (int ix=0;ix<lx;ix++) {
+	xor	a, a
+	ld	-2 (ix), a
+	ld	-1 (ix), a
+00112$:
+	ld	c, -2 (ix)
+	ld	b, -1 (ix)
+	ld	a, c
+	sub	a, 8 (ix)
+	ld	a, b
+	sbc	a, 9 (ix)
+	jr	NC, 00102$
+;./lib/./sprite.c:60: for (int iy=0;iy<ly;iy++){
+	ld	de, #0x0000
+00109$:
+	ld	c, e
+	ld	b, d
+	ld	a, c
+	sub	a, 10 (ix)
+	ld	a, b
+	sbc	a, 11 (ix)
+	jr	NC, 00113$
+	inc	de
+	jr	00109$
+00113$:
+;./lib/./sprite.c:59: for (int ix=0;ix<lx;ix++) {
+	inc	-2 (ix)
+	jr	NZ, 00112$
+	inc	-1 (ix)
+	jr	00112$
+00102$:
+;./lib/./sprite.c:64: return i;
+	pop	de
+	push	de
+	jr	00114$
+00104$:
+;./lib/./sprite.c:66: i--;
+	dec	bc
+	inc	sp
+	inc	sp
+	push	bc
+	jp	00105$
+00114$:
+;./lib/./sprite.c:68: }
+	ld	sp, ix
+	pop	ix
+	pop	hl
+	pop	af
+	pop	af
+	pop	af
+	pop	af
+	pop	af
+	jp	(hl)
+;./lib/./sprite.c:80: void initSpritesVariables (void) {
+;	---------------------------------
+; Function initSpritesVariables
+; ---------------------------------
+_initSpritesVariables::
+;./lib/./sprite.c:82: while (i) {
+	ld	bc, #0x0040
+00101$:
+	ld	a, b
+	or	a, c
+	jr	Z, 00103$
+;./lib/./sprite.c:83: hardwareSprites[i].len = 0;
+	ld	l, c
+	ld	h, b
+	add	hl, hl
+	add	hl, bc
+	add	hl, hl
+	add	hl, hl
+	ld	de, #_hardwareSprites
+	add	hl, de
+	ld	de, #0x000a
+	add	hl, de
+	xor	a, a
+	ld	(hl), a
+	inc	hl
+	ld	(hl), a
+;./lib/./sprite.c:84: i--;
+	dec	bc
+	jr	00101$
+00103$:
+;./lib/./sprite.c:97: __endasm;
+	ld	hl, #_SpriteNextFree
+	ld	(#_SpriteNextFree2), hl
+	ld	hl, #_SpriteTableY
+	ld	(#_SpriteTableY2), hl
+	ld	hl, #_SpriteTableXN
+	ld	(#_SpriteTableXN2), hl
+;./lib/./sprite.c:100: }
+	ret
+;./lib/entities.c:10: unsigned int draw_entidad(T_entidad *entidad, T_sprite *sprite, unsigned int numSprites){
 ;	---------------------------------
 ; Function draw_entidad
 ; ---------------------------------
@@ -445,9 +635,10 @@ _draw_entidad::
 00114$:
 	ld	l, -6 (ix)
 	ld	h, -5 (ix)
-	ld	a,-2 (ix)
-	sub	a,(hl)
-	jp	NC, 00122$
+	ld	c, (hl)
+	ld	a, -2 (ix)
+	sub	a, c
+	jp	NC, 00109$
 ;./lib/entities.c:15: unsigned char desplazado = (j<<2);
 	ld	a, -2 (ix)
 	add	a, a
@@ -472,7 +663,7 @@ _draw_entidad::
 	ld	a,-1 (ix)
 	sub	a,(hl)
 	jr	NC, 00115$
-;./lib/entities.c:18: SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:18: numSprites = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
 	ld	a, (hl)
@@ -512,6 +703,10 @@ _draw_entidad::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_addSprite_f
+	ld	4 (ix), a
+	rlca
+	sbc	a, a
+	ld	5 (ix), a
 ;./lib/entities.c:17: for(i=0;i<sprite->ancho;i++) {
 	inc	-1 (ix)
 	jr	00111$
@@ -616,9 +811,10 @@ _draw_entidad::
 00120$:
 	ld	l, -6 (ix)
 	ld	h, -5 (ix)
-	ld	a,-1 (ix)
-	sub	a,(hl)
-	jr	NC, 00122$
+	ld	c, (hl)
+	ld	a, -1 (ix)
+	sub	a, c
+	jr	NC, 00109$
 ;./lib/entities.c:29: for(i=0;i<sprite->ancho;i++) {
 	ld	c, #0x00
 00117$:
@@ -628,7 +824,7 @@ _draw_entidad::
 	ld	a, c
 	sub	a, b
 	jr	NC, 00121$
-;./lib/entities.c:30: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+;./lib/entities.c:30: numSprites = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
 	ld	a, (hl)
@@ -689,6 +885,10 @@ _draw_entidad::
 	push	bc
 	call	_SMS_addSprite_f
 	pop	bc
+	ld	4 (ix), a
+	rlca
+	sbc	a, a
+	ld	5 (ix), a
 ;./lib/entities.c:29: for(i=0;i<sprite->ancho;i++) {
 	inc	c
 	jr	00117$
@@ -696,11 +896,16 @@ _draw_entidad::
 ;./lib/entities.c:28: for(j=0;j<sprite->alto;j++) {
 	inc	-1 (ix)
 	jr	00120$
-00122$:
-;./lib/entities.c:34: }
+00109$:
+;./lib/entities.c:34: return numSprites;
+	ld	e, 4 (ix)
+	ld	d, 5 (ix)
+;./lib/entities.c:35: }
 	ld	sp, ix
 	pop	ix
-	ret
+	pop	hl
+	pop	af
+	jp	(hl)
 ;./alex.c:20: unsigned char canUp(){
 ;	---------------------------------
 ; Function canUp
@@ -1289,7 +1494,7 @@ _moveAlex::
 	inc	sp
 	pop	ix
 	ret
-;main.c:18: void inicializaPajaros()
+;main.c:20: void inicializaPajaros()
 ;	---------------------------------
 ; Function inicializaPajaros
 ; ---------------------------------
@@ -1298,10 +1503,10 @@ _inicializaPajaros::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:21: for (i = 0; i < NUM_PAJAROS; i++)
+;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
 	ld	c, #0x00
 00102$:
-;main.c:23: pajaros[i].x = 15 + 32 * i;
+;main.c:25: pajaros[i].x = 15 + 32 * i;
 	ld	b, #0x00
 	ld	l, c
 	ld	h, b
@@ -1319,7 +1524,7 @@ _inicializaPajaros::
 	and	a, #0xe0
 	add	a, #0x0f
 	ld	(de), a
-;main.c:24: pajaros[i].y = 15 + 16 * (i / 2);
+;main.c:26: pajaros[i].y = 15 + 16 * (i / 2);
 	ld	l, e
 	ld	h, d
 	inc	hl
@@ -1341,7 +1546,7 @@ _inicializaPajaros::
 	pop	hl
 	push	hl
 	ld	(hl), a
-;main.c:25: pajaros[i].lastChangeFrame = i * 3;
+;main.c:27: pajaros[i].lastChangeFrame = i * 3;
 	inc	de
 	inc	de
 	inc	de
@@ -1349,16 +1554,16 @@ _inicializaPajaros::
 	add	a, a
 	add	a, c
 	ld	(de), a
-;main.c:21: for (i = 0; i < NUM_PAJAROS; i++)
+;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
 	inc	c
 	ld	a, c
 	sub	a, #0x0a
 	jr	C, 00102$
-;main.c:27: }
+;main.c:29: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:29: void loadGrapVRAM()
+;main.c:31: void loadGrapVRAM()
 ;	---------------------------------
 ; Function loadGrapVRAM
 ; ---------------------------------
@@ -1369,34 +1574,31 @@ _loadGrapVRAM::
 	ld	hl, #-30
 	add	hl, sp
 	ld	sp, hl
-;main.c:31: SMS_init();
+;main.c:33: SMS_init();
 	call	_SMS_init
-;main.c:32: inicializaPajaros();
+;main.c:34: inicializaPajaros();
 	call	_inicializaPajaros
-;main.c:34: SMS_setSpriteMode(SPRITEMODE_TALL);
+;main.c:36: SMS_setSpriteMode(SPRITEMODE_TALL);
 	ld	l, #0x01
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setSpriteMode
-;main.c:35: SMS_displayOn();
+;main.c:37: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:36: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-	ld	hl, #0x0020
-	call	_SMS_VDPturnOnFeature
-;main.c:37: SMS_loadBGPalette(sonicpalette_inc);
+;main.c:38: SMS_loadBGPalette(sonicpalette_inc);
 	ld	hl, #_sonicpalette_inc
 	call	_SMS_loadBGPalette
-;main.c:38: SMS_loadSpritePalette(palleteAlex_inc);
+;main.c:39: SMS_loadSpritePalette(palleteAlex_inc);
 	ld	hl, #_palleteAlex_inc
 	call	_SMS_loadSpritePalette
-;main.c:39: SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
+;main.c:40: SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
 	ld	hl, #0x14c0
 	push	hl
 	ld	de, #_sonictiles_inc
 	ld	hl, #0x4000
 	call	_SMS_VRAMmemcpy
-;main.c:40: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
+;main.c:41: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
 	ld	hl, #_spriteAlex_inc
 	push	hl
 	ld	hl, #0x1000
@@ -1420,7 +1622,7 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:41: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
+;main.c:42: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
 	ld	hl, #_puno_inc
 	push	hl
 	ld	hl, #0x0080
@@ -1444,7 +1646,7 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:42: spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+;main.c:43: spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
 	ld	hl, #_spritePajaro_inc
 	push	hl
 	ld	hl, #0x0180
@@ -1468,17 +1670,17 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:44: SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
+;main.c:45: SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
 	ld	hl, #0x0600
 	push	hl
 	ld	de, #_sonictilemap_inc
 	ld	h, #0x78
 	call	_SMS_VRAMmemcpy
-;main.c:45: }
+;main.c:46: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:47: void dibujaPajaros()
+;main.c:48: void dibujaPajaros()
 ;	---------------------------------
 ; Function dibujaPajaros
 ; ---------------------------------
@@ -1487,10 +1689,10 @@ _dibujaPajaros::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:50: for (i = 0; i < NUM_PAJAROS; i++)
+;main.c:51: for (i = 0; i < NUM_PAJAROS; i++)
 	ld	-1 (ix), #0x00
 00106$:
-;main.c:52: pajaros[i].x++;
+;main.c:53: pajaros[i].x++;
 	ld	c, -1 (ix)
 	ld	b, #0x00
 	ld	l, c
@@ -1498,30 +1700,30 @@ _dibujaPajaros::
 	add	hl, hl
 	add	hl, bc
 	add	hl, hl
-	ex	de, hl
-	ld	hl, #_pajaros
+	ld	de, #_pajaros
 	add	hl, de
-	ex	de, hl
-	ld	a, (de)
-	inc	a
-	ld	(de), a
-;main.c:53: pajaros[i].lastChangeFrame++;
-	ld	c, e
-	ld	b, d
-	inc	bc
-	inc	bc
-	inc	bc
+	ld	c, l
+	ld	b, h
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;main.c:54: if (pajaros[i].lastChangeFrame == 20)
+;main.c:54: pajaros[i].lastChangeFrame++;
+	ld	e, c
+	ld	d, b
+	inc	de
+	inc	de
+	inc	de
+	ld	a, (de)
+	inc	a
+	ld	(de), a
+;main.c:55: if (pajaros[i].lastChangeFrame == 20)
 	sub	a, #0x14
 	jr	NZ, 00104$
-;main.c:56: pajaros[i].frame++;
-	ld	l, e
+;main.c:57: pajaros[i].frame++;
+	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
-	ld	h, d
+	ld	h, b
 ;	spillPairReg hl
 ;	spillPairReg hl
 	inc	hl
@@ -1530,41 +1732,82 @@ _dibujaPajaros::
 	inc	a
 	ld	-2 (ix), a
 	ld	(hl), a
-;main.c:57: if (pajaros[i].frame > 1)
+;main.c:58: if (pajaros[i].frame > 1)
 	ld	a, #0x01
 	sub	a, -2 (ix)
 	jr	NC, 00102$
-;main.c:58: pajaros[i].frame = 0;
+;main.c:59: pajaros[i].frame = 0;
 	ld	(hl), #0x00
 00102$:
-;main.c:59: pajaros[i].lastChangeFrame = 0;
+;main.c:60: pajaros[i].lastChangeFrame = 0;
 	xor	a, a
-	ld	(bc), a
+	ld	(de), a
 00104$:
-;main.c:61: draw_entidad(&(pajaros[i]), &spritePajaro);
-	ex	de, hl
+;main.c:62: numSprites = draw_entidad(&(pajaros[i]), &spritePajaro, numSprites);
+	ld	hl, (_numSprites)
+	push	hl
 	ld	de, #_spritePajaro
+	ld	l, c
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	h, b
+;	spillPairReg hl
+;	spillPairReg hl
 	call	_draw_entidad
-;main.c:50: for (i = 0; i < NUM_PAJAROS; i++)
+	ex	de, hl
+	ld	(_numSprites), hl
+;main.c:51: for (i = 0; i < NUM_PAJAROS; i++)
 	inc	-1 (ix)
 	ld	a, -1 (ix)
 	sub	a, #0x0a
 	jr	C, 00106$
-;main.c:63: }
+;main.c:64: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:65: void playMusic() {
+;main.c:66: void playMusic() {
 ;	---------------------------------
 ; Function playMusic
 ; ---------------------------------
 _playMusic::
-;main.c:66: PSGFrame();
+;main.c:67: PSGFrame();
 	call	_PSGFrame
-;main.c:67: PSGSFXFrame();
-;main.c:68: }
+;main.c:68: PSGSFXFrame();
+;main.c:69: }
 	jp	_PSGSFXFrame
-;main.c:70: void main(void)
+;main.c:71: void disableSprites() {
+;	---------------------------------
+; Function disableSprites
+; ---------------------------------
+_disableSprites::
+;main.c:74: while (i < 64) {
+	ld	c, #0x00
+00101$:
+	ld	a, c
+	sub	a, #0x40
+	jr	NC, 00103$
+;main.c:75: SMS_updateSpritePosition(i,10,240); 
+	ld	b, c
+	push	bc
+	ld	a, #0xf0
+	push	af
+	inc	sp
+	ld	l, #0x0a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, b
+	call	_SMS_updateSpritePosition
+	pop	bc
+;main.c:76: i++;
+	inc	c
+	jr	00101$
+00103$:
+;main.c:78: numSprites = 0;
+	ld	hl, #0x0000
+	ld	(_numSprites), hl
+;main.c:79: }
+	ret
+;main.c:81: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
@@ -1573,7 +1816,7 @@ _main::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:75: SMS_VRAMmemsetW(0, 0x0000, 16384);
+;main.c:86: SMS_VRAMmemsetW(0, 0x0000, 16384);
 	ld	-1 (ix), #0x00
 	ld	-2 (ix), #0x00
 	ld	hl, #0x4000
@@ -1581,86 +1824,88 @@ _main::
 	ld	de, #0x0000
 	ld	h, l
 	call	_SMS_VRAMmemsetW
-;main.c:85: printf("Hello, World! [1/3]");
+;main.c:96: printf("Hello, World! [1/3]");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	pop	af
-;main.c:89: loadGrapVRAM();
+;main.c:100: loadGrapVRAM();
 	call	_loadGrapVRAM
-;main.c:91: SMS_displayOn();
+;main.c:102: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:92: SMS_setBGScrollX(scroll_x);
+;main.c:103: SMS_setBGScrollX(scroll_x);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:93: SMS_setBGScrollY(scroll_y);
+;main.c:104: SMS_setBGScrollY(scroll_y);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollY
-;main.c:94: SMS_init();
+;main.c:105: SMS_init();
 	call	_SMS_init
-;main.c:100: PSGPlay(special_psg);
+;main.c:111: PSGPlay(special_psg);
 	ld	hl, #_special_psg
 	call	_PSGPlay
-;main.c:101: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+;main.c:112: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
 	ld	hl, #0x0020
 	call	_SMS_VDPturnOnFeature
-;main.c:102: SMS_setFrameInterruptHandler(playMusic);
+;main.c:116: SMS_setFrameInterruptHandler(playMusic);
 	ld	hl, #_playMusic
 	call	_SMS_setFrameInterruptHandler
+;main.c:117: initSpritesVariables();
+	call	_initSpritesVariables
 00115$:
-;main.c:106: if (SMS_queryPauseRequested())
+;main.c:121: if (SMS_queryPauseRequested())
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	Z, 00105$
-;main.c:108: PSGPlay(emeraldhill_psg);
+;main.c:123: PSGPlay(emeraldhill_psg);
 	ld	hl, #_emeraldhill_psg
 	call	_PSGPlay
-;main.c:109: SMS_resetPauseRequest();
+;main.c:124: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:110: while (!SMS_queryPauseRequested())
+;main.c:125: while (!SMS_queryPauseRequested())
 00101$:
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	NZ, 00103$
-;main.c:112: SMS_waitForVBlank();
+;main.c:127: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
 	jr	00101$
 00103$:
-;main.c:116: SMS_resetPauseRequest();
+;main.c:131: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:117: PSGPlay(titulo_psg);
+;main.c:132: PSGPlay(titulo_psg);
 	ld	hl, #_titulo_psg
 	call	_PSGPlay
 00105$:
-;main.c:121: int keys = SMS_getKeysHeld();
+;main.c:136: int keys = SMS_getKeysHeld();
 	call	_SMS_getKeysHeld
 	ex	de, hl
-;main.c:122: if(keys & PORT_A_KEY_2)
+;main.c:137: if(keys & PORT_A_KEY_2)
 	bit	5, l
 	jr	Z, 00107$
-;main.c:123: keys = keys  ^ PORT_A_KEY_2;
+;main.c:138: keys = keys  ^ PORT_A_KEY_2;
 	ld	a, l
 	xor	a, #0x20
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
 00107$:
-;main.c:124: if(keys & PORT_A_KEY_1)
+;main.c:139: if(keys & PORT_A_KEY_1)
 	bit	4, l
 	jr	Z, 00109$
-;main.c:125: keys = keys  ^ PORT_A_KEY_1;
+;main.c:140: keys = keys  ^ PORT_A_KEY_1;
 	ld	a, l
 	xor	a, #0x10
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
 00109$:
-;main.c:127: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+;main.c:142: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
 	push	hl
 	call	_SMS_getKeysPressed
 	pop	hl
@@ -1670,58 +1915,59 @@ _main::
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
-;main.c:129: SMS_initSprites();
+;main.c:144: SMS_initSprites();
 	push	hl
 	call	_SMS_initSprites
 	pop	hl
-;main.c:130: moveAlex(keys);
+;main.c:145: moveAlex(keys);
 	call	_moveAlex
-;main.c:131: draw_entidad(&alex, &spriteAlex);
+;main.c:146: numSprites = draw_entidad(&alex, &spriteAlex, numSprites);
+	ld	hl, (_numSprites)
+	push	hl
 	ld	de, #_spriteAlex
 	ld	hl, #_alex
 	call	_draw_entidad
-;main.c:132: dibujaPajaros();
+	ld	(_numSprites), de
+;main.c:147: dibujaPajaros();
 	call	_dibujaPajaros
-;main.c:134: SMS_finalizeSprites();
-	call	_SMS_finalizeSprites
-;main.c:137: SMS_waitForVBlank();
+;main.c:152: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
-;main.c:138: SMS_copySpritestoSAT();
+;main.c:156: SMS_copySpritestoSAT();
 	call	_SMS_copySpritestoSAT
-;main.c:141: SMS_displayOff();
+;main.c:161: SMS_displayOff();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOffFeature
-;main.c:142: if (scroll_y % 2 == 0)
+;main.c:162: if (scroll_y % 2 == 0)
 	bit	0, -1 (ix)
 	jr	NZ, 00111$
-;main.c:143: scroll_x += 1;
+;main.c:163: scroll_x += 1;
 	inc	-2 (ix)
 00111$:
-;main.c:144: scroll_y++;
+;main.c:164: scroll_y++;
 	inc	-1 (ix)
-;main.c:145: if (scroll_y == 224)
+;main.c:165: if (scroll_y == 224)
 	ld	a, -1 (ix)
 	sub	a, #0xe0
 	jr	NZ, 00113$
-;main.c:146: scroll_y = 0;
+;main.c:166: scroll_y = 0;
 	ld	-1 (ix), #0x00
 00113$:
-;main.c:148: SMS_setBGScrollX(scroll_x);
+;main.c:168: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:150: SMS_displayOn();
+;main.c:170: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:152: }
+;main.c:172: }
 	jp	00115$
 ___str_0:
 	.ascii "Hello, World! [1/3]"
 	.db 0x00
 	.area _CODE
 __str_1:
-	.ascii "raphnet"
+	.ascii "SEGA"
 	.db 0x00
 __str_2:
 	.ascii "basic example"
@@ -1784,18 +2030,18 @@ ___SMS__SEGA_signature:
 	.db #0xff	; 255
 	.db #0xff	; 255
 	.db #0x99	; 153
-	.db #0x99	; 153
+	.db #0x09	; 9
 	.db #0x00	; 0
 	.db #0x4c	; 76	'L'
-	.org 0x7FD8
+	.org 0x7FDB
 ___SMS__SDSC_author:
-	.ascii "raphnet"
+	.ascii "SEGA"
 	.db 0x00
-	.org 0x7FCA
+	.org 0x7FCD
 ___SMS__SDSC_name:
 	.ascii "basic example"
 	.db 0x00
-	.org 0x7FB9
+	.org 0x7FBC
 ___SMS__SDSC_descr:
 	.ascii "A simple example"
 	.db 0x00
@@ -1811,9 +2057,9 @@ ___SMS__SDSC_signature:
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x00	; 0
-	.db #0xd8	; 216
+	.db #0xdb	; 219
 	.db #0x7f	; 127
-	.db #0xca	; 202
+	.db #0xcd	; 205
 	.db #0x7f	; 127
-	.db #0xb9	; 185
+	.db #0xbc	; 188
 	.db #0x7f	; 127

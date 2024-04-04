@@ -5,9 +5,9 @@ typedef struct{
   unsigned char x,y,frame,lastChangeFrame,oriented,state;
 }T_entidad;
 
-void draw_entidad(T_entidad *entidad, T_sprite *sprite);
+unsigned int draw_entidad(T_entidad *entidad, T_sprite *sprite, unsigned int numSprites);
 
-void draw_entidad(T_entidad *entidad, T_sprite *sprite){
+unsigned int draw_entidad(T_entidad *entidad, T_sprite *sprite, unsigned int numSprites){
   unsigned char i,j;
   if (sprite->allInRAM == 1){
     int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
@@ -15,7 +15,7 @@ void draw_entidad(T_entidad *entidad, T_sprite *sprite){
       unsigned char desplazado = (j<<2);
       unsigned char jCalculated = desplazado + frame, y = entidad->y+(desplazado<<2);
       for(i=0;i<sprite->ancho;i++) {
-          SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+          numSprites = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       }
     }   
   }
@@ -27,8 +27,9 @@ void draw_entidad(T_entidad *entidad, T_sprite *sprite){
     }
     for(j=0;j<sprite->alto;j++) {
       for(i=0;i<sprite->ancho;i++) {
-        SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+        numSprites = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
       }   
     }
   }
+  return numSprites;
 }
