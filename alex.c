@@ -14,7 +14,7 @@
 
 
 unsigned char maxSalto = 255;
-T_entidad alex = {30, 20, 0, 0, 0};
+T_entidad alex = {30, 20, 0, 0, 0,0, 255};
 
 
 unsigned char canUp(){

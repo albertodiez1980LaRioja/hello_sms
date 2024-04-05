@@ -74,6 +74,7 @@ unsigned int addHardwareSprite(unsigned int x,unsigned int y,unsigned int vx,uns
     }
     i--;
   }
+  return i;
 }
 
 
@@ -106,4 +107,55 @@ void initSpritesVariables (void) {
     __endasm;
     //*SpriteNextFree2 = 0;
     //SpriteTableXN2[0] = 10;
+}
+
+#define SMS_SATAddress    ((unsigned int)0x7F00)
+/* declare various I/O ports in SDCC z80 syntax */
+/* define VDPControlPort */
+__sfr __at 0xBF VDPControlPort;
+/* define VDPStatusPort */
+__sfr __at 0xBF VDPStatusPort;
+/* define VDPDataPort */
+__sfr __at 0xBE VDPDataPort;
+/* define VDPVcounter */
+__sfr __at 0x7E VDPVCounterPort;
+/* define VDPHcounter */
+__sfr __at 0x7F VDPHCounterPort;
+
+
+
+void copySpritestoSAT (void) {
+  SMS_setAddr(SMS_SATAddress);
+  __asm
+    ld a,(#_SpriteNextFree)
+    or a
+    jr z,_no_sprites
+    ld b,a
+    ld c,#_VDPDataPort
+    ld hl,#_SpriteTableY
+_next_spriteY:
+    outi                    ; 16 cycles
+    jr nz,_next_spriteY     ; 12 cycles = 28 (VRAM safe on GG too)
+    cp #64                  ;  7 cycles
+    jr z,_no_sprite_term    ;  7 cycles
+    ld a,#0xD0              ;  7 cycles   =>  VRAM safe
+    out (c),a
+_no_sprite_term:
+  __endasm;
+  SMS_setAddr(SMS_SATAddress+128);
+  __asm
+    ld c,#_VDPDataPort
+    ld a,(#_SpriteNextFree)
+    add a,a
+    ld b,a
+    ld hl,#_SpriteTableXN
+_next_spriteXN:
+    outi                    ; 16 cycles
+    jr nz,_next_spriteXN    ; 12 cycles = 28 (VRAM safe on GG too)
+    ret
+
+_no_sprites:
+    ld a,#0xD0
+    out (#_VDPDataPort),a
+  __endasm;
 }

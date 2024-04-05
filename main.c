@@ -8,7 +8,7 @@
 #include "./alex.c"
 
 
-#define NUM_PAJAROS 10
+#define NUM_PAJAROS 19
 T_entidad pajaros[NUM_PAJAROS];
 T_sprite spriteAlex = {2, 2, 8, 0, 0, 0};
 T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
@@ -25,31 +25,8 @@ void inicializaPajaros()
     pajaros[i].x = 15 + 32 * i;
     pajaros[i].y = 15 + 16 * (i / 2);
     pajaros[i].lastChangeFrame = i * 3;
-  }
-}
-
-void loadGrapVRAM()
-{
-  SMS_init();
-  inicializaPajaros();
-  // SMS_setSpriteMode(SPRITEMODE_NORMAL);
-  SMS_setSpriteMode(SPRITEMODE_TALL);
-  SMS_displayOn();
-  SMS_loadBGPalette(sonicpalette_inc);
-  SMS_loadSpritePalette(palleteAlex_inc);
-  SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
-  spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
-  spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
-  spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
-  
-  SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
-}
-
-void dibujaPajaros()
-{
-  unsigned char i;
-  for (i = 0; i < NUM_PAJAROS; i++)
-  {
+    pajaros[i].initSprite = 255;
+    //draw_entidad(&(pajaros[i]), &spritePajaro);
     pajaros[i].x++;
     pajaros[i].lastChangeFrame++;
     if (pajaros[i].lastChangeFrame == 20)
@@ -59,7 +36,60 @@ void dibujaPajaros()
         pajaros[i].frame = 0;
       pajaros[i].lastChangeFrame = 0;
     }
-    numSprites = draw_entidad(&(pajaros[i]), &spritePajaro, numSprites);
+    if(pajaros[i].initSprite == 255) {
+      draw_entidad(&(pajaros[i]), &spritePajaro);
+    }
+  }
+}
+
+void loadGrapVRAM()
+{
+  SMS_init();
+  
+  // SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  SMS_setSpriteMode(SPRITEMODE_TALL);
+  SMS_displayOn();
+  SMS_loadBGPalette(sonicpalette_inc);
+  SMS_loadSpritePalette(palleteAlex_inc);
+  SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
+  spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
+  spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
+  spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+  inicializaPajaros();
+  SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
+}
+
+void dibujaPajaros()
+{
+  unsigned char i, i2, end, j;
+  for (i = 0; i < NUM_PAJAROS; i++)
+  {
+    T_entidad *p = &pajaros[i];
+    p->x++;
+    p->lastChangeFrame++;
+    if (p->lastChangeFrame == 20)
+    {
+      p->frame++;
+      if (p->frame > 1)
+        p->frame = 0;
+      p->lastChangeFrame = 0;
+      int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
+      for(j=0;j<spritePajaro.alto;j++) {
+        unsigned char desplazado = (j<<2);
+        unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
+        for(i2=0;i2<spritePajaro.ancho;i2++) {
+          SpriteTableXN2[(i2+i*3)*2+1] = jCalculated + (i2<<1);
+        }
+      } 
+    }
+    end = p->len;
+    i2 = p->initSprite << 1;
+    while(i2<end) {
+      SpriteTableXN2[i2] += 1;
+      i2 +=2;
+      //SpriteTableXN2[i] = 14;
+      //i2++;
+    }
   }
 }
 
@@ -96,13 +126,14 @@ void main(void)
   printf("Hello, World! [1/3]");
 
   // SMS_printatXY(4,12,"Hello, World! [3/3]");
-
-  loadGrapVRAM();
+  
   /* Turn on the display */
   SMS_displayOn();
   SMS_setBGScrollX(scroll_x);
   SMS_setBGScrollY(scroll_y);
   SMS_init();
+  initSpritesVariables();
+  loadGrapVRAM();
   // SMS_setSpriteMode(SPRITEMODE_NORMAL);
   // SMS_setSpriteMode(SPRITEMODE_TALL);
   /* Do nothing */
@@ -114,7 +145,7 @@ void main(void)
   //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
   //SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
   SMS_setFrameInterruptHandler(playMusic);
-  initSpritesVariables();
+  
   for (;;)
   {
 
@@ -141,9 +172,9 @@ void main(void)
 
     keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
     
-    SMS_initSprites();
+    //SMS_initSprites();
     moveAlex(keys);
-    numSprites = draw_entidad(&alex, &spriteAlex, numSprites);
+    draw_entidad(&alex, &spriteAlex);
     dibujaPajaros();
 
     // SMS_autoSetUpTextRenderer();
@@ -152,13 +183,16 @@ void main(void)
     SMS_waitForVBlank();
 
     //SMS_initSprites();
-   
-    SMS_copySpritestoSAT();
+    SMS_displayOff();
+    //UNSAFE_SMS_copySpritestoSAT();
+    //SMS_displayOn();
+    copySpritestoSAT();
+    //SMS_copySpritestoSAT();
     //copySpritestoSAT();
     //disableSprites();
     //PSGFrame();
     //PSGSFXFrame();
-    SMS_displayOff();
+    
     if (scroll_y % 2 == 0)
       scroll_x += 1;
     scroll_y++;
