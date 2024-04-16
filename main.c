@@ -23,7 +23,7 @@ void inicializaPajaros()
   for (i = 0; i < NUM_PAJAROS; i++)
   {
     pajaros[i].x = 15 + 32 * i;
-    pajaros[i].y = 15 + 16 * (i / 2);
+    pajaros[i].y = 16 * (i / 2);
     pajaros[i].lastChangeFrame = i * 3;
     pajaros[i].initSprite = 255;
     //draw_entidad(&(pajaros[i]), &spritePajaro);
@@ -51,12 +51,19 @@ void loadGrapVRAM()
   SMS_displayOn();
   SMS_loadBGPalette(sonicpalette_inc);
   SMS_loadSpritePalette(palleteAlex_inc);
-  SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
+  
   spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
   spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
   spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
   inicializaPajaros();
-  SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
+  //SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
+  //SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
+  //SMS_loadBGPalette(sonicpalette_inc);
+
+  SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
+  SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
+  SMS_loadBGPalette(paleta_de_prueba2_inc);
+
 }
 
 void dibujaPajaros()
@@ -142,7 +149,7 @@ void main(void)
   PSGPlay(special_psg);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
   //SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
-  //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
+  ////SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
   //SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
   SMS_setFrameInterruptHandler(playMusic);
   

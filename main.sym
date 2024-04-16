@@ -50,12 +50,12 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCD GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       000E7B R
+  0 ___str_0                                                       000E5C R
     __divsint                                                      ****** GX
     __mulint                                                       ****** GX
-  0 __str_1                                                        000E8F R
-  0 __str_2                                                        000E94 R
-  0 __str_3                                                        000EA2 R
+  0 __str_1                                                        000E70 R
+  0 __str_2                                                        000E75 R
+  0 __str_3                                                        000E83 R
   7 __xinit__alex                                                  000003 R
   7 __xinit__maxSalto                                              000002 R
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
@@ -74,8 +74,8 @@ Symbol Table
   0 _canRight                                                      0007FE GR
   0 _canUp                                                         0007D8 GR
   0 _copySpritestoSAT                                              00040C GR
-  0 _dibujaPajaros                                                 000C5E GR
-  0 _disableSprites                                                000D8A GR
+  0 _dibujaPajaros                                                 000C3F GR
+  0 _disableSprites                                                000D6B GR
   0 _draw_entidad                                                  000440 GR
     _emeraldhill_psg                                               ****** GX
   0 _generateSprite                                                000000 GR
@@ -83,8 +83,8 @@ Symbol Table
   1 _hardwareSprites                                               000000 GR
   0 _inicializaPajaros                                             000ABC GR
   0 _initSpritesVariables                                          0003DD GR
-  0 _loadGrapVRAM                                                  000BA5 GR
-  0 _main                                                          000DA8 GR
+  0 _loadGrapVRAM                                                  000B7F GR
+  0 _main                                                          000D89 GR
   2 _maxSalto                                                      000002 GR
   0 _moveAlex                                                      000A85 GR
   0 _moveAlexAire                                                  000989 GR
@@ -96,20 +96,21 @@ Symbol Table
   0 _no_sprites                                                    00043B R
   1 _numSprites                                                    00039E GR
   1 _pajaros                                                       000306 GR
+    _paleta_de_prueba2_inc                                         ****** GX
     _palleteAlex_inc                                               ****** GX
-  0 _playMusic                                                     000D84 GR
+  0 _playMusic                                                     000D65 GR
     _printf                                                        ****** GX
     _puno_inc                                                      ****** GX
     _salto_psg                                                     ****** GX
     _sonicpalette_inc                                              ****** GX
-    _sonictilemap_inc                                              ****** GX
-    _sonictiles_inc                                                ****** GX
     _special_psg                                                   ****** GX
   2 _spriteAlex                                                    00000B GR
     _spriteAlex_inc                                                ****** GX
   2 _spritePajaro                                                  000015 GR
     _spritePajaro_inc                                              ****** GX
   2 _spritePuno                                                    00001F GR
+    _tilemap_de_prueba2_inc                                        ****** GX
+    _tiles_de_prueba2_inc                                          ****** GX
     _titulo_psg                                                    ****** GX
 
 
@@ -118,7 +119,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    EB3   flags    0
+   0 _CODE                                      size    E94   flags    0
    1 _DATA                                      size    3A0   flags    0
    2 _INITIALIZED                               size     29   flags    0
    3 _DABS                                      size      0   flags    8

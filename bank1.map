@@ -43,11 +43,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000010  l__HEADER8                      
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00002CE0  l__CODE                         
-     00002EE0  s__HOME                         
-     00002EE2  s__GSINIT                       
-     00002EE2  s__INITIALIZER                  
-     00002F07  s__GSFINAL                      
+     000034C5  l__CODE                         
+     000036C5  s__HOME                         
+     000036C7  s__GSINIT                       
+     000036C7  s__INITIALIZER                  
+     000036EC  s__GSFINAL                      
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
@@ -59,7 +59,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00002CE0 =       11488. bytes (REL,CON)
+_CODE                               00000200    000034C5 =       13509. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -71,7 +71,10 @@ _CODE                               00000200    00002CE0 =       11488. bytes (R
      00000898  _spriteAlex_inc                    bank1
      00001898  _sonictiles_inc                    bank1
      00002D58  _palleteAlex_inc                   bank1
-     00002D60  _spritePajaro_inc                  bank1
+     00002D60  _tiles_de_prueba2_inc              bank1
+     00002E00  _tilemap_de_prueba2_inc            bank1
+     00003540  _paleta_de_prueba2_inc             bank1
+     00003545  _spritePajaro_inc                  bank1
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
@@ -158,29 +161,29 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00002EE0    00000002 =           2. bytes (REL,CON)
+_HOME                               000036C5    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00002EE0  ___sdcc_external_startup           _startup
+     000036C5  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00002EE2    00000025 =          37. bytes (REL,CON)
+_GSINIT                             000036C7    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00002EE2  gsinit                             crt0
+     000036C7  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00002F07    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            000036EC    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

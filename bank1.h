@@ -16,6 +16,15 @@ extern const unsigned char	sonictiles_inc[];
 extern const unsigned char	palleteAlex_inc[];
 #define				palleteAlex_inc_size 8
 
+extern const unsigned char	tiles_de_prueba2_inc[];
+#define				tiles_de_prueba2_inc_size 160
+
+extern const unsigned char	tilemap_de_prueba2_inc[];
+#define				tilemap_de_prueba2_inc_size 1920
+
+extern const unsigned char	paleta_de_prueba2_inc[];
+#define				paleta_de_prueba2_inc_size 5
+
 extern const unsigned char	spritePajaro_inc[];
 #define				spritePajaro_inc_size 384
 
