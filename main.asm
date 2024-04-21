@@ -39,6 +39,7 @@
 	.globl _SMS_getKeysPressed
 	.globl _SMS_loadSpritePalette
 	.globl _SMS_loadBGPalette
+	.globl _SMS_setSpritePaletteColor
 	.globl _SMS_updateSpritePosition
 	.globl _SMS_addSprite_f
 	.globl _SMS_waitForVBlank
@@ -2152,6 +2153,12 @@ _loadGrapVRAM::
 ;main.c:65: SMS_loadBGPalette(paleta_de_prueba2_inc);
 	ld	hl, #_paleta_de_prueba2_inc
 	call	_SMS_loadBGPalette
+;main.c:66: SMS_setSpritePaletteColor(0,0);
+;	spillPairReg hl
+;	spillPairReg hl
+	xor	a, a
+	ld	l, a
+	call	_SMS_setSpritePaletteColor
 ;main.c:67: }
 	ld	sp, ix
 	pop	ix

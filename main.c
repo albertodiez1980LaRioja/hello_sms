@@ -63,7 +63,7 @@ void loadGrapVRAM()
   SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
   SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
   SMS_loadBGPalette(paleta_de_prueba2_inc);
-
+  SMS_setSpritePaletteColor(0,0);
 }
 
 void dibujaPajaros()
