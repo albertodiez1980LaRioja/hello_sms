@@ -23,6 +23,7 @@ Symbol Table
     _SMS_getKeysHeld                                               ****** GX
     _SMS_getKeysPressed                                            ****** GX
     _SMS_init                                                      ****** GX
+    _SMS_initSprites                                               ****** GX
     _SMS_loadBGPalette                                             ****** GX
     _SMS_loadSpritePalette                                         ****** GX
     _SMS_queryPauseRequested                                       ****** GX
@@ -51,18 +52,18 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCD GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       000E61 R
+  0 ___str_0                                                       000F21 R
     __divsint                                                      ****** GX
     __mulint                                                       ****** GX
-  0 __str_1                                                        000E75 R
-  0 __str_2                                                        000E7A R
-  0 __str_3                                                        000E88 R
-  7 __xinit__alex                                                  000003 R
+  0 __str_1                                                        000F35 R
+  0 __str_2                                                        000F3A R
+  0 __str_3                                                        000F48 R
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
 Symbol Table
 
+  7 __xinit__alex                                                  000003 R
   7 __xinit__maxSalto                                              000002 R
   7 __xinit__nextVRAMsprites                                       000000 R
   7 __xinit__spriteAlex                                            00000B R
@@ -70,26 +71,27 @@ Symbol Table
   7 __xinit__spritePuno                                            00001F R
   0 _addHardwareSprite                                             000159 GR
   2 _alex                                                          000003 GR
-  0 _canDown                                                       0007E4 GR
-  0 _canLeft                                                       0007F2 GR
-  0 _canRight                                                      0007FE GR
-  0 _canUp                                                         0007D8 GR
+  0 _canDown                                                       000853 GR
+  0 _canLeft                                                       000861 GR
+  0 _canRight                                                      00086D GR
+  0 _canUp                                                         000847 GR
   0 _copySpritestoSAT                                              00040C GR
-  0 _dibujaPajaros                                                 000C44 GR
-  0 _disableSprites                                                000D70 GR
+  0 _dibujaPajaros                                                 000D0F GR
+  0 _disableSprites                                                000E3A GR
+  0 _drawAlex                                                      000AEA GR
   0 _draw_entidad                                                  000440 GR
     _emeraldhill_psg                                               ****** GX
   0 _generateSprite                                                000000 GR
   0 _generateSpriteNoRAM                                           0000AA GR
   1 _hardwareSprites                                               000000 GR
-  0 _inicializaPajaros                                             000ABC GR
+  0 _inicializaPajaros                                             000B6D GR
   0 _initSpritesVariables                                          0003DD GR
-  0 _loadGrapVRAM                                                  000B7F GR
-  0 _main                                                          000D8E GR
+  0 _loadGrapVRAM                                                  000C30 GR
+  0 _main                                                          000E58 GR
   2 _maxSalto                                                      000002 GR
-  0 _moveAlex                                                      000A85 GR
-  0 _moveAlexAire                                                  000989 GR
-  0 _moveAlexSuelo                                                 00080C GR
+  0 _moveAlex                                                      000B33 GR
+  0 _moveAlexAire                                                  000A1F GR
+  0 _moveAlexSuelo                                                 00087B GR
   2 _nextVRAMsprites                                               000000 GR
   0 _next_spriteXN                                                 000436 R
   0 _next_spriteY                                                  00041C R
@@ -99,7 +101,7 @@ Symbol Table
   1 _pajaros                                                       000306 GR
     _paleta_de_prueba2_inc                                         ****** GX
     _palleteAlex_inc                                               ****** GX
-  0 _playMusic                                                     000D6A GR
+  0 _playMusic                                                     000E34 GR
     _printf                                                        ****** GX
     _puno_inc                                                      ****** GX
     _salto_psg                                                     ****** GX
@@ -114,12 +116,13 @@ Symbol Table
     _tiles_de_prueba2_inc                                          ****** GX
     _titulo_psg                                                    ****** GX
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
 Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size    E99   flags    0
+   0 _CODE                                      size    F59   flags    0
    1 _DATA                                      size    3A0   flags    0
    2 _INITIALIZED                               size     29   flags    0
    3 _DABS                                      size      0   flags    8

@@ -55,6 +55,10 @@ void loadGrapVRAM()
   spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
   spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
   spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+  SMS_initSprites();
+  alex.initSprite = 255;
+  draw_entidad(&alex, &spriteAlex);
+  SMS_addSprite (0, 0, 9);
   inicializaPajaros();
   //SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
   //SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
@@ -69,11 +73,15 @@ void loadGrapVRAM()
 void dibujaPajaros()
 {
   unsigned char i, i2, end, j;
+  if(NUM_PAJAROS == 0)
+    return;
+  unsigned char initPajaros = pajaros[0].initSprite;
   for (i = 0; i < NUM_PAJAROS; i++)
   {
     T_entidad *p = &pajaros[i];
     p->x++;
     p->lastChangeFrame++;
+    
     if (p->lastChangeFrame == 20)
     {
       p->frame++;
@@ -85,10 +93,11 @@ void dibujaPajaros()
         unsigned char desplazado = (j<<2);
         unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
         for(i2=0;i2<spritePajaro.ancho;i2++) {
-          SpriteTableXN2[(i2+i*3)*2+1] = jCalculated + (i2<<1);
+          SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
         }
       } 
     }
+    initPajaros +=3;
     end = p->len;
     i2 = p->initSprite << 1;
     while(i2<end) {
@@ -181,7 +190,7 @@ void main(void)
     
     //SMS_initSprites();
     moveAlex(keys);
-    draw_entidad(&alex, &spriteAlex);
+    
     dibujaPajaros();
 
     // SMS_autoSetUpTextRenderer();

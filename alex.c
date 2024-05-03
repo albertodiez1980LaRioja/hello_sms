@@ -14,7 +14,7 @@
 
 
 unsigned char maxSalto = 255;
-T_entidad alex = {30, 160, 0, 0, 0,0, 255};
+T_entidad alex = {30, 150, 0, 0, 0,0, 255};
 
 
 unsigned char canUp(){
@@ -105,11 +105,17 @@ void moveAlexSuelo(int keys) {
   else{
     if (!alex.oriented) {
       alex.frame = 5;
-      SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+      //SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+      SpriteTableXN2[8] = alex.x + 16;
+      SpriteTableXN2[9] = 9;
+      SpriteTableY2[4] = alex.y + 9;
     }
     else {
       alex.frame = 13;
-      SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+      //SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+      SpriteTableXN2[8] = alex.x - 8;
+      SpriteTableXN2[9] = 11;
+      SpriteTableY2[4] = alex.y + 9;
     }
     alex.lastChangeFrame--;
     if(!alex.lastChangeFrame) {
@@ -145,11 +151,11 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
     }
     if (!alex.oriented) {
       alex.frame = 5;
-      SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+      //SMS_addSprite (alex.x + 16, alex.y + 9, 9);
     }
     else {
       alex.frame = 13;
-      SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+      //SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
     }
   }
   else {
@@ -165,6 +171,17 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
   
 }
 
+void drawAlex() {
+  SpriteTableXN2[0] = alex.x;
+  SpriteTableXN2[2] = alex.x + 8;
+  SpriteTableXN2[4] = alex.x;
+  SpriteTableXN2[6] = alex.x + 8;
+  SpriteTableY2[0] = alex.y;
+  SpriteTableY2[1] = alex.y;
+  SpriteTableY2[2] = alex.y + 16;
+  SpriteTableY2[3] = alex.y + 16;
+}
+
 
 void moveAlex(int keys) {
   unsigned char puedeBajar = canDown();
@@ -175,4 +192,5 @@ void moveAlex(int keys) {
     moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
   else
     moveAlexSuelo(keys);
+  drawAlex();
 }

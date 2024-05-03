@@ -30,21 +30,20 @@ void draw_entidad(T_entidad *entidad, T_sprite *sprite){
     int frame = sprite->tamano*entidad->frame*32;
     if (entidad->initSprite == 255) {
       if (entidad->frame != sprite->frameInVRAM){
-        SMS_loadTiles(sprite->data + frame,sprite->beginVRAM,sprite->tamano<<5);
+        //SMS_loadTiles(sprite->data + frame,sprite->beginVRAM,sprite->tamano<<5);
         sprite->frameInVRAM = entidad->frame;
       }
       for(j=0;j<sprite->alto;j++) {
         for(i=0;i<sprite->ancho;i++) {
-          if(i==0 && j==0)
+          if(i==0 && j==0) {
             entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
-          else
-            SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+          }
+          else {
+            SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );
+          }  
         }   
       }
       entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
-    }
-    else {
-
     }
   }
 }
