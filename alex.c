@@ -70,6 +70,7 @@ void moveAlexSuelo(int keys) {
     alex.lastChangeFrame = 15;
   }
   if(alex.state != PUÑETAZO_SUELO) {
+    SpriteTableY2[4] = 234;
     if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
     {
       alex.x -= 1;
@@ -120,6 +121,7 @@ void moveAlexSuelo(int keys) {
     alex.lastChangeFrame--;
     if(!alex.lastChangeFrame) {
       alex.state = 0;
+      SpriteTableY2[4] = 234;
     }
   }
 }
@@ -148,17 +150,25 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
     alex.lastChangeFrame--;
     if  (!alex.lastChangeFrame) {
       alex.state = 0;
+      SpriteTableY2[4] = 234;
     }
     if (!alex.oriented) {
       alex.frame = 5;
       //SMS_addSprite (alex.x + 16, alex.y + 9, 9);
+      SpriteTableXN2[8] = alex.x + 16;
+      SpriteTableXN2[9] = 9;
+      SpriteTableY2[4] = alex.y + 9;
     }
     else {
       alex.frame = 13;
       //SMS_addSprite (alex.x - 8,  alex.y + 9, 11);
+      SpriteTableXN2[8] = alex.x - 8;
+      SpriteTableXN2[9] = 11;
+      SpriteTableY2[4] = alex.y + 9;
     }
   }
   else {
+    SpriteTableY2[4] = 234;
     if (!alex.oriented)
       alex.frame = 6;
     else
@@ -180,6 +190,9 @@ void drawAlex() {
   SpriteTableY2[1] = alex.y;
   SpriteTableY2[2] = alex.y + 16;
   SpriteTableY2[3] = alex.y + 16;
+  int frame = 8*alex.frame*32;
+  SMS_loadTiles(alex.sprite->data + frame,alex.sprite->beginVRAM,255);
+  //alex.initSprite
 }
 
 

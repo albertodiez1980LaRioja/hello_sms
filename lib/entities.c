@@ -4,6 +4,7 @@
 typedef struct{
   unsigned char x,y,frame,lastChangeFrame,oriented,state;
   unsigned char initSprite, len;
+  T_sprite *sprite;
 }T_entidad;
 
 void draw_entidad(T_entidad *entidad, T_sprite *sprite);
@@ -44,6 +45,7 @@ void draw_entidad(T_entidad *entidad, T_sprite *sprite){
         }   
       }
       entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
+      entidad->sprite = sprite;
     }
   }
 }

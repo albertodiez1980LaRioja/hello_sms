@@ -101,9 +101,9 @@
                            00FFFC   101 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
                            008000   102 _SMS_SRAM	=	0x8000
       000306                        103 _pajaros::
-      000306                        104 	.ds 152
-      00039E                        105 _numSprites::
-      00039E                        106 	.ds 2
+      000306                        104 	.ds 190
+      0003C4                        105 _numSprites::
+      0003C4                        106 	.ds 2
                                     107 ;--------------------------------------------------------
                                     108 ; ram data
                                     109 ;--------------------------------------------------------
@@ -113,13 +113,13 @@
       000002                        113 _maxSalto::
       000002                        114 	.ds 1
       000003                        115 _alex::
-      000003                        116 	.ds 8
-      00000B                        117 _spriteAlex::
-      00000B                        118 	.ds 10
-      000015                        119 _spritePajaro::
-      000015                        120 	.ds 10
-      00001F                        121 _spritePuno::
-      00001F                        122 	.ds 10
+      000003                        116 	.ds 10
+      00000D                        117 _spriteAlex::
+      00000D                        118 	.ds 10
+      000017                        119 _spritePajaro::
+      000017                        120 	.ds 10
+      000021                        121 _spritePuno::
+      000021                        122 	.ds 10
                                     123 ;--------------------------------------------------------
                                     124 ; absolute external ram data
                                     125 ;--------------------------------------------------------
@@ -788,7 +788,7 @@
       00043D D3 BE            [11]  788 	out	(#_VDPDataPort),a
                                     789 ;./lib/./sprite.c:161: }
       00043F C9               [10]  790 	ret
-                                    791 ;./lib/entities.c:11: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
+                                    791 ;./lib/entities.c:12: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
                                     792 ;	---------------------------------
                                     793 ; Function draw_entidad
                                     794 ; ---------------------------------
@@ -801,7 +801,7 @@
       00044E FD F9            [10]  801 	ld	sp, iy
       000450 DD 75 FC         [19]  802 	ld	-4 (ix), l
       000453 DD 74 FD         [19]  803 	ld	-3 (ix), h
-                                    804 ;./lib/entities.c:13: if (sprite->allInRAM == 1){
+                                    804 ;./lib/entities.c:14: if (sprite->allInRAM == 1){
       000456 DD 73 FA         [19]  805 	ld	-6 (ix), e
       000459 DD 72 FB         [19]  806 	ld	-5 (ix), d
       00045C 4B               [ 4]  807 	ld	c, e
@@ -809,7 +809,7 @@
       00045E 21 06 00         [10]  809 	ld	hl, #6
       000461 09               [11]  810 	add	hl, bc
       000462 4E               [ 7]  811 	ld	c, (hl)
-                                    812 ;./lib/entities.c:14: if (entidad->initSprite == 255) {
+                                    812 ;./lib/entities.c:15: if (entidad->initSprite == 255) {
       000463 DD 7E FC         [19]  813 	ld	a, -4 (ix)
       000466 C6 06            [ 7]  814 	add	a, #0x06
       000468 DD 77 F2         [19]  815 	ld	-14 (ix), a
@@ -819,14 +819,14 @@
       000473 DD 6E F2         [19]  819 	ld	l, -14 (ix)
       000476 DD 66 F3         [19]  820 	ld	h, -13 (ix)
       000479 46               [ 7]  821 	ld	b, (hl)
-                                    822 ;./lib/entities.c:15: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
+                                    822 ;./lib/entities.c:16: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
       00047A DD 7E FC         [19]  823 	ld	a, -4 (ix)
       00047D C6 02            [ 7]  824 	add	a, #0x02
       00047F DD 77 F4         [19]  825 	ld	-12 (ix), a
       000482 DD 7E FD         [19]  826 	ld	a, -3 (ix)
       000485 CE 00            [ 7]  827 	adc	a, #0x00
       000487 DD 77 F5         [19]  828 	ld	-11 (ix), a
-                                    829 ;./lib/entities.c:16: for(j=0;j<sprite->alto;j++) {
+                                    829 ;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
       00048A DD 7E FC         [19]  830 	ld	a, -4 (ix)
       00048D C6 01            [ 7]  831 	add	a, #0x01
       00048F DD 77 F8         [19]  832 	ld	-8 (ix), a
@@ -839,32 +839,32 @@
       0004A2 DD 7E FB         [19]  839 	ld	a, -5 (ix)
       0004A5 CE 00            [ 7]  840 	adc	a, #0x00
       0004A7 DD 77 FF         [19]  841 	ld	-1 (ix), a
-                                    842 ;./lib/entities.c:26: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
+                                    842 ;./lib/entities.c:27: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
       0004AA DD 7E FC         [19]  843 	ld	a, -4 (ix)
       0004AD C6 07            [ 7]  844 	add	a, #0x07
       0004AF DD 77 E3         [19]  845 	ld	-29 (ix), a
       0004B2 DD 7E FD         [19]  846 	ld	a, -3 (ix)
       0004B5 CE 00            [ 7]  847 	adc	a, #0x00
       0004B7 DD 77 E4         [19]  848 	ld	-28 (ix), a
-                                    849 ;./lib/entities.c:14: if (entidad->initSprite == 255) {
+                                    849 ;./lib/entities.c:15: if (entidad->initSprite == 255) {
       0004BA 04               [ 4]  850 	inc	b
       0004BB 3E 01            [ 7]  851 	ld	a, #0x01
       0004BD 28 01            [12]  852 	jr	Z, 00253$
       0004BF AF               [ 4]  853 	xor	a, a
       0004C0                        854 00253$:
       0004C0 DD 77 F7         [19]  855 	ld	-9 (ix), a
-                                    856 ;./lib/entities.c:13: if (sprite->allInRAM == 1){
+                                    856 ;./lib/entities.c:14: if (sprite->allInRAM == 1){
       0004C3 0D               [ 4]  857 	dec	c
       0004C4 C2rD7r06         [10]  858 	jp	NZ,00120$
-                                    859 ;./lib/entities.c:14: if (entidad->initSprite == 255) {
+                                    859 ;./lib/entities.c:15: if (entidad->initSprite == 255) {
       0004C7 DD 7E F2         [19]  860 	ld	a, -14 (ix)
       0004CA DD 77 E5         [19]  861 	ld	-27 (ix), a
       0004CD DD 7E F3         [19]  862 	ld	a, -13 (ix)
       0004D0 DD 77 E6         [19]  863 	ld	-26 (ix), a
       0004D3 DD 7E F7         [19]  864 	ld	a, -9 (ix)
       0004D6 B7               [ 4]  865 	or	a, a
-      0004D7 CAr42r08         [10]  866 	jp	Z, 00134$
-                                    867 ;./lib/entities.c:15: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
+      0004D7 CAr61r08         [10]  866 	jp	Z, 00134$
+                                    867 ;./lib/entities.c:16: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
       0004DA DD 7E FA         [19]  868 	ld	a, -6 (ix)
       0004DD DD 77 F2         [19]  869 	ld	-14 (ix), a
       0004E0 DD 7E FB         [19]  870 	ld	a, -5 (ix)
@@ -907,7 +907,7 @@
       00052D DD 77 F6         [19]  907 	ld	-10 (ix), a
       000530 DD 86 F7         [19]  908 	add	a, -9 (ix)
       000533 DD 77 E7         [19]  909 	ld	-25 (ix), a
-                                    910 ;./lib/entities.c:16: for(j=0;j<sprite->alto;j++) {
+                                    910 ;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
       000536 DD 7E F8         [19]  911 	ld	a, -8 (ix)
       000539 DD 77 E8         [19]  912 	ld	-24 (ix), a
       00053C DD 7E F9         [19]  913 	ld	a, -7 (ix)
@@ -925,12 +925,12 @@
       00055C DD 7E FE         [19]  925 	ld	a, -2 (ix)
       00055F DD 96 FF         [19]  926 	sub	a, -1 (ix)
       000562 D2r9Br06         [10]  927 	jp	NC, 00106$
-                                    928 ;./lib/entities.c:17: unsigned char desplazado = (j<<2);
+                                    928 ;./lib/entities.c:18: unsigned char desplazado = (j<<2);
       000565 DD 7E FE         [19]  929 	ld	a, -2 (ix)
       000568 DD 77 FF         [19]  930 	ld	-1 (ix), a
       00056B DD CB FF 26      [23]  931 	sla	-1 (ix)
       00056F DD CB FF 26      [23]  932 	sla	-1 (ix)
-                                    933 ;./lib/entities.c:18: unsigned char jCalculated = desplazado + frame, y = entidad->y+(desplazado<<2);
+                                    933 ;./lib/entities.c:19: unsigned char jCalculated = desplazado + frame, y = entidad->y+(desplazado<<2);
       000573 DD 7E FF         [19]  934 	ld	a, -1 (ix)
       000576 DD 77 F9         [19]  935 	ld	-7 (ix), a
       000579 DD 86 E7         [19]  936 	add	a, -25 (ix)
@@ -946,7 +946,7 @@
       000597 DD 86 F9         [19]  946 	add	a, -7 (ix)
       00059A DD 77 FF         [19]  947 	ld	-1 (ix), a
       00059D DD 77 ED         [19]  948 	ld	-19 (ix), a
-                                    949 ;./lib/entities.c:19: for(i=0;i<sprite->ancho;i++) {
+                                    949 ;./lib/entities.c:20: for(i=0;i<sprite->ancho;i++) {
       0005A0 DD 36 FF 00      [19]  950 	ld	-1 (ix), #0x00
       0005A4                        951 00123$:
       0005A4 DD 6E EA         [19]  952 	ld	l, -22 (ix)
@@ -954,7 +954,7 @@
       0005AA DD 7E FF         [19]  954 	ld	a,-1 (ix)
       0005AD 96               [ 7]  955 	sub	a,(hl)
       0005AE D2r95r06         [10]  956 	jp	NC, 00127$
-                                    957 ;./lib/entities.c:21: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+                                    957 ;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       0005B1 DD 6E FC         [19]  958 	ld	l, -4 (ix)
       0005B4 DD 66 FD         [19]  959 	ld	h, -3 (ix)
       0005B7 7E               [ 7]  960 	ld	a, (hl)
@@ -1013,14 +1013,14 @@
       000657 DD 7E F7         [19] 1013 	ld	a, -9 (ix)
       00065A DD B6 F9         [19] 1014 	or	a, -7 (ix)
       00065D DD 77 F5         [19] 1015 	ld	-11 (ix), a
-                                   1016 ;./lib/entities.c:20: if(i==0 && j==0)
+                                   1016 ;./lib/entities.c:21: if(i==0 && j==0)
       000660 DD 7E FF         [19] 1017 	ld	a, -1 (ix)
       000663 B7               [ 4] 1018 	or	a, a
       000664 20 1B            [12] 1019 	jr	NZ, 00102$
       000666 DD 7E FE         [19] 1020 	ld	a, -2 (ix)
       000669 B7               [ 4] 1021 	or	a, a
       00066A 20 15            [12] 1022 	jr	NZ, 00102$
-                                   1023 ;./lib/entities.c:21: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+                                   1023 ;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       00066C DD 5E F4         [19] 1024 	ld	e, -12 (ix)
       00066F DD 56 F5         [19] 1025 	ld	d, -11 (ix)
       000672 DD 6E F0         [19] 1026 	ld	l, -16 (ix)
@@ -1037,7 +1037,7 @@
       00067E 77               [ 7] 1037 	ld	(hl), a
       00067F 18 0E            [12] 1038 	jr	00124$
       000681                       1039 00102$:
-                                   1040 ;./lib/entities.c:23: SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+                                   1040 ;./lib/entities.c:24: SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       000681 DD 5E F4         [19] 1041 	ld	e, -12 (ix)
       000684 DD 56 F5         [19] 1042 	ld	d, -11 (ix)
       000687 DD 6E F0         [19] 1043 	ld	l, -16 (ix)
@@ -1048,15 +1048,15 @@
                                    1048 ;	spillPairReg hl
       00068C CDr00r00         [17] 1049 	call	_SMS_addSprite_f
       00068F                       1050 00124$:
-                                   1051 ;./lib/entities.c:19: for(i=0;i<sprite->ancho;i++) {
+                                   1051 ;./lib/entities.c:20: for(i=0;i<sprite->ancho;i++) {
       00068F DD 34 FF         [23] 1052 	inc	-1 (ix)
       000692 C3rA4r05         [10] 1053 	jp	00123$
       000695                       1054 00127$:
-                                   1055 ;./lib/entities.c:16: for(j=0;j<sprite->alto;j++) {
+                                   1055 ;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
       000695 DD 34 FE         [23] 1056 	inc	-2 (ix)
       000698 C3r52r05         [10] 1057 	jp	00126$
       00069B                       1058 00106$:
-                                   1059 ;./lib/entities.c:26: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
+                                   1059 ;./lib/entities.c:27: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
       00069B DD 6E EA         [19] 1060 	ld	l, -22 (ix)
       00069E DD 66 EB         [19] 1061 	ld	h, -21 (ix)
       0006A1 7E               [ 7] 1062 	ld	a, (hl)
@@ -1087,17 +1087,17 @@
       0006CF E5               [11] 1087 	push	hl
       0006D0 DD 7E FF         [19] 1088 	ld	a, -1 (ix)
       0006D3 77               [ 7] 1089 	ld	(hl), a
-      0006D4 C3r42r08         [10] 1090 	jp	00134$
+      0006D4 C3r61r08         [10] 1090 	jp	00134$
       0006D7                       1091 00120$:
-                                   1092 ;./lib/entities.c:31: if (entidad->initSprite == 255) {
+                                   1092 ;./lib/entities.c:32: if (entidad->initSprite == 255) {
       0006D7 DD 7E F2         [19] 1093 	ld	a, -14 (ix)
       0006DA DD 77 EC         [19] 1094 	ld	-20 (ix), a
       0006DD DD 7E F3         [19] 1095 	ld	a, -13 (ix)
       0006E0 DD 77 ED         [19] 1096 	ld	-19 (ix), a
       0006E3 DD 7E F7         [19] 1097 	ld	a, -9 (ix)
       0006E6 B7               [ 4] 1098 	or	a, a
-      0006E7 CAr42r08         [10] 1099 	jp	Z, 00134$
-                                   1100 ;./lib/entities.c:32: if (entidad->frame != sprite->frameInVRAM){
+      0006E7 CAr61r08         [10] 1099 	jp	Z, 00134$
+                                   1100 ;./lib/entities.c:33: if (entidad->frame != sprite->frameInVRAM){
       0006EA DD 6E F4         [19] 1101 	ld	l, -12 (ix)
       0006ED DD 66 F5         [19] 1102 	ld	h, -11 (ix)
       0006F0 7E               [ 7] 1103 	ld	a, (hl)
@@ -1113,12 +1113,12 @@
       00070A DD 7E F7         [19] 1113 	ld	a,-9 (ix)
       00070D 96               [ 7] 1114 	sub	a,(hl)
       00070E 28 0A            [12] 1115 	jr	Z, 00151$
-                                   1116 ;./lib/entities.c:34: sprite->frameInVRAM = entidad->frame;
+                                   1116 ;./lib/entities.c:35: sprite->frameInVRAM = entidad->frame;
       000710 DD 6E F5         [19] 1117 	ld	l, -11 (ix)
       000713 DD 66 F6         [19] 1118 	ld	h, -10 (ix)
       000716 DD 7E F7         [19] 1119 	ld	a, -9 (ix)
       000719 77               [ 7] 1120 	ld	(hl), a
-                                   1121 ;./lib/entities.c:36: for(j=0;j<sprite->alto;j++) {
+                                   1121 ;./lib/entities.c:37: for(j=0;j<sprite->alto;j++) {
       00071A                       1122 00151$:
       00071A DD 7E F8         [19] 1123 	ld	a, -8 (ix)
       00071D DD 77 EE         [19] 1124 	ld	-18 (ix), a
@@ -1141,7 +1141,7 @@
       00074C DD 7E FE         [19] 1141 	ld	a, -2 (ix)
       00074F DD 96 FF         [19] 1142 	sub	a, -1 (ix)
       000752 D2r10r08         [10] 1143 	jp	NC, 00116$
-                                   1144 ;./lib/entities.c:37: for(i=0;i<sprite->ancho;i++) {
+                                   1144 ;./lib/entities.c:38: for(i=0;i<sprite->ancho;i++) {
       000755 DD 36 FF 00      [19] 1145 	ld	-1 (ix), #0x00
       000759                       1146 00129$:
       000759 DD 6E F2         [19] 1147 	ld	l, -14 (ix)
@@ -1149,19 +1149,19 @@
       00075F DD 7E FF         [19] 1149 	ld	a,-1 (ix)
       000762 96               [ 7] 1150 	sub	a,(hl)
       000763 D2r0Ar08         [10] 1151 	jp	NC, 00133$
-                                   1152 ;./lib/entities.c:21: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+                                   1152 ;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       000766 DD 6E FC         [19] 1153 	ld	l, -4 (ix)
       000769 DD 66 FD         [19] 1154 	ld	h, -3 (ix)
       00076C 7E               [ 7] 1155 	ld	a, (hl)
-                                   1156 ;./lib/entities.c:39: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+                                   1156 ;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
       00076D DD 4E FF         [19] 1157 	ld	c, -1 (ix)
       000770 06 00            [ 7] 1158 	ld	b, #0x00
       000772 DD 5E FE         [19] 1159 	ld	e, -2 (ix)
       000775 16 00            [ 7] 1160 	ld	d, #0x00
-                                   1161 ;./lib/entities.c:21: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+                                   1161 ;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
       000777 DD 77 F4         [19] 1162 	ld	-12 (ix), a
       00077A DD 36 F5 00      [19] 1163 	ld	-11 (ix), #0x00
-                                   1164 ;./lib/entities.c:39: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+                                   1164 ;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
       00077E DD 71 F6         [19] 1165 	ld	-10 (ix), c
       000781 DD 70 F7         [19] 1166 	ld	-9 (ix), b
       000784 3E 03            [ 7] 1167 	ld	a, #0x03
@@ -1199,14 +1199,14 @@
       0007B8 7B               [ 4] 1199 	ld	a, e
       0007B9 B4               [ 4] 1200 	or	a, h
       0007BA DD 77 F7         [19] 1201 	ld	-9 (ix), a
-                                   1202 ;./lib/entities.c:38: if(i==0 && j==0) {
+                                   1202 ;./lib/entities.c:39: if(i==0 && j==0) {
       0007BD DD 7E FF         [19] 1203 	ld	a, -1 (ix)
       0007C0 B7               [ 4] 1204 	or	a, a
       0007C1 20 28            [12] 1205 	jr	NZ, 00112$
       0007C3 DD 7E FE         [19] 1206 	ld	a, -2 (ix)
       0007C6 B7               [ 4] 1207 	or	a, a
       0007C7 20 22            [12] 1208 	jr	NZ, 00112$
-                                   1209 ;./lib/entities.c:39: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+                                   1209 ;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
       0007C9 DD 6E F0         [19] 1210 	ld	l, -16 (ix)
       0007CC DD 66 F1         [19] 1211 	ld	h, -15 (ix)
       0007CF 4E               [ 7] 1212 	ld	c, (hl)
@@ -1226,7 +1226,7 @@
       0007E8 77               [ 7] 1226 	ld	(hl), a
       0007E9 18 19            [12] 1227 	jr	00130$
       0007EB                       1228 00112$:
-                                   1229 ;./lib/entities.c:42: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );
+                                   1229 ;./lib/entities.c:43: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );
       0007EB DD 6E EE         [19] 1230 	ld	l, -18 (ix)
       0007EE DD 66 EF         [19] 1231 	ld	h, -17 (ix)
       0007F1 4E               [ 7] 1232 	ld	c, (hl)
@@ -1242,15 +1242,15 @@
       0007FE DD 56 F7         [19] 1242 	ld	d, -9 (ix)
       000801 CDr00r00         [17] 1243 	call	_SMS_addSprite_f
       000804                       1244 00130$:
-                                   1245 ;./lib/entities.c:37: for(i=0;i<sprite->ancho;i++) {
+                                   1245 ;./lib/entities.c:38: for(i=0;i<sprite->ancho;i++) {
       000804 DD 34 FF         [23] 1246 	inc	-1 (ix)
       000807 C3r59r07         [10] 1247 	jp	00129$
       00080A                       1248 00133$:
-                                   1249 ;./lib/entities.c:36: for(j=0;j<sprite->alto;j++) {
+                                   1249 ;./lib/entities.c:37: for(j=0;j<sprite->alto;j++) {
       00080A DD 34 FE         [23] 1250 	inc	-2 (ix)
       00080D C3r42r07         [10] 1251 	jp	00132$
       000810                       1252 00116$:
-                                   1253 ;./lib/entities.c:46: entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
+                                   1253 ;./lib/entities.c:47: entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
       000810 DD 6E F2         [19] 1254 	ld	l, -14 (ix)
       000813 DD 66 F3         [19] 1255 	ld	h, -13 (ix)
       000816 7E               [ 7] 1256 	ld	a, (hl)
@@ -1279,1423 +1279,1534 @@
       00083D E5               [11] 1279 	push	hl
       00083E DD 7E FF         [19] 1280 	ld	a, -1 (ix)
       000841 77               [ 7] 1281 	ld	(hl), a
-      000842                       1282 00134$:
-                                   1283 ;./lib/entities.c:49: }
-      000842 DD F9            [10] 1284 	ld	sp, ix
-      000844 DD E1            [14] 1285 	pop	ix
-      000846 C9               [10] 1286 	ret
-                                   1287 ;./alex.c:20: unsigned char canUp(){
-                                   1288 ;	---------------------------------
-                                   1289 ; Function canUp
-                                   1290 ; ---------------------------------
-      000847                       1291 _canUp::
-                                   1292 ;./alex.c:21: if (alex.x < 2)
-      000847 3Ar03r00         [13] 1293 	ld	a, (#_alex + 0)
-      00084A D6 02            [ 7] 1294 	sub	a, #0x02
-      00084C 30 02            [12] 1295 	jr	NC, 00102$
-                                   1296 ;./alex.c:22: return 0;
-      00084E AF               [ 4] 1297 	xor	a, a
-      00084F C9               [10] 1298 	ret
-      000850                       1299 00102$:
-                                   1300 ;./alex.c:23: return 1;
-      000850 3E 01            [ 7] 1301 	ld	a, #0x01
-                                   1302 ;./alex.c:24: }
-      000852 C9               [10] 1303 	ret
-                                   1304 ;./alex.c:26: unsigned char canDown() {
-                                   1305 ;	---------------------------------
-                                   1306 ; Function canDown
-                                   1307 ; ---------------------------------
-      000853                       1308 _canDown::
-                                   1309 ;./alex.c:27: if (alex.y > 155)
-      000853 21r04r00         [10] 1310 	ld	hl, #_alex+1
-      000856 4E               [ 7] 1311 	ld	c, (hl)
-      000857 3E 9B            [ 7] 1312 	ld	a, #0x9b
-      000859 91               [ 4] 1313 	sub	a, c
-      00085A 30 02            [12] 1314 	jr	NC, 00102$
-                                   1315 ;./alex.c:28: return 0;
-      00085C AF               [ 4] 1316 	xor	a, a
-      00085D C9               [10] 1317 	ret
-      00085E                       1318 00102$:
-                                   1319 ;./alex.c:29: return 1;
-      00085E 3E 01            [ 7] 1320 	ld	a, #0x01
-                                   1321 ;./alex.c:30: }
-      000860 C9               [10] 1322 	ret
-                                   1323 ;./alex.c:32: unsigned char canLeft() {
-                                   1324 ;	---------------------------------
-                                   1325 ; Function canLeft
-                                   1326 ; ---------------------------------
-      000861                       1327 _canLeft::
-                                   1328 ;./alex.c:33: if (alex.x < 9)
-      000861 3Ar03r00         [13] 1329 	ld	a, (#_alex + 0)
-      000864 D6 09            [ 7] 1330 	sub	a, #0x09
-      000866 30 02            [12] 1331 	jr	NC, 00102$
-                                   1332 ;./alex.c:34: return 0;
-      000868 AF               [ 4] 1333 	xor	a, a
-      000869 C9               [10] 1334 	ret
-      00086A                       1335 00102$:
-                                   1336 ;./alex.c:35: return 1;
-      00086A 3E 01            [ 7] 1337 	ld	a, #0x01
-                                   1338 ;./alex.c:36: }
-      00086C C9               [10] 1339 	ret
-                                   1340 ;./alex.c:38: unsigned char canRight() {
-                                   1341 ;	---------------------------------
-                                   1342 ; Function canRight
-                                   1343 ; ---------------------------------
-      00086D                       1344 _canRight::
-                                   1345 ;./alex.c:39: if (alex.x > 238)
-      00086D 21r03r00         [10] 1346 	ld	hl, #_alex+0
-      000870 4E               [ 7] 1347 	ld	c, (hl)
-      000871 3E EE            [ 7] 1348 	ld	a, #0xee
-      000873 91               [ 4] 1349 	sub	a, c
-      000874 30 02            [12] 1350 	jr	NC, 00102$
-                                   1351 ;./alex.c:40: return 0;
-      000876 AF               [ 4] 1352 	xor	a, a
-      000877 C9               [10] 1353 	ret
-      000878                       1354 00102$:
-                                   1355 ;./alex.c:41: return 1;
-      000878 3E 01            [ 7] 1356 	ld	a, #0x01
-                                   1357 ;./alex.c:42: }
-      00087A C9               [10] 1358 	ret
-                                   1359 ;./alex.c:44: void moveAlexSuelo(int keys) {
-                                   1360 ;	---------------------------------
-                                   1361 ; Function moveAlexSuelo
-                                   1362 ; ---------------------------------
-      00087B                       1363 _moveAlexSuelo::
-      00087B DD E5            [15] 1364 	push	ix
-      00087D DD 21 00 00      [14] 1365 	ld	ix,#0
-      000881 DD 39            [15] 1366 	add	ix,sp
-      000883 F5               [11] 1367 	push	af
-      000884 F5               [11] 1368 	push	af
-      000885 F5               [11] 1369 	push	af
-      000886 DD 75 FE         [19] 1370 	ld	-2 (ix), l
-      000889 DD 74 FF         [19] 1371 	ld	-1 (ix), h
-                                   1372 ;./alex.c:46: if (keys & PORT_A_KEY_LEFT)
-      00088C DD 7E FE         [19] 1373 	ld	a, -2 (ix)
-      00088F E6 04            [ 7] 1374 	and	a, #0x04
-      000891 DD 77 FA         [19] 1375 	ld	-6 (ix), a
-      000894 DD 36 FB 00      [19] 1376 	ld	-5 (ix), #0x00
-                                   1377 ;./alex.c:48: if (keys & PORT_A_KEY_RIGHT)
-      000898 DD 7E FE         [19] 1378 	ld	a, -2 (ix)
-      00089B E6 08            [ 7] 1379 	and	a, #0x08
-      00089D DD 77 FC         [19] 1380 	ld	-4 (ix), a
-      0008A0 DD 36 FD 00      [19] 1381 	ld	-3 (ix), #0x00
-                                   1382 ;./alex.c:45: if ((keys & PORT_A_KEY_DOWN)){
-      0008A4 DD CB FE 4E      [20] 1383 	bit	1, -2 (ix)
-      0008A8 28 33            [12] 1384 	jr	Z, 00109$
-                                   1385 ;./alex.c:46: if (keys & PORT_A_KEY_LEFT)
-      0008AA AF               [ 4] 1386 	xor	a, a
-      0008AB DD B6 FA         [19] 1387 	or	a, -6 (ix)
-      0008AE 28 05            [12] 1388 	jr	Z, 00102$
-                                   1389 ;./alex.c:47: alex.oriented = 1;
-      0008B0 21r07r00         [10] 1390 	ld	hl, #_alex+4
-      0008B3 36 01            [10] 1391 	ld	(hl), #0x01
-      0008B5                       1392 00102$:
-                                   1393 ;./alex.c:48: if (keys & PORT_A_KEY_RIGHT)
-      0008B5 AF               [ 4] 1394 	xor	a, a
-      0008B6 DD B6 FC         [19] 1395 	or	a, -4 (ix)
-      0008B9 28 05            [12] 1396 	jr	Z, 00104$
-                                   1397 ;./alex.c:49: alex.oriented = 0;
-      0008BB 21r07r00         [10] 1398 	ld	hl, #_alex+4
-      0008BE 36 00            [10] 1399 	ld	(hl), #0x00
-      0008C0                       1400 00104$:
-                                   1401 ;./alex.c:50: if (!alex.oriented)
-      0008C0 3Ar07r00         [13] 1402 	ld	a,(#_alex + 4)
-                                   1403 ;./alex.c:51: alex.frame = 7;
-                                   1404 ;./alex.c:50: if (!alex.oriented)
-      0008C3 DD 77 FD         [19] 1405 	ld	-3 (ix), a
-      0008C6 B7               [ 4] 1406 	or	a, a
-      0008C7 20 07            [12] 1407 	jr	NZ, 00106$
-                                   1408 ;./alex.c:51: alex.frame = 7;
-      0008C9 21r05r00         [10] 1409 	ld	hl, #(_alex + 2)
-      0008CC 36 07            [10] 1410 	ld	(hl), #0x07
-      0008CE 18 05            [12] 1411 	jr	00107$
-      0008D0                       1412 00106$:
-                                   1413 ;./alex.c:53: alex.frame = 15;
-      0008D0 21r05r00         [10] 1414 	ld	hl, #(_alex + 2)
-      0008D3 36 0F            [10] 1415 	ld	(hl), #0x0f
-      0008D5                       1416 00107$:
-                                   1417 ;./alex.c:54: alex.lastChangeFrame = 15;
-      0008D5 21r06r00         [10] 1418 	ld	hl, #_alex + 3
-      0008D8 36 0F            [10] 1419 	ld	(hl), #0x0f
-                                   1420 ;./alex.c:55: return; // not move
-      0008DA C3r1Ar0A         [10] 1421 	jp	00146$
-      0008DD                       1422 00109$:
-                                   1423 ;./alex.c:58: if (keys & PORT_A_KEY_2) {
-      0008DD DD CB FE 6E      [20] 1424 	bit	5, -2 (ix)
-      0008E1 28 2A            [12] 1425 	jr	Z, 00116$
-                                   1426 ;./alex.c:59: if (alex.y > 100)
-      0008E3 01r04r00         [10] 1427 	ld	bc, #_alex+1
-      0008E6 0A               [ 7] 1428 	ld	a, (bc)
-      0008E7 5F               [ 4] 1429 	ld	e, a
-      0008E8 3E 64            [ 7] 1430 	ld	a, #0x64
-      0008EA 93               [ 4] 1431 	sub	a, e
-      0008EB 30 09            [12] 1432 	jr	NC, 00111$
-                                   1433 ;./alex.c:60: maxSalto = alex.y - 100;
-      0008ED 7B               [ 4] 1434 	ld	a, e
-      0008EE 21r02r00         [10] 1435 	ld	hl, #_maxSalto
-      0008F1 C6 9C            [ 7] 1436 	add	a, #0x9c
-      0008F3 77               [ 7] 1437 	ld	(hl), a
-      0008F4 18 05            [12] 1438 	jr	00112$
-      0008F6                       1439 00111$:
-                                   1440 ;./alex.c:62: maxSalto = 0;
-      0008F6 21r02r00         [10] 1441 	ld	hl, #_maxSalto
-      0008F9 36 00            [10] 1442 	ld	(hl), #0x00
-      0008FB                       1443 00112$:
-                                   1444 ;./alex.c:63: alex.y--;
-      0008FB 0A               [ 7] 1445 	ld	a, (bc)
-      0008FC 3D               [ 4] 1446 	dec	a
-      0008FD 02               [ 7] 1447 	ld	(bc), a
-                                   1448 ;./alex.c:64: alex.y--;
-      0008FE 3D               [ 4] 1449 	dec	a
-      0008FF 02               [ 7] 1450 	ld	(bc), a
-                                   1451 ;./alex.c:65: PSGSFXPlay(salto_psg, SFX_CHANNEL1);
-      000900 3E 08            [ 7] 1452 	ld	a, #0x08
-      000902 F5               [11] 1453 	push	af
-      000903 33               [ 6] 1454 	inc	sp
-      000904 21r00r00         [10] 1455 	ld	hl, #_salto_psg
-      000907 CDr00r00         [17] 1456 	call	_PSGSFXPlay
-                                   1457 ;./alex.c:66: return;
-      00090A C3r1Ar0A         [10] 1458 	jp	00146$
-      00090D                       1459 00116$:
-                                   1460 ;./alex.c:68: else if (keys & PORT_A_KEY_1) {
-      00090D DD CB FE 66      [20] 1461 	bit	4, -2 (ix)
-      000911 28 0A            [12] 1462 	jr	Z, 00117$
-                                   1463 ;./alex.c:69: alex.state = PUÑETAZO_SUELO;
-      000913 21r08r00         [10] 1464 	ld	hl, #_alex + 5
-      000916 36 20            [10] 1465 	ld	(hl), #0x20
-                                   1466 ;./alex.c:70: alex.lastChangeFrame = 15;
-      000918 21r06r00         [10] 1467 	ld	hl, #_alex + 3
-      00091B 36 0F            [10] 1468 	ld	(hl), #0x0f
-      00091D                       1469 00117$:
-                                   1470 ;./alex.c:72: if(alex.state != PUÑETAZO_SUELO) {
-      00091D 21r08r00         [10] 1471 	ld	hl, #(_alex + 5)
-      000920 6E               [ 7] 1472 	ld	l, (hl)
-                                   1473 ;	spillPairReg hl
-                                   1474 ;./alex.c:76: alex.oriented = 1;
-                                   1475 ;./alex.c:77: alex.lastChangeFrame++;
-      000921 01r06r00         [10] 1476 	ld	bc, #_alex + 3
-                                   1477 ;./alex.c:80: alex.frame++;
-      000924 11r05r00         [10] 1478 	ld	de, #_alex + 2
-                                   1479 ;./alex.c:72: if(alex.state != PUÑETAZO_SUELO) {
-      000927 7D               [ 4] 1480 	ld	a, l
-      000928 D6 20            [ 7] 1481 	sub	a, #0x20
-      00092A 28 78            [12] 1482 	jr	Z, 00144$
-                                   1483 ;./alex.c:73: if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
-      00092C AF               [ 4] 1484 	xor	a, a
-      00092D DD B6 FA         [19] 1485 	or	a, -6 (ix)
-      000930 28 32            [12] 1486 	jr	Z, 00135$
-      000932 21r03r00         [10] 1487 	ld	hl, #_alex
-      000935 6E               [ 7] 1488 	ld	l, (hl)
-                                   1489 ;	spillPairReg hl
-      000936 3E 08            [ 7] 1490 	ld	a, #0x08
-      000938 95               [ 4] 1491 	sub	a, l
-      000939 30 29            [12] 1492 	jr	NC, 00135$
-                                   1493 ;./alex.c:75: alex.x -= 1;
-      00093B 7D               [ 4] 1494 	ld	a, l
-      00093C 3D               [ 4] 1495 	dec	a
-      00093D 32r03r00         [13] 1496 	ld	(#_alex),a
-                                   1497 ;./alex.c:76: alex.oriented = 1;
-      000940 21r07r00         [10] 1498 	ld	hl, #(_alex + 4)
-      000943 36 01            [10] 1499 	ld	(hl), #0x01
-                                   1500 ;./alex.c:77: alex.lastChangeFrame++;
-      000945 0A               [ 7] 1501 	ld	a, (bc)
-      000946 3C               [ 4] 1502 	inc	a
-      000947 02               [ 7] 1503 	ld	(bc), a
-                                   1504 ;./alex.c:78: if (alex.lastChangeFrame == 11) {
-      000948 D6 0B            [ 7] 1505 	sub	a, #0x0b
-      00094A 20 05            [12] 1506 	jr	NZ, 00119$
-                                   1507 ;./alex.c:79: alex.lastChangeFrame = 0;
-      00094C AF               [ 4] 1508 	xor	a, a
-      00094D 02               [ 7] 1509 	ld	(bc), a
-                                   1510 ;./alex.c:80: alex.frame++;
-      00094E 1A               [ 7] 1511 	ld	a, (de)
-      00094F 3C               [ 4] 1512 	inc	a
-      000950 12               [ 7] 1513 	ld	(de), a
-      000951                       1514 00119$:
-                                   1515 ;./alex.c:82: if (alex.frame > 11 || alex.frame < 8)
-      000951 1A               [ 7] 1516 	ld	a, (de)
-      000952 4F               [ 4] 1517 	ld	c, a
-      000953 3E 0B            [ 7] 1518 	ld	a, #0x0b
-      000955 91               [ 4] 1519 	sub	a, c
-      000956 38 06            [12] 1520 	jr	C, 00120$
-      000958 79               [ 4] 1521 	ld	a, c
-      000959 D6 08            [ 7] 1522 	sub	a, #0x08
-      00095B D2r1Ar0A         [10] 1523 	jp	NC, 00146$
-      00095E                       1524 00120$:
-                                   1525 ;./alex.c:83: alex.frame = 8;
-      00095E 3E 08            [ 7] 1526 	ld	a, #0x08
-      000960 12               [ 7] 1527 	ld	(de), a
-      000961 C3r1Ar0A         [10] 1528 	jp	00146$
-      000964                       1529 00135$:
-                                   1530 ;./alex.c:85: else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
-      000964 AF               [ 4] 1531 	xor	a, a
-      000965 DD B6 FC         [19] 1532 	or	a, -4 (ix)
-      000968 28 29            [12] 1533 	jr	Z, 00131$
-      00096A 3Ar03r00         [13] 1534 	ld	a, (#_alex + 0)
-      00096D FE F0            [ 7] 1535 	cp	a, #0xf0
-      00096F 30 22            [12] 1536 	jr	NC, 00131$
-                                   1537 ;./alex.c:87: alex.x += 1;
-      000971 3C               [ 4] 1538 	inc	a
-      000972 32r03r00         [13] 1539 	ld	(#_alex),a
-                                   1540 ;./alex.c:88: alex.oriented = 0;
-      000975 21r07r00         [10] 1541 	ld	hl, #(_alex + 4)
-      000978 36 00            [10] 1542 	ld	(hl), #0x00
-                                   1543 ;./alex.c:89: alex.lastChangeFrame++;
-      00097A 0A               [ 7] 1544 	ld	a, (bc)
-      00097B 3C               [ 4] 1545 	inc	a
-      00097C 02               [ 7] 1546 	ld	(bc), a
-                                   1547 ;./alex.c:90: if (alex.lastChangeFrame == 11) {
-      00097D D6 0B            [ 7] 1548 	sub	a, #0x0b
-      00097F 20 05            [12] 1549 	jr	NZ, 00124$
-                                   1550 ;./alex.c:91: alex.lastChangeFrame = 0;
-      000981 AF               [ 4] 1551 	xor	a, a
-      000982 02               [ 7] 1552 	ld	(bc), a
-                                   1553 ;./alex.c:92: alex.frame++;
-      000983 1A               [ 7] 1554 	ld	a, (de)
-      000984 3C               [ 4] 1555 	inc	a
-      000985 12               [ 7] 1556 	ld	(de), a
-      000986                       1557 00124$:
-                                   1558 ;./alex.c:94: if (alex.frame > 3 || alex.frame < 0)
-      000986 1A               [ 7] 1559 	ld	a, (de)
-      000987 4F               [ 4] 1560 	ld	c, a
-      000988 3E 03            [ 7] 1561 	ld	a, #0x03
-      00098A 91               [ 4] 1562 	sub	a, c
-      00098B D2r1Ar0A         [10] 1563 	jp	NC, 00146$
-                                   1564 ;./alex.c:95: alex.frame = 0;
-      00098E AF               [ 4] 1565 	xor	a, a
-      00098F 12               [ 7] 1566 	ld	(de), a
-      000990 C3r1Ar0A         [10] 1567 	jp	00146$
-      000993                       1568 00131$:
-                                   1569 ;./alex.c:99: alex.frame = 4;
-      000993 3E 04            [ 7] 1570 	ld	a, #0x04
-      000995 12               [ 7] 1571 	ld	(de), a
-                                   1572 ;./alex.c:100: if (alex.oriented)
-      000996 3Ar07r00         [13] 1573 	ld	a, (#(_alex + 4) + 0)
-      000999 B7               [ 4] 1574 	or	a, a
-      00099A 28 03            [12] 1575 	jr	Z, 00129$
-                                   1576 ;./alex.c:101: alex.frame = 12;
-      00099C 3E 0C            [ 7] 1577 	ld	a, #0x0c
-      00099E 12               [ 7] 1578 	ld	(de), a
-      00099F                       1579 00129$:
-                                   1580 ;./alex.c:102: alex.lastChangeFrame = 10;
-      00099F 3E 0A            [ 7] 1581 	ld	a, #0x0a
-      0009A1 02               [ 7] 1582 	ld	(bc), a
-      0009A2 18 76            [12] 1583 	jr	00146$
-      0009A4                       1584 00144$:
-                                   1585 ;./alex.c:106: if (!alex.oriented) {
-      0009A4 3Ar07r00         [13] 1586 	ld	a, (#(_alex + 4) + 0)
-                                   1587 ;./alex.c:111: SpriteTableY2[4] = alex.y + 9;
-                                   1588 ;./alex.c:106: if (!alex.oriented) {
-      0009A7 DD 77 FD         [19] 1589 	ld	-3 (ix), a
-      0009AA B7               [ 4] 1590 	or	a, a
-      0009AB 20 32            [12] 1591 	jr	NZ, 00139$
-                                   1592 ;./alex.c:107: alex.frame = 5;
-      0009AD 3E 05            [ 7] 1593 	ld	a, #0x05
-      0009AF 12               [ 7] 1594 	ld	(de), a
-                                   1595 ;./alex.c:109: SpriteTableXN2[8] = alex.x + 16;
-      0009B0 3Ar02r03         [13] 1596 	ld	a, (_SpriteTableXN2+0)
-      0009B3 C6 08            [ 7] 1597 	add	a, #0x08
-      0009B5 5F               [ 4] 1598 	ld	e, a
-      0009B6 3Ar03r03         [13] 1599 	ld	a, (_SpriteTableXN2+1)
-      0009B9 CE 00            [ 7] 1600 	adc	a, #0x00
-      0009BB 57               [ 4] 1601 	ld	d, a
-      0009BC 3Ar03r00         [13] 1602 	ld	a, (#_alex + 0)
-      0009BF C6 10            [ 7] 1603 	add	a, #0x10
-      0009C1 12               [ 7] 1604 	ld	(de), a
-                                   1605 ;./alex.c:110: SpriteTableXN2[9] = 9;
-      0009C2 2Ar02r03         [16] 1606 	ld	hl, (_SpriteTableXN2)
-      0009C5 11 09 00         [10] 1607 	ld	de, #0x0009
-      0009C8 19               [11] 1608 	add	hl, de
-      0009C9 36 09            [10] 1609 	ld	(hl), #0x09
-                                   1610 ;./alex.c:111: SpriteTableY2[4] = alex.y + 9;
-      0009CB 3Ar00r03         [13] 1611 	ld	a, (_SpriteTableY2+0)
-      0009CE C6 04            [ 7] 1612 	add	a, #0x04
-      0009D0 5F               [ 4] 1613 	ld	e, a
-      0009D1 3Ar01r03         [13] 1614 	ld	a, (_SpriteTableY2+1)
-      0009D4 CE 00            [ 7] 1615 	adc	a, #0x00
-      0009D6 57               [ 4] 1616 	ld	d, a
-      0009D7 3Ar04r00         [13] 1617 	ld	a, (#(_alex + 1) + 0)
-      0009DA C6 09            [ 7] 1618 	add	a, #0x09
-      0009DC 12               [ 7] 1619 	ld	(de), a
-      0009DD 18 30            [12] 1620 	jr	00140$
-      0009DF                       1621 00139$:
-                                   1622 ;./alex.c:114: alex.frame = 13;
-      0009DF 3E 0D            [ 7] 1623 	ld	a, #0x0d
-      0009E1 12               [ 7] 1624 	ld	(de), a
-                                   1625 ;./alex.c:116: SpriteTableXN2[8] = alex.x - 8;
-      0009E2 3Ar02r03         [13] 1626 	ld	a, (_SpriteTableXN2+0)
-      0009E5 C6 08            [ 7] 1627 	add	a, #0x08
-      0009E7 5F               [ 4] 1628 	ld	e, a
-      0009E8 3Ar03r03         [13] 1629 	ld	a, (_SpriteTableXN2+1)
-      0009EB CE 00            [ 7] 1630 	adc	a, #0x00
-      0009ED 57               [ 4] 1631 	ld	d, a
-      0009EE 3Ar03r00         [13] 1632 	ld	a, (#_alex + 0)
-      0009F1 C6 F8            [ 7] 1633 	add	a, #0xf8
-      0009F3 12               [ 7] 1634 	ld	(de), a
-                                   1635 ;./alex.c:117: SpriteTableXN2[9] = 11;
-      0009F4 2Ar02r03         [16] 1636 	ld	hl, (_SpriteTableXN2)
-      0009F7 11 09 00         [10] 1637 	ld	de, #0x0009
-      0009FA 19               [11] 1638 	add	hl, de
-      0009FB 36 0B            [10] 1639 	ld	(hl), #0x0b
-                                   1640 ;./alex.c:118: SpriteTableY2[4] = alex.y + 9;
-      0009FD 3Ar00r03         [13] 1641 	ld	a, (_SpriteTableY2+0)
-      000A00 C6 04            [ 7] 1642 	add	a, #0x04
-      000A02 5F               [ 4] 1643 	ld	e, a
-      000A03 3Ar01r03         [13] 1644 	ld	a, (_SpriteTableY2+1)
-      000A06 CE 00            [ 7] 1645 	adc	a, #0x00
-      000A08 57               [ 4] 1646 	ld	d, a
-      000A09 3Ar04r00         [13] 1647 	ld	a, (#(_alex + 1) + 0)
-      000A0C C6 09            [ 7] 1648 	add	a, #0x09
-      000A0E 12               [ 7] 1649 	ld	(de), a
-      000A0F                       1650 00140$:
-                                   1651 ;./alex.c:120: alex.lastChangeFrame--;
-      000A0F 0A               [ 7] 1652 	ld	a, (bc)
-      000A10 3D               [ 4] 1653 	dec	a
-      000A11 02               [ 7] 1654 	ld	(bc), a
-                                   1655 ;./alex.c:121: if(!alex.lastChangeFrame) {
-      000A12 B7               [ 4] 1656 	or	a, a
-      000A13 20 05            [12] 1657 	jr	NZ, 00146$
-                                   1658 ;./alex.c:122: alex.state = 0;
-      000A15 21r08r00         [10] 1659 	ld	hl, #(_alex + 5)
-      000A18 36 00            [10] 1660 	ld	(hl), #0x00
-      000A1A                       1661 00146$:
-                                   1662 ;./alex.c:125: }
-      000A1A DD F9            [10] 1663 	ld	sp, ix
-      000A1C DD E1            [14] 1664 	pop	ix
-      000A1E C9               [10] 1665 	ret
-                                   1666 ;./alex.c:127: void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
-                                   1667 ;	---------------------------------
-                                   1668 ; Function moveAlexAire
-                                   1669 ; ---------------------------------
-      000A1F                       1670 _moveAlexAire::
-      000A1F DD E5            [15] 1671 	push	ix
-      000A21 DD 21 00 00      [14] 1672 	ld	ix,#0
-      000A25 DD 39            [15] 1673 	add	ix,sp
-      000A27 F5               [11] 1674 	push	af
-      000A28 3B               [ 6] 1675 	dec	sp
-      000A29 DD 75 FE         [19] 1676 	ld	-2 (ix), l
-      000A2C DD 74 FF         [19] 1677 	ld	-1 (ix), h
-                                   1678 ;./alex.c:128: if (alex.y > maxSalto) {
-      000A2F 21r04r00         [10] 1679 	ld	hl, #(_alex + 1)
-      000A32 4E               [ 7] 1680 	ld	c, (hl)
-                                   1681 ;./alex.c:129: alex.y -= 2;
-      000A33 DD 71 FD         [19] 1682 	ld	-3 (ix), c
-                                   1683 ;./alex.c:128: if (alex.y > maxSalto) {
-      000A36 3Ar02r00         [13] 1684 	ld	a, (_maxSalto+0)
-      000A39 91               [ 4] 1685 	sub	a, c
-      000A3A 30 0A            [12] 1686 	jr	NC, 00102$
-                                   1687 ;./alex.c:129: alex.y -= 2;
-      000A3C DD 7E FD         [19] 1688 	ld	a, -3 (ix)
-      000A3F 3D               [ 4] 1689 	dec	a
-      000A40 3D               [ 4] 1690 	dec	a
-      000A41 32r04r00         [13] 1691 	ld	(#(_alex + 1)),a
-      000A44 18 10            [12] 1692 	jr	00103$
-      000A46                       1693 00102$:
-                                   1694 ;./alex.c:132: alex.y += 2; // bajando
-      000A46 DD 7E FD         [19] 1695 	ld	a, -3 (ix)
-      000A49 3C               [ 4] 1696 	inc	a
-      000A4A 3C               [ 4] 1697 	inc	a
-      000A4B 32r04r00         [13] 1698 	ld	(#(_alex + 1)),a
-                                   1699 ;./alex.c:133: maxSalto = 255;
-      000A4E FD 21r02r00      [14] 1700 	ld	iy, #_maxSalto
-      000A52 FD 36 00 FF      [19] 1701 	ld	0 (iy), #0xff
-      000A56                       1702 00103$:
-                                   1703 ;./alex.c:136: if (alex.state != PUÑETAZO_SALTANDO)
-                                   1704 ;./alex.c:137: alex.oriented = 1;
-                                   1705 ;./alex.c:135: if (keys & PORT_A_KEY_LEFT) {
-      000A56 DD CB FE 56      [20] 1706 	bit	2, -2 (ix)
-      000A5A 28 1A            [12] 1707 	jr	Z, 00109$
-                                   1708 ;./alex.c:136: if (alex.state != PUÑETAZO_SALTANDO)
-      000A5C 3Ar08r00         [13] 1709 	ld	a, (#(_alex + 5) + 0)
-      000A5F D6 10            [ 7] 1710 	sub	a, #0x10
-      000A61 28 05            [12] 1711 	jr	Z, 00105$
-                                   1712 ;./alex.c:137: alex.oriented = 1;
-      000A63 21r07r00         [10] 1713 	ld	hl, #(_alex + 4)
-      000A66 36 01            [10] 1714 	ld	(hl), #0x01
-      000A68                       1715 00105$:
-                                   1716 ;./alex.c:138: if (puedeIzquieda)
-      000A68 DD 7E 06         [19] 1717 	ld	a, 6 (ix)
-      000A6B B7               [ 4] 1718 	or	a, a
-      000A6C 28 08            [12] 1719 	jr	Z, 00109$
-                                   1720 ;./alex.c:139: alex.x -= 2;
-      000A6E 3Ar03r00         [13] 1721 	ld	a, (#_alex + 0)
-      000A71 3D               [ 4] 1722 	dec	a
-      000A72 3D               [ 4] 1723 	dec	a
-      000A73 32r03r00         [13] 1724 	ld	(#_alex),a
-      000A76                       1725 00109$:
-                                   1726 ;./alex.c:141: if (keys & PORT_A_KEY_RIGHT) {
-      000A76 DD CB FE 5E      [20] 1727 	bit	3, -2 (ix)
-      000A7A 28 1A            [12] 1728 	jr	Z, 00115$
-                                   1729 ;./alex.c:142: if (alex.state != PUÑETAZO_SALTANDO)
-      000A7C 3Ar08r00         [13] 1730 	ld	a, (#(_alex + 5) + 0)
-      000A7F D6 10            [ 7] 1731 	sub	a, #0x10
-      000A81 28 05            [12] 1732 	jr	Z, 00111$
-                                   1733 ;./alex.c:143: alex.oriented = 0;
-      000A83 21r07r00         [10] 1734 	ld	hl, #(_alex + 4)
-      000A86 36 00            [10] 1735 	ld	(hl), #0x00
-      000A88                       1736 00111$:
-                                   1737 ;./alex.c:144: if (puedeDerecha)
-      000A88 DD 7E 05         [19] 1738 	ld	a, 5 (ix)
-      000A8B B7               [ 4] 1739 	or	a, a
-      000A8C 28 08            [12] 1740 	jr	Z, 00115$
-                                   1741 ;./alex.c:145: alex.x += 2;
-      000A8E 3Ar03r00         [13] 1742 	ld	a, (#_alex + 0)
-      000A91 C6 02            [ 7] 1743 	add	a, #0x02
-      000A93 32r03r00         [13] 1744 	ld	(#_alex),a
-      000A96                       1745 00115$:
-                                   1746 ;./alex.c:147: if (alex.state == PUÑETAZO_SALTANDO) {
-      000A96 21r08r00         [10] 1747 	ld	hl, #(_alex + 5)
-      000A99 4E               [ 7] 1748 	ld	c, (hl)
-                                   1749 ;./alex.c:148: alex.lastChangeFrame--;
-                                   1750 ;./alex.c:153: alex.frame = 5;
-      000A9A 11r05r00         [10] 1751 	ld	de, #_alex + 2
-                                   1752 ;./alex.c:147: if (alex.state == PUÑETAZO_SALTANDO) {
-      000A9D 79               [ 4] 1753 	ld	a, c
-      000A9E D6 10            [ 7] 1754 	sub	a, #0x10
-      000AA0 20 22            [12] 1755 	jr	NZ, 00127$
-                                   1756 ;./alex.c:148: alex.lastChangeFrame--;
-      000AA2 21r06r00         [10] 1757 	ld	hl, #(_alex + 3)
-      000AA5 4E               [ 7] 1758 	ld	c, (hl)
-      000AA6 0D               [ 4] 1759 	dec	c
-      000AA7 21r06r00         [10] 1760 	ld	hl, #(_alex + 3)
-                                   1761 ;./alex.c:149: if  (!alex.lastChangeFrame) {
-      000AAA 79               [ 4] 1762 	ld	a,c
-      000AAB 77               [ 7] 1763 	ld	(hl),a
-      000AAC B7               [ 4] 1764 	or	a, a
-      000AAD 20 05            [12] 1765 	jr	NZ, 00117$
-                                   1766 ;./alex.c:150: alex.state = 0;
-      000AAF 21r08r00         [10] 1767 	ld	hl, #(_alex + 5)
-      000AB2 36 00            [10] 1768 	ld	(hl), #0x00
-      000AB4                       1769 00117$:
-                                   1770 ;./alex.c:152: if (!alex.oriented) {
-      000AB4 3Ar07r00         [13] 1771 	ld	a, (#(_alex + 4) + 0)
-      000AB7 B7               [ 4] 1772 	or	a, a
-      000AB8 20 05            [12] 1773 	jr	NZ, 00119$
-                                   1774 ;./alex.c:153: alex.frame = 5;
-      000ABA 3E 05            [ 7] 1775 	ld	a, #0x05
-      000ABC 12               [ 7] 1776 	ld	(de), a
-      000ABD 18 23            [12] 1777 	jr	00129$
-      000ABF                       1778 00119$:
-                                   1779 ;./alex.c:157: alex.frame = 13;
-      000ABF 3E 0D            [ 7] 1780 	ld	a, #0x0d
-      000AC1 12               [ 7] 1781 	ld	(de), a
-      000AC2 18 1E            [12] 1782 	jr	00129$
-      000AC4                       1783 00127$:
-                                   1784 ;./alex.c:162: if (!alex.oriented)
-      000AC4 3Ar07r00         [13] 1785 	ld	a, (#(_alex + 4) + 0)
-      000AC7 B7               [ 4] 1786 	or	a, a
-      000AC8 20 05            [12] 1787 	jr	NZ, 00122$
-                                   1788 ;./alex.c:163: alex.frame = 6;
-      000ACA 3E 06            [ 7] 1789 	ld	a, #0x06
-      000ACC 12               [ 7] 1790 	ld	(de), a
-      000ACD 18 03            [12] 1791 	jr	00123$
-      000ACF                       1792 00122$:
-                                   1793 ;./alex.c:165: alex.frame = 14;
-      000ACF 3E 0E            [ 7] 1794 	ld	a, #0x0e
-      000AD1 12               [ 7] 1795 	ld	(de), a
-      000AD2                       1796 00123$:
-                                   1797 ;./alex.c:166: if (keys & PORT_A_KEY_1) {
-      000AD2 DD CB FE 66      [20] 1798 	bit	4, -2 (ix)
-      000AD6 28 0A            [12] 1799 	jr	Z, 00129$
-                                   1800 ;./alex.c:167: alex.state = PUÑETAZO_SALTANDO;
-      000AD8 21r08r00         [10] 1801 	ld	hl, #(_alex + 5)
-      000ADB 36 10            [10] 1802 	ld	(hl), #0x10
-                                   1803 ;./alex.c:168: alex.lastChangeFrame = 20;
-      000ADD 21r06r00         [10] 1804 	ld	hl, #(_alex + 3)
-      000AE0 36 14            [10] 1805 	ld	(hl), #0x14
-      000AE2                       1806 00129$:
-                                   1807 ;./alex.c:172: }
-      000AE2 DD F9            [10] 1808 	ld	sp, ix
-      000AE4 DD E1            [14] 1809 	pop	ix
-      000AE6 E1               [10] 1810 	pop	hl
-      000AE7 F1               [10] 1811 	pop	af
-      000AE8 33               [ 6] 1812 	inc	sp
-      000AE9 E9               [ 4] 1813 	jp	(hl)
-                                   1814 ;./alex.c:174: void drawAlex() {
-                                   1815 ;	---------------------------------
-                                   1816 ; Function drawAlex
-                                   1817 ; ---------------------------------
-      000AEA                       1818 _drawAlex::
-                                   1819 ;./alex.c:175: SpriteTableXN2[0] = alex.x;
-      000AEA ED 5Br02r03      [20] 1820 	ld	de, (_SpriteTableXN2)
-      000AEE 01r03r00         [10] 1821 	ld	bc, #_alex+0
-      000AF1 0A               [ 7] 1822 	ld	a, (bc)
-      000AF2 12               [ 7] 1823 	ld	(de), a
-                                   1824 ;./alex.c:176: SpriteTableXN2[2] = alex.x + 8;
-      000AF3 2Ar02r03         [16] 1825 	ld	hl, (_SpriteTableXN2)
-      000AF6 23               [ 6] 1826 	inc	hl
-      000AF7 23               [ 6] 1827 	inc	hl
-      000AF8 0A               [ 7] 1828 	ld	a, (bc)
-      000AF9 C6 08            [ 7] 1829 	add	a, #0x08
-      000AFB 77               [ 7] 1830 	ld	(hl), a
-                                   1831 ;./alex.c:177: SpriteTableXN2[4] = alex.x;
-      000AFC 2Ar02r03         [16] 1832 	ld	hl, (_SpriteTableXN2)
-      000AFF 11 04 00         [10] 1833 	ld	de, #0x0004
-      000B02 19               [11] 1834 	add	hl, de
-      000B03 0A               [ 7] 1835 	ld	a, (bc)
-      000B04 77               [ 7] 1836 	ld	(hl), a
-                                   1837 ;./alex.c:178: SpriteTableXN2[6] = alex.x + 8;
-      000B05 2Ar02r03         [16] 1838 	ld	hl, (_SpriteTableXN2)
-      000B08 11 06 00         [10] 1839 	ld	de, #0x0006
-      000B0B 19               [11] 1840 	add	hl, de
-      000B0C 0A               [ 7] 1841 	ld	a, (bc)
-      000B0D C6 08            [ 7] 1842 	add	a, #0x08
-      000B0F 77               [ 7] 1843 	ld	(hl), a
-                                   1844 ;./alex.c:179: SpriteTableY2[0] = alex.y;
-      000B10 ED 5Br00r03      [20] 1845 	ld	de, (_SpriteTableY2)
-      000B14 01r04r00         [10] 1846 	ld	bc, #_alex+1
-      000B17 0A               [ 7] 1847 	ld	a, (bc)
-      000B18 12               [ 7] 1848 	ld	(de), a
-                                   1849 ;./alex.c:180: SpriteTableY2[1] = alex.y;
-      000B19 2Ar00r03         [16] 1850 	ld	hl, (_SpriteTableY2)
-      000B1C 23               [ 6] 1851 	inc	hl
-      000B1D 0A               [ 7] 1852 	ld	a, (bc)
-      000B1E 77               [ 7] 1853 	ld	(hl), a
-                                   1854 ;./alex.c:181: SpriteTableY2[2] = alex.y + 16;
-      000B1F 2Ar00r03         [16] 1855 	ld	hl, (_SpriteTableY2)
-      000B22 23               [ 6] 1856 	inc	hl
-      000B23 23               [ 6] 1857 	inc	hl
-      000B24 0A               [ 7] 1858 	ld	a, (bc)
-      000B25 C6 10            [ 7] 1859 	add	a, #0x10
-      000B27 77               [ 7] 1860 	ld	(hl), a
-                                   1861 ;./alex.c:182: SpriteTableY2[3] = alex.y + 16;
-      000B28 2Ar00r03         [16] 1862 	ld	hl, (_SpriteTableY2)
-      000B2B 23               [ 6] 1863 	inc	hl
-      000B2C 23               [ 6] 1864 	inc	hl
-      000B2D 23               [ 6] 1865 	inc	hl
-      000B2E 0A               [ 7] 1866 	ld	a, (bc)
-      000B2F C6 10            [ 7] 1867 	add	a, #0x10
-      000B31 77               [ 7] 1868 	ld	(hl), a
-                                   1869 ;./alex.c:183: }
-      000B32 C9               [10] 1870 	ret
-                                   1871 ;./alex.c:186: void moveAlex(int keys) {
-                                   1872 ;	---------------------------------
-                                   1873 ; Function moveAlex
-                                   1874 ; ---------------------------------
-      000B33                       1875 _moveAlex::
-      000B33 DD E5            [15] 1876 	push	ix
-      000B35 DD 21 00 00      [14] 1877 	ld	ix,#0
-      000B39 DD 39            [15] 1878 	add	ix,sp
-      000B3B 3B               [ 6] 1879 	dec	sp
-                                   1880 ;./alex.c:187: unsigned char puedeBajar = canDown();
-      000B3C E5               [11] 1881 	push	hl
-      000B3D CDr53r08         [17] 1882 	call	_canDown
-      000B40 4F               [ 4] 1883 	ld	c, a
-      000B41 C5               [11] 1884 	push	bc
-      000B42 CDr47r08         [17] 1885 	call	_canUp
-      000B45 DD 77 FF         [19] 1886 	ld	-1 (ix), a
-      000B48 CDr6Dr08         [17] 1887 	call	_canRight
-      000B4B 5F               [ 4] 1888 	ld	e, a
-      000B4C D5               [11] 1889 	push	de
-      000B4D CDr61r08         [17] 1890 	call	_canLeft
-      000B50 D1               [10] 1891 	pop	de
-      000B51 C1               [10] 1892 	pop	bc
-      000B52 E1               [10] 1893 	pop	hl
-                                   1894 ;./alex.c:191: if (puedeBajar)
-      000B53 0C               [ 4] 1895 	inc	c
-      000B54 0D               [ 4] 1896 	dec	c
-      000B55 28 0C            [12] 1897 	jr	Z, 00102$
-                                   1898 ;./alex.c:192: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
-      000B57 57               [ 4] 1899 	ld	d,a
-      000B58 D5               [11] 1900 	push	de
-      000B59 DD 7E FF         [19] 1901 	ld	a, -1 (ix)
-      000B5C F5               [11] 1902 	push	af
-      000B5D 33               [ 6] 1903 	inc	sp
-      000B5E CDr1Fr0A         [17] 1904 	call	_moveAlexAire
-      000B61 18 03            [12] 1905 	jr	00103$
-      000B63                       1906 00102$:
-                                   1907 ;./alex.c:194: moveAlexSuelo(keys);
-      000B63 CDr7Br08         [17] 1908 	call	_moveAlexSuelo
-      000B66                       1909 00103$:
-                                   1910 ;./alex.c:195: drawAlex();
-      000B66 CDrEAr0A         [17] 1911 	call	_drawAlex
-                                   1912 ;./alex.c:196: }
-      000B69 33               [ 6] 1913 	inc	sp
-      000B6A DD E1            [14] 1914 	pop	ix
-      000B6C C9               [10] 1915 	ret
-                                   1916 ;main.c:20: void inicializaPajaros()
-                                   1917 ;	---------------------------------
-                                   1918 ; Function inicializaPajaros
-                                   1919 ; ---------------------------------
-      000B6D                       1920 _inicializaPajaros::
-      000B6D DD E5            [15] 1921 	push	ix
-      000B6F DD 21 00 00      [14] 1922 	ld	ix,#0
-      000B73 DD 39            [15] 1923 	add	ix,sp
-      000B75 21 F9 FF         [10] 1924 	ld	hl, #-7
-      000B78 39               [11] 1925 	add	hl, sp
-      000B79 F9               [ 6] 1926 	ld	sp, hl
-                                   1927 ;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
-      000B7A DD 36 FF 00      [19] 1928 	ld	-1 (ix), #0x00
-      000B7E                       1929 00108$:
-                                   1930 ;main.c:25: pajaros[i].x = 15 + 32 * i;
-      000B7E DD 4E FF         [19] 1931 	ld	c, -1 (ix)
-      000B81 06 00            [ 7] 1932 	ld	b, #0x00
-      000B83 69               [ 4] 1933 	ld	l, c
-      000B84 60               [ 4] 1934 	ld	h, b
-      000B85 29               [11] 1935 	add	hl, hl
-      000B86 29               [11] 1936 	add	hl, hl
-      000B87 29               [11] 1937 	add	hl, hl
-      000B88 7D               [ 4] 1938 	ld	a, l
-      000B89 C6r06            [ 7] 1939 	add	a, #<(_pajaros)
-      000B8B DD 77 F9         [19] 1940 	ld	-7 (ix), a
-      000B8E 7C               [ 4] 1941 	ld	a, h
-      000B8F CEs03            [ 7] 1942 	adc	a, #>(_pajaros)
-      000B91 DD 77 FA         [19] 1943 	ld	-6 (ix), a
-      000B94 DD 7E FF         [19] 1944 	ld	a, -1 (ix)
-      000B97 0F               [ 4] 1945 	rrca
-      000B98 0F               [ 4] 1946 	rrca
-      000B99 0F               [ 4] 1947 	rrca
-      000B9A E6 E0            [ 7] 1948 	and	a, #0xe0
-      000B9C C6 0F            [ 7] 1949 	add	a, #0x0f
-      000B9E E1               [10] 1950 	pop	hl
-      000B9F E5               [11] 1951 	push	hl
-      000BA0 77               [ 7] 1952 	ld	(hl), a
-                                   1953 ;main.c:26: pajaros[i].y = 16 * (i / 2);
-      000BA1 DD 7E F9         [19] 1954 	ld	a, -7 (ix)
-      000BA4 C6 01            [ 7] 1955 	add	a, #0x01
-      000BA6 DD 77 FB         [19] 1956 	ld	-5 (ix), a
-      000BA9 DD 7E FA         [19] 1957 	ld	a, -6 (ix)
-      000BAC CE 00            [ 7] 1958 	adc	a, #0x00
-      000BAE DD 77 FC         [19] 1959 	ld	-4 (ix), a
-      000BB1 DD 71 FD         [19] 1960 	ld	-3 (ix), c
-      000BB4 DD 70 FE         [19] 1961 	ld	-2 (ix), b
-      000BB7 CB 78            [ 8] 1962 	bit	7, b
-      000BB9 28 08            [12] 1963 	jr	Z, 00112$
-      000BBB DD 36 FD 01      [19] 1964 	ld	-3 (ix), #0x01
-      000BBF DD 36 FE 00      [19] 1965 	ld	-2 (ix), #0
-      000BC3                       1966 00112$:
-      000BC3 DD 4E FD         [19] 1967 	ld	c, -3 (ix)
-      000BC6 1E 00            [ 7] 1968 	ld	e, #0x00
-      000BC8 CB 2B            [ 8] 1969 	sra	e
-      000BCA CB 19            [ 8] 1970 	rr	c
-      000BCC 79               [ 4] 1971 	ld	a, c
-      000BCD 87               [ 4] 1972 	add	a, a
-      000BCE 87               [ 4] 1973 	add	a, a
-      000BCF 87               [ 4] 1974 	add	a, a
-      000BD0 87               [ 4] 1975 	add	a, a
-      000BD1 C1               [10] 1976 	pop	bc
-      000BD2 E1               [10] 1977 	pop	hl
-      000BD3 E5               [11] 1978 	push	hl
-      000BD4 C5               [11] 1979 	push	bc
-      000BD5 77               [ 7] 1980 	ld	(hl), a
-                                   1981 ;main.c:27: pajaros[i].lastChangeFrame = i * 3;
-      000BD6 C1               [10] 1982 	pop	bc
-      000BD7 C5               [11] 1983 	push	bc
-      000BD8 03               [ 6] 1984 	inc	bc
-      000BD9 03               [ 6] 1985 	inc	bc
-      000BDA 03               [ 6] 1986 	inc	bc
-      000BDB DD 7E FF         [19] 1987 	ld	a, -1 (ix)
-      000BDE 5F               [ 4] 1988 	ld	e, a
-      000BDF 87               [ 4] 1989 	add	a, a
-      000BE0 83               [ 4] 1990 	add	a, e
-      000BE1 02               [ 7] 1991 	ld	(bc), a
-                                   1992 ;main.c:28: pajaros[i].initSprite = 255;
-      000BE2 DD 7E F9         [19] 1993 	ld	a, -7 (ix)
-      000BE5 C6 06            [ 7] 1994 	add	a, #0x06
-      000BE7 5F               [ 4] 1995 	ld	e, a
-      000BE8 DD 7E FA         [19] 1996 	ld	a, -6 (ix)
-      000BEB CE 00            [ 7] 1997 	adc	a, #0x00
-      000BED 57               [ 4] 1998 	ld	d, a
-      000BEE 3E FF            [ 7] 1999 	ld	a, #0xff
-      000BF0 12               [ 7] 2000 	ld	(de), a
-                                   2001 ;main.c:30: pajaros[i].x++;
-      000BF1 E1               [10] 2002 	pop	hl
-      000BF2 E5               [11] 2003 	push	hl
-      000BF3 7E               [ 7] 2004 	ld	a, (hl)
-      000BF4 3C               [ 4] 2005 	inc	a
-      000BF5 E1               [10] 2006 	pop	hl
-      000BF6 E5               [11] 2007 	push	hl
-      000BF7 77               [ 7] 2008 	ld	(hl), a
-                                   2009 ;main.c:31: pajaros[i].lastChangeFrame++;
-      000BF8 0A               [ 7] 2010 	ld	a, (bc)
-      000BF9 3C               [ 4] 2011 	inc	a
-      000BFA 02               [ 7] 2012 	ld	(bc), a
-                                   2013 ;main.c:32: if (pajaros[i].lastChangeFrame == 20)
-      000BFB D6 14            [ 7] 2014 	sub	a, #0x14
-      000BFD 20 15            [12] 2015 	jr	NZ, 00104$
-                                   2016 ;main.c:34: pajaros[i].frame++;
-      000BFF E1               [10] 2017 	pop	hl
-      000C00 E5               [11] 2018 	push	hl
-      000C01 23               [ 6] 2019 	inc	hl
-      000C02 23               [ 6] 2020 	inc	hl
-      000C03 7E               [ 7] 2021 	ld	a, (hl)
-      000C04 3C               [ 4] 2022 	inc	a
-      000C05 DD 77 FE         [19] 2023 	ld	-2 (ix), a
-      000C08 77               [ 7] 2024 	ld	(hl), a
-                                   2025 ;main.c:35: if (pajaros[i].frame > 1)
-      000C09 3E 01            [ 7] 2026 	ld	a, #0x01
-      000C0B DD 96 FE         [19] 2027 	sub	a, -2 (ix)
-      000C0E 30 02            [12] 2028 	jr	NC, 00102$
-                                   2029 ;main.c:36: pajaros[i].frame = 0;
-      000C10 36 00            [10] 2030 	ld	(hl), #0x00
-      000C12                       2031 00102$:
-                                   2032 ;main.c:37: pajaros[i].lastChangeFrame = 0;
-      000C12 AF               [ 4] 2033 	xor	a, a
-      000C13 02               [ 7] 2034 	ld	(bc), a
-      000C14                       2035 00104$:
-                                   2036 ;main.c:39: if(pajaros[i].initSprite == 255) {
-      000C14 1A               [ 7] 2037 	ld	a, (de)
-      000C15 3C               [ 4] 2038 	inc	a
-      000C16 20 08            [12] 2039 	jr	NZ, 00109$
-                                   2040 ;main.c:40: draw_entidad(&(pajaros[i]), &spritePajaro);
-      000C18 11r15r00         [10] 2041 	ld	de, #_spritePajaro
-      000C1B E1               [10] 2042 	pop	hl
-      000C1C E5               [11] 2043 	push	hl
-      000C1D CDr40r04         [17] 2044 	call	_draw_entidad
-      000C20                       2045 00109$:
-                                   2046 ;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
-      000C20 DD 34 FF         [23] 2047 	inc	-1 (ix)
-      000C23 DD 7E FF         [19] 2048 	ld	a, -1 (ix)
-      000C26 D6 13            [ 7] 2049 	sub	a, #0x13
-      000C28 DAr7Er0B         [10] 2050 	jp	C, 00108$
-                                   2051 ;main.c:43: }
-      000C2B DD F9            [10] 2052 	ld	sp, ix
-      000C2D DD E1            [14] 2053 	pop	ix
-      000C2F C9               [10] 2054 	ret
-                                   2055 ;main.c:45: void loadGrapVRAM()
-                                   2056 ;	---------------------------------
-                                   2057 ; Function loadGrapVRAM
-                                   2058 ; ---------------------------------
-      000C30                       2059 _loadGrapVRAM::
-      000C30 DD E5            [15] 2060 	push	ix
-      000C32 DD 21 00 00      [14] 2061 	ld	ix,#0
-      000C36 DD 39            [15] 2062 	add	ix,sp
-      000C38 21 E2 FF         [10] 2063 	ld	hl, #-30
-      000C3B 39               [11] 2064 	add	hl, sp
-      000C3C F9               [ 6] 2065 	ld	sp, hl
-                                   2066 ;main.c:47: SMS_init();
-      000C3D CDr00r00         [17] 2067 	call	_SMS_init
-                                   2068 ;main.c:50: SMS_setSpriteMode(SPRITEMODE_TALL);
-      000C40 2E 01            [ 7] 2069 	ld	l, #0x01
-                                   2070 ;	spillPairReg hl
-                                   2071 ;	spillPairReg hl
-      000C42 CDr00r00         [17] 2072 	call	_SMS_setSpriteMode
-                                   2073 ;main.c:51: SMS_displayOn();
-      000C45 21 40 01         [10] 2074 	ld	hl, #0x0140
-      000C48 CDr00r00         [17] 2075 	call	_SMS_VDPturnOnFeature
-                                   2076 ;main.c:52: SMS_loadBGPalette(sonicpalette_inc);
-      000C4B 21r00r00         [10] 2077 	ld	hl, #_sonicpalette_inc
-      000C4E CDr00r00         [17] 2078 	call	_SMS_loadBGPalette
-                                   2079 ;main.c:53: SMS_loadSpritePalette(palleteAlex_inc);
-      000C51 21r00r00         [10] 2080 	ld	hl, #_palleteAlex_inc
-      000C54 CDr00r00         [17] 2081 	call	_SMS_loadSpritePalette
-                                   2082 ;main.c:55: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
-      000C57 21r00r00         [10] 2083 	ld	hl, #_spriteAlex_inc
-      000C5A E5               [11] 2084 	push	hl
-      000C5B 21 00 10         [10] 2085 	ld	hl, #0x1000
-      000C5E E5               [11] 2086 	push	hl
-                                   2087 ;	spillPairReg hl
-                                   2088 ;	spillPairReg hl
-      000C5F 3E 02            [ 7] 2089 	ld	a,#0x02
-      000C61 6F               [ 4] 2090 	ld	l,a
-      000C62 E5               [11] 2091 	push	hl
-      000C63 21 06 00         [10] 2092 	ld	hl, #0x0006
-      000C66 39               [11] 2093 	add	hl, sp
-      000C67 EB               [ 4] 2094 	ex	de,hl
-      000C68 E1               [10] 2095 	pop	hl
-      000C69 D5               [11] 2096 	push	de
-      000C6A CDrAAr00         [17] 2097 	call	_generateSpriteNoRAM
-      000C6D F1               [10] 2098 	pop	af
-      000C6E F1               [10] 2099 	pop	af
-      000C6F F1               [10] 2100 	pop	af
-      000C70 11r0Br00         [10] 2101 	ld	de, #_spriteAlex
-      000C73 21 00 00         [10] 2102 	ld	hl, #0
-      000C76 39               [11] 2103 	add	hl, sp
-      000C77 01 0A 00         [10] 2104 	ld	bc, #0x000a
-      000C7A ED B0            [21] 2105 	ldir
-                                   2106 ;main.c:56: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
-      000C7C 21r00r00         [10] 2107 	ld	hl, #_puno_inc
-      000C7F E5               [11] 2108 	push	hl
-      000C80 21 80 00         [10] 2109 	ld	hl, #0x0080
-      000C83 E5               [11] 2110 	push	hl
-      000C84 2E 02            [ 7] 2111 	ld	l, #0x02
-                                   2112 ;	spillPairReg hl
-                                   2113 ;	spillPairReg hl
-      000C86 3E 01            [ 7] 2114 	ld	a, #0x01
-      000C88 E5               [11] 2115 	push	hl
-      000C89 21 10 00         [10] 2116 	ld	hl, #0x0010
-      000C8C 39               [11] 2117 	add	hl, sp
-      000C8D EB               [ 4] 2118 	ex	de,hl
-      000C8E E1               [10] 2119 	pop	hl
-      000C8F D5               [11] 2120 	push	de
-      000C90 CDr00r00         [17] 2121 	call	_generateSprite
-      000C93 F1               [10] 2122 	pop	af
-      000C94 F1               [10] 2123 	pop	af
-      000C95 F1               [10] 2124 	pop	af
-      000C96 11r1Fr00         [10] 2125 	ld	de, #_spritePuno
-      000C99 21 0A 00         [10] 2126 	ld	hl, #10
-      000C9C 39               [11] 2127 	add	hl, sp
-      000C9D 01 0A 00         [10] 2128 	ld	bc, #0x000a
-      000CA0 ED B0            [21] 2129 	ldir
-                                   2130 ;main.c:57: spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
-      000CA2 21r00r00         [10] 2131 	ld	hl, #_spritePajaro_inc
-      000CA5 E5               [11] 2132 	push	hl
-      000CA6 21 80 01         [10] 2133 	ld	hl, #0x0180
-      000CA9 E5               [11] 2134 	push	hl
-      000CAA 2E 01            [ 7] 2135 	ld	l, #0x01
-                                   2136 ;	spillPairReg hl
-                                   2137 ;	spillPairReg hl
-      000CAC 3E 03            [ 7] 2138 	ld	a, #0x03
-      000CAE E5               [11] 2139 	push	hl
-      000CAF 21 1A 00         [10] 2140 	ld	hl, #0x001a
-      000CB2 39               [11] 2141 	add	hl, sp
-      000CB3 EB               [ 4] 2142 	ex	de,hl
-      000CB4 E1               [10] 2143 	pop	hl
-      000CB5 D5               [11] 2144 	push	de
-      000CB6 CDr00r00         [17] 2145 	call	_generateSprite
-      000CB9 F1               [10] 2146 	pop	af
-      000CBA F1               [10] 2147 	pop	af
-      000CBB F1               [10] 2148 	pop	af
-      000CBC 11r15r00         [10] 2149 	ld	de, #_spritePajaro
-      000CBF 21 14 00         [10] 2150 	ld	hl, #20
-      000CC2 39               [11] 2151 	add	hl, sp
-      000CC3 01 0A 00         [10] 2152 	ld	bc, #0x000a
-      000CC6 ED B0            [21] 2153 	ldir
-                                   2154 ;main.c:58: SMS_initSprites();
-      000CC8 CDr00r00         [17] 2155 	call	_SMS_initSprites
-                                   2156 ;main.c:59: alex.initSprite = 255;
-      000CCB 21r09r00         [10] 2157 	ld	hl, #_alex + 6
-      000CCE 36 FF            [10] 2158 	ld	(hl), #0xff
-                                   2159 ;main.c:60: draw_entidad(&alex, &spriteAlex);
-      000CD0 11r0Br00         [10] 2160 	ld	de, #_spriteAlex
-      000CD3 21r03r00         [10] 2161 	ld	hl, #_alex
-      000CD6 CDr40r04         [17] 2162 	call	_draw_entidad
-                                   2163 ;main.c:61: SMS_addSprite (0, 0, 9);
-      000CD9 11 09 00         [10] 2164 	ld	de, #0x0009
-      000CDC 21 00 00         [10] 2165 	ld	hl, #0x0000
-      000CDF CDr00r00         [17] 2166 	call	_SMS_addSprite_f
-                                   2167 ;main.c:62: inicializaPajaros();
-      000CE2 CDr6Dr0B         [17] 2168 	call	_inicializaPajaros
-                                   2169 ;main.c:67: SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
-      000CE5 21 A0 00         [10] 2170 	ld	hl, #0x00a0
-      000CE8 E5               [11] 2171 	push	hl
-      000CE9 11r00r00         [10] 2172 	ld	de, #_tiles_de_prueba2_inc
-      000CEC 21 00 40         [10] 2173 	ld	hl, #0x4000
-      000CEF CDr00r00         [17] 2174 	call	_SMS_VRAMmemcpy
-                                   2175 ;main.c:68: SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
-      000CF2 21 80 07         [10] 2176 	ld	hl, #0x0780
-      000CF5 E5               [11] 2177 	push	hl
-      000CF6 11r00r00         [10] 2178 	ld	de, #_tilemap_de_prueba2_inc
-      000CF9 21 00 78         [10] 2179 	ld	hl, #0x7800
-      000CFC CDr00r00         [17] 2180 	call	_SMS_VRAMmemcpy
-                                   2181 ;main.c:69: SMS_loadBGPalette(paleta_de_prueba2_inc);
-      000CFF 21r00r00         [10] 2182 	ld	hl, #_paleta_de_prueba2_inc
-      000D02 CDr00r00         [17] 2183 	call	_SMS_loadBGPalette
-                                   2184 ;main.c:70: SMS_setSpritePaletteColor(0,0);
-                                   2185 ;	spillPairReg hl
-                                   2186 ;	spillPairReg hl
-      000D05 AF               [ 4] 2187 	xor	a, a
-      000D06 6F               [ 4] 2188 	ld	l, a
-      000D07 CDr00r00         [17] 2189 	call	_SMS_setSpritePaletteColor
-                                   2190 ;main.c:71: }
-      000D0A DD F9            [10] 2191 	ld	sp, ix
-      000D0C DD E1            [14] 2192 	pop	ix
-      000D0E C9               [10] 2193 	ret
-                                   2194 ;main.c:73: void dibujaPajaros()
-                                   2195 ;	---------------------------------
-                                   2196 ; Function dibujaPajaros
-                                   2197 ; ---------------------------------
-      000D0F                       2198 _dibujaPajaros::
-      000D0F DD E5            [15] 2199 	push	ix
-      000D11 DD 21 00 00      [14] 2200 	ld	ix,#0
-      000D15 DD 39            [15] 2201 	add	ix,sp
-      000D17 21 F6 FF         [10] 2202 	ld	hl, #-10
-      000D1A 39               [11] 2203 	add	hl, sp
-      000D1B F9               [ 6] 2204 	ld	sp, hl
-                                   2205 ;main.c:78: unsigned char initPajaros = pajaros[0].initSprite;
-      000D1C 3Ar0Cr03         [13] 2206 	ld	a,(#_pajaros + 6)
-      000D1F DD 77 FA         [19] 2207 	ld	-6 (ix), a
-                                   2208 ;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
-      000D22 DD 36 FE 00      [19] 2209 	ld	-2 (ix), #0x00
-      000D26                       2210 00119$:
-                                   2211 ;main.c:81: T_entidad *p = &pajaros[i];
-      000D26 DD 6E FE         [19] 2212 	ld	l, -2 (ix)
-                                   2213 ;	spillPairReg hl
-                                   2214 ;	spillPairReg hl
-      000D29 26 00            [ 7] 2215 	ld	h, #0x00
-                                   2216 ;	spillPairReg hl
-                                   2217 ;	spillPairReg hl
-      000D2B 29               [11] 2218 	add	hl, hl
-      000D2C 29               [11] 2219 	add	hl, hl
-      000D2D 29               [11] 2220 	add	hl, hl
-      000D2E 11r06r03         [10] 2221 	ld	de, #_pajaros
-      000D31 19               [11] 2222 	add	hl, de
-                                   2223 ;main.c:82: p->x++;
-      000D32 DD 75 FB         [19] 2224 	ld	-5 (ix), l
-      000D35 DD 74 FC         [19] 2225 	ld	-4 (ix), h
-      000D38 7E               [ 7] 2226 	ld	a, (hl)
-      000D39 3C               [ 4] 2227 	inc	a
-      000D3A DD 6E FB         [19] 2228 	ld	l, -5 (ix)
-      000D3D DD 66 FC         [19] 2229 	ld	h, -4 (ix)
-      000D40 77               [ 7] 2230 	ld	(hl), a
-                                   2231 ;main.c:83: p->lastChangeFrame++;
-      000D41 DD 7E FB         [19] 2232 	ld	a, -5 (ix)
-      000D44 C6 03            [ 7] 2233 	add	a, #0x03
-      000D46 DD 77 F6         [19] 2234 	ld	-10 (ix), a
-      000D49 DD 7E FC         [19] 2235 	ld	a, -4 (ix)
-      000D4C CE 00            [ 7] 2236 	adc	a, #0x00
-      000D4E DD 77 F7         [19] 2237 	ld	-9 (ix), a
-      000D51 E1               [10] 2238 	pop	hl
-      000D52 E5               [11] 2239 	push	hl
-      000D53 7E               [ 7] 2240 	ld	a, (hl)
-      000D54 3C               [ 4] 2241 	inc	a
-      000D55 E1               [10] 2242 	pop	hl
-      000D56 E5               [11] 2243 	push	hl
-      000D57 77               [ 7] 2244 	ld	(hl), a
-                                   2245 ;main.c:85: if (p->lastChangeFrame == 20)
-      000D58 D6 14            [ 7] 2246 	sub	a, #0x14
-      000D5A C2rEFr0D         [10] 2247 	jp	NZ,00108$
-                                   2248 ;main.c:87: p->frame++;
-      000D5D DD 7E FB         [19] 2249 	ld	a, -5 (ix)
-      000D60 C6 02            [ 7] 2250 	add	a, #0x02
-      000D62 DD 77 F8         [19] 2251 	ld	-8 (ix), a
-      000D65 DD 7E FC         [19] 2252 	ld	a, -4 (ix)
-      000D68 CE 00            [ 7] 2253 	adc	a, #0x00
-      000D6A DD 77 F9         [19] 2254 	ld	-7 (ix), a
-      000D6D DD 6E F8         [19] 2255 	ld	l, -8 (ix)
-      000D70 DD 66 F9         [19] 2256 	ld	h, -7 (ix)
-      000D73 4E               [ 7] 2257 	ld	c, (hl)
-      000D74 0C               [ 4] 2258 	inc	c
-      000D75 D1               [10] 2259 	pop	de
-      000D76 E1               [10] 2260 	pop	hl
-      000D77 E5               [11] 2261 	push	hl
-      000D78 D5               [11] 2262 	push	de
-      000D79 71               [ 7] 2263 	ld	(hl), c
-                                   2264 ;main.c:88: if (p->frame > 1)
-      000D7A 3E 01            [ 7] 2265 	ld	a, #0x01
-      000D7C 91               [ 4] 2266 	sub	a, c
-      000D7D 30 06            [12] 2267 	jr	NC, 00104$
-                                   2268 ;main.c:89: p->frame = 0;
-      000D7F C1               [10] 2269 	pop	bc
-      000D80 E1               [10] 2270 	pop	hl
-      000D81 E5               [11] 2271 	push	hl
-      000D82 C5               [11] 2272 	push	bc
-      000D83 36 00            [10] 2273 	ld	(hl), #0x00
-      000D85                       2274 00104$:
-                                   2275 ;main.c:90: p->lastChangeFrame = 0;
-      000D85 E1               [10] 2276 	pop	hl
-      000D86 36 00            [10] 2277 	ld	(hl), #0x00
-      000D88 E5               [11] 2278 	push	hl
-                                   2279 ;main.c:91: int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
-      000D89 21r17r00         [10] 2280 	ld	hl, #_spritePajaro + 2
-      000D8C 5E               [ 7] 2281 	ld	e, (hl)
-      000D8D DD 6E F8         [19] 2282 	ld	l, -8 (ix)
-      000D90 DD 66 F9         [19] 2283 	ld	h, -7 (ix)
-      000D93 66               [ 7] 2284 	ld	h, (hl)
-                                   2285 ;	spillPairReg hl
-      000D94 2E 00            [ 7] 2286 	ld	l, #0x00
-      000D96 55               [ 4] 2287 	ld	d, l
-      000D97 06 08            [ 7] 2288 	ld	b, #0x08
-      000D99                       2289 00191$:
-      000D99 29               [11] 2290 	add	hl, hl
-      000D9A 30 01            [12] 2291 	jr	NC, 00192$
-      000D9C 19               [11] 2292 	add	hl, de
-      000D9D                       2293 00192$:
-      000D9D 10 FA            [13] 2294 	djnz	00191$
-      000D9F 4D               [ 4] 2295 	ld	c, l
-      000DA0 3Ar19r00         [13] 2296 	ld	a, (#_spritePajaro + 4)
-      000DA3 81               [ 4] 2297 	add	a, c
-      000DA4 DD 77 FD         [19] 2298 	ld	-3 (ix), a
-                                   2299 ;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
-      000DA7 DD 36 FF 00      [19] 2300 	ld	-1 (ix), #0x00
-      000DAB                       2301 00117$:
-      000DAB 21r15r00         [10] 2302 	ld	hl, #_spritePajaro
-      000DAE DD 7E FF         [19] 2303 	ld	a,-1 (ix)
-      000DB1 96               [ 7] 2304 	sub	a,(hl)
-      000DB2 30 3B            [12] 2305 	jr	NC, 00108$
-                                   2306 ;main.c:93: unsigned char desplazado = (j<<2);
-      000DB4 DD 7E FF         [19] 2307 	ld	a, -1 (ix)
-      000DB7 87               [ 4] 2308 	add	a, a
-      000DB8 87               [ 4] 2309 	add	a, a
-                                   2310 ;main.c:94: unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
-      000DB9 DD 86 FD         [19] 2311 	add	a, -3 (ix)
-      000DBC 5F               [ 4] 2312 	ld	e, a
-                                   2313 ;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
-      000DBD 16 00            [ 7] 2314 	ld	d, #0x00
-      000DBF                       2315 00114$:
-      000DBF 21r16r00         [10] 2316 	ld	hl, #_spritePajaro + 1
-      000DC2 4E               [ 7] 2317 	ld	c, (hl)
-      000DC3 7A               [ 4] 2318 	ld	a, d
-      000DC4 91               [ 4] 2319 	sub	a, c
-      000DC5 30 23            [12] 2320 	jr	NC, 00118$
-                                   2321 ;main.c:96: SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
-      000DC7 4A               [ 4] 2322 	ld	c, d
-      000DC8 06 00            [ 7] 2323 	ld	b, #0x00
-      000DCA DD 6E FA         [19] 2324 	ld	l, -6 (ix)
-                                   2325 ;	spillPairReg hl
-                                   2326 ;	spillPairReg hl
-      000DCD 26 00            [ 7] 2327 	ld	h, #0x00
-                                   2328 ;	spillPairReg hl
-                                   2329 ;	spillPairReg hl
-      000DCF 09               [11] 2330 	add	hl, bc
-      000DD0 29               [11] 2331 	add	hl, hl
-      000DD1 23               [ 6] 2332 	inc	hl
-      000DD2 4D               [ 4] 2333 	ld	c, l
-      000DD3 44               [ 4] 2334 	ld	b, h
-      000DD4 79               [ 4] 2335 	ld	a, c
-      000DD5 FD 21r02r03      [14] 2336 	ld	iy, #_SpriteTableXN2
-      000DD9 FD 86 00         [19] 2337 	add	a, 0 (iy)
-      000DDC 4F               [ 4] 2338 	ld	c, a
-      000DDD 78               [ 4] 2339 	ld	a, b
-      000DDE FD 8E 01         [19] 2340 	adc	a, 1 (iy)
-      000DE1 47               [ 4] 2341 	ld	b, a
-      000DE2 7A               [ 4] 2342 	ld	a, d
-      000DE3 87               [ 4] 2343 	add	a, a
-      000DE4 6B               [ 4] 2344 	ld	l, e
-                                   2345 ;	spillPairReg hl
-                                   2346 ;	spillPairReg hl
-      000DE5 85               [ 4] 2347 	add	a, l
-      000DE6 02               [ 7] 2348 	ld	(bc), a
-                                   2349 ;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
-      000DE7 14               [ 4] 2350 	inc	d
-      000DE8 18 D5            [12] 2351 	jr	00114$
-      000DEA                       2352 00118$:
-                                   2353 ;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
-      000DEA DD 34 FF         [23] 2354 	inc	-1 (ix)
-      000DED 18 BC            [12] 2355 	jr	00117$
-      000DEF                       2356 00108$:
-                                   2357 ;main.c:100: initPajaros +=3;
-      000DEF DD 7E FA         [19] 2358 	ld	a, -6 (ix)
-      000DF2 C6 03            [ 7] 2359 	add	a, #0x03
-      000DF4 DD 77 FA         [19] 2360 	ld	-6 (ix), a
-                                   2361 ;main.c:101: end = p->len;
-      000DF7 DD 4E FB         [19] 2362 	ld	c, -5 (ix)
-      000DFA DD 46 FC         [19] 2363 	ld	b, -4 (ix)
-      000DFD 21 07 00         [10] 2364 	ld	hl, #7
-      000E00 09               [11] 2365 	add	hl, bc
-      000E01 4E               [ 7] 2366 	ld	c, (hl)
-                                   2367 ;main.c:102: i2 = p->initSprite << 1;
-      000E02 DD 5E FB         [19] 2368 	ld	e, -5 (ix)
-      000E05 DD 56 FC         [19] 2369 	ld	d, -4 (ix)
-      000E08 21 06 00         [10] 2370 	ld	hl, #6
-      000E0B 19               [11] 2371 	add	hl, de
-      000E0C 7E               [ 7] 2372 	ld	a, (hl)
-      000E0D 87               [ 4] 2373 	add	a, a
-      000E0E 47               [ 4] 2374 	ld	b, a
-                                   2375 ;main.c:103: while(i2<end) {
-      000E0F                       2376 00109$:
-                                   2377 ;main.c:104: SpriteTableXN2[i2] += 1;
-      000E0F 78               [ 4] 2378 	ld	a,b
-      000E10 B9               [ 4] 2379 	cp	a,c
-      000E11 30 11            [12] 2380 	jr	NC, 00120$
-      000E13 21r02r03         [10] 2381 	ld	hl, #_SpriteTableXN2
-      000E16 86               [ 7] 2382 	add	a, (hl)
-      000E17 23               [ 6] 2383 	inc	hl
-      000E18 5F               [ 4] 2384 	ld	e, a
-      000E19 3E 00            [ 7] 2385 	ld	a, #0x00
-      000E1B 8E               [ 7] 2386 	adc	a, (hl)
-      000E1C 57               [ 4] 2387 	ld	d, a
-      000E1D 1A               [ 7] 2388 	ld	a, (de)
-      000E1E 3C               [ 4] 2389 	inc	a
-      000E1F 12               [ 7] 2390 	ld	(de), a
-                                   2391 ;main.c:105: i2 +=2;
-      000E20 04               [ 4] 2392 	inc	b
-      000E21 04               [ 4] 2393 	inc	b
-      000E22 18 EB            [12] 2394 	jr	00109$
-      000E24                       2395 00120$:
-                                   2396 ;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
-      000E24 DD 34 FE         [23] 2397 	inc	-2 (ix)
-      000E27 DD 7E FE         [19] 2398 	ld	a, -2 (ix)
-      000E2A D6 13            [ 7] 2399 	sub	a, #0x13
-      000E2C DAr26r0D         [10] 2400 	jp	C, 00119$
-                                   2401 ;main.c:110: }
-      000E2F DD F9            [10] 2402 	ld	sp, ix
-      000E31 DD E1            [14] 2403 	pop	ix
-      000E33 C9               [10] 2404 	ret
-                                   2405 ;main.c:112: void playMusic() {
-                                   2406 ;	---------------------------------
-                                   2407 ; Function playMusic
-                                   2408 ; ---------------------------------
-      000E34                       2409 _playMusic::
-                                   2410 ;main.c:113: PSGFrame();
-      000E34 CDr00r00         [17] 2411 	call	_PSGFrame
-                                   2412 ;main.c:114: PSGSFXFrame();
-                                   2413 ;main.c:115: }
-      000E37 C3r00r00         [10] 2414 	jp	_PSGSFXFrame
-                                   2415 ;main.c:117: void disableSprites() {
-                                   2416 ;	---------------------------------
-                                   2417 ; Function disableSprites
-                                   2418 ; ---------------------------------
-      000E3A                       2419 _disableSprites::
-                                   2420 ;main.c:120: while (i < 64) {
-      000E3A 0E 00            [ 7] 2421 	ld	c, #0x00
-      000E3C                       2422 00101$:
-      000E3C 79               [ 4] 2423 	ld	a, c
-      000E3D D6 40            [ 7] 2424 	sub	a, #0x40
-      000E3F 30 10            [12] 2425 	jr	NC, 00103$
-                                   2426 ;main.c:121: SMS_updateSpritePosition(i,10,240); 
-      000E41 41               [ 4] 2427 	ld	b, c
-      000E42 C5               [11] 2428 	push	bc
-      000E43 3E F0            [ 7] 2429 	ld	a, #0xf0
-      000E45 F5               [11] 2430 	push	af
-      000E46 33               [ 6] 2431 	inc	sp
-      000E47 2E 0A            [ 7] 2432 	ld	l, #0x0a
-                                   2433 ;	spillPairReg hl
-                                   2434 ;	spillPairReg hl
-      000E49 78               [ 4] 2435 	ld	a, b
-      000E4A CDr00r00         [17] 2436 	call	_SMS_updateSpritePosition
-      000E4D C1               [10] 2437 	pop	bc
-                                   2438 ;main.c:122: i++;
-      000E4E 0C               [ 4] 2439 	inc	c
-      000E4F 18 EB            [12] 2440 	jr	00101$
-      000E51                       2441 00103$:
-                                   2442 ;main.c:124: numSprites = 0;
-      000E51 21 00 00         [10] 2443 	ld	hl, #0x0000
-      000E54 22r9Er03         [16] 2444 	ld	(_numSprites), hl
-                                   2445 ;main.c:125: }
-      000E57 C9               [10] 2446 	ret
-                                   2447 ;main.c:127: void main(void)
-                                   2448 ;	---------------------------------
-                                   2449 ; Function main
-                                   2450 ; ---------------------------------
-      000E58                       2451 _main::
-      000E58 DD E5            [15] 2452 	push	ix
-      000E5A DD 21 00 00      [14] 2453 	ld	ix,#0
-      000E5E DD 39            [15] 2454 	add	ix,sp
-      000E60 F5               [11] 2455 	push	af
-                                   2456 ;main.c:132: SMS_VRAMmemsetW(0, 0x0000, 16384);
-      000E61 DD 36 FF 00      [19] 2457 	ld	-1 (ix), #0x00
-      000E65 DD 36 FE 00      [19] 2458 	ld	-2 (ix), #0x00
-      000E69 21 00 40         [10] 2459 	ld	hl, #0x4000
-      000E6C E5               [11] 2460 	push	hl
-      000E6D 11 00 00         [10] 2461 	ld	de, #0x0000
-      000E70 65               [ 4] 2462 	ld	h, l
-      000E71 CDr00r00         [17] 2463 	call	_SMS_VRAMmemsetW
-                                   2464 ;main.c:142: printf("Hello, World! [1/3]");
-      000E74 21r21r0F         [10] 2465 	ld	hl, #___str_0
-      000E77 E5               [11] 2466 	push	hl
-      000E78 CDr00r00         [17] 2467 	call	_printf
-      000E7B F1               [10] 2468 	pop	af
-                                   2469 ;main.c:147: SMS_displayOn();
-      000E7C 21 40 01         [10] 2470 	ld	hl, #0x0140
-      000E7F CDr00r00         [17] 2471 	call	_SMS_VDPturnOnFeature
-                                   2472 ;main.c:148: SMS_setBGScrollX(scroll_x);
-      000E82 2E 00            [ 7] 2473 	ld	l, #0x00
-                                   2474 ;	spillPairReg hl
-                                   2475 ;	spillPairReg hl
-      000E84 CDr00r00         [17] 2476 	call	_SMS_setBGScrollX
-                                   2477 ;main.c:149: SMS_setBGScrollY(scroll_y);
-      000E87 2E 00            [ 7] 2478 	ld	l, #0x00
-                                   2479 ;	spillPairReg hl
-                                   2480 ;	spillPairReg hl
-      000E89 CDr00r00         [17] 2481 	call	_SMS_setBGScrollY
-                                   2482 ;main.c:150: SMS_init();
-      000E8C CDr00r00         [17] 2483 	call	_SMS_init
-                                   2484 ;main.c:151: initSpritesVariables();
-      000E8F CDrDDr03         [17] 2485 	call	_initSpritesVariables
-                                   2486 ;main.c:152: loadGrapVRAM();
-      000E92 CDr30r0C         [17] 2487 	call	_loadGrapVRAM
-                                   2488 ;main.c:158: PSGPlay(special_psg);
-      000E95 21r00r00         [10] 2489 	ld	hl, #_special_psg
-      000E98 CDr00r00         [17] 2490 	call	_PSGPlay
-                                   2491 ;main.c:159: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-      000E9B 21 20 00         [10] 2492 	ld	hl, #0x0020
-      000E9E CDr00r00         [17] 2493 	call	_SMS_VDPturnOnFeature
-                                   2494 ;main.c:163: SMS_setFrameInterruptHandler(playMusic);
-      000EA1 21r34r0E         [10] 2495 	ld	hl, #_playMusic
-      000EA4 CDr00r00         [17] 2496 	call	_SMS_setFrameInterruptHandler
-      000EA7                       2497 00115$:
-                                   2498 ;main.c:168: if (SMS_queryPauseRequested())
-      000EA7 CDr00r00         [17] 2499 	call	_SMS_queryPauseRequested
-      000EAA CB 47            [ 8] 2500 	bit	0,a
-      000EAC 28 1E            [12] 2501 	jr	Z, 00105$
-                                   2502 ;main.c:170: PSGPlay(emeraldhill_psg);
-      000EAE 21r00r00         [10] 2503 	ld	hl, #_emeraldhill_psg
-      000EB1 CDr00r00         [17] 2504 	call	_PSGPlay
-                                   2505 ;main.c:171: SMS_resetPauseRequest();
-      000EB4 CDr00r00         [17] 2506 	call	_SMS_resetPauseRequest
-                                   2507 ;main.c:172: while (!SMS_queryPauseRequested())
-      000EB7                       2508 00101$:
-      000EB7 CDr00r00         [17] 2509 	call	_SMS_queryPauseRequested
-      000EBA CB 47            [ 8] 2510 	bit	0,a
-      000EBC 20 05            [12] 2511 	jr	NZ, 00103$
-                                   2512 ;main.c:174: SMS_waitForVBlank();
-      000EBE CDr00r00         [17] 2513 	call	_SMS_waitForVBlank
-      000EC1 18 F4            [12] 2514 	jr	00101$
-      000EC3                       2515 00103$:
-                                   2516 ;main.c:178: SMS_resetPauseRequest();
-      000EC3 CDr00r00         [17] 2517 	call	_SMS_resetPauseRequest
-                                   2518 ;main.c:179: PSGPlay(titulo_psg);
-      000EC6 21r00r00         [10] 2519 	ld	hl, #_titulo_psg
-      000EC9 CDr00r00         [17] 2520 	call	_PSGPlay
-      000ECC                       2521 00105$:
-                                   2522 ;main.c:183: int keys = SMS_getKeysHeld();
-      000ECC CDr00r00         [17] 2523 	call	_SMS_getKeysHeld
-      000ECF EB               [ 4] 2524 	ex	de, hl
-                                   2525 ;main.c:184: if(keys & PORT_A_KEY_2)
-      000ED0 CB 6D            [ 8] 2526 	bit	5, l
-      000ED2 28 04            [12] 2527 	jr	Z, 00107$
-                                   2528 ;main.c:185: keys = keys  ^ PORT_A_KEY_2;
-      000ED4 7D               [ 4] 2529 	ld	a, l
-      000ED5 EE 20            [ 7] 2530 	xor	a, #0x20
-      000ED7 6F               [ 4] 2531 	ld	l, a
-                                   2532 ;	spillPairReg hl
-                                   2533 ;	spillPairReg hl
-      000ED8                       2534 00107$:
-                                   2535 ;main.c:186: if(keys & PORT_A_KEY_1)
-      000ED8 CB 65            [ 8] 2536 	bit	4, l
-      000EDA 28 04            [12] 2537 	jr	Z, 00109$
-                                   2538 ;main.c:187: keys = keys  ^ PORT_A_KEY_1;
-      000EDC 7D               [ 4] 2539 	ld	a, l
-      000EDD EE 10            [ 7] 2540 	xor	a, #0x10
-      000EDF 6F               [ 4] 2541 	ld	l, a
-                                   2542 ;	spillPairReg hl
+                                   1282 ;./lib/entities.c:48: entidad->sprite = sprite;
+      000842 DD 7E FC         [19] 1283 	ld	a, -4 (ix)
+      000845 C6 08            [ 7] 1284 	add	a, #0x08
+      000847 DD 77 FE         [19] 1285 	ld	-2 (ix), a
+      00084A DD 7E FD         [19] 1286 	ld	a, -3 (ix)
+      00084D CE 00            [ 7] 1287 	adc	a, #0x00
+      00084F DD 77 FF         [19] 1288 	ld	-1 (ix), a
+      000852 DD 6E FE         [19] 1289 	ld	l, -2 (ix)
+      000855 DD 66 FF         [19] 1290 	ld	h, -1 (ix)
+      000858 DD 7E FA         [19] 1291 	ld	a, -6 (ix)
+      00085B 77               [ 7] 1292 	ld	(hl), a
+      00085C 23               [ 6] 1293 	inc	hl
+      00085D DD 7E FB         [19] 1294 	ld	a, -5 (ix)
+      000860 77               [ 7] 1295 	ld	(hl), a
+      000861                       1296 00134$:
+                                   1297 ;./lib/entities.c:51: }
+      000861 DD F9            [10] 1298 	ld	sp, ix
+      000863 DD E1            [14] 1299 	pop	ix
+      000865 C9               [10] 1300 	ret
+                                   1301 ;./alex.c:20: unsigned char canUp(){
+                                   1302 ;	---------------------------------
+                                   1303 ; Function canUp
+                                   1304 ; ---------------------------------
+      000866                       1305 _canUp::
+                                   1306 ;./alex.c:21: if (alex.x < 2)
+      000866 3Ar03r00         [13] 1307 	ld	a, (#_alex + 0)
+      000869 D6 02            [ 7] 1308 	sub	a, #0x02
+      00086B 30 02            [12] 1309 	jr	NC, 00102$
+                                   1310 ;./alex.c:22: return 0;
+      00086D AF               [ 4] 1311 	xor	a, a
+      00086E C9               [10] 1312 	ret
+      00086F                       1313 00102$:
+                                   1314 ;./alex.c:23: return 1;
+      00086F 3E 01            [ 7] 1315 	ld	a, #0x01
+                                   1316 ;./alex.c:24: }
+      000871 C9               [10] 1317 	ret
+                                   1318 ;./alex.c:26: unsigned char canDown() {
+                                   1319 ;	---------------------------------
+                                   1320 ; Function canDown
+                                   1321 ; ---------------------------------
+      000872                       1322 _canDown::
+                                   1323 ;./alex.c:27: if (alex.y > 155)
+      000872 21r04r00         [10] 1324 	ld	hl, #_alex+1
+      000875 4E               [ 7] 1325 	ld	c, (hl)
+      000876 3E 9B            [ 7] 1326 	ld	a, #0x9b
+      000878 91               [ 4] 1327 	sub	a, c
+      000879 30 02            [12] 1328 	jr	NC, 00102$
+                                   1329 ;./alex.c:28: return 0;
+      00087B AF               [ 4] 1330 	xor	a, a
+      00087C C9               [10] 1331 	ret
+      00087D                       1332 00102$:
+                                   1333 ;./alex.c:29: return 1;
+      00087D 3E 01            [ 7] 1334 	ld	a, #0x01
+                                   1335 ;./alex.c:30: }
+      00087F C9               [10] 1336 	ret
+                                   1337 ;./alex.c:32: unsigned char canLeft() {
+                                   1338 ;	---------------------------------
+                                   1339 ; Function canLeft
+                                   1340 ; ---------------------------------
+      000880                       1341 _canLeft::
+                                   1342 ;./alex.c:33: if (alex.x < 9)
+      000880 3Ar03r00         [13] 1343 	ld	a, (#_alex + 0)
+      000883 D6 09            [ 7] 1344 	sub	a, #0x09
+      000885 30 02            [12] 1345 	jr	NC, 00102$
+                                   1346 ;./alex.c:34: return 0;
+      000887 AF               [ 4] 1347 	xor	a, a
+      000888 C9               [10] 1348 	ret
+      000889                       1349 00102$:
+                                   1350 ;./alex.c:35: return 1;
+      000889 3E 01            [ 7] 1351 	ld	a, #0x01
+                                   1352 ;./alex.c:36: }
+      00088B C9               [10] 1353 	ret
+                                   1354 ;./alex.c:38: unsigned char canRight() {
+                                   1355 ;	---------------------------------
+                                   1356 ; Function canRight
+                                   1357 ; ---------------------------------
+      00088C                       1358 _canRight::
+                                   1359 ;./alex.c:39: if (alex.x > 238)
+      00088C 21r03r00         [10] 1360 	ld	hl, #_alex+0
+      00088F 4E               [ 7] 1361 	ld	c, (hl)
+      000890 3E EE            [ 7] 1362 	ld	a, #0xee
+      000892 91               [ 4] 1363 	sub	a, c
+      000893 30 02            [12] 1364 	jr	NC, 00102$
+                                   1365 ;./alex.c:40: return 0;
+      000895 AF               [ 4] 1366 	xor	a, a
+      000896 C9               [10] 1367 	ret
+      000897                       1368 00102$:
+                                   1369 ;./alex.c:41: return 1;
+      000897 3E 01            [ 7] 1370 	ld	a, #0x01
+                                   1371 ;./alex.c:42: }
+      000899 C9               [10] 1372 	ret
+                                   1373 ;./alex.c:44: void moveAlexSuelo(int keys) {
+                                   1374 ;	---------------------------------
+                                   1375 ; Function moveAlexSuelo
+                                   1376 ; ---------------------------------
+      00089A                       1377 _moveAlexSuelo::
+      00089A DD E5            [15] 1378 	push	ix
+      00089C DD 21 00 00      [14] 1379 	ld	ix,#0
+      0008A0 DD 39            [15] 1380 	add	ix,sp
+      0008A2 F5               [11] 1381 	push	af
+      0008A3 F5               [11] 1382 	push	af
+      0008A4 F5               [11] 1383 	push	af
+      0008A5 DD 75 FE         [19] 1384 	ld	-2 (ix), l
+      0008A8 DD 74 FF         [19] 1385 	ld	-1 (ix), h
+                                   1386 ;./alex.c:46: if (keys & PORT_A_KEY_LEFT)
+      0008AB DD 7E FE         [19] 1387 	ld	a, -2 (ix)
+      0008AE E6 04            [ 7] 1388 	and	a, #0x04
+      0008B0 DD 77 FA         [19] 1389 	ld	-6 (ix), a
+      0008B3 DD 36 FB 00      [19] 1390 	ld	-5 (ix), #0x00
+                                   1391 ;./alex.c:48: if (keys & PORT_A_KEY_RIGHT)
+      0008B7 DD 7E FE         [19] 1392 	ld	a, -2 (ix)
+      0008BA E6 08            [ 7] 1393 	and	a, #0x08
+      0008BC DD 77 FC         [19] 1394 	ld	-4 (ix), a
+      0008BF DD 36 FD 00      [19] 1395 	ld	-3 (ix), #0x00
+                                   1396 ;./alex.c:45: if ((keys & PORT_A_KEY_DOWN)){
+      0008C3 DD CB FE 4E      [20] 1397 	bit	1, -2 (ix)
+      0008C7 28 33            [12] 1398 	jr	Z, 00109$
+                                   1399 ;./alex.c:46: if (keys & PORT_A_KEY_LEFT)
+      0008C9 AF               [ 4] 1400 	xor	a, a
+      0008CA DD B6 FA         [19] 1401 	or	a, -6 (ix)
+      0008CD 28 05            [12] 1402 	jr	Z, 00102$
+                                   1403 ;./alex.c:47: alex.oriented = 1;
+      0008CF 21r07r00         [10] 1404 	ld	hl, #_alex+4
+      0008D2 36 01            [10] 1405 	ld	(hl), #0x01
+      0008D4                       1406 00102$:
+                                   1407 ;./alex.c:48: if (keys & PORT_A_KEY_RIGHT)
+      0008D4 AF               [ 4] 1408 	xor	a, a
+      0008D5 DD B6 FC         [19] 1409 	or	a, -4 (ix)
+      0008D8 28 05            [12] 1410 	jr	Z, 00104$
+                                   1411 ;./alex.c:49: alex.oriented = 0;
+      0008DA 21r07r00         [10] 1412 	ld	hl, #_alex+4
+      0008DD 36 00            [10] 1413 	ld	(hl), #0x00
+      0008DF                       1414 00104$:
+                                   1415 ;./alex.c:50: if (!alex.oriented)
+      0008DF 3Ar07r00         [13] 1416 	ld	a,(#_alex + 4)
+                                   1417 ;./alex.c:51: alex.frame = 7;
+                                   1418 ;./alex.c:50: if (!alex.oriented)
+      0008E2 DD 77 FD         [19] 1419 	ld	-3 (ix), a
+      0008E5 B7               [ 4] 1420 	or	a, a
+      0008E6 20 07            [12] 1421 	jr	NZ, 00106$
+                                   1422 ;./alex.c:51: alex.frame = 7;
+      0008E8 21r05r00         [10] 1423 	ld	hl, #(_alex + 2)
+      0008EB 36 07            [10] 1424 	ld	(hl), #0x07
+      0008ED 18 05            [12] 1425 	jr	00107$
+      0008EF                       1426 00106$:
+                                   1427 ;./alex.c:53: alex.frame = 15;
+      0008EF 21r05r00         [10] 1428 	ld	hl, #(_alex + 2)
+      0008F2 36 0F            [10] 1429 	ld	(hl), #0x0f
+      0008F4                       1430 00107$:
+                                   1431 ;./alex.c:54: alex.lastChangeFrame = 15;
+      0008F4 21r06r00         [10] 1432 	ld	hl, #_alex + 3
+      0008F7 36 0F            [10] 1433 	ld	(hl), #0x0f
+                                   1434 ;./alex.c:55: return; // not move
+      0008F9 C3r5Dr0A         [10] 1435 	jp	00146$
+      0008FC                       1436 00109$:
+                                   1437 ;./alex.c:58: if (keys & PORT_A_KEY_2) {
+      0008FC DD CB FE 6E      [20] 1438 	bit	5, -2 (ix)
+      000900 28 2A            [12] 1439 	jr	Z, 00116$
+                                   1440 ;./alex.c:59: if (alex.y > 100)
+      000902 01r04r00         [10] 1441 	ld	bc, #_alex+1
+      000905 0A               [ 7] 1442 	ld	a, (bc)
+      000906 5F               [ 4] 1443 	ld	e, a
+      000907 3E 64            [ 7] 1444 	ld	a, #0x64
+      000909 93               [ 4] 1445 	sub	a, e
+      00090A 30 09            [12] 1446 	jr	NC, 00111$
+                                   1447 ;./alex.c:60: maxSalto = alex.y - 100;
+      00090C 7B               [ 4] 1448 	ld	a, e
+      00090D 21r02r00         [10] 1449 	ld	hl, #_maxSalto
+      000910 C6 9C            [ 7] 1450 	add	a, #0x9c
+      000912 77               [ 7] 1451 	ld	(hl), a
+      000913 18 05            [12] 1452 	jr	00112$
+      000915                       1453 00111$:
+                                   1454 ;./alex.c:62: maxSalto = 0;
+      000915 21r02r00         [10] 1455 	ld	hl, #_maxSalto
+      000918 36 00            [10] 1456 	ld	(hl), #0x00
+      00091A                       1457 00112$:
+                                   1458 ;./alex.c:63: alex.y--;
+      00091A 0A               [ 7] 1459 	ld	a, (bc)
+      00091B 3D               [ 4] 1460 	dec	a
+      00091C 02               [ 7] 1461 	ld	(bc), a
+                                   1462 ;./alex.c:64: alex.y--;
+      00091D 3D               [ 4] 1463 	dec	a
+      00091E 02               [ 7] 1464 	ld	(bc), a
+                                   1465 ;./alex.c:65: PSGSFXPlay(salto_psg, SFX_CHANNEL1);
+      00091F 3E 08            [ 7] 1466 	ld	a, #0x08
+      000921 F5               [11] 1467 	push	af
+      000922 33               [ 6] 1468 	inc	sp
+      000923 21r00r00         [10] 1469 	ld	hl, #_salto_psg
+      000926 CDr00r00         [17] 1470 	call	_PSGSFXPlay
+                                   1471 ;./alex.c:66: return;
+      000929 C3r5Dr0A         [10] 1472 	jp	00146$
+      00092C                       1473 00116$:
+                                   1474 ;./alex.c:68: else if (keys & PORT_A_KEY_1) {
+      00092C DD CB FE 66      [20] 1475 	bit	4, -2 (ix)
+      000930 28 0A            [12] 1476 	jr	Z, 00117$
+                                   1477 ;./alex.c:69: alex.state = PUÑETAZO_SUELO;
+      000932 21r08r00         [10] 1478 	ld	hl, #_alex + 5
+      000935 36 20            [10] 1479 	ld	(hl), #0x20
+                                   1480 ;./alex.c:70: alex.lastChangeFrame = 15;
+      000937 21r06r00         [10] 1481 	ld	hl, #_alex + 3
+      00093A 36 0F            [10] 1482 	ld	(hl), #0x0f
+      00093C                       1483 00117$:
+                                   1484 ;./alex.c:72: if(alex.state != PUÑETAZO_SUELO) {
+      00093C 21r08r00         [10] 1485 	ld	hl, #(_alex + 5)
+      00093F 5E               [ 7] 1486 	ld	e, (hl)
+                                   1487 ;./alex.c:77: alex.oriented = 1;
+                                   1488 ;./alex.c:78: alex.lastChangeFrame++;
+      000940 01r06r00         [10] 1489 	ld	bc, #_alex + 3
+                                   1490 ;./alex.c:81: alex.frame++;
+                                   1491 ;./alex.c:72: if(alex.state != PUÑETAZO_SUELO) {
+      000943 7B               [ 4] 1492 	ld	a, e
+      000944 D6 20            [ 7] 1493 	sub	a, #0x20
+      000946 CArDDr09         [10] 1494 	jp	Z,00144$
+                                   1495 ;./alex.c:73: SpriteTableY2[4] = 234;
+      000949 2Ar00r03         [16] 1496 	ld	hl, (_SpriteTableY2)
+      00094C 11 04 00         [10] 1497 	ld	de, #0x0004
+      00094F 19               [11] 1498 	add	hl, de
+      000950 36 EA            [10] 1499 	ld	(hl), #0xea
+                                   1500 ;./alex.c:74: if ((keys & PORT_A_KEY_LEFT) && alex.x > 8 )
+      000952 AF               [ 4] 1501 	xor	a, a
+      000953 DD B6 FA         [19] 1502 	or	a, -6 (ix)
+      000956 28 3A            [12] 1503 	jr	Z, 00135$
+      000958 21r03r00         [10] 1504 	ld	hl, #_alex
+      00095B 5E               [ 7] 1505 	ld	e, (hl)
+      00095C 3E 08            [ 7] 1506 	ld	a, #0x08
+      00095E 93               [ 4] 1507 	sub	a, e
+      00095F 30 31            [12] 1508 	jr	NC, 00135$
+                                   1509 ;./alex.c:76: alex.x -= 1;
+      000961 1D               [ 4] 1510 	dec	e
+      000962 21r03r00         [10] 1511 	ld	hl, #_alex
+      000965 73               [ 7] 1512 	ld	(hl), e
+                                   1513 ;./alex.c:77: alex.oriented = 1;
+      000966 21r07r00         [10] 1514 	ld	hl, #(_alex + 4)
+      000969 36 01            [10] 1515 	ld	(hl), #0x01
+                                   1516 ;./alex.c:78: alex.lastChangeFrame++;
+      00096B 0A               [ 7] 1517 	ld	a, (bc)
+      00096C 3C               [ 4] 1518 	inc	a
+      00096D 02               [ 7] 1519 	ld	(bc), a
+                                   1520 ;./alex.c:79: if (alex.lastChangeFrame == 11) {
+      00096E D6 0B            [ 7] 1521 	sub	a, #0x0b
+      000970 20 09            [12] 1522 	jr	NZ, 00119$
+                                   1523 ;./alex.c:80: alex.lastChangeFrame = 0;
+      000972 AF               [ 4] 1524 	xor	a, a
+      000973 02               [ 7] 1525 	ld	(bc), a
+                                   1526 ;./alex.c:81: alex.frame++;
+      000974 3Ar05r00         [13] 1527 	ld	a, (#(_alex + 2) + 0)
+      000977 3C               [ 4] 1528 	inc	a
+      000978 32r05r00         [13] 1529 	ld	(#(_alex + 2)),a
+      00097B                       1530 00119$:
+                                   1531 ;./alex.c:83: if (alex.frame > 11 || alex.frame < 8)
+      00097B 21r05r00         [10] 1532 	ld	hl, #(_alex + 2)
+      00097E 4E               [ 7] 1533 	ld	c, (hl)
+      00097F 3E 0B            [ 7] 1534 	ld	a, #0x0b
+      000981 91               [ 4] 1535 	sub	a, c
+      000982 38 06            [12] 1536 	jr	C, 00120$
+      000984 79               [ 4] 1537 	ld	a, c
+      000985 D6 08            [ 7] 1538 	sub	a, #0x08
+      000987 D2r5Dr0A         [10] 1539 	jp	NC, 00146$
+      00098A                       1540 00120$:
+                                   1541 ;./alex.c:84: alex.frame = 8;
+      00098A 21r05r00         [10] 1542 	ld	hl, #(_alex + 2)
+      00098D 36 08            [10] 1543 	ld	(hl), #0x08
+      00098F C3r5Dr0A         [10] 1544 	jp	00146$
+      000992                       1545 00135$:
+                                   1546 ;./alex.c:86: else if ((keys & PORT_A_KEY_RIGHT) && alex.x <240)
+      000992 AF               [ 4] 1547 	xor	a, a
+      000993 DD B6 FC         [19] 1548 	or	a, -4 (ix)
+      000996 28 32            [12] 1549 	jr	Z, 00131$
+      000998 3Ar03r00         [13] 1550 	ld	a, (#_alex + 0)
+      00099B FE F0            [ 7] 1551 	cp	a, #0xf0
+      00099D 30 2B            [12] 1552 	jr	NC, 00131$
+                                   1553 ;./alex.c:88: alex.x += 1;
+      00099F 3C               [ 4] 1554 	inc	a
+      0009A0 32r03r00         [13] 1555 	ld	(#_alex),a
+                                   1556 ;./alex.c:89: alex.oriented = 0;
+      0009A3 21r07r00         [10] 1557 	ld	hl, #(_alex + 4)
+      0009A6 36 00            [10] 1558 	ld	(hl), #0x00
+                                   1559 ;./alex.c:90: alex.lastChangeFrame++;
+      0009A8 0A               [ 7] 1560 	ld	a, (bc)
+      0009A9 3C               [ 4] 1561 	inc	a
+      0009AA 02               [ 7] 1562 	ld	(bc), a
+                                   1563 ;./alex.c:91: if (alex.lastChangeFrame == 11) {
+      0009AB D6 0B            [ 7] 1564 	sub	a, #0x0b
+      0009AD 20 09            [12] 1565 	jr	NZ, 00124$
+                                   1566 ;./alex.c:92: alex.lastChangeFrame = 0;
+      0009AF AF               [ 4] 1567 	xor	a, a
+      0009B0 02               [ 7] 1568 	ld	(bc), a
+                                   1569 ;./alex.c:93: alex.frame++;
+      0009B1 3Ar05r00         [13] 1570 	ld	a, (#(_alex + 2) + 0)
+      0009B4 3C               [ 4] 1571 	inc	a
+      0009B5 32r05r00         [13] 1572 	ld	(#(_alex + 2)),a
+      0009B8                       1573 00124$:
+                                   1574 ;./alex.c:95: if (alex.frame > 3 || alex.frame < 0)
+      0009B8 21r05r00         [10] 1575 	ld	hl, #(_alex + 2)
+      0009BB 4E               [ 7] 1576 	ld	c, (hl)
+      0009BC 3E 03            [ 7] 1577 	ld	a, #0x03
+      0009BE 91               [ 4] 1578 	sub	a, c
+      0009BF D2r5Dr0A         [10] 1579 	jp	NC, 00146$
+                                   1580 ;./alex.c:96: alex.frame = 0;
+      0009C2 21r05r00         [10] 1581 	ld	hl, #(_alex + 2)
+      0009C5 36 00            [10] 1582 	ld	(hl), #0x00
+      0009C7 C3r5Dr0A         [10] 1583 	jp	00146$
+      0009CA                       1584 00131$:
+                                   1585 ;./alex.c:100: alex.frame = 4;
+      0009CA 21r05r00         [10] 1586 	ld	hl, #(_alex + 2)
+      0009CD 36 04            [10] 1587 	ld	(hl), #0x04
+                                   1588 ;./alex.c:101: if (alex.oriented)
+      0009CF 3Ar07r00         [13] 1589 	ld	a, (#(_alex + 4) + 0)
+      0009D2 B7               [ 4] 1590 	or	a, a
+      0009D3 28 02            [12] 1591 	jr	Z, 00129$
+                                   1592 ;./alex.c:102: alex.frame = 12;
+      0009D5 36 0C            [10] 1593 	ld	(hl), #0x0c
+      0009D7                       1594 00129$:
+                                   1595 ;./alex.c:103: alex.lastChangeFrame = 10;
+      0009D7 3E 0A            [ 7] 1596 	ld	a, #0x0a
+      0009D9 02               [ 7] 1597 	ld	(bc), a
+      0009DA C3r5Dr0A         [10] 1598 	jp	00146$
+      0009DD                       1599 00144$:
+                                   1600 ;./alex.c:107: if (!alex.oriented) {
+                                   1601 ;./alex.c:112: SpriteTableY2[4] = alex.y + 9;
+                                   1602 ;./alex.c:107: if (!alex.oriented) {
+      0009DD 3Ar07r00         [13] 1603 	ld	a, (#(_alex + 4) + 0)
+      0009E0 B7               [ 4] 1604 	or	a, a
+      0009E1 20 34            [12] 1605 	jr	NZ, 00139$
+                                   1606 ;./alex.c:108: alex.frame = 5;
+      0009E3 21r05r00         [10] 1607 	ld	hl, #(_alex + 2)
+      0009E6 36 05            [10] 1608 	ld	(hl), #0x05
+                                   1609 ;./alex.c:110: SpriteTableXN2[8] = alex.x + 16;
+      0009E8 3Ar02r03         [13] 1610 	ld	a, (_SpriteTableXN2+0)
+      0009EB C6 08            [ 7] 1611 	add	a, #0x08
+      0009ED 5F               [ 4] 1612 	ld	e, a
+      0009EE 3Ar03r03         [13] 1613 	ld	a, (_SpriteTableXN2+1)
+      0009F1 CE 00            [ 7] 1614 	adc	a, #0x00
+      0009F3 57               [ 4] 1615 	ld	d, a
+      0009F4 3Ar03r00         [13] 1616 	ld	a, (#_alex + 0)
+      0009F7 C6 10            [ 7] 1617 	add	a, #0x10
+      0009F9 12               [ 7] 1618 	ld	(de), a
+                                   1619 ;./alex.c:111: SpriteTableXN2[9] = 9;
+      0009FA 2Ar02r03         [16] 1620 	ld	hl, (_SpriteTableXN2)
+      0009FD 11 09 00         [10] 1621 	ld	de, #0x0009
+      000A00 19               [11] 1622 	add	hl, de
+      000A01 36 09            [10] 1623 	ld	(hl), #0x09
+                                   1624 ;./alex.c:112: SpriteTableY2[4] = alex.y + 9;
+      000A03 3Ar00r03         [13] 1625 	ld	a, (_SpriteTableY2+0)
+      000A06 C6 04            [ 7] 1626 	add	a, #0x04
+      000A08 5F               [ 4] 1627 	ld	e, a
+      000A09 3Ar01r03         [13] 1628 	ld	a, (_SpriteTableY2+1)
+      000A0C CE 00            [ 7] 1629 	adc	a, #0x00
+      000A0E 57               [ 4] 1630 	ld	d, a
+      000A0F 3Ar04r00         [13] 1631 	ld	a, (#(_alex + 1) + 0)
+      000A12 C6 09            [ 7] 1632 	add	a, #0x09
+      000A14 12               [ 7] 1633 	ld	(de), a
+      000A15 18 32            [12] 1634 	jr	00140$
+      000A17                       1635 00139$:
+                                   1636 ;./alex.c:115: alex.frame = 13;
+      000A17 21r05r00         [10] 1637 	ld	hl, #(_alex + 2)
+      000A1A 36 0D            [10] 1638 	ld	(hl), #0x0d
+                                   1639 ;./alex.c:117: SpriteTableXN2[8] = alex.x - 8;
+      000A1C 3Ar02r03         [13] 1640 	ld	a, (_SpriteTableXN2+0)
+      000A1F C6 08            [ 7] 1641 	add	a, #0x08
+      000A21 5F               [ 4] 1642 	ld	e, a
+      000A22 3Ar03r03         [13] 1643 	ld	a, (_SpriteTableXN2+1)
+      000A25 CE 00            [ 7] 1644 	adc	a, #0x00
+      000A27 57               [ 4] 1645 	ld	d, a
+      000A28 3Ar03r00         [13] 1646 	ld	a, (#_alex + 0)
+      000A2B C6 F8            [ 7] 1647 	add	a, #0xf8
+      000A2D 12               [ 7] 1648 	ld	(de), a
+                                   1649 ;./alex.c:118: SpriteTableXN2[9] = 11;
+      000A2E 2Ar02r03         [16] 1650 	ld	hl, (_SpriteTableXN2)
+      000A31 11 09 00         [10] 1651 	ld	de, #0x0009
+      000A34 19               [11] 1652 	add	hl, de
+      000A35 36 0B            [10] 1653 	ld	(hl), #0x0b
+                                   1654 ;./alex.c:119: SpriteTableY2[4] = alex.y + 9;
+      000A37 3Ar00r03         [13] 1655 	ld	a, (_SpriteTableY2+0)
+      000A3A C6 04            [ 7] 1656 	add	a, #0x04
+      000A3C 5F               [ 4] 1657 	ld	e, a
+      000A3D 3Ar01r03         [13] 1658 	ld	a, (_SpriteTableY2+1)
+      000A40 CE 00            [ 7] 1659 	adc	a, #0x00
+      000A42 57               [ 4] 1660 	ld	d, a
+      000A43 3Ar04r00         [13] 1661 	ld	a, (#(_alex + 1) + 0)
+      000A46 C6 09            [ 7] 1662 	add	a, #0x09
+      000A48 12               [ 7] 1663 	ld	(de), a
+      000A49                       1664 00140$:
+                                   1665 ;./alex.c:121: alex.lastChangeFrame--;
+      000A49 0A               [ 7] 1666 	ld	a, (bc)
+      000A4A 3D               [ 4] 1667 	dec	a
+      000A4B 02               [ 7] 1668 	ld	(bc), a
+                                   1669 ;./alex.c:122: if(!alex.lastChangeFrame) {
+      000A4C B7               [ 4] 1670 	or	a, a
+      000A4D 20 0E            [12] 1671 	jr	NZ, 00146$
+                                   1672 ;./alex.c:123: alex.state = 0;
+      000A4F 21r08r00         [10] 1673 	ld	hl, #(_alex + 5)
+      000A52 36 00            [10] 1674 	ld	(hl), #0x00
+                                   1675 ;./alex.c:124: SpriteTableY2[4] = 234;
+      000A54 2Ar00r03         [16] 1676 	ld	hl, (_SpriteTableY2)
+      000A57 11 04 00         [10] 1677 	ld	de, #0x0004
+      000A5A 19               [11] 1678 	add	hl, de
+      000A5B 36 EA            [10] 1679 	ld	(hl), #0xea
+      000A5D                       1680 00146$:
+                                   1681 ;./alex.c:127: }
+      000A5D DD F9            [10] 1682 	ld	sp, ix
+      000A5F DD E1            [14] 1683 	pop	ix
+      000A61 C9               [10] 1684 	ret
+                                   1685 ;./alex.c:129: void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha, unsigned char puedeIzquieda) {
+                                   1686 ;	---------------------------------
+                                   1687 ; Function moveAlexAire
+                                   1688 ; ---------------------------------
+      000A62                       1689 _moveAlexAire::
+      000A62 DD E5            [15] 1690 	push	ix
+      000A64 DD 21 00 00      [14] 1691 	ld	ix,#0
+      000A68 DD 39            [15] 1692 	add	ix,sp
+      000A6A F5               [11] 1693 	push	af
+      000A6B 3B               [ 6] 1694 	dec	sp
+      000A6C DD 75 FE         [19] 1695 	ld	-2 (ix), l
+      000A6F DD 74 FF         [19] 1696 	ld	-1 (ix), h
+                                   1697 ;./alex.c:130: if (alex.y > maxSalto) {
+      000A72 21r04r00         [10] 1698 	ld	hl, #(_alex + 1)
+      000A75 46               [ 7] 1699 	ld	b, (hl)
+                                   1700 ;./alex.c:131: alex.y -= 2;
+      000A76 48               [ 4] 1701 	ld	c, b
+                                   1702 ;./alex.c:130: if (alex.y > maxSalto) {
+      000A77 3Ar02r00         [13] 1703 	ld	a, (_maxSalto+0)
+      000A7A 90               [ 4] 1704 	sub	a, b
+      000A7B 30 08            [12] 1705 	jr	NC, 00102$
+                                   1706 ;./alex.c:131: alex.y -= 2;
+      000A7D 0D               [ 4] 1707 	dec	c
+      000A7E 0D               [ 4] 1708 	dec	c
+      000A7F 21r04r00         [10] 1709 	ld	hl, #(_alex + 1)
+      000A82 71               [ 7] 1710 	ld	(hl), c
+      000A83 18 0E            [12] 1711 	jr	00103$
+      000A85                       1712 00102$:
+                                   1713 ;./alex.c:134: alex.y += 2; // bajando
+      000A85 0C               [ 4] 1714 	inc	c
+      000A86 0C               [ 4] 1715 	inc	c
+      000A87 21r04r00         [10] 1716 	ld	hl, #(_alex + 1)
+      000A8A 71               [ 7] 1717 	ld	(hl), c
+                                   1718 ;./alex.c:135: maxSalto = 255;
+      000A8B FD 21r02r00      [14] 1719 	ld	iy, #_maxSalto
+      000A8F FD 36 00 FF      [19] 1720 	ld	0 (iy), #0xff
+      000A93                       1721 00103$:
+                                   1722 ;./alex.c:138: if (alex.state != PUÑETAZO_SALTANDO)
+                                   1723 ;./alex.c:139: alex.oriented = 1;
+                                   1724 ;./alex.c:137: if (keys & PORT_A_KEY_LEFT) {
+      000A93 DD CB FE 56      [20] 1725 	bit	2, -2 (ix)
+      000A97 28 1A            [12] 1726 	jr	Z, 00109$
+                                   1727 ;./alex.c:138: if (alex.state != PUÑETAZO_SALTANDO)
+      000A99 3Ar08r00         [13] 1728 	ld	a, (#(_alex + 5) + 0)
+      000A9C D6 10            [ 7] 1729 	sub	a, #0x10
+      000A9E 28 05            [12] 1730 	jr	Z, 00105$
+                                   1731 ;./alex.c:139: alex.oriented = 1;
+      000AA0 21r07r00         [10] 1732 	ld	hl, #(_alex + 4)
+      000AA3 36 01            [10] 1733 	ld	(hl), #0x01
+      000AA5                       1734 00105$:
+                                   1735 ;./alex.c:140: if (puedeIzquieda)
+      000AA5 DD 7E 06         [19] 1736 	ld	a, 6 (ix)
+      000AA8 B7               [ 4] 1737 	or	a, a
+      000AA9 28 08            [12] 1738 	jr	Z, 00109$
+                                   1739 ;./alex.c:141: alex.x -= 2;
+      000AAB 3Ar03r00         [13] 1740 	ld	a, (#_alex + 0)
+      000AAE 3D               [ 4] 1741 	dec	a
+      000AAF 3D               [ 4] 1742 	dec	a
+      000AB0 32r03r00         [13] 1743 	ld	(#_alex),a
+      000AB3                       1744 00109$:
+                                   1745 ;./alex.c:143: if (keys & PORT_A_KEY_RIGHT) {
+      000AB3 DD CB FE 5E      [20] 1746 	bit	3, -2 (ix)
+      000AB7 28 1A            [12] 1747 	jr	Z, 00115$
+                                   1748 ;./alex.c:144: if (alex.state != PUÑETAZO_SALTANDO)
+      000AB9 3Ar08r00         [13] 1749 	ld	a, (#(_alex + 5) + 0)
+      000ABC D6 10            [ 7] 1750 	sub	a, #0x10
+      000ABE 28 05            [12] 1751 	jr	Z, 00111$
+                                   1752 ;./alex.c:145: alex.oriented = 0;
+      000AC0 21r07r00         [10] 1753 	ld	hl, #(_alex + 4)
+      000AC3 36 00            [10] 1754 	ld	(hl), #0x00
+      000AC5                       1755 00111$:
+                                   1756 ;./alex.c:146: if (puedeDerecha)
+      000AC5 DD 7E 05         [19] 1757 	ld	a, 5 (ix)
+      000AC8 B7               [ 4] 1758 	or	a, a
+      000AC9 28 08            [12] 1759 	jr	Z, 00115$
+                                   1760 ;./alex.c:147: alex.x += 2;
+      000ACB 3Ar03r00         [13] 1761 	ld	a, (#_alex + 0)
+      000ACE C6 02            [ 7] 1762 	add	a, #0x02
+      000AD0 32r03r00         [13] 1763 	ld	(#_alex),a
+      000AD3                       1764 00115$:
+                                   1765 ;./alex.c:149: if (alex.state == PUÑETAZO_SALTANDO) {
+      000AD3 21r08r00         [10] 1766 	ld	hl, #(_alex + 5)
+      000AD6 4E               [ 7] 1767 	ld	c, (hl)
+                                   1768 ;./alex.c:150: alex.lastChangeFrame--;
+                                   1769 ;./alex.c:156: alex.frame = 5;
+                                   1770 ;./alex.c:149: if (alex.state == PUÑETAZO_SALTANDO) {
+      000AD7 79               [ 4] 1771 	ld	a, c
+      000AD8 D6 10            [ 7] 1772 	sub	a, #0x10
+      000ADA C2r66r0B         [10] 1773 	jp	NZ,00127$
+                                   1774 ;./alex.c:150: alex.lastChangeFrame--;
+      000ADD 21r06r00         [10] 1775 	ld	hl, #(_alex + 3)
+      000AE0 4E               [ 7] 1776 	ld	c, (hl)
+      000AE1 0D               [ 4] 1777 	dec	c
+      000AE2 21r06r00         [10] 1778 	ld	hl, #(_alex + 3)
+                                   1779 ;./alex.c:151: if  (!alex.lastChangeFrame) {
+      000AE5 79               [ 4] 1780 	ld	a,c
+      000AE6 77               [ 7] 1781 	ld	(hl),a
+      000AE7 B7               [ 4] 1782 	or	a, a
+      000AE8 20 0E            [12] 1783 	jr	NZ, 00117$
+                                   1784 ;./alex.c:152: alex.state = 0;
+      000AEA 21r08r00         [10] 1785 	ld	hl, #(_alex + 5)
+      000AED 36 00            [10] 1786 	ld	(hl), #0x00
+                                   1787 ;./alex.c:153: SpriteTableY2[4] = 234;
+      000AEF 2Ar00r03         [16] 1788 	ld	hl, (_SpriteTableY2)
+      000AF2 11 04 00         [10] 1789 	ld	de, #0x0004
+      000AF5 19               [11] 1790 	add	hl, de
+      000AF6 36 EA            [10] 1791 	ld	(hl), #0xea
+      000AF8                       1792 00117$:
+                                   1793 ;./alex.c:155: if (!alex.oriented) {
+      000AF8 3Ar07r00         [13] 1794 	ld	a, (#(_alex + 4) + 0)
+      000AFB B7               [ 4] 1795 	or	a, a
+      000AFC 20 34            [12] 1796 	jr	NZ, 00119$
+                                   1797 ;./alex.c:156: alex.frame = 5;
+      000AFE 21r05r00         [10] 1798 	ld	hl, #(_alex + 2)
+      000B01 36 05            [10] 1799 	ld	(hl), #0x05
+                                   1800 ;./alex.c:158: SpriteTableXN2[8] = alex.x + 16;
+      000B03 3Ar02r03         [13] 1801 	ld	a, (_SpriteTableXN2+0)
+      000B06 C6 08            [ 7] 1802 	add	a, #0x08
+      000B08 4F               [ 4] 1803 	ld	c, a
+      000B09 3Ar03r03         [13] 1804 	ld	a, (_SpriteTableXN2+1)
+      000B0C CE 00            [ 7] 1805 	adc	a, #0x00
+      000B0E 47               [ 4] 1806 	ld	b, a
+      000B0F 3Ar03r00         [13] 1807 	ld	a, (#_alex + 0)
+      000B12 C6 10            [ 7] 1808 	add	a, #0x10
+      000B14 02               [ 7] 1809 	ld	(bc), a
+                                   1810 ;./alex.c:159: SpriteTableXN2[9] = 9;
+      000B15 2Ar02r03         [16] 1811 	ld	hl, (_SpriteTableXN2)
+      000B18 11 09 00         [10] 1812 	ld	de, #0x0009
+      000B1B 19               [11] 1813 	add	hl, de
+      000B1C 36 09            [10] 1814 	ld	(hl), #0x09
+                                   1815 ;./alex.c:160: SpriteTableY2[4] = alex.y + 9;
+      000B1E 3Ar00r03         [13] 1816 	ld	a, (_SpriteTableY2+0)
+      000B21 C6 04            [ 7] 1817 	add	a, #0x04
+      000B23 4F               [ 4] 1818 	ld	c, a
+      000B24 3Ar01r03         [13] 1819 	ld	a, (_SpriteTableY2+1)
+      000B27 CE 00            [ 7] 1820 	adc	a, #0x00
+      000B29 47               [ 4] 1821 	ld	b, a
+      000B2A 3Ar04r00         [13] 1822 	ld	a, (#(_alex + 1) + 0)
+      000B2D C6 09            [ 7] 1823 	add	a, #0x09
+      000B2F 02               [ 7] 1824 	ld	(bc), a
+      000B30 18 62            [12] 1825 	jr	00129$
+      000B32                       1826 00119$:
+                                   1827 ;./alex.c:163: alex.frame = 13;
+      000B32 21r05r00         [10] 1828 	ld	hl, #(_alex + 2)
+      000B35 36 0D            [10] 1829 	ld	(hl), #0x0d
+                                   1830 ;./alex.c:165: SpriteTableXN2[8] = alex.x - 8;
+      000B37 3Ar02r03         [13] 1831 	ld	a, (_SpriteTableXN2+0)
+      000B3A C6 08            [ 7] 1832 	add	a, #0x08
+      000B3C 4F               [ 4] 1833 	ld	c, a
+      000B3D 3Ar03r03         [13] 1834 	ld	a, (_SpriteTableXN2+1)
+      000B40 CE 00            [ 7] 1835 	adc	a, #0x00
+      000B42 47               [ 4] 1836 	ld	b, a
+      000B43 3Ar03r00         [13] 1837 	ld	a, (#_alex + 0)
+      000B46 C6 F8            [ 7] 1838 	add	a, #0xf8
+      000B48 02               [ 7] 1839 	ld	(bc), a
+                                   1840 ;./alex.c:166: SpriteTableXN2[9] = 11;
+      000B49 2Ar02r03         [16] 1841 	ld	hl, (_SpriteTableXN2)
+      000B4C 11 09 00         [10] 1842 	ld	de, #0x0009
+      000B4F 19               [11] 1843 	add	hl, de
+      000B50 36 0B            [10] 1844 	ld	(hl), #0x0b
+                                   1845 ;./alex.c:167: SpriteTableY2[4] = alex.y + 9;
+      000B52 3Ar00r03         [13] 1846 	ld	a, (_SpriteTableY2+0)
+      000B55 C6 04            [ 7] 1847 	add	a, #0x04
+      000B57 4F               [ 4] 1848 	ld	c, a
+      000B58 3Ar01r03         [13] 1849 	ld	a, (_SpriteTableY2+1)
+      000B5B CE 00            [ 7] 1850 	adc	a, #0x00
+      000B5D 47               [ 4] 1851 	ld	b, a
+      000B5E 3Ar04r00         [13] 1852 	ld	a, (#(_alex + 1) + 0)
+      000B61 C6 09            [ 7] 1853 	add	a, #0x09
+      000B63 02               [ 7] 1854 	ld	(bc), a
+      000B64 18 2E            [12] 1855 	jr	00129$
+      000B66                       1856 00127$:
+                                   1857 ;./alex.c:171: SpriteTableY2[4] = 234;
+      000B66 2Ar00r03         [16] 1858 	ld	hl, (_SpriteTableY2)
+      000B69 11 04 00         [10] 1859 	ld	de, #0x0004
+      000B6C 19               [11] 1860 	add	hl, de
+      000B6D 36 EA            [10] 1861 	ld	(hl), #0xea
+                                   1862 ;./alex.c:172: if (!alex.oriented)
+      000B6F 3Ar07r00         [13] 1863 	ld	a, (#(_alex + 4) + 0)
+      000B72 DD 77 FD         [19] 1864 	ld	-3 (ix), a
+      000B75 B7               [ 4] 1865 	or	a, a
+      000B76 20 07            [12] 1866 	jr	NZ, 00122$
+                                   1867 ;./alex.c:173: alex.frame = 6;
+      000B78 21r05r00         [10] 1868 	ld	hl, #(_alex + 2)
+      000B7B 36 06            [10] 1869 	ld	(hl), #0x06
+      000B7D 18 05            [12] 1870 	jr	00123$
+      000B7F                       1871 00122$:
+                                   1872 ;./alex.c:175: alex.frame = 14;
+      000B7F 21r05r00         [10] 1873 	ld	hl, #(_alex + 2)
+      000B82 36 0E            [10] 1874 	ld	(hl), #0x0e
+      000B84                       1875 00123$:
+                                   1876 ;./alex.c:176: if (keys & PORT_A_KEY_1) {
+      000B84 DD CB FE 66      [20] 1877 	bit	4, -2 (ix)
+      000B88 28 0A            [12] 1878 	jr	Z, 00129$
+                                   1879 ;./alex.c:177: alex.state = PUÑETAZO_SALTANDO;
+      000B8A 21r08r00         [10] 1880 	ld	hl, #(_alex + 5)
+      000B8D 36 10            [10] 1881 	ld	(hl), #0x10
+                                   1882 ;./alex.c:178: alex.lastChangeFrame = 20;
+      000B8F 21r06r00         [10] 1883 	ld	hl, #(_alex + 3)
+      000B92 36 14            [10] 1884 	ld	(hl), #0x14
+      000B94                       1885 00129$:
+                                   1886 ;./alex.c:182: }
+      000B94 DD F9            [10] 1887 	ld	sp, ix
+      000B96 DD E1            [14] 1888 	pop	ix
+      000B98 E1               [10] 1889 	pop	hl
+      000B99 F1               [10] 1890 	pop	af
+      000B9A 33               [ 6] 1891 	inc	sp
+      000B9B E9               [ 4] 1892 	jp	(hl)
+                                   1893 ;./alex.c:184: void drawAlex() {
+                                   1894 ;	---------------------------------
+                                   1895 ; Function drawAlex
+                                   1896 ; ---------------------------------
+      000B9C                       1897 _drawAlex::
+                                   1898 ;./alex.c:185: SpriteTableXN2[0] = alex.x;
+      000B9C ED 5Br02r03      [20] 1899 	ld	de, (_SpriteTableXN2)
+      000BA0 01r03r00         [10] 1900 	ld	bc, #_alex+0
+      000BA3 0A               [ 7] 1901 	ld	a, (bc)
+      000BA4 12               [ 7] 1902 	ld	(de), a
+                                   1903 ;./alex.c:186: SpriteTableXN2[2] = alex.x + 8;
+      000BA5 2Ar02r03         [16] 1904 	ld	hl, (_SpriteTableXN2)
+      000BA8 23               [ 6] 1905 	inc	hl
+      000BA9 23               [ 6] 1906 	inc	hl
+      000BAA 0A               [ 7] 1907 	ld	a, (bc)
+      000BAB C6 08            [ 7] 1908 	add	a, #0x08
+      000BAD 77               [ 7] 1909 	ld	(hl), a
+                                   1910 ;./alex.c:187: SpriteTableXN2[4] = alex.x;
+      000BAE 2Ar02r03         [16] 1911 	ld	hl, (_SpriteTableXN2)
+      000BB1 11 04 00         [10] 1912 	ld	de, #0x0004
+      000BB4 19               [11] 1913 	add	hl, de
+      000BB5 0A               [ 7] 1914 	ld	a, (bc)
+      000BB6 77               [ 7] 1915 	ld	(hl), a
+                                   1916 ;./alex.c:188: SpriteTableXN2[6] = alex.x + 8;
+      000BB7 2Ar02r03         [16] 1917 	ld	hl, (_SpriteTableXN2)
+      000BBA 11 06 00         [10] 1918 	ld	de, #0x0006
+      000BBD 19               [11] 1919 	add	hl, de
+      000BBE 0A               [ 7] 1920 	ld	a, (bc)
+      000BBF C6 08            [ 7] 1921 	add	a, #0x08
+      000BC1 77               [ 7] 1922 	ld	(hl), a
+                                   1923 ;./alex.c:189: SpriteTableY2[0] = alex.y;
+      000BC2 ED 5Br00r03      [20] 1924 	ld	de, (_SpriteTableY2)
+      000BC6 01r04r00         [10] 1925 	ld	bc, #_alex + 1
+      000BC9 0A               [ 7] 1926 	ld	a, (bc)
+      000BCA 12               [ 7] 1927 	ld	(de), a
+                                   1928 ;./alex.c:190: SpriteTableY2[1] = alex.y;
+      000BCB 2Ar00r03         [16] 1929 	ld	hl, (_SpriteTableY2)
+      000BCE 23               [ 6] 1930 	inc	hl
+      000BCF 0A               [ 7] 1931 	ld	a, (bc)
+      000BD0 77               [ 7] 1932 	ld	(hl), a
+                                   1933 ;./alex.c:191: SpriteTableY2[2] = alex.y + 16;
+      000BD1 2Ar00r03         [16] 1934 	ld	hl, (_SpriteTableY2)
+      000BD4 23               [ 6] 1935 	inc	hl
+      000BD5 23               [ 6] 1936 	inc	hl
+      000BD6 0A               [ 7] 1937 	ld	a, (bc)
+      000BD7 C6 10            [ 7] 1938 	add	a, #0x10
+      000BD9 77               [ 7] 1939 	ld	(hl), a
+                                   1940 ;./alex.c:192: SpriteTableY2[3] = alex.y + 16;
+      000BDA 2Ar00r03         [16] 1941 	ld	hl, (_SpriteTableY2)
+      000BDD 23               [ 6] 1942 	inc	hl
+      000BDE 23               [ 6] 1943 	inc	hl
+      000BDF 23               [ 6] 1944 	inc	hl
+      000BE0 0A               [ 7] 1945 	ld	a, (bc)
+      000BE1 C6 10            [ 7] 1946 	add	a, #0x10
+      000BE3 77               [ 7] 1947 	ld	(hl), a
+                                   1948 ;./alex.c:193: int frame = 8*alex.frame*32;
+      000BE4 3Ar05r00         [13] 1949 	ld	a, (#_alex + 2)
+      000BE7 57               [ 4] 1950 	ld	d, a
+      000BE8 1E 00            [ 7] 1951 	ld	e, #0x00
+                                   1952 ;./alex.c:194: SMS_loadTiles(alex.sprite->data + frame,alex.sprite->beginVRAM,255);
+      000BEA ED 4Br0Br00      [20] 1953 	ld	bc, (#_alex + 8)
+      000BEE C5               [11] 1954 	push	bc
+      000BEF FD E1            [14] 1955 	pop	iy
+      000BF1 FD 6E 07         [19] 1956 	ld	l, 7 (iy)
+                                   1957 ;	spillPairReg hl
+      000BF4 FD 66 08         [19] 1958 	ld	h, 8 (iy)
+                                   1959 ;	spillPairReg hl
+      000BF7 19               [11] 1960 	add	hl, de
+      000BF8 EB               [ 4] 1961 	ex	de, hl
+      000BF9 21 04 00         [10] 1962 	ld	hl, #4
+      000BFC 09               [11] 1963 	add	hl, bc
+      000BFD 7E               [ 7] 1964 	ld	a, (hl)
+      000BFE 23               [ 6] 1965 	inc	hl
+      000BFF 66               [ 7] 1966 	ld	h, (hl)
+                                   1967 ;	spillPairReg hl
+      000C00 6F               [ 4] 1968 	ld	l, a
+                                   1969 ;	spillPairReg hl
+                                   1970 ;	spillPairReg hl
+      000C01 29               [11] 1971 	add	hl, hl
+      000C02 29               [11] 1972 	add	hl, hl
+      000C03 29               [11] 1973 	add	hl, hl
+      000C04 29               [11] 1974 	add	hl, hl
+      000C05 29               [11] 1975 	add	hl, hl
+      000C06 CB F4            [ 8] 1976 	set	6, h
+      000C08 01 FF 00         [10] 1977 	ld	bc, #0x00ff
+      000C0B C5               [11] 1978 	push	bc
+      000C0C CDr00r00         [17] 1979 	call	_SMS_VRAMmemcpy
+                                   1980 ;./alex.c:196: }
+      000C0F C9               [10] 1981 	ret
+                                   1982 ;./alex.c:199: void moveAlex(int keys) {
+                                   1983 ;	---------------------------------
+                                   1984 ; Function moveAlex
+                                   1985 ; ---------------------------------
+      000C10                       1986 _moveAlex::
+      000C10 DD E5            [15] 1987 	push	ix
+      000C12 DD 21 00 00      [14] 1988 	ld	ix,#0
+      000C16 DD 39            [15] 1989 	add	ix,sp
+      000C18 3B               [ 6] 1990 	dec	sp
+                                   1991 ;./alex.c:200: unsigned char puedeBajar = canDown();
+      000C19 E5               [11] 1992 	push	hl
+      000C1A CDr72r08         [17] 1993 	call	_canDown
+      000C1D 4F               [ 4] 1994 	ld	c, a
+      000C1E C5               [11] 1995 	push	bc
+      000C1F CDr66r08         [17] 1996 	call	_canUp
+      000C22 DD 77 FF         [19] 1997 	ld	-1 (ix), a
+      000C25 CDr8Cr08         [17] 1998 	call	_canRight
+      000C28 5F               [ 4] 1999 	ld	e, a
+      000C29 D5               [11] 2000 	push	de
+      000C2A CDr80r08         [17] 2001 	call	_canLeft
+      000C2D D1               [10] 2002 	pop	de
+      000C2E C1               [10] 2003 	pop	bc
+      000C2F E1               [10] 2004 	pop	hl
+                                   2005 ;./alex.c:204: if (puedeBajar)
+      000C30 0C               [ 4] 2006 	inc	c
+      000C31 0D               [ 4] 2007 	dec	c
+      000C32 28 0C            [12] 2008 	jr	Z, 00102$
+                                   2009 ;./alex.c:205: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
+      000C34 57               [ 4] 2010 	ld	d,a
+      000C35 D5               [11] 2011 	push	de
+      000C36 DD 7E FF         [19] 2012 	ld	a, -1 (ix)
+      000C39 F5               [11] 2013 	push	af
+      000C3A 33               [ 6] 2014 	inc	sp
+      000C3B CDr62r0A         [17] 2015 	call	_moveAlexAire
+      000C3E 18 03            [12] 2016 	jr	00103$
+      000C40                       2017 00102$:
+                                   2018 ;./alex.c:207: moveAlexSuelo(keys);
+      000C40 CDr9Ar08         [17] 2019 	call	_moveAlexSuelo
+      000C43                       2020 00103$:
+                                   2021 ;./alex.c:208: drawAlex();
+      000C43 CDr9Cr0B         [17] 2022 	call	_drawAlex
+                                   2023 ;./alex.c:209: }
+      000C46 33               [ 6] 2024 	inc	sp
+      000C47 DD E1            [14] 2025 	pop	ix
+      000C49 C9               [10] 2026 	ret
+                                   2027 ;main.c:20: void inicializaPajaros()
+                                   2028 ;	---------------------------------
+                                   2029 ; Function inicializaPajaros
+                                   2030 ; ---------------------------------
+      000C4A                       2031 _inicializaPajaros::
+      000C4A DD E5            [15] 2032 	push	ix
+      000C4C DD 21 00 00      [14] 2033 	ld	ix,#0
+      000C50 DD 39            [15] 2034 	add	ix,sp
+      000C52 21 F9 FF         [10] 2035 	ld	hl, #-7
+      000C55 39               [11] 2036 	add	hl, sp
+      000C56 F9               [ 6] 2037 	ld	sp, hl
+                                   2038 ;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
+      000C57 DD 36 FF 00      [19] 2039 	ld	-1 (ix), #0x00
+      000C5B                       2040 00108$:
+                                   2041 ;main.c:25: pajaros[i].x = 15 + 32 * i;
+      000C5B DD 4E FF         [19] 2042 	ld	c, -1 (ix)
+      000C5E 06 00            [ 7] 2043 	ld	b, #0x00
+      000C60 69               [ 4] 2044 	ld	l, c
+      000C61 60               [ 4] 2045 	ld	h, b
+      000C62 29               [11] 2046 	add	hl, hl
+      000C63 29               [11] 2047 	add	hl, hl
+      000C64 09               [11] 2048 	add	hl, bc
+      000C65 29               [11] 2049 	add	hl, hl
+      000C66 11r06r03         [10] 2050 	ld	de, #_pajaros
+      000C69 19               [11] 2051 	add	hl, de
+      000C6A E3               [19] 2052 	ex	(sp), hl
+      000C6B DD 7E FF         [19] 2053 	ld	a, -1 (ix)
+      000C6E 0F               [ 4] 2054 	rrca
+      000C6F 0F               [ 4] 2055 	rrca
+      000C70 0F               [ 4] 2056 	rrca
+      000C71 E6 E0            [ 7] 2057 	and	a, #0xe0
+      000C73 C6 0F            [ 7] 2058 	add	a, #0x0f
+      000C75 E1               [10] 2059 	pop	hl
+      000C76 E5               [11] 2060 	push	hl
+      000C77 77               [ 7] 2061 	ld	(hl), a
+                                   2062 ;main.c:26: pajaros[i].y = 16 * (i / 2);
+      000C78 DD 7E F9         [19] 2063 	ld	a, -7 (ix)
+      000C7B C6 01            [ 7] 2064 	add	a, #0x01
+      000C7D DD 77 FB         [19] 2065 	ld	-5 (ix), a
+      000C80 DD 7E FA         [19] 2066 	ld	a, -6 (ix)
+      000C83 CE 00            [ 7] 2067 	adc	a, #0x00
+      000C85 DD 77 FC         [19] 2068 	ld	-4 (ix), a
+      000C88 DD 4E FF         [19] 2069 	ld	c, -1 (ix)
+      000C8B 06 00            [ 7] 2070 	ld	b, #0x00
+      000C8D DD 71 FD         [19] 2071 	ld	-3 (ix), c
+      000C90 DD 70 FE         [19] 2072 	ld	-2 (ix), b
+      000C93 CB 78            [ 8] 2073 	bit	7, b
+      000C95 28 08            [12] 2074 	jr	Z, 00112$
+      000C97 DD 36 FD 01      [19] 2075 	ld	-3 (ix), #0x01
+      000C9B DD 36 FE 00      [19] 2076 	ld	-2 (ix), #0
+      000C9F                       2077 00112$:
+      000C9F DD 4E FD         [19] 2078 	ld	c, -3 (ix)
+      000CA2 1E 00            [ 7] 2079 	ld	e, #0x00
+      000CA4 CB 2B            [ 8] 2080 	sra	e
+      000CA6 CB 19            [ 8] 2081 	rr	c
+      000CA8 79               [ 4] 2082 	ld	a, c
+      000CA9 87               [ 4] 2083 	add	a, a
+      000CAA 87               [ 4] 2084 	add	a, a
+      000CAB 87               [ 4] 2085 	add	a, a
+      000CAC 87               [ 4] 2086 	add	a, a
+      000CAD C1               [10] 2087 	pop	bc
+      000CAE E1               [10] 2088 	pop	hl
+      000CAF E5               [11] 2089 	push	hl
+      000CB0 C5               [11] 2090 	push	bc
+      000CB1 77               [ 7] 2091 	ld	(hl), a
+                                   2092 ;main.c:27: pajaros[i].lastChangeFrame = i * 3;
+      000CB2 C1               [10] 2093 	pop	bc
+      000CB3 C5               [11] 2094 	push	bc
+      000CB4 03               [ 6] 2095 	inc	bc
+      000CB5 03               [ 6] 2096 	inc	bc
+      000CB6 03               [ 6] 2097 	inc	bc
+      000CB7 DD 7E FF         [19] 2098 	ld	a, -1 (ix)
+      000CBA 5F               [ 4] 2099 	ld	e, a
+      000CBB 87               [ 4] 2100 	add	a, a
+      000CBC 83               [ 4] 2101 	add	a, e
+      000CBD 02               [ 7] 2102 	ld	(bc), a
+                                   2103 ;main.c:28: pajaros[i].initSprite = 255;
+      000CBE DD 7E F9         [19] 2104 	ld	a, -7 (ix)
+      000CC1 C6 06            [ 7] 2105 	add	a, #0x06
+      000CC3 5F               [ 4] 2106 	ld	e, a
+      000CC4 DD 7E FA         [19] 2107 	ld	a, -6 (ix)
+      000CC7 CE 00            [ 7] 2108 	adc	a, #0x00
+      000CC9 57               [ 4] 2109 	ld	d, a
+      000CCA 3E FF            [ 7] 2110 	ld	a, #0xff
+      000CCC 12               [ 7] 2111 	ld	(de), a
+                                   2112 ;main.c:30: pajaros[i].x++;
+      000CCD E1               [10] 2113 	pop	hl
+      000CCE E5               [11] 2114 	push	hl
+      000CCF 7E               [ 7] 2115 	ld	a, (hl)
+      000CD0 3C               [ 4] 2116 	inc	a
+      000CD1 E1               [10] 2117 	pop	hl
+      000CD2 E5               [11] 2118 	push	hl
+      000CD3 77               [ 7] 2119 	ld	(hl), a
+                                   2120 ;main.c:31: pajaros[i].lastChangeFrame++;
+      000CD4 0A               [ 7] 2121 	ld	a, (bc)
+      000CD5 3C               [ 4] 2122 	inc	a
+      000CD6 02               [ 7] 2123 	ld	(bc), a
+                                   2124 ;main.c:32: if (pajaros[i].lastChangeFrame == 20)
+      000CD7 D6 14            [ 7] 2125 	sub	a, #0x14
+      000CD9 20 15            [12] 2126 	jr	NZ, 00104$
+                                   2127 ;main.c:34: pajaros[i].frame++;
+      000CDB E1               [10] 2128 	pop	hl
+      000CDC E5               [11] 2129 	push	hl
+      000CDD 23               [ 6] 2130 	inc	hl
+      000CDE 23               [ 6] 2131 	inc	hl
+      000CDF 7E               [ 7] 2132 	ld	a, (hl)
+      000CE0 3C               [ 4] 2133 	inc	a
+      000CE1 DD 77 FE         [19] 2134 	ld	-2 (ix), a
+      000CE4 77               [ 7] 2135 	ld	(hl), a
+                                   2136 ;main.c:35: if (pajaros[i].frame > 1)
+      000CE5 3E 01            [ 7] 2137 	ld	a, #0x01
+      000CE7 DD 96 FE         [19] 2138 	sub	a, -2 (ix)
+      000CEA 30 02            [12] 2139 	jr	NC, 00102$
+                                   2140 ;main.c:36: pajaros[i].frame = 0;
+      000CEC 36 00            [10] 2141 	ld	(hl), #0x00
+      000CEE                       2142 00102$:
+                                   2143 ;main.c:37: pajaros[i].lastChangeFrame = 0;
+      000CEE AF               [ 4] 2144 	xor	a, a
+      000CEF 02               [ 7] 2145 	ld	(bc), a
+      000CF0                       2146 00104$:
+                                   2147 ;main.c:39: if(pajaros[i].initSprite == 255) {
+      000CF0 1A               [ 7] 2148 	ld	a, (de)
+      000CF1 3C               [ 4] 2149 	inc	a
+      000CF2 20 08            [12] 2150 	jr	NZ, 00109$
+                                   2151 ;main.c:40: draw_entidad(&(pajaros[i]), &spritePajaro);
+      000CF4 11r17r00         [10] 2152 	ld	de, #_spritePajaro
+      000CF7 E1               [10] 2153 	pop	hl
+      000CF8 E5               [11] 2154 	push	hl
+      000CF9 CDr40r04         [17] 2155 	call	_draw_entidad
+      000CFC                       2156 00109$:
+                                   2157 ;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
+      000CFC DD 34 FF         [23] 2158 	inc	-1 (ix)
+      000CFF DD 7E FF         [19] 2159 	ld	a, -1 (ix)
+      000D02 D6 13            [ 7] 2160 	sub	a, #0x13
+      000D04 DAr5Br0C         [10] 2161 	jp	C, 00108$
+                                   2162 ;main.c:43: }
+      000D07 DD F9            [10] 2163 	ld	sp, ix
+      000D09 DD E1            [14] 2164 	pop	ix
+      000D0B C9               [10] 2165 	ret
+                                   2166 ;main.c:45: void loadGrapVRAM()
+                                   2167 ;	---------------------------------
+                                   2168 ; Function loadGrapVRAM
+                                   2169 ; ---------------------------------
+      000D0C                       2170 _loadGrapVRAM::
+      000D0C DD E5            [15] 2171 	push	ix
+      000D0E DD 21 00 00      [14] 2172 	ld	ix,#0
+      000D12 DD 39            [15] 2173 	add	ix,sp
+      000D14 21 E2 FF         [10] 2174 	ld	hl, #-30
+      000D17 39               [11] 2175 	add	hl, sp
+      000D18 F9               [ 6] 2176 	ld	sp, hl
+                                   2177 ;main.c:47: SMS_init();
+      000D19 CDr00r00         [17] 2178 	call	_SMS_init
+                                   2179 ;main.c:50: SMS_setSpriteMode(SPRITEMODE_TALL);
+      000D1C 2E 01            [ 7] 2180 	ld	l, #0x01
+                                   2181 ;	spillPairReg hl
+                                   2182 ;	spillPairReg hl
+      000D1E CDr00r00         [17] 2183 	call	_SMS_setSpriteMode
+                                   2184 ;main.c:51: SMS_displayOn();
+      000D21 21 40 01         [10] 2185 	ld	hl, #0x0140
+      000D24 CDr00r00         [17] 2186 	call	_SMS_VDPturnOnFeature
+                                   2187 ;main.c:52: SMS_loadBGPalette(sonicpalette_inc);
+      000D27 21r00r00         [10] 2188 	ld	hl, #_sonicpalette_inc
+      000D2A CDr00r00         [17] 2189 	call	_SMS_loadBGPalette
+                                   2190 ;main.c:53: SMS_loadSpritePalette(palleteAlex_inc);
+      000D2D 21r00r00         [10] 2191 	ld	hl, #_palleteAlex_inc
+      000D30 CDr00r00         [17] 2192 	call	_SMS_loadSpritePalette
+                                   2193 ;main.c:55: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
+      000D33 21r00r00         [10] 2194 	ld	hl, #_spriteAlex_inc
+      000D36 E5               [11] 2195 	push	hl
+      000D37 21 00 10         [10] 2196 	ld	hl, #0x1000
+      000D3A E5               [11] 2197 	push	hl
+                                   2198 ;	spillPairReg hl
+                                   2199 ;	spillPairReg hl
+      000D3B 3E 02            [ 7] 2200 	ld	a,#0x02
+      000D3D 6F               [ 4] 2201 	ld	l,a
+      000D3E E5               [11] 2202 	push	hl
+      000D3F 21 06 00         [10] 2203 	ld	hl, #0x0006
+      000D42 39               [11] 2204 	add	hl, sp
+      000D43 EB               [ 4] 2205 	ex	de,hl
+      000D44 E1               [10] 2206 	pop	hl
+      000D45 D5               [11] 2207 	push	de
+      000D46 CDrAAr00         [17] 2208 	call	_generateSpriteNoRAM
+      000D49 F1               [10] 2209 	pop	af
+      000D4A F1               [10] 2210 	pop	af
+      000D4B F1               [10] 2211 	pop	af
+      000D4C 11r0Dr00         [10] 2212 	ld	de, #_spriteAlex
+      000D4F 21 00 00         [10] 2213 	ld	hl, #0
+      000D52 39               [11] 2214 	add	hl, sp
+      000D53 01 0A 00         [10] 2215 	ld	bc, #0x000a
+      000D56 ED B0            [21] 2216 	ldir
+                                   2217 ;main.c:56: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
+      000D58 21r00r00         [10] 2218 	ld	hl, #_puno_inc
+      000D5B E5               [11] 2219 	push	hl
+      000D5C 21 80 00         [10] 2220 	ld	hl, #0x0080
+      000D5F E5               [11] 2221 	push	hl
+      000D60 2E 02            [ 7] 2222 	ld	l, #0x02
+                                   2223 ;	spillPairReg hl
+                                   2224 ;	spillPairReg hl
+      000D62 3E 01            [ 7] 2225 	ld	a, #0x01
+      000D64 E5               [11] 2226 	push	hl
+      000D65 21 10 00         [10] 2227 	ld	hl, #0x0010
+      000D68 39               [11] 2228 	add	hl, sp
+      000D69 EB               [ 4] 2229 	ex	de,hl
+      000D6A E1               [10] 2230 	pop	hl
+      000D6B D5               [11] 2231 	push	de
+      000D6C CDr00r00         [17] 2232 	call	_generateSprite
+      000D6F F1               [10] 2233 	pop	af
+      000D70 F1               [10] 2234 	pop	af
+      000D71 F1               [10] 2235 	pop	af
+      000D72 11r21r00         [10] 2236 	ld	de, #_spritePuno
+      000D75 21 0A 00         [10] 2237 	ld	hl, #10
+      000D78 39               [11] 2238 	add	hl, sp
+      000D79 01 0A 00         [10] 2239 	ld	bc, #0x000a
+      000D7C ED B0            [21] 2240 	ldir
+                                   2241 ;main.c:57: spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+      000D7E 21r00r00         [10] 2242 	ld	hl, #_spritePajaro_inc
+      000D81 E5               [11] 2243 	push	hl
+      000D82 21 80 01         [10] 2244 	ld	hl, #0x0180
+      000D85 E5               [11] 2245 	push	hl
+      000D86 2E 01            [ 7] 2246 	ld	l, #0x01
+                                   2247 ;	spillPairReg hl
+                                   2248 ;	spillPairReg hl
+      000D88 3E 03            [ 7] 2249 	ld	a, #0x03
+      000D8A E5               [11] 2250 	push	hl
+      000D8B 21 1A 00         [10] 2251 	ld	hl, #0x001a
+      000D8E 39               [11] 2252 	add	hl, sp
+      000D8F EB               [ 4] 2253 	ex	de,hl
+      000D90 E1               [10] 2254 	pop	hl
+      000D91 D5               [11] 2255 	push	de
+      000D92 CDr00r00         [17] 2256 	call	_generateSprite
+      000D95 F1               [10] 2257 	pop	af
+      000D96 F1               [10] 2258 	pop	af
+      000D97 F1               [10] 2259 	pop	af
+      000D98 11r17r00         [10] 2260 	ld	de, #_spritePajaro
+      000D9B 21 14 00         [10] 2261 	ld	hl, #20
+      000D9E 39               [11] 2262 	add	hl, sp
+      000D9F 01 0A 00         [10] 2263 	ld	bc, #0x000a
+      000DA2 ED B0            [21] 2264 	ldir
+                                   2265 ;main.c:58: SMS_initSprites();
+      000DA4 CDr00r00         [17] 2266 	call	_SMS_initSprites
+                                   2267 ;main.c:59: alex.initSprite = 255;
+      000DA7 21r09r00         [10] 2268 	ld	hl, #_alex + 6
+      000DAA 36 FF            [10] 2269 	ld	(hl), #0xff
+                                   2270 ;main.c:60: draw_entidad(&alex, &spriteAlex);
+      000DAC 11r0Dr00         [10] 2271 	ld	de, #_spriteAlex
+      000DAF 21r03r00         [10] 2272 	ld	hl, #_alex
+      000DB2 CDr40r04         [17] 2273 	call	_draw_entidad
+                                   2274 ;main.c:61: SMS_addSprite (0, 0, 9); // puno
+      000DB5 11 09 00         [10] 2275 	ld	de, #0x0009
+      000DB8 21 00 00         [10] 2276 	ld	hl, #0x0000
+      000DBB CDr00r00         [17] 2277 	call	_SMS_addSprite_f
+                                   2278 ;main.c:62: inicializaPajaros();
+      000DBE CDr4Ar0C         [17] 2279 	call	_inicializaPajaros
+                                   2280 ;main.c:67: SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
+      000DC1 21 A0 00         [10] 2281 	ld	hl, #0x00a0
+      000DC4 E5               [11] 2282 	push	hl
+      000DC5 11r00r00         [10] 2283 	ld	de, #_tiles_de_prueba2_inc
+      000DC8 21 00 40         [10] 2284 	ld	hl, #0x4000
+      000DCB CDr00r00         [17] 2285 	call	_SMS_VRAMmemcpy
+                                   2286 ;main.c:68: SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
+      000DCE 21 80 07         [10] 2287 	ld	hl, #0x0780
+      000DD1 E5               [11] 2288 	push	hl
+      000DD2 11r00r00         [10] 2289 	ld	de, #_tilemap_de_prueba2_inc
+      000DD5 21 00 78         [10] 2290 	ld	hl, #0x7800
+      000DD8 CDr00r00         [17] 2291 	call	_SMS_VRAMmemcpy
+                                   2292 ;main.c:69: SMS_loadBGPalette(paleta_de_prueba2_inc);
+      000DDB 21r00r00         [10] 2293 	ld	hl, #_paleta_de_prueba2_inc
+      000DDE CDr00r00         [17] 2294 	call	_SMS_loadBGPalette
+                                   2295 ;main.c:70: SMS_setSpritePaletteColor(0,0);
+                                   2296 ;	spillPairReg hl
+                                   2297 ;	spillPairReg hl
+      000DE1 AF               [ 4] 2298 	xor	a, a
+      000DE2 6F               [ 4] 2299 	ld	l, a
+      000DE3 CDr00r00         [17] 2300 	call	_SMS_setSpritePaletteColor
+                                   2301 ;main.c:71: }
+      000DE6 DD F9            [10] 2302 	ld	sp, ix
+      000DE8 DD E1            [14] 2303 	pop	ix
+      000DEA C9               [10] 2304 	ret
+                                   2305 ;main.c:73: void dibujaPajaros()
+                                   2306 ;	---------------------------------
+                                   2307 ; Function dibujaPajaros
+                                   2308 ; ---------------------------------
+      000DEB                       2309 _dibujaPajaros::
+      000DEB DD E5            [15] 2310 	push	ix
+      000DED DD 21 00 00      [14] 2311 	ld	ix,#0
+      000DF1 DD 39            [15] 2312 	add	ix,sp
+      000DF3 21 F6 FF         [10] 2313 	ld	hl, #-10
+      000DF6 39               [11] 2314 	add	hl, sp
+      000DF7 F9               [ 6] 2315 	ld	sp, hl
+                                   2316 ;main.c:78: unsigned char initPajaros = pajaros[0].initSprite;
+      000DF8 3Ar0Cr03         [13] 2317 	ld	a,(#_pajaros + 6)
+      000DFB DD 77 FA         [19] 2318 	ld	-6 (ix), a
+                                   2319 ;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
+      000DFE DD 36 FE 00      [19] 2320 	ld	-2 (ix), #0x00
+      000E02                       2321 00119$:
+                                   2322 ;main.c:81: T_entidad *p = &pajaros[i];
+      000E02 DD 4E FE         [19] 2323 	ld	c, -2 (ix)
+      000E05 06 00            [ 7] 2324 	ld	b, #0x00
+      000E07 69               [ 4] 2325 	ld	l, c
+      000E08 60               [ 4] 2326 	ld	h, b
+      000E09 29               [11] 2327 	add	hl, hl
+      000E0A 29               [11] 2328 	add	hl, hl
+      000E0B 09               [11] 2329 	add	hl, bc
+      000E0C 29               [11] 2330 	add	hl, hl
+      000E0D 11r06r03         [10] 2331 	ld	de, #_pajaros
+      000E10 19               [11] 2332 	add	hl, de
+                                   2333 ;main.c:82: p->x++;
+      000E11 DD 75 FB         [19] 2334 	ld	-5 (ix), l
+      000E14 DD 74 FC         [19] 2335 	ld	-4 (ix), h
+      000E17 7E               [ 7] 2336 	ld	a, (hl)
+      000E18 3C               [ 4] 2337 	inc	a
+      000E19 DD 6E FB         [19] 2338 	ld	l, -5 (ix)
+      000E1C DD 66 FC         [19] 2339 	ld	h, -4 (ix)
+      000E1F 77               [ 7] 2340 	ld	(hl), a
+                                   2341 ;main.c:83: p->lastChangeFrame++;
+      000E20 DD 7E FB         [19] 2342 	ld	a, -5 (ix)
+      000E23 C6 03            [ 7] 2343 	add	a, #0x03
+      000E25 DD 77 F6         [19] 2344 	ld	-10 (ix), a
+      000E28 DD 7E FC         [19] 2345 	ld	a, -4 (ix)
+      000E2B CE 00            [ 7] 2346 	adc	a, #0x00
+      000E2D DD 77 F7         [19] 2347 	ld	-9 (ix), a
+      000E30 E1               [10] 2348 	pop	hl
+      000E31 E5               [11] 2349 	push	hl
+      000E32 7E               [ 7] 2350 	ld	a, (hl)
+      000E33 3C               [ 4] 2351 	inc	a
+      000E34 E1               [10] 2352 	pop	hl
+      000E35 E5               [11] 2353 	push	hl
+      000E36 77               [ 7] 2354 	ld	(hl), a
+                                   2355 ;main.c:85: if (p->lastChangeFrame == 20)
+      000E37 D6 14            [ 7] 2356 	sub	a, #0x14
+      000E39 C2rCEr0E         [10] 2357 	jp	NZ,00108$
+                                   2358 ;main.c:87: p->frame++;
+      000E3C DD 7E FB         [19] 2359 	ld	a, -5 (ix)
+      000E3F C6 02            [ 7] 2360 	add	a, #0x02
+      000E41 DD 77 F8         [19] 2361 	ld	-8 (ix), a
+      000E44 DD 7E FC         [19] 2362 	ld	a, -4 (ix)
+      000E47 CE 00            [ 7] 2363 	adc	a, #0x00
+      000E49 DD 77 F9         [19] 2364 	ld	-7 (ix), a
+      000E4C DD 6E F8         [19] 2365 	ld	l, -8 (ix)
+      000E4F DD 66 F9         [19] 2366 	ld	h, -7 (ix)
+      000E52 4E               [ 7] 2367 	ld	c, (hl)
+      000E53 0C               [ 4] 2368 	inc	c
+      000E54 D1               [10] 2369 	pop	de
+      000E55 E1               [10] 2370 	pop	hl
+      000E56 E5               [11] 2371 	push	hl
+      000E57 D5               [11] 2372 	push	de
+      000E58 71               [ 7] 2373 	ld	(hl), c
+                                   2374 ;main.c:88: if (p->frame > 1)
+      000E59 3E 01            [ 7] 2375 	ld	a, #0x01
+      000E5B 91               [ 4] 2376 	sub	a, c
+      000E5C 30 06            [12] 2377 	jr	NC, 00104$
+                                   2378 ;main.c:89: p->frame = 0;
+      000E5E C1               [10] 2379 	pop	bc
+      000E5F E1               [10] 2380 	pop	hl
+      000E60 E5               [11] 2381 	push	hl
+      000E61 C5               [11] 2382 	push	bc
+      000E62 36 00            [10] 2383 	ld	(hl), #0x00
+      000E64                       2384 00104$:
+                                   2385 ;main.c:90: p->lastChangeFrame = 0;
+      000E64 E1               [10] 2386 	pop	hl
+      000E65 36 00            [10] 2387 	ld	(hl), #0x00
+      000E67 E5               [11] 2388 	push	hl
+                                   2389 ;main.c:91: int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
+      000E68 21r19r00         [10] 2390 	ld	hl, #_spritePajaro + 2
+      000E6B 5E               [ 7] 2391 	ld	e, (hl)
+      000E6C DD 6E F8         [19] 2392 	ld	l, -8 (ix)
+      000E6F DD 66 F9         [19] 2393 	ld	h, -7 (ix)
+      000E72 66               [ 7] 2394 	ld	h, (hl)
+                                   2395 ;	spillPairReg hl
+      000E73 2E 00            [ 7] 2396 	ld	l, #0x00
+      000E75 55               [ 4] 2397 	ld	d, l
+      000E76 06 08            [ 7] 2398 	ld	b, #0x08
+      000E78                       2399 00191$:
+      000E78 29               [11] 2400 	add	hl, hl
+      000E79 30 01            [12] 2401 	jr	NC, 00192$
+      000E7B 19               [11] 2402 	add	hl, de
+      000E7C                       2403 00192$:
+      000E7C 10 FA            [13] 2404 	djnz	00191$
+      000E7E 4D               [ 4] 2405 	ld	c, l
+      000E7F 3Ar1Br00         [13] 2406 	ld	a, (#_spritePajaro + 4)
+      000E82 81               [ 4] 2407 	add	a, c
+      000E83 DD 77 FD         [19] 2408 	ld	-3 (ix), a
+                                   2409 ;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
+      000E86 DD 36 FF 00      [19] 2410 	ld	-1 (ix), #0x00
+      000E8A                       2411 00117$:
+      000E8A 21r17r00         [10] 2412 	ld	hl, #_spritePajaro
+      000E8D DD 7E FF         [19] 2413 	ld	a,-1 (ix)
+      000E90 96               [ 7] 2414 	sub	a,(hl)
+      000E91 30 3B            [12] 2415 	jr	NC, 00108$
+                                   2416 ;main.c:93: unsigned char desplazado = (j<<2);
+      000E93 DD 7E FF         [19] 2417 	ld	a, -1 (ix)
+      000E96 87               [ 4] 2418 	add	a, a
+      000E97 87               [ 4] 2419 	add	a, a
+                                   2420 ;main.c:94: unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
+      000E98 DD 86 FD         [19] 2421 	add	a, -3 (ix)
+      000E9B 5F               [ 4] 2422 	ld	e, a
+                                   2423 ;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
+      000E9C 16 00            [ 7] 2424 	ld	d, #0x00
+      000E9E                       2425 00114$:
+      000E9E 21r18r00         [10] 2426 	ld	hl, #_spritePajaro + 1
+      000EA1 4E               [ 7] 2427 	ld	c, (hl)
+      000EA2 7A               [ 4] 2428 	ld	a, d
+      000EA3 91               [ 4] 2429 	sub	a, c
+      000EA4 30 23            [12] 2430 	jr	NC, 00118$
+                                   2431 ;main.c:96: SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
+      000EA6 4A               [ 4] 2432 	ld	c, d
+      000EA7 06 00            [ 7] 2433 	ld	b, #0x00
+      000EA9 DD 6E FA         [19] 2434 	ld	l, -6 (ix)
+                                   2435 ;	spillPairReg hl
+                                   2436 ;	spillPairReg hl
+      000EAC 26 00            [ 7] 2437 	ld	h, #0x00
+                                   2438 ;	spillPairReg hl
+                                   2439 ;	spillPairReg hl
+      000EAE 09               [11] 2440 	add	hl, bc
+      000EAF 29               [11] 2441 	add	hl, hl
+      000EB0 23               [ 6] 2442 	inc	hl
+      000EB1 4D               [ 4] 2443 	ld	c, l
+      000EB2 44               [ 4] 2444 	ld	b, h
+      000EB3 79               [ 4] 2445 	ld	a, c
+      000EB4 FD 21r02r03      [14] 2446 	ld	iy, #_SpriteTableXN2
+      000EB8 FD 86 00         [19] 2447 	add	a, 0 (iy)
+      000EBB 4F               [ 4] 2448 	ld	c, a
+      000EBC 78               [ 4] 2449 	ld	a, b
+      000EBD FD 8E 01         [19] 2450 	adc	a, 1 (iy)
+      000EC0 47               [ 4] 2451 	ld	b, a
+      000EC1 7A               [ 4] 2452 	ld	a, d
+      000EC2 87               [ 4] 2453 	add	a, a
+      000EC3 6B               [ 4] 2454 	ld	l, e
+                                   2455 ;	spillPairReg hl
+                                   2456 ;	spillPairReg hl
+      000EC4 85               [ 4] 2457 	add	a, l
+      000EC5 02               [ 7] 2458 	ld	(bc), a
+                                   2459 ;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
+      000EC6 14               [ 4] 2460 	inc	d
+      000EC7 18 D5            [12] 2461 	jr	00114$
+      000EC9                       2462 00118$:
+                                   2463 ;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
+      000EC9 DD 34 FF         [23] 2464 	inc	-1 (ix)
+      000ECC 18 BC            [12] 2465 	jr	00117$
+      000ECE                       2466 00108$:
+                                   2467 ;main.c:100: initPajaros +=3;
+      000ECE DD 7E FA         [19] 2468 	ld	a, -6 (ix)
+      000ED1 C6 03            [ 7] 2469 	add	a, #0x03
+      000ED3 DD 77 FA         [19] 2470 	ld	-6 (ix), a
+                                   2471 ;main.c:101: end = p->len;
+      000ED6 DD 4E FB         [19] 2472 	ld	c, -5 (ix)
+      000ED9 DD 46 FC         [19] 2473 	ld	b, -4 (ix)
+      000EDC 21 07 00         [10] 2474 	ld	hl, #7
+      000EDF 09               [11] 2475 	add	hl, bc
+      000EE0 4E               [ 7] 2476 	ld	c, (hl)
+                                   2477 ;main.c:102: i2 = p->initSprite << 1;
+      000EE1 DD 5E FB         [19] 2478 	ld	e, -5 (ix)
+      000EE4 DD 56 FC         [19] 2479 	ld	d, -4 (ix)
+      000EE7 21 06 00         [10] 2480 	ld	hl, #6
+      000EEA 19               [11] 2481 	add	hl, de
+      000EEB 7E               [ 7] 2482 	ld	a, (hl)
+      000EEC 87               [ 4] 2483 	add	a, a
+      000EED 47               [ 4] 2484 	ld	b, a
+                                   2485 ;main.c:103: while(i2<end) {
+      000EEE                       2486 00109$:
+                                   2487 ;main.c:104: SpriteTableXN2[i2] += 1;
+      000EEE 78               [ 4] 2488 	ld	a,b
+      000EEF B9               [ 4] 2489 	cp	a,c
+      000EF0 30 11            [12] 2490 	jr	NC, 00120$
+      000EF2 21r02r03         [10] 2491 	ld	hl, #_SpriteTableXN2
+      000EF5 86               [ 7] 2492 	add	a, (hl)
+      000EF6 23               [ 6] 2493 	inc	hl
+      000EF7 5F               [ 4] 2494 	ld	e, a
+      000EF8 3E 00            [ 7] 2495 	ld	a, #0x00
+      000EFA 8E               [ 7] 2496 	adc	a, (hl)
+      000EFB 57               [ 4] 2497 	ld	d, a
+      000EFC 1A               [ 7] 2498 	ld	a, (de)
+      000EFD 3C               [ 4] 2499 	inc	a
+      000EFE 12               [ 7] 2500 	ld	(de), a
+                                   2501 ;main.c:105: i2 +=2;
+      000EFF 04               [ 4] 2502 	inc	b
+      000F00 04               [ 4] 2503 	inc	b
+      000F01 18 EB            [12] 2504 	jr	00109$
+      000F03                       2505 00120$:
+                                   2506 ;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
+      000F03 DD 34 FE         [23] 2507 	inc	-2 (ix)
+      000F06 DD 7E FE         [19] 2508 	ld	a, -2 (ix)
+      000F09 D6 13            [ 7] 2509 	sub	a, #0x13
+      000F0B DAr02r0E         [10] 2510 	jp	C, 00119$
+                                   2511 ;main.c:110: }
+      000F0E DD F9            [10] 2512 	ld	sp, ix
+      000F10 DD E1            [14] 2513 	pop	ix
+      000F12 C9               [10] 2514 	ret
+                                   2515 ;main.c:112: void playMusic() {
+                                   2516 ;	---------------------------------
+                                   2517 ; Function playMusic
+                                   2518 ; ---------------------------------
+      000F13                       2519 _playMusic::
+                                   2520 ;main.c:113: PSGFrame();
+      000F13 CDr00r00         [17] 2521 	call	_PSGFrame
+                                   2522 ;main.c:114: PSGSFXFrame();
+                                   2523 ;main.c:115: }
+      000F16 C3r00r00         [10] 2524 	jp	_PSGSFXFrame
+                                   2525 ;main.c:117: void disableSprites() {
+                                   2526 ;	---------------------------------
+                                   2527 ; Function disableSprites
+                                   2528 ; ---------------------------------
+      000F19                       2529 _disableSprites::
+                                   2530 ;main.c:120: while (i < 64) {
+      000F19 0E 00            [ 7] 2531 	ld	c, #0x00
+      000F1B                       2532 00101$:
+      000F1B 79               [ 4] 2533 	ld	a, c
+      000F1C D6 40            [ 7] 2534 	sub	a, #0x40
+      000F1E 30 10            [12] 2535 	jr	NC, 00103$
+                                   2536 ;main.c:121: SMS_updateSpritePosition(i,10,240); 
+      000F20 41               [ 4] 2537 	ld	b, c
+      000F21 C5               [11] 2538 	push	bc
+      000F22 3E F0            [ 7] 2539 	ld	a, #0xf0
+      000F24 F5               [11] 2540 	push	af
+      000F25 33               [ 6] 2541 	inc	sp
+      000F26 2E 0A            [ 7] 2542 	ld	l, #0x0a
                                    2543 ;	spillPairReg hl
-      000EE0                       2544 00109$:
-                                   2545 ;main.c:189: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
-      000EE0 E5               [11] 2546 	push	hl
-      000EE1 CDr00r00         [17] 2547 	call	_SMS_getKeysPressed
-      000EE4 E1               [10] 2548 	pop	hl
-      000EE5 7B               [ 4] 2549 	ld	a, e
-      000EE6 E6 30            [ 7] 2550 	and	a, #0x30
-      000EE8 B5               [ 4] 2551 	or	a, l
-      000EE9 6F               [ 4] 2552 	ld	l, a
-                                   2553 ;	spillPairReg hl
-                                   2554 ;	spillPairReg hl
-                                   2555 ;main.c:192: moveAlex(keys);
-      000EEA CDr33r0B         [17] 2556 	call	_moveAlex
-                                   2557 ;main.c:194: dibujaPajaros();
-      000EED CDr0Fr0D         [17] 2558 	call	_dibujaPajaros
-                                   2559 ;main.c:199: SMS_waitForVBlank();
-      000EF0 CDr00r00         [17] 2560 	call	_SMS_waitForVBlank
-                                   2561 ;main.c:202: SMS_displayOff();
-      000EF3 21 40 01         [10] 2562 	ld	hl, #0x0140
-      000EF6 CDr00r00         [17] 2563 	call	_SMS_VDPturnOffFeature
-                                   2564 ;main.c:205: copySpritestoSAT();
-      000EF9 CDr0Cr04         [17] 2565 	call	_copySpritestoSAT
-                                   2566 ;main.c:212: if (scroll_y % 2 == 0)
-      000EFC DD CB FF 46      [20] 2567 	bit	0, -1 (ix)
-      000F00 20 03            [12] 2568 	jr	NZ, 00111$
-                                   2569 ;main.c:213: scroll_x += 1;
-      000F02 DD 34 FE         [23] 2570 	inc	-2 (ix)
-      000F05                       2571 00111$:
-                                   2572 ;main.c:214: scroll_y++;
-      000F05 DD 34 FF         [23] 2573 	inc	-1 (ix)
-                                   2574 ;main.c:215: if (scroll_y == 224)
-      000F08 DD 7E FF         [19] 2575 	ld	a, -1 (ix)
-      000F0B D6 E0            [ 7] 2576 	sub	a, #0xe0
-      000F0D 20 04            [12] 2577 	jr	NZ, 00113$
-                                   2578 ;main.c:216: scroll_y = 0;
-      000F0F DD 36 FF 00      [19] 2579 	ld	-1 (ix), #0x00
-      000F13                       2580 00113$:
-                                   2581 ;main.c:218: SMS_setBGScrollX(scroll_x);
-      000F13 DD 6E FE         [19] 2582 	ld	l, -2 (ix)
-                                   2583 ;	spillPairReg hl
+                                   2544 ;	spillPairReg hl
+      000F28 78               [ 4] 2545 	ld	a, b
+      000F29 CDr00r00         [17] 2546 	call	_SMS_updateSpritePosition
+      000F2C C1               [10] 2547 	pop	bc
+                                   2548 ;main.c:122: i++;
+      000F2D 0C               [ 4] 2549 	inc	c
+      000F2E 18 EB            [12] 2550 	jr	00101$
+      000F30                       2551 00103$:
+                                   2552 ;main.c:124: numSprites = 0;
+      000F30 21 00 00         [10] 2553 	ld	hl, #0x0000
+      000F33 22rC4r03         [16] 2554 	ld	(_numSprites), hl
+                                   2555 ;main.c:125: }
+      000F36 C9               [10] 2556 	ret
+                                   2557 ;main.c:127: void main(void)
+                                   2558 ;	---------------------------------
+                                   2559 ; Function main
+                                   2560 ; ---------------------------------
+      000F37                       2561 _main::
+      000F37 DD E5            [15] 2562 	push	ix
+      000F39 DD 21 00 00      [14] 2563 	ld	ix,#0
+      000F3D DD 39            [15] 2564 	add	ix,sp
+      000F3F F5               [11] 2565 	push	af
+                                   2566 ;main.c:132: SMS_VRAMmemsetW(0, 0x0000, 16384);
+      000F40 DD 36 FF 00      [19] 2567 	ld	-1 (ix), #0x00
+      000F44 DD 36 FE 00      [19] 2568 	ld	-2 (ix), #0x00
+      000F48 21 00 40         [10] 2569 	ld	hl, #0x4000
+      000F4B E5               [11] 2570 	push	hl
+      000F4C 11 00 00         [10] 2571 	ld	de, #0x0000
+      000F4F 65               [ 4] 2572 	ld	h, l
+      000F50 CDr00r00         [17] 2573 	call	_SMS_VRAMmemsetW
+                                   2574 ;main.c:142: printf("Hello, World! [1/3]");
+      000F53 21r00r10         [10] 2575 	ld	hl, #___str_0
+      000F56 E5               [11] 2576 	push	hl
+      000F57 CDr00r00         [17] 2577 	call	_printf
+      000F5A F1               [10] 2578 	pop	af
+                                   2579 ;main.c:147: SMS_displayOn();
+      000F5B 21 40 01         [10] 2580 	ld	hl, #0x0140
+      000F5E CDr00r00         [17] 2581 	call	_SMS_VDPturnOnFeature
+                                   2582 ;main.c:148: SMS_setBGScrollX(scroll_x);
+      000F61 2E 00            [ 7] 2583 	ld	l, #0x00
                                    2584 ;	spillPairReg hl
-      000F16 CDr00r00         [17] 2585 	call	_SMS_setBGScrollX
-                                   2586 ;main.c:220: SMS_displayOn();
-      000F19 21 40 01         [10] 2587 	ld	hl, #0x0140
-      000F1C CDr00r00         [17] 2588 	call	_SMS_VDPturnOnFeature
-                                   2589 ;main.c:222: }
-      000F1F 18 86            [12] 2590 	jr	00115$
-      000F21                       2591 ___str_0:
-      000F21 48 65 6C 6C 6F 2C 20  2592 	.ascii "Hello, World! [1/3]"
+                                   2585 ;	spillPairReg hl
+      000F63 CDr00r00         [17] 2586 	call	_SMS_setBGScrollX
+                                   2587 ;main.c:149: SMS_setBGScrollY(scroll_y);
+      000F66 2E 00            [ 7] 2588 	ld	l, #0x00
+                                   2589 ;	spillPairReg hl
+                                   2590 ;	spillPairReg hl
+      000F68 CDr00r00         [17] 2591 	call	_SMS_setBGScrollY
+                                   2592 ;main.c:150: SMS_init();
+      000F6B CDr00r00         [17] 2593 	call	_SMS_init
+                                   2594 ;main.c:151: initSpritesVariables();
+      000F6E CDrDDr03         [17] 2595 	call	_initSpritesVariables
+                                   2596 ;main.c:152: loadGrapVRAM();
+      000F71 CDr0Cr0D         [17] 2597 	call	_loadGrapVRAM
+                                   2598 ;main.c:158: PSGPlay(special_psg);
+      000F74 21r00r00         [10] 2599 	ld	hl, #_special_psg
+      000F77 CDr00r00         [17] 2600 	call	_PSGPlay
+                                   2601 ;main.c:159: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+      000F7A 21 20 00         [10] 2602 	ld	hl, #0x0020
+      000F7D CDr00r00         [17] 2603 	call	_SMS_VDPturnOnFeature
+                                   2604 ;main.c:163: SMS_setFrameInterruptHandler(playMusic);
+      000F80 21r13r0F         [10] 2605 	ld	hl, #_playMusic
+      000F83 CDr00r00         [17] 2606 	call	_SMS_setFrameInterruptHandler
+      000F86                       2607 00115$:
+                                   2608 ;main.c:168: if (SMS_queryPauseRequested())
+      000F86 CDr00r00         [17] 2609 	call	_SMS_queryPauseRequested
+      000F89 CB 47            [ 8] 2610 	bit	0,a
+      000F8B 28 1E            [12] 2611 	jr	Z, 00105$
+                                   2612 ;main.c:170: PSGPlay(emeraldhill_psg);
+      000F8D 21r00r00         [10] 2613 	ld	hl, #_emeraldhill_psg
+      000F90 CDr00r00         [17] 2614 	call	_PSGPlay
+                                   2615 ;main.c:171: SMS_resetPauseRequest();
+      000F93 CDr00r00         [17] 2616 	call	_SMS_resetPauseRequest
+                                   2617 ;main.c:172: while (!SMS_queryPauseRequested())
+      000F96                       2618 00101$:
+      000F96 CDr00r00         [17] 2619 	call	_SMS_queryPauseRequested
+      000F99 CB 47            [ 8] 2620 	bit	0,a
+      000F9B 20 05            [12] 2621 	jr	NZ, 00103$
+                                   2622 ;main.c:174: SMS_waitForVBlank();
+      000F9D CDr00r00         [17] 2623 	call	_SMS_waitForVBlank
+      000FA0 18 F4            [12] 2624 	jr	00101$
+      000FA2                       2625 00103$:
+                                   2626 ;main.c:178: SMS_resetPauseRequest();
+      000FA2 CDr00r00         [17] 2627 	call	_SMS_resetPauseRequest
+                                   2628 ;main.c:179: PSGPlay(titulo_psg);
+      000FA5 21r00r00         [10] 2629 	ld	hl, #_titulo_psg
+      000FA8 CDr00r00         [17] 2630 	call	_PSGPlay
+      000FAB                       2631 00105$:
+                                   2632 ;main.c:183: int keys = SMS_getKeysHeld();
+      000FAB CDr00r00         [17] 2633 	call	_SMS_getKeysHeld
+      000FAE EB               [ 4] 2634 	ex	de, hl
+                                   2635 ;main.c:184: if(keys & PORT_A_KEY_2)
+      000FAF CB 6D            [ 8] 2636 	bit	5, l
+      000FB1 28 04            [12] 2637 	jr	Z, 00107$
+                                   2638 ;main.c:185: keys = keys  ^ PORT_A_KEY_2;
+      000FB3 7D               [ 4] 2639 	ld	a, l
+      000FB4 EE 20            [ 7] 2640 	xor	a, #0x20
+      000FB6 6F               [ 4] 2641 	ld	l, a
+                                   2642 ;	spillPairReg hl
+                                   2643 ;	spillPairReg hl
+      000FB7                       2644 00107$:
+                                   2645 ;main.c:186: if(keys & PORT_A_KEY_1)
+      000FB7 CB 65            [ 8] 2646 	bit	4, l
+      000FB9 28 04            [12] 2647 	jr	Z, 00109$
+                                   2648 ;main.c:187: keys = keys  ^ PORT_A_KEY_1;
+      000FBB 7D               [ 4] 2649 	ld	a, l
+      000FBC EE 10            [ 7] 2650 	xor	a, #0x10
+      000FBE 6F               [ 4] 2651 	ld	l, a
+                                   2652 ;	spillPairReg hl
+                                   2653 ;	spillPairReg hl
+      000FBF                       2654 00109$:
+                                   2655 ;main.c:189: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+      000FBF E5               [11] 2656 	push	hl
+      000FC0 CDr00r00         [17] 2657 	call	_SMS_getKeysPressed
+      000FC3 E1               [10] 2658 	pop	hl
+      000FC4 7B               [ 4] 2659 	ld	a, e
+      000FC5 E6 30            [ 7] 2660 	and	a, #0x30
+      000FC7 B5               [ 4] 2661 	or	a, l
+      000FC8 6F               [ 4] 2662 	ld	l, a
+                                   2663 ;	spillPairReg hl
+                                   2664 ;	spillPairReg hl
+                                   2665 ;main.c:192: moveAlex(keys);
+      000FC9 CDr10r0C         [17] 2666 	call	_moveAlex
+                                   2667 ;main.c:194: dibujaPajaros();
+      000FCC CDrEBr0D         [17] 2668 	call	_dibujaPajaros
+                                   2669 ;main.c:199: SMS_waitForVBlank();
+      000FCF CDr00r00         [17] 2670 	call	_SMS_waitForVBlank
+                                   2671 ;main.c:202: SMS_displayOff();
+      000FD2 21 40 01         [10] 2672 	ld	hl, #0x0140
+      000FD5 CDr00r00         [17] 2673 	call	_SMS_VDPturnOffFeature
+                                   2674 ;main.c:205: copySpritestoSAT();
+      000FD8 CDr0Cr04         [17] 2675 	call	_copySpritestoSAT
+                                   2676 ;main.c:212: if (scroll_y % 2 == 0)
+      000FDB DD CB FF 46      [20] 2677 	bit	0, -1 (ix)
+      000FDF 20 03            [12] 2678 	jr	NZ, 00111$
+                                   2679 ;main.c:213: scroll_x += 1;
+      000FE1 DD 34 FE         [23] 2680 	inc	-2 (ix)
+      000FE4                       2681 00111$:
+                                   2682 ;main.c:214: scroll_y++;
+      000FE4 DD 34 FF         [23] 2683 	inc	-1 (ix)
+                                   2684 ;main.c:215: if (scroll_y == 224)
+      000FE7 DD 7E FF         [19] 2685 	ld	a, -1 (ix)
+      000FEA D6 E0            [ 7] 2686 	sub	a, #0xe0
+      000FEC 20 04            [12] 2687 	jr	NZ, 00113$
+                                   2688 ;main.c:216: scroll_y = 0;
+      000FEE DD 36 FF 00      [19] 2689 	ld	-1 (ix), #0x00
+      000FF2                       2690 00113$:
+                                   2691 ;main.c:218: SMS_setBGScrollX(scroll_x);
+      000FF2 DD 6E FE         [19] 2692 	ld	l, -2 (ix)
+                                   2693 ;	spillPairReg hl
+                                   2694 ;	spillPairReg hl
+      000FF5 CDr00r00         [17] 2695 	call	_SMS_setBGScrollX
+                                   2696 ;main.c:220: SMS_displayOn();
+      000FF8 21 40 01         [10] 2697 	ld	hl, #0x0140
+      000FFB CDr00r00         [17] 2698 	call	_SMS_VDPturnOnFeature
+                                   2699 ;main.c:222: }
+      000FFE 18 86            [12] 2700 	jr	00115$
+      001000                       2701 ___str_0:
+      001000 48 65 6C 6C 6F 2C 20  2702 	.ascii "Hello, World! [1/3]"
              57 6F 72 6C 64 21 20
              5B 31 2F 33 5D
-      000F34 00                    2593 	.db 0x00
-                                   2594 	.area _CODE
-      000F35                       2595 __str_1:
-      000F35 53 45 47 41           2596 	.ascii "SEGA"
-      000F39 00                    2597 	.db 0x00
-      000F3A                       2598 __str_2:
-      000F3A 62 61 73 69 63 20 65  2599 	.ascii "basic example"
+      001013 00                    2703 	.db 0x00
+                                   2704 	.area _CODE
+      001014                       2705 __str_1:
+      001014 53 45 47 41           2706 	.ascii "SEGA"
+      001018 00                    2707 	.db 0x00
+      001019                       2708 __str_2:
+      001019 62 61 73 69 63 20 65  2709 	.ascii "basic example"
              78 61 6D 70 6C 65
-      000F47 00                    2600 	.db 0x00
-      000F48                       2601 __str_3:
-      000F48 41 20 73 69 6D 70 6C  2602 	.ascii "A simple example"
+      001026 00                    2710 	.db 0x00
+      001027                       2711 __str_3:
+      001027 41 20 73 69 6D 70 6C  2712 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      000F58 00                    2603 	.db 0x00
-                                   2604 	.area _INITIALIZER
-      000000                       2605 __xinit__nextVRAMsprites:
-      000000 00 01                 2606 	.dw #0x0100
-      000002                       2607 __xinit__maxSalto:
-      000002 FF                    2608 	.db #0xff	; 255
-      000003                       2609 __xinit__alex:
-      000003 1E                    2610 	.db #0x1e	; 30
-      000004 96                    2611 	.db #0x96	; 150
-      000005 00                    2612 	.db #0x00	; 0
-      000006 00                    2613 	.db #0x00	; 0
-      000007 00                    2614 	.db #0x00	; 0
-      000008 00                    2615 	.db #0x00	; 0
-      000009 FF                    2616 	.db #0xff	; 255
-      00000A 00                    2617 	.db #0x00	; 0
-      00000B                       2618 __xinit__spriteAlex:
-      00000B 02                    2619 	.db #0x02	; 2
-      00000C 02                    2620 	.db #0x02	; 2
-      00000D 08                    2621 	.db #0x08	; 8
-      00000E 00                    2622 	.db #0x00	; 0
-      00000F 00 00                 2623 	.dw #0x0000
-      000011 00                    2624 	.db #0x00	; 0
-      000012 00 00                 2625 	.dw #0x0000
-      000014 00                    2626 	.db #0x00	; 0
-      000015                       2627 __xinit__spritePajaro:
-      000015 02                    2628 	.db #0x02	; 2
-      000016 02                    2629 	.db #0x02	; 2
-      000017 08                    2630 	.db #0x08	; 8
-      000018 00                    2631 	.db #0x00	; 0
-      000019 00 00                 2632 	.dw #0x0000
-      00001B 00                    2633 	.db #0x00	; 0
-      00001C 00 00                 2634 	.dw #0x0000
-      00001E 00                    2635 	.db #0x00	; 0
-      00001F                       2636 __xinit__spritePuno:
-      00001F 02                    2637 	.db #0x02	; 2
-      000020 02                    2638 	.db #0x02	; 2
-      000021 08                    2639 	.db #0x08	; 8
-      000022 00                    2640 	.db #0x00	; 0
-      000023 00 00                 2641 	.dw #0x0000
-      000025 00                    2642 	.db #0x00	; 0
-      000026 00 00                 2643 	.dw #0x0000
-      000028 00                    2644 	.db #0x00	; 0
-                                   2645 	.area _CABS (ABS)
-      007FF0                       2646 	.org 0x7FF0
-      007FF0                       2647 ___SMS__SEGA_signature:
-      007FF0 54                    2648 	.db #0x54	; 84	'T'
-      007FF1 4D                    2649 	.db #0x4d	; 77	'M'
-      007FF2 52                    2650 	.db #0x52	; 82	'R'
-      007FF3 20                    2651 	.db #0x20	; 32
-      007FF4 53                    2652 	.db #0x53	; 83	'S'
-      007FF5 45                    2653 	.db #0x45	; 69	'E'
-      007FF6 47                    2654 	.db #0x47	; 71	'G'
-      007FF7 41                    2655 	.db #0x41	; 65	'A'
-      007FF8 FF                    2656 	.db #0xff	; 255
-      007FF9 FF                    2657 	.db #0xff	; 255
-      007FFA FF                    2658 	.db #0xff	; 255
-      007FFB FF                    2659 	.db #0xff	; 255
-      007FFC 99                    2660 	.db #0x99	; 153
-      007FFD 09                    2661 	.db #0x09	; 9
-      007FFE 00                    2662 	.db #0x00	; 0
-      007FFF 4C                    2663 	.db #0x4c	; 76	'L'
-      007FDB                       2664 	.org 0x7FDB
-      007FDB                       2665 ___SMS__SDSC_author:
-      007FDB 53 45 47 41           2666 	.ascii "SEGA"
-      007FDF 00                    2667 	.db 0x00
-      007FCD                       2668 	.org 0x7FCD
-      007FCD                       2669 ___SMS__SDSC_name:
-      007FCD 62 61 73 69 63 20 65  2670 	.ascii "basic example"
+      001037 00                    2713 	.db 0x00
+                                   2714 	.area _INITIALIZER
+      000000                       2715 __xinit__nextVRAMsprites:
+      000000 00 01                 2716 	.dw #0x0100
+      000002                       2717 __xinit__maxSalto:
+      000002 FF                    2718 	.db #0xff	; 255
+      000003                       2719 __xinit__alex:
+      000003 1E                    2720 	.db #0x1e	; 30
+      000004 96                    2721 	.db #0x96	; 150
+      000005 00                    2722 	.db #0x00	; 0
+      000006 00                    2723 	.db #0x00	; 0
+      000007 00                    2724 	.db #0x00	; 0
+      000008 00                    2725 	.db #0x00	; 0
+      000009 FF                    2726 	.db #0xff	; 255
+      00000A 00                    2727 	.db #0x00	; 0
+      00000B 00 00                 2728 	.dw #0x0000
+      00000D                       2729 __xinit__spriteAlex:
+      00000D 02                    2730 	.db #0x02	; 2
+      00000E 02                    2731 	.db #0x02	; 2
+      00000F 08                    2732 	.db #0x08	; 8
+      000010 00                    2733 	.db #0x00	; 0
+      000011 00 00                 2734 	.dw #0x0000
+      000013 00                    2735 	.db #0x00	; 0
+      000014 00 00                 2736 	.dw #0x0000
+      000016 00                    2737 	.db #0x00	; 0
+      000017                       2738 __xinit__spritePajaro:
+      000017 02                    2739 	.db #0x02	; 2
+      000018 02                    2740 	.db #0x02	; 2
+      000019 08                    2741 	.db #0x08	; 8
+      00001A 00                    2742 	.db #0x00	; 0
+      00001B 00 00                 2743 	.dw #0x0000
+      00001D 00                    2744 	.db #0x00	; 0
+      00001E 00 00                 2745 	.dw #0x0000
+      000020 00                    2746 	.db #0x00	; 0
+      000021                       2747 __xinit__spritePuno:
+      000021 02                    2748 	.db #0x02	; 2
+      000022 02                    2749 	.db #0x02	; 2
+      000023 08                    2750 	.db #0x08	; 8
+      000024 00                    2751 	.db #0x00	; 0
+      000025 00 00                 2752 	.dw #0x0000
+      000027 00                    2753 	.db #0x00	; 0
+      000028 00 00                 2754 	.dw #0x0000
+      00002A 00                    2755 	.db #0x00	; 0
+                                   2756 	.area _CABS (ABS)
+      007FF0                       2757 	.org 0x7FF0
+      007FF0                       2758 ___SMS__SEGA_signature:
+      007FF0 54                    2759 	.db #0x54	; 84	'T'
+      007FF1 4D                    2760 	.db #0x4d	; 77	'M'
+      007FF2 52                    2761 	.db #0x52	; 82	'R'
+      007FF3 20                    2762 	.db #0x20	; 32
+      007FF4 53                    2763 	.db #0x53	; 83	'S'
+      007FF5 45                    2764 	.db #0x45	; 69	'E'
+      007FF6 47                    2765 	.db #0x47	; 71	'G'
+      007FF7 41                    2766 	.db #0x41	; 65	'A'
+      007FF8 FF                    2767 	.db #0xff	; 255
+      007FF9 FF                    2768 	.db #0xff	; 255
+      007FFA FF                    2769 	.db #0xff	; 255
+      007FFB FF                    2770 	.db #0xff	; 255
+      007FFC 99                    2771 	.db #0x99	; 153
+      007FFD 09                    2772 	.db #0x09	; 9
+      007FFE 00                    2773 	.db #0x00	; 0
+      007FFF 4C                    2774 	.db #0x4c	; 76	'L'
+      007FDB                       2775 	.org 0x7FDB
+      007FDB                       2776 ___SMS__SDSC_author:
+      007FDB 53 45 47 41           2777 	.ascii "SEGA"
+      007FDF 00                    2778 	.db 0x00
+      007FCD                       2779 	.org 0x7FCD
+      007FCD                       2780 ___SMS__SDSC_name:
+      007FCD 62 61 73 69 63 20 65  2781 	.ascii "basic example"
              78 61 6D 70 6C 65
-      007FDA 00                    2671 	.db 0x00
-      007FBC                       2672 	.org 0x7FBC
-      007FBC                       2673 ___SMS__SDSC_descr:
-      007FBC 41 20 73 69 6D 70 6C  2674 	.ascii "A simple example"
+      007FDA 00                    2782 	.db 0x00
+      007FBC                       2783 	.org 0x7FBC
+      007FBC                       2784 ___SMS__SDSC_descr:
+      007FBC 41 20 73 69 6D 70 6C  2785 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      007FCC 00                    2675 	.db 0x00
-      007FE0                       2676 	.org 0x7FE0
-      007FE0                       2677 ___SMS__SDSC_signature:
-      007FE0 53                    2678 	.db #0x53	; 83	'S'
-      007FE1 44                    2679 	.db #0x44	; 68	'D'
-      007FE2 53                    2680 	.db #0x53	; 83	'S'
-      007FE3 43                    2681 	.db #0x43	; 67	'C'
-      007FE4 01                    2682 	.db #0x01	; 1
-      007FE5 00                    2683 	.db #0x00	; 0
-      007FE6 00                    2684 	.db #0x00	; 0
-      007FE7 00                    2685 	.db #0x00	; 0
-      007FE8 00                    2686 	.db #0x00	; 0
-      007FE9 00                    2687 	.db #0x00	; 0
-      007FEA DB                    2688 	.db #0xdb	; 219
-      007FEB 7F                    2689 	.db #0x7f	; 127
-      007FEC CD                    2690 	.db #0xcd	; 205
-      007FED 7F                    2691 	.db #0x7f	; 127
-      007FEE BC                    2692 	.db #0xbc	; 188
-      007FEF 7F                    2693 	.db #0x7f	; 127
+      007FCC 00                    2786 	.db 0x00
+      007FE0                       2787 	.org 0x7FE0
+      007FE0                       2788 ___SMS__SDSC_signature:
+      007FE0 53                    2789 	.db #0x53	; 83	'S'
+      007FE1 44                    2790 	.db #0x44	; 68	'D'
+      007FE2 53                    2791 	.db #0x53	; 83	'S'
+      007FE3 43                    2792 	.db #0x43	; 67	'C'
+      007FE4 01                    2793 	.db #0x01	; 1
+      007FE5 00                    2794 	.db #0x00	; 0
+      007FE6 00                    2795 	.db #0x00	; 0
+      007FE7 00                    2796 	.db #0x00	; 0
+      007FE8 00                    2797 	.db #0x00	; 0
+      007FE9 00                    2798 	.db #0x00	; 0
+      007FEA DB                    2799 	.db #0xdb	; 219
+      007FEB 7F                    2800 	.db #0x7f	; 127
+      007FEC CD                    2801 	.db #0xcd	; 205
+      007FED 7F                    2802 	.db #0x7f	; 127
+      007FEE BC                    2803 	.db #0xbc	; 188
+      007FEF 7F                    2804 	.db #0x7f	; 127

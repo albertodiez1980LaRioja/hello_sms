@@ -58,7 +58,7 @@ void loadGrapVRAM()
   SMS_initSprites();
   alex.initSprite = 255;
   draw_entidad(&alex, &spriteAlex);
-  SMS_addSprite (0, 0, 9);
+  SMS_addSprite (0, 0, 9); // puno
   inicializaPajaros();
   //SMS_loadTiles(sonictiles_inc, 0, sonictiles_inc_size);
   //SMS_loadTileMap(0, 0, sonictilemap_inc, sonictilemap_inc_size);
