@@ -157,9 +157,9 @@ void main(void)
   // PSGPlay(nuestro_psg);
   PSGPlay(special_psg);
   SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-  //SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
-  ////SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
-  //SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+  SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+  //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
+  SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
   SMS_setFrameInterruptHandler(playMusic);
   
   for (;;)
@@ -199,7 +199,7 @@ void main(void)
     SMS_waitForVBlank();
 
     //SMS_initSprites();
-    SMS_displayOff();
+    //SMS_displayOff();
     //UNSAFE_SMS_copySpritestoSAT();
     //SMS_displayOn();
     copySpritestoSAT();

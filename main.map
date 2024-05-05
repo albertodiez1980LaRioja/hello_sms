@@ -12,7 +12,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  _PSGPlay                        
      00000000  _PSGSFXFrame                    
      00000000  _PSGSFXPlay                     
-     00000000  _SMS_VDPturnOffFeature          
      00000000  _SMS_VDPturnOnFeature           
      00000000  _SMS_VRAMmemcpy                 
      00000000  _SMS_VRAMmemsetW                
@@ -57,6 +56,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  s__CABS                         
      00000000  s__CABS0                        
      00000000  s__CABS1                        
+     00000000  s__CABS2                        
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
@@ -66,7 +66,6 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000000  s__CABS2                        
      00000000  s__CABS3                        
      00000000  s__CABS4                        
      00000000  s__DABS                         
@@ -97,32 +96,31 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000010  l__HEADER8                      
      00000011  l__CABS3                        
      00000025  l__GSINIT                       
-     0000002B  l__INITIALIZED                  
-     0000002B  l__INITIALIZER                  
+     0000002C  l__INITIALIZED                  
+     0000002C  l__INITIALIZER                  
      00000200  s__CODE                         
      000003C6  l__DATA                         
-     00001C48  l__CODE                         
-     00001E48  s__HOME                         
-     00001E4A  s__INITIALIZER                  
-     00001E75  s__GSINIT                       
-     00001E9A  s__GSFINAL                      
+     00001C5B  l__CODE                         
+     00001E5B  s__HOME                         
+     00001E5D  s__INITIALIZER                  
+     00001E89  s__GSINIT                       
+     00001EAE  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
      00008000  s__DATA                         
      000083C6  s__INITIALIZED                  
-     000083F1  s__BSEG                         
-     000083F1  s__BSS                          
-     000083F1  s__HEAP                         
+     000083F2  s__BSEG                         
+     000083F2  s__BSS                          
+     000083F2  s__HEAP                         
      0000FFFC  _SRAM_bank_to_be_mapped_on_slot2   main
      0000FFFD  _ROM_bank_to_be_mapped_on_slot0    main
      0000FFFE  _ROM_bank_to_be_mapped_on_slot1    main
      0000FFFF  _ROM_bank_to_be_mapped_on_slot2    main
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00001C48 =        7240. bytes (REL,CON)
+_CODE                               00000200    00001C5B =        7259. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -141,30 +139,30 @@ _CODE                               00000200    00001C48 =        7240. bytes (R
      00000AA4  _moveAlexSuelo                     main
      00000C6C  _moveAlexAire                      main
      00000DA6  _drawAlex                          main
-     00000E1A  _moveAlex                          main
-     00000E54  _inicializaPajaros                 main
-     00000F16  _loadGrapVRAM                      main
-     00000FF5  _dibujaPajaros                     main
-     0000111D  _playMusic                         main
-     00001123  _disableSprites                    main
-     00001141  _main                              main
-     00001242  __mulint                           
-     00001244  __mul16                            
-     0000125F  _vprintf                           vprintf
-     0000126B  _printf                            vprintf
-     00001282  __divschar                         
-     00001284  __div8                             
-     00001288  __div_signexte                     
-     0000128C  __div16                            
-     0000128C  __divsint                          
-     000012B2  __get_remainder                    
-     0000139B  __print_format                     printf_large
-     00001E07  __divuchar                         
-     00001E09  __divu8                            
-     00001E0C  __divu16                           
-     00001E0C  __divuint                          
-     00001E3B  ___sdcc_call_hl                    
-     00001E3C  _strlen                            
+     00000E27  _moveAlex                          main
+     00000E61  _inicializaPajaros                 main
+     00000F23  _loadGrapVRAM                      main
+     00001002  _dibujaPajaros                     main
+     0000112A  _playMusic                         main
+     00001130  _disableSprites                    main
+     0000114E  _main                              main
+     00001255  __mulint                           
+     00001257  __mul16                            
+     00001272  _vprintf                           vprintf
+     0000127E  _printf                            vprintf
+     00001295  __divschar                         
+     00001297  __div8                             
+     0000129B  __div_signexte                     
+     0000129F  __div16                            
+     0000129F  __divsint                          
+     000012C5  __get_remainder                    
+     000013AE  __print_format                     printf_large
+     00001E1A  __divuchar                         
+     00001E1C  __divu8                            
+     00001E1F  __divu16                           
+     00001E1F  __divuint                          
+     00001E4E  ___sdcc_call_hl                    
+     00001E4F  _strlen                            
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -251,18 +249,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00001E48    00000002 =           2. bytes (REL,CON)
+_HOME                               00001E5B    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00001E48  ___sdcc_external_startup           _startup
+     00001E5B  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00001E4A    0000002B =          43. bytes (REL,CON)
+_INITIALIZER                        00001E5D    0000002C =          44. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -271,18 +269,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00001E75    00000025 =          37. bytes (REL,CON)
+_GSINIT                             00001E89    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00001E75  gsinit                             crt0
+     00001E89  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00001E9A    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00001EAE    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -306,16 +304,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        000083C6    0000002B =          43. bytes (REL,CON)
+_INITIALIZED                        000083C6    0000002C =          44. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      000083C6  _nextVRAMsprites                   main
      000083C8  _maxSalto                          main
      000083C9  _alex                              main
-     000083D3  _spriteAlex                        main
-     000083DD  _spritePajaro                      main
-     000083E7  _spritePuno                        main
+     000083D3  _lastFrame                         main
+     000083D4  _spriteAlex                        main
+     000083DE  _spritePajaro                      main
+     000083E8  _spritePuno                        main
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
 Hexadecimal  [32-Bits]
 
@@ -410,8 +410,6 @@ _DATA = 0x8000
 ?ASlink-Warning-Undefined Global '_SMS_getKeysHeld' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_SMS_waitForVBlank' referenced by module 'main'
-
-?ASlink-Warning-Undefined Global '_SMS_VDPturnOffFeature' referenced by module 'main'
 
 ?ASlink-Warning-Undefined Global '_emeraldhill_psg' referenced by module 'main'
 

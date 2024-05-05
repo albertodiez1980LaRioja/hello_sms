@@ -39,22 +39,22 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000011  l__CABS3                        
      0000001F  l__HEADER2                      
      0000002B  l__HEADER3                      
-     00000030  l__INITIALIZED                  
-     00000030  l__INITIALIZER                  
+     00000031  l__INITIALIZED                  
+     00000031  l__INITIALIZER                  
      00000104  l__HEADER4                      
      00000200  s__CODE                         
      000004C3  l__DATA                         
      00008000  _SMS_SRAM                          SMSlib_textrenderer
-     000099B3  l__CODE                         
-     00009BB3  s__HOME                         
-     00009BB3  s__INITIALIZER                  
-     00009BE3  s__GSINIT                       
-     00009BF2  s__GSFINAL                      
+     000099C6  l__CODE                         
+     00009BC6  s__HOME                         
+     00009BC6  s__INITIALIZER                  
+     00009BF7  s__GSINIT                       
+     00009C06  s__GSFINAL                      
      0000C000  s__DATA                         
      0000C4C3  s__INITIALIZED                  
-     0000C4F3  s__BSEG                         
-     0000C4F3  s__BSS                          
-     0000C4F3  s__HEAP                         
+     0000C4F4  s__BSEG                         
+     0000C4F4  s__BSS                          
+     0000C4F4  s__HEAP                         
      0000FFFC  _SRAM_bank_to_be_mapped_on_slot2   SMSlib_textrenderer
      0000FFFD  _ROM_bank_to_be_mapped_on_slot0    SMSlib_textrenderer
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
@@ -74,7 +74,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000099B3 =       39347. bytes (REL,CON)
+_CODE                               00000200    000099C6 =       39366. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -91,121 +91,121 @@ _CODE                               00000200    000099B3 =       39347. bytes (R
      00000A9A  _moveAlexSuelo                     main
      00000C62  _moveAlexAire                      main
      00000D9C  _drawAlex                          main
-     00000E10  _moveAlex                          main
-     00000E4A  _inicializaPajaros                 main
-     00000F0C  _loadGrapVRAM                      main
-     00000FEB  _dibujaPajaros                     main
-     00001113  _playMusic                         main
-     00001119  _disableSprites                    main
-     00001137  _main                              main
-     00001238  _sonicpalette_inc                  bank1
-     00001246  _sonictilemap_inc                  bank1
-     00001846  _puno_inc                          bank1
-     000018C6  _spriteAlex_inc                    bank1
-     000028C6  _sonictiles_inc                    bank1
-     00003D86  _palleteAlex_inc                   bank1
-     00003D8E  _tiles_de_prueba2_inc              bank1
-     00003E2E  _tilemap_de_prueba2_inc            bank1
-     0000456E  _paleta_de_prueba2_inc             bank1
-     00004573  _spritePajaro_inc                  bank1
-     000046F3  _emeraldhill_psg                   bank2
-     000049D9  _special_psg                       bank2
-     000072C2  _salto_psg                         bank2
-     00007301  _nuestro_psg                       bank2
-     0000774C  _greenhill_psg                     bank2
-     00007B87  _titulo_psg                        bank2
-     000084F2  _PSGStop                           PSGlib
-     00008525  _PSGResume                         PSGlib
-     00008646  _PSGPlay                           PSGlib
-     00008685  _PSGPlayLoops                      PSGlib
-     0000869C  _PSGCancelLoop                     PSGlib
-     000086A7  _PSGPlayNoRepeat                   PSGlib
-     000086B5  _PSGGetStatus                      PSGlib
-     000086B9  _PSGSilenceChannels                PSGlib
-     000086CA  _PSGRestoreVolumes                 PSGlib
-     000087C7  _PSGSetMusicVolumeAttenuation      PSGlib
-     000088AD  _PSGSFXStop                        PSGlib
-     00008A12  _PSGSFXPlay                        PSGlib
-     00008A76  _PSGSFXCancelLoop                  PSGlib
-     00008A7C  _PSGSFXGetStatus                   PSGlib
+     00000E1D  _moveAlex                          main
+     00000E57  _inicializaPajaros                 main
+     00000F19  _loadGrapVRAM                      main
+     00000FF8  _dibujaPajaros                     main
+     00001120  _playMusic                         main
+     00001126  _disableSprites                    main
+     00001144  _main                              main
+     0000124B  _sonicpalette_inc                  bank1
+     00001259  _sonictilemap_inc                  bank1
+     00001859  _puno_inc                          bank1
+     000018D9  _spriteAlex_inc                    bank1
+     000028D9  _sonictiles_inc                    bank1
+     00003D99  _palleteAlex_inc                   bank1
+     00003DA1  _tiles_de_prueba2_inc              bank1
+     00003E41  _tilemap_de_prueba2_inc            bank1
+     00004581  _paleta_de_prueba2_inc             bank1
+     00004586  _spritePajaro_inc                  bank1
+     00004706  _emeraldhill_psg                   bank2
+     000049EC  _special_psg                       bank2
+     000072D5  _salto_psg                         bank2
+     00007314  _nuestro_psg                       bank2
+     0000775F  _greenhill_psg                     bank2
+     00007B9A  _titulo_psg                        bank2
+     00008505  _PSGStop                           PSGlib
+     00008538  _PSGResume                         PSGlib
+     00008659  _PSGPlay                           PSGlib
+     00008698  _PSGPlayLoops                      PSGlib
+     000086AF  _PSGCancelLoop                     PSGlib
+     000086BA  _PSGPlayNoRepeat                   PSGlib
+     000086C8  _PSGGetStatus                      PSGlib
+     000086CC  _PSGSilenceChannels                PSGlib
+     000086DD  _PSGRestoreVolumes                 PSGlib
+     000087DA  _PSGSetMusicVolumeAttenuation      PSGlib
+     000088C0  _PSGSFXStop                        PSGlib
+     00008A25  _PSGSFXPlay                        PSGlib
+     00008A89  _PSGSFXCancelLoop                  PSGlib
+     00008A8F  _PSGSFXGetStatus                   PSGlib
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000099B3 =       39347. bytes (REL,CON)
+_CODE                               00000200    000099C6 =       39366. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00008A80  _PSGSFXPlayLoop                    PSGlib
-     00008A9B  _PSGFrame                          PSGlib
-     00008C03  _PSGSFXFrame                       PSGlib
-     00008C9B  _SMS_reserveSprite                 SMSlib_spriteAdv
-     00008CBA  _SMS_updateSpritePosition          SMSlib_spriteAdv
-     00008CEE  _SMS_updateSpriteImage             SMSlib_spriteAdv
-     00008CFB  _SMS_hideSprite                    SMSlib_spriteAdv
-     00008D05  _SMS_init                          SMSlib
-     00008D31  _VDPReg_init                       SMSlib
-     00008D3C  _SMS_VDPturnOnFeature              SMSlib
-     00008D51  _SMS_VDPturnOffFeature             SMSlib
-     00008D69  _SMS_setBGScrollX                  SMSlib
-     00008D73  _SMS_setBGScrollY                  SMSlib
-     00008D7D  _SMS_setBackdropColor              SMSlib
-     00008D87  _SMS_useFirstHalfTilesforSprites   SMSlib
-     00008D9D  _SMS_setSpriteMode                 SMSlib
-     00008DEA  _SMS_setBGPaletteColor             SMSlib
-     00008DF7  _SMS_setSpritePaletteColor         SMSlib
-     00008E04  _SMS_loadBGPalette                 SMSlib
-     00008E18  _SMS_loadSpritePalette             SMSlib
-     00008E2C  _SMS_setColor                      SMSlib
-     00008E30  _SMS_waitForVBlank                 SMSlib
-     00008E3D  _SMS_getKeysStatus                 SMSlib
-     00008E42  _SMS_getKeysPressed                SMSlib
-     00008E57  _SMS_getKeysHeld                   SMSlib
-     00008E6A  _SMS_getKeysReleased               SMSlib
-     00008E83  _SMS_queryPauseRequested           SMSlib
-     00008E87  _SMS_resetPauseRequest             SMSlib
-     00008E8D  _SMS_setFrameInterruptHandler      SMSlib
-     00008E91  _SMS_setLineInterruptHandler       SMSlib
-     00008E95  _SMS_setLineCounter                SMSlib
-     00008E9F  _SMS_getVCount                     SMSlib
-     00008EA2  _SMS_getHCount                     SMSlib
-     00008EA5  _SMS_isr                           SMSlib
-     00008EED  _SMS_nmi_isr                       SMSlib
-     00008EF6  _SMS_VRAMmemset_f                  SMSlib_VRAMmemset
-     00008F12  _SMS_VRAMmemsetW                   SMSlib_VRAMmemset
-     00008F25  _SMS_initSprites                   SMSlib_sprite
-     00008F2B  _SMS_addSprite_f                   SMSlib_sprite
-     00008F56  _SMS_copySpritestoSAT              SMSlib_sprite
-     00008F8A  __mulint                           
-     00008F8C  __mul16                            
-     00008FA1  ___sdcc_call_hl                    
-     00008FA2  _SMS_VRAMmemcpy                    SMSlib_VRAMmemcpy
-     00008FBF  _vprintf                           vprintf
-     00008FCB  _printf                            vprintf
-     00008FE2  __divschar                         
-     00008FE4  __div8                             
-     00008FE8  __div_signexte                     
-     00008FEC  __div16                            
-     00008FEC  __divsint                          
+     00008A93  _PSGSFXPlayLoop                    PSGlib
+     00008AAE  _PSGFrame                          PSGlib
+     00008C16  _PSGSFXFrame                       PSGlib
+     00008CAE  _SMS_reserveSprite                 SMSlib_spriteAdv
+     00008CCD  _SMS_updateSpritePosition          SMSlib_spriteAdv
+     00008D01  _SMS_updateSpriteImage             SMSlib_spriteAdv
+     00008D0E  _SMS_hideSprite                    SMSlib_spriteAdv
+     00008D18  _SMS_init                          SMSlib
+     00008D44  _VDPReg_init                       SMSlib
+     00008D4F  _SMS_VDPturnOnFeature              SMSlib
+     00008D64  _SMS_VDPturnOffFeature             SMSlib
+     00008D7C  _SMS_setBGScrollX                  SMSlib
+     00008D86  _SMS_setBGScrollY                  SMSlib
+     00008D90  _SMS_setBackdropColor              SMSlib
+     00008D9A  _SMS_useFirstHalfTilesforSprites   SMSlib
+     00008DB0  _SMS_setSpriteMode                 SMSlib
+     00008DFD  _SMS_setBGPaletteColor             SMSlib
+     00008E0A  _SMS_setSpritePaletteColor         SMSlib
+     00008E17  _SMS_loadBGPalette                 SMSlib
+     00008E2B  _SMS_loadSpritePalette             SMSlib
+     00008E3F  _SMS_setColor                      SMSlib
+     00008E43  _SMS_waitForVBlank                 SMSlib
+     00008E50  _SMS_getKeysStatus                 SMSlib
+     00008E55  _SMS_getKeysPressed                SMSlib
+     00008E6A  _SMS_getKeysHeld                   SMSlib
+     00008E7D  _SMS_getKeysReleased               SMSlib
+     00008E96  _SMS_queryPauseRequested           SMSlib
+     00008E9A  _SMS_resetPauseRequest             SMSlib
+     00008EA0  _SMS_setFrameInterruptHandler      SMSlib
+     00008EA4  _SMS_setLineInterruptHandler       SMSlib
+     00008EA8  _SMS_setLineCounter                SMSlib
+     00008EB2  _SMS_getVCount                     SMSlib
+     00008EB5  _SMS_getHCount                     SMSlib
+     00008EB8  _SMS_isr                           SMSlib
+     00008F00  _SMS_nmi_isr                       SMSlib
+     00008F09  _SMS_VRAMmemset_f                  SMSlib_VRAMmemset
+     00008F25  _SMS_VRAMmemsetW                   SMSlib_VRAMmemset
+     00008F38  _SMS_initSprites                   SMSlib_sprite
+     00008F3E  _SMS_addSprite_f                   SMSlib_sprite
+     00008F69  _SMS_copySpritestoSAT              SMSlib_sprite
+     00008F9D  __mulint                           
+     00008F9F  __mul16                            
+     00008FB4  ___sdcc_call_hl                    
+     00008FB5  _SMS_VRAMmemcpy                    SMSlib_VRAMmemcpy
+     00008FD2  _vprintf                           vprintf
+     00008FDE  _printf                            vprintf
+     00008FF5  __divschar                         
+     00008FF7  __div8                             
+     00008FFB  __div_signexte                     
+     00008FFF  __div16                            
+     00008FFF  __divsint                          
 ASxxxx Linker V03.00/V05.40 + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000099B3 =       39347. bytes (REL,CON)
+_CODE                               00000200    000099C6 =       39366. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00009012  __get_remainder                    
-     000090FB  __print_format                     printf_large
-     00009B67  _SMS_configureTextRenderer         SMSlib_textrenderer
-     00009B6B  _putchar                           SMSlib_textrenderer
-     00009B73  __divuchar                         
-     00009B75  __divu8                            
-     00009B78  __divu16                           
-     00009B78  __divuint                          
-     00009BA7  _strlen                            
+     00009025  __get_remainder                    
+     0000910E  __print_format                     printf_large
+     00009B7A  _SMS_configureTextRenderer         SMSlib_textrenderer
+     00009B7E  _putchar                           SMSlib_textrenderer
+     00009B86  __divuchar                         
+     00009B88  __divu8                            
+     00009B8B  __divu16                           
+     00009B8B  __divuint                          
+     00009BBA  _strlen                            
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 6.
 Hexadecimal  [32-Bits]
@@ -267,7 +267,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00009BB3    00000030 =          48. bytes (REL,CON)
+_INITIALIZER                        00009BC6    00000031 =          49. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -276,18 +276,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00009BE3    0000000F =          15. bytes (REL,CON)
+_GSINIT                             00009BF7    0000000F =          15. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00009BE3  gsinit                             crt0
+     00009BF7  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00009BF2    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00009C06    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -371,20 +371,21 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        0000C4C3    00000030 =          48. bytes (REL,CON)
+_INITIALIZED                        0000C4C3    00000031 =          49. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      0000C4C3  _nextVRAMsprites                   main
      0000C4C5  _maxSalto                          main
      0000C4C6  _alex                              main
-     0000C4D0  _spriteAlex                        main
-     0000C4DA  _spritePajaro                      main
-     0000C4E4  _spritePuno                        main
-     0000C4EE  _VDPReg                            SMSlib
-     0000C4F0  _spritesHeight                     SMSlib
-     0000C4F1  _spritesWidth                      SMSlib
-     0000C4F2  _spritesTileOffset                 SMSlib
+     0000C4D0  _lastFrame                         main
+     0000C4D1  _spriteAlex                        main
+     0000C4DB  _spritePajaro                      main
+     0000C4E5  _spritePuno                        main
+     0000C4EF  _VDPReg                            SMSlib
+     0000C4F1  _spritesHeight                     SMSlib
+     0000C4F2  _spritesWidth                      SMSlib
+     0000C4F3  _spritesTileOffset                 SMSlib
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
 Hexadecimal  [32-Bits]

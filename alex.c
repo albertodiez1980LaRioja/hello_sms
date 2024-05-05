@@ -24,7 +24,7 @@ unsigned char canUp(){
 }
 
 unsigned char canDown() {
-  if (alex.y > 155)
+  if (alex.y > 153)
     return 0;
   return 1;
 }
@@ -181,6 +181,8 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
   
 }
 
+unsigned char lastFrame = 255;
+
 void drawAlex() {
   SpriteTableXN2[0] = alex.x;
   SpriteTableXN2[2] = alex.x + 8;
@@ -190,9 +192,10 @@ void drawAlex() {
   SpriteTableY2[1] = alex.y;
   SpriteTableY2[2] = alex.y + 16;
   SpriteTableY2[3] = alex.y + 16;
-  int frame = 8*alex.frame*32;
-  SMS_loadTiles(alex.sprite->data + frame,alex.sprite->beginVRAM,255);
-  //alex.initSprite
+  if (alex.frame != lastFrame) {
+    SMS_loadTiles(alex.sprite->data + alex.frame *256, alex.sprite->beginVRAM, 255);
+    lastFrame = alex.frame;
+  }
 }
 
 

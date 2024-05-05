@@ -48,7 +48,6 @@
 	.globl _SMS_setSpriteMode
 	.globl _SMS_setBGScrollY
 	.globl _SMS_setBGScrollX
-	.globl _SMS_VDPturnOffFeature
 	.globl _SMS_VDPturnOnFeature
 	.globl _SMS_init
 	.globl _copySpritestoSAT
@@ -58,6 +57,7 @@
 	.globl _spritePuno
 	.globl _spritePajaro
 	.globl _spriteAlex
+	.globl _lastFrame
 	.globl _alex
 	.globl _maxSalto
 	.globl _nextVRAMsprites
@@ -114,6 +114,8 @@ _maxSalto::
 	.ds 1
 _alex::
 	.ds 10
+_lastFrame::
+	.ds 1
 _spriteAlex::
 	.ds 10
 _spritePajaro::
@@ -1320,10 +1322,10 @@ _canUp::
 ; Function canDown
 ; ---------------------------------
 _canDown::
-;./alex.c:27: if (alex.y > 155)
+;./alex.c:27: if (alex.y > 153)
 	ld	hl, #_alex+1
 	ld	c, (hl)
-	ld	a, #0x9b
+	ld	a, #0x99
 	sub	a, c
 	jr	NC, 00102$
 ;./alex.c:28: return 0;
@@ -1890,66 +1892,68 @@ _moveAlexAire::
 	pop	af
 	inc	sp
 	jp	(hl)
-;./alex.c:184: void drawAlex() {
+;./alex.c:186: void drawAlex() {
 ;	---------------------------------
 ; Function drawAlex
 ; ---------------------------------
 _drawAlex::
-;./alex.c:185: SpriteTableXN2[0] = alex.x;
+;./alex.c:187: SpriteTableXN2[0] = alex.x;
 	ld	de, (_SpriteTableXN2)
 	ld	bc, #_alex+0
 	ld	a, (bc)
 	ld	(de), a
-;./alex.c:186: SpriteTableXN2[2] = alex.x + 8;
+;./alex.c:188: SpriteTableXN2[2] = alex.x + 8;
 	ld	hl, (_SpriteTableXN2)
 	inc	hl
 	inc	hl
 	ld	a, (bc)
 	add	a, #0x08
 	ld	(hl), a
-;./alex.c:187: SpriteTableXN2[4] = alex.x;
+;./alex.c:189: SpriteTableXN2[4] = alex.x;
 	ld	hl, (_SpriteTableXN2)
 	ld	de, #0x0004
 	add	hl, de
 	ld	a, (bc)
 	ld	(hl), a
-;./alex.c:188: SpriteTableXN2[6] = alex.x + 8;
+;./alex.c:190: SpriteTableXN2[6] = alex.x + 8;
 	ld	hl, (_SpriteTableXN2)
 	ld	de, #0x0006
 	add	hl, de
 	ld	a, (bc)
 	add	a, #0x08
 	ld	(hl), a
-;./alex.c:189: SpriteTableY2[0] = alex.y;
+;./alex.c:191: SpriteTableY2[0] = alex.y;
 	ld	de, (_SpriteTableY2)
 	ld	bc, #_alex + 1
 	ld	a, (bc)
 	ld	(de), a
-;./alex.c:190: SpriteTableY2[1] = alex.y;
+;./alex.c:192: SpriteTableY2[1] = alex.y;
 	ld	hl, (_SpriteTableY2)
 	inc	hl
 	ld	a, (bc)
 	ld	(hl), a
-;./alex.c:191: SpriteTableY2[2] = alex.y + 16;
+;./alex.c:193: SpriteTableY2[2] = alex.y + 16;
 	ld	hl, (_SpriteTableY2)
-	inc	hl
-	inc	hl
-	ld	a, (bc)
-	add	a, #0x10
-	ld	(hl), a
-;./alex.c:192: SpriteTableY2[3] = alex.y + 16;
-	ld	hl, (_SpriteTableY2)
-	inc	hl
 	inc	hl
 	inc	hl
 	ld	a, (bc)
 	add	a, #0x10
 	ld	(hl), a
-;./alex.c:193: int frame = 8*alex.frame*32;
-	ld	a, (#_alex + 2)
-	ld	d, a
-	ld	e, #0x00
-;./alex.c:194: SMS_loadTiles(alex.sprite->data + frame,alex.sprite->beginVRAM,255);
+;./alex.c:194: SpriteTableY2[3] = alex.y + 16;
+	ld	hl, (_SpriteTableY2)
+	inc	hl
+	inc	hl
+	inc	hl
+	ld	a, (bc)
+	add	a, #0x10
+	ld	(hl), a
+;./alex.c:195: if (alex.frame != lastFrame) {
+	ld	hl, #(_alex + 2)
+	ld	e, (hl)
+	ld	a, (_lastFrame+0)
+	sub	a, e
+	ret	Z
+;./alex.c:196: SMS_loadTiles(alex.sprite->data + alex.frame *256, alex.sprite->beginVRAM, 255);
 	ld	bc, (#_alex + 8)
 	push	bc
 	pop	iy
@@ -1957,6 +1961,8 @@ _drawAlex::
 ;	spillPairReg hl
 	ld	h, 8 (iy)
 ;	spillPairReg hl
+	ld	d, e
+	ld	e, #0x00
 	add	hl, de
 	ex	de, hl
 	ld	hl, #4
@@ -1977,9 +1983,13 @@ _drawAlex::
 	ld	bc, #0x00ff
 	push	bc
 	call	_SMS_VRAMmemcpy
-;./alex.c:196: }
+;./alex.c:197: lastFrame = alex.frame;
+	ld	hl, #(_alex + 2)
+	ld	a, (hl)
+	ld	(_lastFrame+0), a
+;./alex.c:199: }
 	ret
-;./alex.c:199: void moveAlex(int keys) {
+;./alex.c:202: void moveAlex(int keys) {
 ;	---------------------------------
 ; Function moveAlex
 ; ---------------------------------
@@ -1988,7 +1998,7 @@ _moveAlex::
 	ld	ix,#0
 	add	ix,sp
 	dec	sp
-;./alex.c:200: unsigned char puedeBajar = canDown();
+;./alex.c:203: unsigned char puedeBajar = canDown();
 	push	hl
 	call	_canDown
 	ld	c, a
@@ -2002,11 +2012,11 @@ _moveAlex::
 	pop	de
 	pop	bc
 	pop	hl
-;./alex.c:204: if (puedeBajar)
+;./alex.c:207: if (puedeBajar)
 	inc	c
 	dec	c
 	jr	Z, 00102$
-;./alex.c:205: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
+;./alex.c:208: moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
 	ld	d,a
 	push	de
 	ld	a, -1 (ix)
@@ -2015,12 +2025,12 @@ _moveAlex::
 	call	_moveAlexAire
 	jr	00103$
 00102$:
-;./alex.c:207: moveAlexSuelo(keys);
+;./alex.c:210: moveAlexSuelo(keys);
 	call	_moveAlexSuelo
 00103$:
-;./alex.c:208: drawAlex();
+;./alex.c:211: drawAlex();
 	call	_drawAlex
-;./alex.c:209: }
+;./alex.c:212: }
 	inc	sp
 	pop	ix
 	ret
@@ -2601,6 +2611,12 @@ _main::
 ;main.c:159: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
 	ld	hl, #0x0020
 	call	_SMS_VDPturnOnFeature
+;main.c:160: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+	ld	hl, #0x0002
+	call	_SMS_VDPturnOnFeature
+;main.c:162: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+	ld	hl, #0x0108
+	call	_SMS_VDPturnOnFeature
 ;main.c:163: SMS_setFrameInterruptHandler(playMusic);
 	ld	hl, #_playMusic
 	call	_SMS_setFrameInterruptHandler
@@ -2668,9 +2684,6 @@ _main::
 	call	_dibujaPajaros
 ;main.c:199: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
-;main.c:202: SMS_displayOff();
-	ld	hl, #0x0140
-	call	_SMS_VDPturnOffFeature
 ;main.c:205: copySpritestoSAT();
 	call	_copySpritestoSAT
 ;main.c:212: if (scroll_y % 2 == 0)
@@ -2726,6 +2739,8 @@ __xinit__alex:
 	.db #0xff	; 255
 	.db #0x00	; 0
 	.dw #0x0000
+__xinit__lastFrame:
+	.db #0xff	; 255
 __xinit__spriteAlex:
 	.db #0x02	; 2
 	.db #0x02	; 2
