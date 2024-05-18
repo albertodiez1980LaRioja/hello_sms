@@ -157,12 +157,12 @@ _generateSpriteFlip::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	ld	iy, #-21
+	ld	iy, #-20
 	add	iy, sp
 	ld	sp, iy
 ;./lib/./sprite.c:25: unsigned char tamano = alto*ancho*2;
-	ld	-8 (ix), a
-	ld	-9 (ix), l
+	ld	-7 (ix), a
+	ld	-8 (ix), l
 	ld	e, a
 	ld	h, l
 ;	spillPairReg hl
@@ -179,11 +179,11 @@ _generateSpriteFlip::
 	ld	c, l
 	sla	c
 ;./lib/./sprite.c:26: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 1,0};
-	ld	a, -9 (ix)
-	ld	-19 (ix), a
 	ld	a, -8 (ix)
-	ld	-18 (ix), a
-	ld	-17 (ix), c
+	ld	-20 (ix), a
+	ld	a, -7 (ix)
+	ld	-19 (ix), a
+	ld	-18 (ix), c
 	ld	-2 (ix), c
 	ld	-1 (ix), #0x00
 	ld	l, c
@@ -203,16 +203,16 @@ _generateSpriteFlip::
 ;	spillPairReg hl
 	call	__divsint
 	pop	bc
-	ld	-16 (ix), e
+	ld	-17 (ix), e
 	ld	a, (_nextVRAMsprites+0)
-	ld	-15 (ix), a
+	ld	-16 (ix), a
 	ld	a, (_nextVRAMsprites+1)
-	ld	-14 (ix), a
-	ld	-13 (ix), #0x01
+	ld	-15 (ix), a
+	ld	-14 (ix), #0x01
 	xor	a, a
+	ld	-13 (ix), a
 	ld	-12 (ix), a
-	ld	-11 (ix), a
-	ld	-10 (ix), #0x00
+	ld	-11 (ix), #0x00
 ;./lib/./sprite.c:27: SMS_loadTiles(data,nextVRAMsprites,tam);
 	ld	e, 8 (ix)
 	ld	d, 9 (ix)
@@ -235,7 +235,7 @@ _generateSpriteFlip::
 	call	_SMS_VRAMmemcpy
 	pop	bc
 ;./lib/./sprite.c:28: nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
-	ld	e, -16 (ix)
+	ld	e, -17 (ix)
 	ld	h, c
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -257,9 +257,9 @@ _generateSpriteFlip::
 	ld	a, (hl)
 	adc	a, d
 	ld	(hl), a
-;./lib/./sprite.c:30: unsigned char x, y, numFrames = tamano/(alto*ancho);
-	ld	e, -8 (ix)
-	ld	h, -9 (ix)
+;./lib/./sprite.c:30: unsigned char y,x, numFrames = tamano/(alto*ancho);
+	ld	e, -7 (ix)
+	ld	h, -8 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	l, #0x00
@@ -279,89 +279,92 @@ _generateSpriteFlip::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	__divsint
-	ld	-7 (ix), e
-;./lib/./sprite.c:31: int offset = 0;
-	xor	a, a
-	ld	-4 (ix), a
-	ld	-3 (ix), a
+	ld	-6 (ix), e
+;./lib/./sprite.c:31: int offset = 0, yOffset = 0;
+	ld	bc, #0x0000
+	ld	d, b
+	ld	e, c
 ;./lib/./sprite.c:32: while(numFrames) {
 00110$:
-	ld	a, -7 (ix)
+	ld	a, -6 (ix)
 	or	a, a
 	jp	Z, 00112$
 ;./lib/./sprite.c:34: while (y) {
-	ld	a, -9 (ix)
-	ld	-6 (ix), a
+	ld	a, -8 (ix)
+	ld	-5 (ix), a
 00107$:
-	ld	a, -6 (ix)
+	ld	a, -5 (ix)
 	or	a, a
 	jp	Z, 00109$
 ;./lib/./sprite.c:36: offset = offset + x*64 - 64; // voy al principio del último tile
-	ld	a, -8 (ix)
-	ld	-2 (ix), a
-	ld	-1 (ix), #0x00
-	ld	a, -2 (ix)
-	ld	-21 (ix), a
-	ld	-20 (ix), #0x00
-	ld	b, #0x06
-00181$:
-	sla	-21 (ix)
-	rl	-20 (ix)
-	djnz	00181$
-	ld	a, -21 (ix)
-	add	a, -4 (ix)
-	ld	-2 (ix), a
-	ld	a, -20 (ix)
-	adc	a, -3 (ix)
-	ld	-1 (ix), a
-	ld	a, -2 (ix)
+	ld	l, -7 (ix)
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	h, #0x00
+;	spillPairReg hl
+;	spillPairReg hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, bc
+	ld	a, l
 	add	a, #0xc0
-	ld	-5 (ix), a
-	ld	a, -1 (ix)
-	adc	a, #0xff
 	ld	-4 (ix), a
-;./lib/./sprite.c:37: while(x) {
-	ld	a, -8 (ix)
+	ld	a, h
+	adc	a, #0xff
 	ld	-3 (ix), a
-00104$:
-	ld	a, -3 (ix)
-	or	a, a
-	jr	Z, 00106$
-;./lib/./sprite.c:40: while(i<64){
-	ld	a, -5 (ix)
+;./lib/./sprite.c:37: while(x) {
+	ld	c, e
+	ld	b, d
+	ld	a, -7 (ix)
 	ld	-2 (ix), a
-	ld	a, -4 (ix)
-	ld	-1 (ix), a
-	ld	c, #0x00
+00104$:
+	ld	a, -2 (ix)
+	or	a, a
+	jr	Z, 00124$
+;./lib/./sprite.c:40: while(i<64){
+	ld	e, -4 (ix)
+	ld	d, -3 (ix)
+	ld	-1 (ix), #0x00
 00101$:
-	ld	a, c
+	ld	a, -1 (ix)
 	sub	a, #0x40
 	jr	NC, 00103$
 ;./lib/./sprite.c:41: buffer64[i] = flipArray[data[offset2]];
-	ld	hl, #_buffer64
-	ld	b, #0x00
-	add	hl, bc
-	ld	a, 8 (ix)
-	add	a, -2 (ix)
-	ld	e, a
-	ld	a, 9 (ix)
-	adc	a, -1 (ix)
-	ld	d, a
-	ld	a, (de)
+	ld	a, #<(_buffer64)
+	add	a, -1 (ix)
+	ld	-10 (ix), a
+	ld	a, #>(_buffer64)
+	adc	a, #0x00
+	ld	-9 (ix), a
+	ld	l, 8 (ix)
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	h, 9 (ix)
+;	spillPairReg hl
+;	spillPairReg hl
+	add	hl, de
+	ld	a, (hl)
 	add	a, #<(_flipArray)
-	ld	e, a
+	ld	l, a
+;	spillPairReg hl
+;	spillPairReg hl
 	ld	a, #0x00
 	adc	a, #>(_flipArray)
-	ld	d, a
-	ld	a, (de)
+	ld	h, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, (hl)
+	ld	l, -10 (ix)
+	ld	h, -9 (ix)
 	ld	(hl), a
 ;./lib/./sprite.c:42: offset2++;
-	inc	-2 (ix)
-	jr	NZ, 00182$
-	inc	-1 (ix)
-00182$:
+	inc	de
 ;./lib/./sprite.c:43: i++;
-	inc	c
+	inc	-1 (ix)
 	jr	00101$
 00103$:
 ;./lib/./sprite.c:45: SMS_loadTiles(&buffer64,nextVRAMsprites,64);
@@ -371,80 +374,60 @@ _generateSpriteFlip::
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
-	ld	-2 (ix), l
-	ld	a, h
-	or	a, #0x40
-	ld	-1 (ix), a
-	ld	hl, #0x0040
-	push	hl
+	set	6, h
+	push	bc
+	ld	de, #0x0040
+	push	de
 	ld	de, #_buffer64
-	ld	l, -2 (ix)
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	h, -1 (ix)
-;	spillPairReg hl
-;	spillPairReg hl
 	call	_SMS_VRAMmemcpy
+	pop	bc
 ;./lib/./sprite.c:46: offset = offset - 64; // voy al anterior tile
-	ld	a, -5 (ix)
-	add	a, #0xc0
-	ld	-5 (ix), a
 	ld	a, -4 (ix)
-	adc	a, #0xff
+	add	a, #0xc0
 	ld	-4 (ix), a
-;./lib/./sprite.c:47: nextVRAMsprites += 2;
+	ld	a, -3 (ix)
+	adc	a, #0xff
+	ld	-3 (ix), a
+;./lib/./sprite.c:47: yOffset = yOffset + 64;
+	ld	hl, #0x0040
+	add	hl, bc
+	ld	c, l
+	ld	b, h
+;./lib/./sprite.c:48: nextVRAMsprites += 2;
 	ld	hl, (_nextVRAMsprites)
 	inc	hl
 	inc	hl
 	ld	(_nextVRAMsprites), hl
-;./lib/./sprite.c:48: x--;
-	dec	-3 (ix)
-	jp	00104$
-00106$:
-;./lib/./sprite.c:50: offset = offset + x*64 + 64;
-	ld	a, -3 (ix)
-	ld	-2 (ix), a
-	ld	-1 (ix), #0x00
-	ld	b, #0x06
-00183$:
-	sla	-2 (ix)
-	rl	-1 (ix)
-	djnz	00183$
-	ld	a, -2 (ix)
-	add	a, -5 (ix)
-	ld	-21 (ix), a
-	ld	a, -1 (ix)
-	adc	a, -4 (ix)
-	ld	-20 (ix), a
-	ld	a, -21 (ix)
-	add	a, #0x40
-	ld	-4 (ix), a
-	ld	a, -20 (ix)
-	adc	a, #0x00
-	ld	-3 (ix), a
-;./lib/./sprite.c:51: y--;
-	dec	-6 (ix)
+;./lib/./sprite.c:49: x--;
+	dec	-2 (ix)
+	jr	00104$
+00124$:
+	ld	e, c
+	ld	d, b
+;./lib/./sprite.c:51: offset = yOffset;
+;./lib/./sprite.c:52: y--;
+	dec	-5 (ix)
 	jp	00107$
 00109$:
-;./lib/./sprite.c:53: numFrames--;
-	dec	-7 (ix)
+;./lib/./sprite.c:54: numFrames--;
+	dec	-6 (ix)
 	jp	00110$
 00112$:
-;./lib/./sprite.c:55: return sprite;
-	ld	hl, #25
+;./lib/./sprite.c:56: return sprite;
+	ld	hl, #24
 	add	hl, sp
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-	ld	hl, #2
+	ld	hl, #0
 	add	hl, sp
 	ld	bc, #10
 	ldir
-;./lib/./sprite.c:56: }
+;./lib/./sprite.c:57: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./lib/./sprite.c:60: T_sprite generateSprite(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
+;./lib/./sprite.c:61: T_sprite generateSprite(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
 ;	---------------------------------
 ; Function generateSprite
 ; ---------------------------------
@@ -457,7 +440,7 @@ _generateSprite::
 	ld	sp, iy
 	ld	e, a
 	ld	d, l
-;./lib/./sprite.c:61: unsigned char tamano = alto*ancho*2;
+;./lib/./sprite.c:62: unsigned char tamano = alto*ancho*2;
 	push	de
 	ld	h, d
 ;	spillPairReg hl
@@ -474,7 +457,7 @@ _generateSprite::
 	pop	de
 	ld	c, l
 	sla	c
-;./lib/./sprite.c:62: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 1,0};
+;./lib/./sprite.c:63: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 1,0};
 	ld	-10 (ix), d
 	ld	-9 (ix), e
 	ld	-8 (ix), c
@@ -509,7 +492,7 @@ _generateSprite::
 	ld	-3 (ix), a
 	ld	-2 (ix), a
 	ld	-1 (ix), #0x00
-;./lib/./sprite.c:63: SMS_loadTiles(data,nextVRAMsprites,tam);
+;./lib/./sprite.c:64: SMS_loadTiles(data,nextVRAMsprites,tam);
 	ld	e, 8 (ix)
 	ld	d, 9 (ix)
 	ld	hl, (_nextVRAMsprites)
@@ -530,7 +513,7 @@ _generateSprite::
 	ex	(sp), hl
 	call	_SMS_VRAMmemcpy
 	pop	bc
-;./lib/./sprite.c:64: nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
+;./lib/./sprite.c:65: nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
 	ld	e, -7 (ix)
 	ld	h, c
 ;	spillPairReg hl
@@ -553,7 +536,7 @@ _generateSprite::
 	ld	a, (hl)
 	adc	a, d
 	ld	(hl), a
-;./lib/./sprite.c:65: return sprite;
+;./lib/./sprite.c:66: return sprite;
 	ld	hl, #14
 	add	hl, sp
 	ld	e, (hl)
@@ -563,11 +546,11 @@ _generateSprite::
 	add	hl, sp
 	ld	bc, #10
 	ldir
-;./lib/./sprite.c:66: }
+;./lib/./sprite.c:67: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./lib/./sprite.c:69: T_sprite generateSpriteNoRAM(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
+;./lib/./sprite.c:70: T_sprite generateSpriteNoRAM(unsigned char ancho, unsigned char alto, int tam,const unsigned char data[]) {
 ;	---------------------------------
 ; Function generateSpriteNoRAM
 ; ---------------------------------
@@ -580,7 +563,7 @@ _generateSpriteNoRAM::
 	ld	sp, iy
 	ld	e, a
 	ld	d, l
-;./lib/./sprite.c:70: unsigned char tamano = alto*ancho*2;
+;./lib/./sprite.c:71: unsigned char tamano = alto*ancho*2;
 	push	de
 	ld	h, d
 ;	spillPairReg hl
@@ -597,7 +580,7 @@ _generateSpriteNoRAM::
 	pop	de
 	ld	c, l
 	sla	c
-;./lib/./sprite.c:71: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 0,0};
+;./lib/./sprite.c:72: T_sprite sprite = {alto,ancho,tamano,tam/(tamano*32),nextVRAMsprites, 0,0};
 	ld	-12 (ix), d
 	ld	-11 (ix), e
 	ld	-10 (ix), c
@@ -635,14 +618,14 @@ _generateSpriteNoRAM::
 	ld	-5 (ix), a
 	ld	-4 (ix), a
 	ld	-3 (ix), #0x00
-;./lib/./sprite.c:72: sprite.data = data;
+;./lib/./sprite.c:73: sprite.data = data;
 	ld	a, 8 (ix)
 	ld	-5 (ix), a
 	ld	a, 9 (ix)
 	ld	-4 (ix), a
-;./lib/./sprite.c:73: sprite.frameInVRAM = 0;
+;./lib/./sprite.c:74: sprite.frameInVRAM = 0;
 	ld	-3 (ix), #0x00
-;./lib/./sprite.c:74: SMS_loadTiles(data,nextVRAMsprites,tamano*32);
+;./lib/./sprite.c:75: SMS_loadTiles(data,nextVRAMsprites,tamano*32);
 	ld	c, 8 (ix)
 	ld	b, 9 (ix)
 	ld	hl, (_nextVRAMsprites)
@@ -656,7 +639,7 @@ _generateSpriteNoRAM::
 	ld	e, c
 	ld	d, b
 	call	_SMS_VRAMmemcpy
-;./lib/./sprite.c:75: nextVRAMsprites = nextVRAMsprites + (tamano);
+;./lib/./sprite.c:76: nextVRAMsprites = nextVRAMsprites + (tamano);
 	ld	hl, #_nextVRAMsprites
 	ld	a, (hl)
 	add	a, -2 (ix)
@@ -665,7 +648,7 @@ _generateSpriteNoRAM::
 	ld	a, (hl)
 	adc	a, -1 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:76: return sprite;
+;./lib/./sprite.c:77: return sprite;
 	ld	hl, #16
 	add	hl, sp
 	ld	e, (hl)
@@ -675,11 +658,11 @@ _generateSpriteNoRAM::
 	add	hl, sp
 	ld	bc, #10
 	ldir
-;./lib/./sprite.c:77: }
+;./lib/./sprite.c:78: }
 	ld	sp, ix
 	pop	ix
 	ret
-;./lib/./sprite.c:88: unsigned int addHardwareSprite(unsigned int x,unsigned int y,unsigned int vx,unsigned int vy,unsigned int lx,
+;./lib/./sprite.c:89: unsigned int addHardwareSprite(unsigned int x,unsigned int y,unsigned int vx,unsigned int vy,unsigned int lx,
 ;	---------------------------------
 ; Function addHardwareSprite
 ; ---------------------------------
@@ -694,17 +677,17 @@ _addHardwareSprite::
 	ld	-11 (ix), h
 	ld	-14 (ix), e
 	ld	-13 (ix), d
-;./lib/./sprite.c:90: unsigned int i = MAX_HARDWARE_SPRITES;
+;./lib/./sprite.c:91: unsigned int i = MAX_HARDWARE_SPRITES;
 	ld	hl, #0x0040
 	ex	(sp), hl
-;./lib/./sprite.c:91: while (i) {
+;./lib/./sprite.c:92: while (i) {
 	ld	-2 (ix), #0x40
 	ld	-1 (ix), #0
 00109$:
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jp	Z, 00111$
-;./lib/./sprite.c:92: if (!hardwareSprites[i].len) {
+;./lib/./sprite.c:93: if (!hardwareSprites[i].len) {
 	ld	c, -2 (ix)
 	ld	b, -1 (ix)
 	ld	l, c
@@ -736,7 +719,7 @@ _addHardwareSprite::
 	ld	-3 (ix), a
 	or	a, -4 (ix)
 	jp	NZ, 00108$
-;./lib/./sprite.c:93: T_HardwareSprite *p = &hardwareSprites[i]; 
+;./lib/./sprite.c:94: T_HardwareSprite *p = &hardwareSprites[i]; 
 	ld	a, -6 (ix)
 	ld	-2 (ix), a
 	ld	a, -5 (ix)
@@ -745,7 +728,7 @@ _addHardwareSprite::
 	ld	-20 (ix), a
 	ld	a, -1 (ix)
 	ld	-19 (ix), a
-;./lib/./sprite.c:94: p->x = x;
+;./lib/./sprite.c:95: p->x = x;
 	ld	a, -20 (ix)
 	add	a, #0x04
 	ld	-2 (ix), a
@@ -759,7 +742,7 @@ _addHardwareSprite::
 	inc	hl
 	ld	a, -11 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:95: p->y = y;
+;./lib/./sprite.c:96: p->y = y;
 	pop	de
 	pop	hl
 	push	hl
@@ -771,7 +754,7 @@ _addHardwareSprite::
 	inc	hl
 	ld	a, -13 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:96: p->vx = vx;
+;./lib/./sprite.c:97: p->vx = vx;
 	pop	bc
 	pop	hl
 	push	hl
@@ -781,7 +764,7 @@ _addHardwareSprite::
 	inc	hl
 	ld	a, 5 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:97: p->vy = vy;
+;./lib/./sprite.c:98: p->vy = vy;
 	pop	hl
 	pop	bc
 	push	bc
@@ -793,11 +776,11 @@ _addHardwareSprite::
 	inc	bc
 	ld	a, 7 (ix)
 	ld	(bc), a
-;./lib/./sprite.c:98: unsigned int iTile = 0;
+;./lib/./sprite.c:99: unsigned int iTile = 0;
 	xor	a, a
 	ld	-2 (ix), a
 	ld	-1 (ix), a
-;./lib/./sprite.c:99: for (int iy=0;iy<ly;iy++) {
+;./lib/./sprite.c:100: for (int iy=0;iy<ly;iy++) {
 	ld	a, -14 (ix)
 	ld	-10 (ix), a
 	ld	a, -13 (ix)
@@ -810,20 +793,20 @@ _addHardwareSprite::
 	ld	-4 (ix), a
 	ld	a, -7 (ix)
 	ld	-3 (ix), a
-;./lib/./sprite.c:102: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
+;./lib/./sprite.c:103: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
 	ld	a, -20 (ix)
 	add	a, #0x08
 	ld	-18 (ix), a
 	ld	a, -19 (ix)
 	adc	a, #0x00
 	ld	-17 (ix), a
-;./lib/./sprite.c:99: for (int iy=0;iy<ly;iy++) {
+;./lib/./sprite.c:100: for (int iy=0;iy<ly;iy++) {
 	ld	a, -4 (ix)
 	sub	a, 10 (ix)
 	ld	a, -3 (ix)
 	sbc	a, 11 (ix)
 	jp	NC, 00106$
-;./lib/./sprite.c:100: for (int ix=0;ix<lx;ix++){
+;./lib/./sprite.c:101: for (int ix=0;ix<lx;ix++){
 	ld	a, -2 (ix)
 	ld	-6 (ix), a
 	ld	a, -1 (ix)
@@ -845,7 +828,7 @@ _addHardwareSprite::
 	ld	a, -15 (ix)
 	sbc	a, 9 (ix)
 	jr	NC, 00129$
-;./lib/./sprite.c:102: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
+;./lib/./sprite.c:103: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
 	ld	b, -4 (ix)
 	ld	l, -6 (ix)
 ;	spillPairReg hl
@@ -865,14 +848,14 @@ _addHardwareSprite::
 	ld	e, (hl)
 	ld	-16 (ix), e
 	ld	-15 (ix), b
-;./lib/./sprite.c:101: if(ix==0 && iy == 0) {
+;./lib/./sprite.c:102: if(ix==0 && iy == 0) {
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jr	NZ, 00102$
 	ld	a, -7 (ix)
 	or	a, -8 (ix)
 	jr	NZ, 00102$
-;./lib/./sprite.c:102: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
+;./lib/./sprite.c:103: p->initSprite = SMS_addSprite(x,y, tiles[iTile]);
 	ld	e, -16 (ix)
 	ld	d, -15 (ix)
 	ld	l, -10 (ix)
@@ -893,7 +876,7 @@ _addHardwareSprite::
 	ld	(hl), b
 	jr	00103$
 00102$:
-;./lib/./sprite.c:105: SMS_addSprite(x,y, tiles[iTile]);
+;./lib/./sprite.c:106: SMS_addSprite(x,y, tiles[iTile]);
 	ld	e, -16 (ix)
 	ld	d, -15 (ix)
 	ld	l, -10 (ix)
@@ -904,19 +887,19 @@ _addHardwareSprite::
 ;	spillPairReg hl
 	call	_SMS_addSprite_f
 00103$:
-;./lib/./sprite.c:107: iTile++;
+;./lib/./sprite.c:108: iTile++;
 	inc	-6 (ix)
 	jr	NZ, 00185$
 	inc	-5 (ix)
 00185$:
-;./lib/./sprite.c:108: x += 8;
+;./lib/./sprite.c:109: x += 8;
 	ld	a, -4 (ix)
 	add	a, #0x08
 	ld	-4 (ix), a
 	jr	NC, 00186$
 	inc	-3 (ix)
 00186$:
-;./lib/./sprite.c:100: for (int ix=0;ix<lx;ix++){
+;./lib/./sprite.c:101: for (int ix=0;ix<lx;ix++){
 	inc	-2 (ix)
 	jp	NZ,00113$
 	inc	-1 (ix)
@@ -930,20 +913,20 @@ _addHardwareSprite::
 	ld	-12 (ix), a
 	ld	a, -3 (ix)
 	ld	-11 (ix), a
-;./lib/./sprite.c:110: y += 16;
+;./lib/./sprite.c:111: y += 16;
 	ld	a, -10 (ix)
 	add	a, #0x10
 	ld	-10 (ix), a
 	jr	NC, 00188$
 	inc	-9 (ix)
 00188$:
-;./lib/./sprite.c:99: for (int iy=0;iy<ly;iy++) {
+;./lib/./sprite.c:100: for (int iy=0;iy<ly;iy++) {
 	inc	-8 (ix)
 	jp	NZ,00116$
 	inc	-7 (ix)
 	jp	00116$
 00106$:
-;./lib/./sprite.c:112: p->len = p->initSprite + lx*ly;
+;./lib/./sprite.c:113: p->len = p->initSprite + lx*ly;
 	ld	a, -20 (ix)
 	add	a, #0x0a
 	ld	-2 (ix), a
@@ -981,12 +964,12 @@ _addHardwareSprite::
 	inc	hl
 	ld	a, -5 (ix)
 	ld	(hl), a
-;./lib/./sprite.c:113: return i;
+;./lib/./sprite.c:114: return i;
 	pop	de
 	push	de
 	jr	00118$
 00108$:
-;./lib/./sprite.c:115: i--;
+;./lib/./sprite.c:116: i--;
 	ld	l, -2 (ix)
 	ld	h, -1 (ix)
 	dec	hl
@@ -998,11 +981,11 @@ _addHardwareSprite::
 	ld	-21 (ix), a
 	jp	00109$
 00111$:
-;./lib/./sprite.c:117: return i;
+;./lib/./sprite.c:118: return i;
 	pop	de
 	push	de
 00118$:
-;./lib/./sprite.c:118: }
+;./lib/./sprite.c:119: }
 	ld	sp, ix
 	pop	ix
 	pop	hl
@@ -1012,18 +995,18 @@ _addHardwareSprite::
 	pop	af
 	pop	af
 	jp	(hl)
-;./lib/./sprite.c:130: void initSpritesVariables (void) {
+;./lib/./sprite.c:131: void initSpritesVariables (void) {
 ;	---------------------------------
 ; Function initSpritesVariables
 ; ---------------------------------
 _initSpritesVariables::
-;./lib/./sprite.c:132: while (i) {
+;./lib/./sprite.c:133: while (i) {
 	ld	bc, #0x0040
 00101$:
 	ld	a, b
 	or	a, c
 	jr	Z, 00103$
-;./lib/./sprite.c:133: hardwareSprites[i].len = 0;
+;./lib/./sprite.c:134: hardwareSprites[i].len = 0;
 	ld	l, c
 	ld	h, b
 	add	hl, hl
@@ -1038,28 +1021,28 @@ _initSpritesVariables::
 	ld	(hl), a
 	inc	hl
 	ld	(hl), a
-;./lib/./sprite.c:134: i--;
+;./lib/./sprite.c:135: i--;
 	dec	bc
 	jr	00101$
 00103$:
-;./lib/./sprite.c:147: __endasm;
+;./lib/./sprite.c:148: __endasm;
 	ld	hl, #_SpriteNextFree
 	ld	(#_SpriteNextFree2), hl
 	ld	hl, #_SpriteTableY
 	ld	(#_SpriteTableY2), hl
 	ld	hl, #_SpriteTableXN
 	ld	(#_SpriteTableXN2), hl
-;./lib/./sprite.c:150: }
+;./lib/./sprite.c:151: }
 	ret
-;./lib/./sprite.c:167: void copySpritestoSAT (void) {
+;./lib/./sprite.c:168: void copySpritestoSAT (void) {
 ;	---------------------------------
 ; Function copySpritestoSAT
 ; ---------------------------------
 _copySpritestoSAT::
-;./lib/./sprite.c:168: SMS_setAddr(SMS_SATAddress);
+;./lib/./sprite.c:169: SMS_setAddr(SMS_SATAddress);
 	ld	hl, #0x7f00
 	rst	#0x08
-;./lib/./sprite.c:184: __endasm;
+;./lib/./sprite.c:185: __endasm;
 	ld	a,(#_SpriteNextFree)
 	or	a
 	jr	z,_no_sprites
@@ -1074,10 +1057,10 @@ _next_spriteY:
 	ld	a,#0xD0 ; 7 cycles => VRAM safe
 	out	(c),a
 _no_sprite_term:
-;./lib/./sprite.c:185: SMS_setAddr(SMS_SATAddress+128);
+;./lib/./sprite.c:186: SMS_setAddr(SMS_SATAddress+128);
 	ld	hl, #0x7f80
 	rst	#0x08
-;./lib/./sprite.c:200: __endasm;
+;./lib/./sprite.c:201: __endasm;
 	ld	c,#_VDPDataPort
 	ld	a,(#_SpriteNextFree)
 	add	a,a
@@ -1090,7 +1073,7 @@ _next_spriteXN:
 _no_sprites:
 	ld	a,#0xD0
 	out	(#_VDPDataPort),a
-;./lib/./sprite.c:201: }
+;./lib/./sprite.c:202: }
 	ret
 ;./lib/entities.c:12: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
 ;	---------------------------------

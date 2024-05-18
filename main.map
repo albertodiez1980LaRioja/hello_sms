@@ -100,11 +100,11 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000012C  l__INITIALIZER                  
      00000200  s__CODE                         
      00000406  l__DATA                         
-     00001E5C  l__CODE                         
-     0000205C  s__HOME                         
-     0000205E  s__INITIALIZER                  
-     0000218A  s__GSINIT                       
-     000021AF  s__GSFINAL                      
+     00001DF7  l__CODE                         
+     00001FF7  s__HOME                         
+     00001FF9  s__INITIALIZER                  
+     00002125  s__GSINIT                       
+     0000214A  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
      00008000  s__DATA                         
      00008406  s__INITIALIZED                  
@@ -120,50 +120,50 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00001E5C =        7772. bytes (REL,CON)
+_CODE                               00000200    00001DF7 =        7671. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000200  __clock                            crt0
      00000204  _exit                              crt0
      0000020A  _generateSpriteFlip                main
-     0000040B  _generateSprite                    main
-     000004B5  _generateSpriteNoRAM               main
-     00000564  _addHardwareSprite                 main
-     000007E8  _initSpritesVariables              main
-     00000817  _copySpritestoSAT                  main
-     0000084B  _draw_entidad                      main
-     00000C71  _canUp                             main
-     00000C7D  _canDown                           main
-     00000C8B  _canLeft                           main
-     00000C97  _canRight                          main
-     00000CA5  _moveAlexSuelo                     main
-     00000E6D  _moveAlexAire                      main
-     00000FA7  _drawAlex                          main
-     00001028  _moveAlex                          main
-     00001062  _inicializaPajaros                 main
-     00001124  _loadGrapVRAM                      main
-     00001203  _dibujaPajaros                     main
-     0000132B  _playMusic                         main
-     00001331  _disableSprites                    main
-     0000134F  _main                              main
-     00001456  __mulint                           
-     00001458  __mul16                            
-     00001473  _vprintf                           vprintf
-     0000147F  _printf                            vprintf
-     00001496  __divschar                         
-     00001498  __div8                             
-     0000149C  __div_signexte                     
-     000014A0  __div16                            
-     000014A0  __divsint                          
-     000014C6  __get_remainder                    
-     000015AF  __print_format                     printf_large
-     0000201B  __divuchar                         
-     0000201D  __divu8                            
-     00002020  __divu16                           
-     00002020  __divuint                          
-     0000204F  ___sdcc_call_hl                    
-     00002050  _strlen                            
+     000003A6  _generateSprite                    main
+     00000450  _generateSpriteNoRAM               main
+     000004FF  _addHardwareSprite                 main
+     00000783  _initSpritesVariables              main
+     000007B2  _copySpritestoSAT                  main
+     000007E6  _draw_entidad                      main
+     00000C0C  _canUp                             main
+     00000C18  _canDown                           main
+     00000C26  _canLeft                           main
+     00000C32  _canRight                          main
+     00000C40  _moveAlexSuelo                     main
+     00000E08  _moveAlexAire                      main
+     00000F42  _drawAlex                          main
+     00000FC3  _moveAlex                          main
+     00000FFD  _inicializaPajaros                 main
+     000010BF  _loadGrapVRAM                      main
+     0000119E  _dibujaPajaros                     main
+     000012C6  _playMusic                         main
+     000012CC  _disableSprites                    main
+     000012EA  _main                              main
+     000013F1  __mulint                           
+     000013F3  __mul16                            
+     0000140E  _vprintf                           vprintf
+     0000141A  _printf                            vprintf
+     00001431  __divschar                         
+     00001433  __div8                             
+     00001437  __div_signexte                     
+     0000143B  __div16                            
+     0000143B  __divsint                          
+     00001461  __get_remainder                    
+     0000154A  __print_format                     printf_large
+     00001FB6  __divuchar                         
+     00001FB8  __divu8                            
+     00001FBB  __divu16                           
+     00001FBB  __divuint                          
+     00001FEA  ___sdcc_call_hl                    
+     00001FEB  _strlen                            
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
@@ -251,18 +251,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               0000205C    00000002 =           2. bytes (REL,CON)
+_HOME                               00001FF7    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000205C  ___sdcc_external_startup           _startup
+     00001FF7  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        0000205E    0000012C =         300. bytes (REL,CON)
+_INITIALIZER                        00001FF9    0000012C =         300. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -271,18 +271,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             0000218A    00000025 =          37. bytes (REL,CON)
+_GSINIT                             00002125    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000218A  gsinit                             crt0
+     00002125  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            000021AF    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            0000214A    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

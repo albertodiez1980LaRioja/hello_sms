@@ -27,8 +27,8 @@ T_sprite generateSpriteFlip(unsigned char ancho, unsigned char alto, int tam,con
   SMS_loadTiles(data,nextVRAMsprites,tam);
   nextVRAMsprites = nextVRAMsprites + (tamano*sprite.numFrames);
   // now put the flip sprite
-  unsigned char x, y, numFrames = tamano/(alto*ancho);
-  int offset = 0;
+  unsigned char y,x, numFrames = tamano/(alto*ancho);
+  int offset = 0, yOffset = 0;
   while(numFrames) {
     y=alto;
     while (y) {
@@ -44,10 +44,11 @@ T_sprite generateSpriteFlip(unsigned char ancho, unsigned char alto, int tam,con
         }
         SMS_loadTiles(&buffer64,nextVRAMsprites,64);
         offset = offset - 64; // voy al anterior tile
+        yOffset = yOffset + 64;
         nextVRAMsprites += 2;
         x--;
       }
-      offset = offset + x*64 + 64;
+      offset = yOffset;
       y--;
     }
     numFrames--;

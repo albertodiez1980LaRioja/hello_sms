@@ -51,12 +51,12 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCD GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       001214 R
+  0 ___str_0                                                       0011AF R
     __divsint                                                      ****** GX
     __mulint                                                       ****** GX
-  0 __str_1                                                        001228 R
-  0 __str_2                                                        00122D R
-  0 __str_3                                                        00123B R
+  0 __str_1                                                        0011C3 R
+  0 __str_2                                                        0011C8 R
+  0 __str_3                                                        0011D6 R
   7 __xinit__alex                                                  000103 R
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
@@ -70,43 +70,43 @@ Symbol Table
   7 __xinit__spriteAlex                                            00010E R
   7 __xinit__spritePajaro                                          000118 R
   7 __xinit__spritePuno                                            000122 R
-  0 _addHardwareSprite                                             00035A GR
+  0 _addHardwareSprite                                             0002F5 GR
   2 _alex                                                          000103 GR
   1 _buffer64                                                      000000 GR
-  0 _canDown                                                       000A73 GR
-  0 _canLeft                                                       000A81 GR
-  0 _canRight                                                      000A8D GR
-  0 _canUp                                                         000A67 GR
-  0 _copySpritestoSAT                                              00060D GR
-  0 _dibujaPajaros                                                 000FF9 GR
-  0 _disableSprites                                                001127 GR
-  0 _drawAlex                                                      000D9D GR
-  0 _draw_entidad                                                  000641 GR
+  0 _canDown                                                       000A0E GR
+  0 _canLeft                                                       000A1C GR
+  0 _canRight                                                      000A28 GR
+  0 _canUp                                                         000A02 GR
+  0 _copySpritestoSAT                                              0005A8 GR
+  0 _dibujaPajaros                                                 000F94 GR
+  0 _disableSprites                                                0010C2 GR
+  0 _drawAlex                                                      000D38 GR
+  0 _draw_entidad                                                  0005DC GR
     _emeraldhill_psg                                               ****** GX
   2 _flipArray                                                     000002 GR
-  0 _generateSprite                                                000201 GR
+  0 _generateSprite                                                00019C GR
   0 _generateSpriteFlip                                            000000 GR
-  0 _generateSpriteNoRAM                                           0002AB GR
+  0 _generateSpriteNoRAM                                           000246 GR
   1 _hardwareSprites                                               000040 GR
-  0 _inicializaPajaros                                             000E58 GR
-  0 _initSpritesVariables                                          0005DE GR
+  0 _inicializaPajaros                                             000DF3 GR
+  0 _initSpritesVariables                                          000579 GR
   2 _lastFrame                                                     00010D GR
-  0 _loadGrapVRAM                                                  000F1A GR
-  0 _main                                                          001145 GR
+  0 _loadGrapVRAM                                                  000EB5 GR
+  0 _main                                                          0010E0 GR
   2 _maxSalto                                                      000102 GR
-  0 _moveAlex                                                      000E1E GR
-  0 _moveAlexAire                                                  000C63 GR
-  0 _moveAlexSuelo                                                 000A9B GR
+  0 _moveAlex                                                      000DB9 GR
+  0 _moveAlexAire                                                  000BFE GR
+  0 _moveAlexSuelo                                                 000A36 GR
   2 _nextVRAMsprites                                               000000 GR
-  0 _next_spriteXN                                                 000637 R
-  0 _next_spriteY                                                  00061D R
-  0 _no_sprite_term                                                000629 R
-  0 _no_sprites                                                    00063C R
+  0 _next_spriteXN                                                 0005D2 R
+  0 _next_spriteY                                                  0005B8 R
+  0 _no_sprite_term                                                0005C4 R
+  0 _no_sprites                                                    0005D7 R
   1 _numSprites                                                    000404 GR
   1 _pajaros                                                       000346 GR
     _paleta_de_prueba2_inc                                         ****** GX
     _palleteAlex_inc                                               ****** GX
-  0 _playMusic                                                     001121 GR
+  0 _playMusic                                                     0010BC GR
     _printf                                                        ****** GX
     _puno_inc                                                      ****** GX
     _salto_psg                                                     ****** GX
@@ -132,7 +132,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size   124C   flags    0
+   0 _CODE                                      size   11E7   flags    0
    1 _DATA                                      size    406   flags    0
    2 _INITIALIZED                               size    12C   flags    0
    3 _DABS                                      size      0   flags    8
