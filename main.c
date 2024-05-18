@@ -54,7 +54,7 @@ void loadGrapVRAM()
   
   spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
   spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
-  spritePajaro = generateSprite(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+  spritePajaro = generateSpriteFlip(3, 1, spritePajaro_inc_size, spritePajaro_inc);
   SMS_initSprites();
   alex.initSprite = 255;
   draw_entidad(&alex, &spriteAlex);
