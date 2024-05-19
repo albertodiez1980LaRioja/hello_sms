@@ -4,6 +4,7 @@
 typedef struct{
   unsigned char x,y,frame,lastChangeFrame,oriented,state;
   unsigned char initSprite, len;
+  int vx, vy;
   T_sprite *sprite;
 }T_entidad;
 

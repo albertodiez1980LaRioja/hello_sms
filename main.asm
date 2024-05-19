@@ -106,7 +106,7 @@ _ROM_bank_to_be_mapped_on_slot0	=	0xfffd
 _SRAM_bank_to_be_mapped_on_slot2	=	0xfffc
 _SMS_SRAM	=	0x8000
 _pajaros::
-	.ds 190
+	.ds 266
 _numSprites::
 	.ds 2
 ;--------------------------------------------------------
@@ -120,7 +120,7 @@ _flipArray::
 _maxSalto::
 	.ds 1
 _alex::
-	.ds 10
+	.ds 14
 _lastFrame::
 	.ds 1
 _spriteAlex::
@@ -1075,7 +1075,7 @@ _no_sprites:
 	out	(#_VDPDataPort),a
 ;./lib/./sprite.c:202: }
 	ret
-;./lib/entities.c:12: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
+;./lib/entities.c:13: void draw_entidad(T_entidad *entidad, T_sprite *sprite){
 ;	---------------------------------
 ; Function draw_entidad
 ; ---------------------------------
@@ -1088,7 +1088,7 @@ _draw_entidad::
 	ld	sp, iy
 	ld	-4 (ix), l
 	ld	-3 (ix), h
-;./lib/entities.c:14: if (sprite->allInRAM == 1){
+;./lib/entities.c:15: if (sprite->allInRAM == 1){
 	ld	-6 (ix), e
 	ld	-5 (ix), d
 	ld	c, e
@@ -1096,7 +1096,7 @@ _draw_entidad::
 	ld	hl, #6
 	add	hl, bc
 	ld	c, (hl)
-;./lib/entities.c:15: if (entidad->initSprite == 255) {
+;./lib/entities.c:16: if (entidad->initSprite == 255) {
 	ld	a, -4 (ix)
 	add	a, #0x06
 	ld	-14 (ix), a
@@ -1106,14 +1106,14 @@ _draw_entidad::
 	ld	l, -14 (ix)
 	ld	h, -13 (ix)
 	ld	b, (hl)
-;./lib/entities.c:16: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
+;./lib/entities.c:17: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
 	ld	a, -4 (ix)
 	add	a, #0x02
 	ld	-12 (ix), a
 	ld	a, -3 (ix)
 	adc	a, #0x00
 	ld	-11 (ix), a
-;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
+;./lib/entities.c:18: for(j=0;j<sprite->alto;j++) {
 	ld	a, -4 (ix)
 	add	a, #0x01
 	ld	-8 (ix), a
@@ -1126,24 +1126,24 @@ _draw_entidad::
 	ld	a, -5 (ix)
 	adc	a, #0x00
 	ld	-1 (ix), a
-;./lib/entities.c:27: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
+;./lib/entities.c:28: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
 	ld	a, -4 (ix)
 	add	a, #0x07
 	ld	-29 (ix), a
 	ld	a, -3 (ix)
 	adc	a, #0x00
 	ld	-28 (ix), a
-;./lib/entities.c:15: if (entidad->initSprite == 255) {
+;./lib/entities.c:16: if (entidad->initSprite == 255) {
 	inc	b
 	ld	a, #0x01
 	jr	Z, 00253$
 	xor	a, a
 00253$:
 	ld	-9 (ix), a
-;./lib/entities.c:14: if (sprite->allInRAM == 1){
+;./lib/entities.c:15: if (sprite->allInRAM == 1){
 	dec	c
 	jp	NZ,00120$
-;./lib/entities.c:15: if (entidad->initSprite == 255) {
+;./lib/entities.c:16: if (entidad->initSprite == 255) {
 	ld	a, -14 (ix)
 	ld	-27 (ix), a
 	ld	a, -13 (ix)
@@ -1151,7 +1151,7 @@ _draw_entidad::
 	ld	a, -9 (ix)
 	or	a, a
 	jp	Z, 00134$
-;./lib/entities.c:16: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
+;./lib/entities.c:17: int frame = sprite->tamano*entidad->frame + sprite->beginVRAM;
 	ld	a, -6 (ix)
 	ld	-14 (ix), a
 	ld	a, -5 (ix)
@@ -1194,7 +1194,7 @@ _draw_entidad::
 	ld	-10 (ix), a
 	add	a, -9 (ix)
 	ld	-25 (ix), a
-;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
+;./lib/entities.c:18: for(j=0;j<sprite->alto;j++) {
 	ld	a, -8 (ix)
 	ld	-24 (ix), a
 	ld	a, -7 (ix)
@@ -1212,12 +1212,12 @@ _draw_entidad::
 	ld	a, -2 (ix)
 	sub	a, -1 (ix)
 	jp	NC, 00106$
-;./lib/entities.c:18: unsigned char desplazado = (j<<2);
+;./lib/entities.c:19: unsigned char desplazado = (j<<2);
 	ld	a, -2 (ix)
 	ld	-1 (ix), a
 	sla	-1 (ix)
 	sla	-1 (ix)
-;./lib/entities.c:19: unsigned char jCalculated = desplazado + frame, y = entidad->y+(desplazado<<2);
+;./lib/entities.c:20: unsigned char jCalculated = desplazado + frame, y = entidad->y+(desplazado<<2);
 	ld	a, -1 (ix)
 	ld	-7 (ix), a
 	add	a, -25 (ix)
@@ -1233,7 +1233,7 @@ _draw_entidad::
 	add	a, -7 (ix)
 	ld	-1 (ix), a
 	ld	-19 (ix), a
-;./lib/entities.c:20: for(i=0;i<sprite->ancho;i++) {
+;./lib/entities.c:21: for(i=0;i<sprite->ancho;i++) {
 	ld	-1 (ix), #0x00
 00123$:
 	ld	l, -22 (ix)
@@ -1241,7 +1241,7 @@ _draw_entidad::
 	ld	a,-1 (ix)
 	sub	a,(hl)
 	jp	NC, 00127$
-;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:23: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
 	ld	a, (hl)
@@ -1300,14 +1300,14 @@ _draw_entidad::
 	ld	a, -9 (ix)
 	or	a, -7 (ix)
 	ld	-11 (ix), a
-;./lib/entities.c:21: if(i==0 && j==0)
+;./lib/entities.c:22: if(i==0 && j==0)
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00102$
 	ld	a, -2 (ix)
 	or	a, a
 	jr	NZ, 00102$
-;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:23: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	e, -12 (ix)
 	ld	d, -11 (ix)
 	ld	l, -16 (ix)
@@ -1324,7 +1324,7 @@ _draw_entidad::
 	ld	(hl), a
 	jr	00124$
 00102$:
-;./lib/entities.c:24: SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:25: SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	e, -12 (ix)
 	ld	d, -11 (ix)
 	ld	l, -16 (ix)
@@ -1335,15 +1335,15 @@ _draw_entidad::
 ;	spillPairReg hl
 	call	_SMS_addSprite_f
 00124$:
-;./lib/entities.c:20: for(i=0;i<sprite->ancho;i++) {
+;./lib/entities.c:21: for(i=0;i<sprite->ancho;i++) {
 	inc	-1 (ix)
 	jp	00123$
 00127$:
-;./lib/entities.c:17: for(j=0;j<sprite->alto;j++) {
+;./lib/entities.c:18: for(j=0;j<sprite->alto;j++) {
 	inc	-2 (ix)
 	jp	00126$
 00106$:
-;./lib/entities.c:27: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
+;./lib/entities.c:28: entidad->len = (sprite->alto * sprite->ancho + entidad->initSprite)*2;
 	ld	l, -22 (ix)
 	ld	h, -21 (ix)
 	ld	a, (hl)
@@ -1376,7 +1376,7 @@ _draw_entidad::
 	ld	(hl), a
 	jp	00134$
 00120$:
-;./lib/entities.c:32: if (entidad->initSprite == 255) {
+;./lib/entities.c:33: if (entidad->initSprite == 255) {
 	ld	a, -14 (ix)
 	ld	-20 (ix), a
 	ld	a, -13 (ix)
@@ -1384,7 +1384,7 @@ _draw_entidad::
 	ld	a, -9 (ix)
 	or	a, a
 	jp	Z, 00134$
-;./lib/entities.c:33: if (entidad->frame != sprite->frameInVRAM){
+;./lib/entities.c:34: if (entidad->frame != sprite->frameInVRAM){
 	ld	l, -12 (ix)
 	ld	h, -11 (ix)
 	ld	a, (hl)
@@ -1400,12 +1400,12 @@ _draw_entidad::
 	ld	a,-9 (ix)
 	sub	a,(hl)
 	jr	Z, 00151$
-;./lib/entities.c:35: sprite->frameInVRAM = entidad->frame;
+;./lib/entities.c:36: sprite->frameInVRAM = entidad->frame;
 	ld	l, -11 (ix)
 	ld	h, -10 (ix)
 	ld	a, -9 (ix)
 	ld	(hl), a
-;./lib/entities.c:37: for(j=0;j<sprite->alto;j++) {
+;./lib/entities.c:38: for(j=0;j<sprite->alto;j++) {
 00151$:
 	ld	a, -8 (ix)
 	ld	-18 (ix), a
@@ -1428,7 +1428,7 @@ _draw_entidad::
 	ld	a, -2 (ix)
 	sub	a, -1 (ix)
 	jp	NC, 00116$
-;./lib/entities.c:38: for(i=0;i<sprite->ancho;i++) {
+;./lib/entities.c:39: for(i=0;i<sprite->ancho;i++) {
 	ld	-1 (ix), #0x00
 00129$:
 	ld	l, -14 (ix)
@@ -1436,19 +1436,19 @@ _draw_entidad::
 	ld	a,-1 (ix)
 	sub	a,(hl)
 	jp	NC, 00133$
-;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:23: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
 	ld	a, (hl)
-;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+;./lib/entities.c:41: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
 	ld	c, -1 (ix)
 	ld	b, #0x00
 	ld	e, -2 (ix)
 	ld	d, #0x00
-;./lib/entities.c:22: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
+;./lib/entities.c:23: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),y, jCalculated + (i<<1) );  
 	ld	-12 (ix), a
 	ld	-11 (ix), #0x00
-;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+;./lib/entities.c:41: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
 	ld	-10 (ix), c
 	ld	-9 (ix), b
 	ld	a, #0x03
@@ -1486,14 +1486,14 @@ _draw_entidad::
 	ld	a, e
 	or	a, h
 	ld	-9 (ix), a
-;./lib/entities.c:39: if(i==0 && j==0) {
+;./lib/entities.c:40: if(i==0 && j==0) {
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00112$
 	ld	a, -2 (ix)
 	or	a, a
 	jr	NZ, 00112$
-;./lib/entities.c:40: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
+;./lib/entities.c:41: entidad->initSprite = SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );  
 	ld	l, -16 (ix)
 	ld	h, -15 (ix)
 	ld	c, (hl)
@@ -1513,7 +1513,7 @@ _draw_entidad::
 	ld	(hl), a
 	jr	00130$
 00112$:
-;./lib/entities.c:43: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );
+;./lib/entities.c:44: SMS_addSprite(entidad->x+(i<<3),entidad->y+(j<<4), (j<<2) + (i<<1) );
 	ld	l, -18 (ix)
 	ld	h, -17 (ix)
 	ld	c, (hl)
@@ -1529,15 +1529,15 @@ _draw_entidad::
 	ld	d, -9 (ix)
 	call	_SMS_addSprite_f
 00130$:
-;./lib/entities.c:38: for(i=0;i<sprite->ancho;i++) {
+;./lib/entities.c:39: for(i=0;i<sprite->ancho;i++) {
 	inc	-1 (ix)
 	jp	00129$
 00133$:
-;./lib/entities.c:37: for(j=0;j<sprite->alto;j++) {
+;./lib/entities.c:38: for(j=0;j<sprite->alto;j++) {
 	inc	-2 (ix)
 	jp	00132$
 00116$:
-;./lib/entities.c:47: entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
+;./lib/entities.c:48: entidad->len = sprite->alto * sprite->ancho + entidad->initSprite;
 	ld	l, -14 (ix)
 	ld	h, -13 (ix)
 	ld	a, (hl)
@@ -1566,9 +1566,9 @@ _draw_entidad::
 	push	hl
 	ld	a, -1 (ix)
 	ld	(hl), a
-;./lib/entities.c:48: entidad->sprite = sprite;
+;./lib/entities.c:49: entidad->sprite = sprite;
 	ld	a, -4 (ix)
-	add	a, #0x08
+	add	a, #0x0c
 	ld	-2 (ix), a
 	ld	a, -3 (ix)
 	adc	a, #0x00
@@ -1581,7 +1581,7 @@ _draw_entidad::
 	ld	a, -5 (ix)
 	ld	(hl), a
 00134$:
-;./lib/entities.c:51: }
+;./lib/entities.c:52: }
 	ld	sp, ix
 	pop	ix
 	ret
@@ -2239,7 +2239,7 @@ _drawAlex::
 	sub	a, e
 	ret	Z
 ;./alex.c:196: SMS_loadTiles(alex.sprite->data + alex.frame *256, alex.sprite->beginVRAM, 255);
-	ld	bc, (#_alex + 8)
+	ld	bc, (#_alex + 12)
 	push	bc
 	pop	iy
 	ld	l, 7 (iy)
@@ -2327,18 +2327,19 @@ _inicializaPajaros::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	ld	hl, #-7
+	ld	hl, #-9
 	add	hl, sp
 	ld	sp, hl
 ;main.c:23: for (i = 0; i < NUM_PAJAROS; i++)
 	ld	-1 (ix), #0x00
 00108$:
-;main.c:25: pajaros[i].x = 15 + 32 * i;
+;main.c:25: pajaros[i].x = 15 + (32 * i) % 200;
 	ld	c, -1 (ix)
 	ld	b, #0x00
 	ld	l, c
 	ld	h, b
 	add	hl, hl
+	add	hl, bc
 	add	hl, hl
 	add	hl, bc
 	add	hl, hl
@@ -2346,43 +2347,55 @@ _inicializaPajaros::
 	add	hl, de
 	ex	(sp), hl
 	ld	a, -1 (ix)
-	rrca
-	rrca
-	rrca
-	and	a, #0xe0
+	ld	-7 (ix), a
+	ld	-6 (ix), #0x00
+	pop	bc
+	pop	hl
+	push	hl
+	push	bc
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	ld	de, #0x00c8
+	call	__modsint
+	ld	a, e
 	add	a, #0x0f
 	pop	hl
 	push	hl
 	ld	(hl), a
 ;main.c:26: pajaros[i].y = 16 * (i / 2);
-	ld	a, -7 (ix)
+	ld	a, -9 (ix)
 	add	a, #0x01
 	ld	-5 (ix), a
-	ld	a, -6 (ix)
+	ld	a, -8 (ix)
 	adc	a, #0x00
 	ld	-4 (ix), a
-	ld	c, -1 (ix)
-	ld	b, #0x00
-	ld	-3 (ix), c
-	ld	-2 (ix), b
-	bit	7, b
+	ld	a, -7 (ix)
+	ld	-3 (ix), a
+	ld	a, -6 (ix)
+	ld	-2 (ix), a
+	bit	7, -6 (ix)
 	jr	Z, 00112$
-	ld	-3 (ix), #0x01
-	ld	-2 (ix), #0
+	ld	a, -7 (ix)
+	add	a, #0x01
+	ld	-3 (ix), a
+	ld	a, -6 (ix)
+	adc	a, #0x00
+	ld	-2 (ix), a
 00112$:
 	ld	c, -3 (ix)
-	ld	e, #0x00
-	sra	e
+	ld	b, -2 (ix)
+	sra	b
 	rr	c
 	ld	a, c
 	add	a, a
 	add	a, a
 	add	a, a
 	add	a, a
-	pop	bc
-	pop	hl
-	push	hl
-	push	bc
+	ld	l, -5 (ix)
+	ld	h, -4 (ix)
 	ld	(hl), a
 ;main.c:27: pajaros[i].lastChangeFrame = i * 3;
 	pop	bc
@@ -2396,10 +2409,10 @@ _inicializaPajaros::
 	add	a, e
 	ld	(bc), a
 ;main.c:28: pajaros[i].initSprite = 255;
-	ld	a, -7 (ix)
+	ld	a, -9 (ix)
 	add	a, #0x06
 	ld	e, a
-	ld	a, -6 (ix)
+	ld	a, -8 (ix)
 	adc	a, #0x00
 	ld	d, a
 	ld	a, #0xff
@@ -2416,10 +2429,40 @@ _inicializaPajaros::
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;main.c:32: if (pajaros[i].lastChangeFrame == 20)
+;main.c:32: pajaros[i].vx = 1;
+	ld	a, -9 (ix)
+	add	a, #0x08
+	ld	l, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, -8 (ix)
+	adc	a, #0x00
+	ld	h, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	(hl), #0x01
+	inc	hl
+	ld	(hl), #0x00
+;main.c:33: pajaros[i].vy = 0;
+	ld	a, -9 (ix)
+	add	a, #0x0a
+	ld	l, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, -8 (ix)
+	adc	a, #0x00
+	ld	h, a
+;	spillPairReg hl
+;	spillPairReg hl
+	xor	a, a
+	ld	(hl), a
+	inc	hl
+	ld	(hl), a
+;main.c:34: if (pajaros[i].lastChangeFrame == 20)
+	ld	a, (bc)
 	sub	a, #0x14
 	jr	NZ, 00104$
-;main.c:34: pajaros[i].frame++;
+;main.c:36: pajaros[i].frame++;
 	pop	hl
 	push	hl
 	inc	hl
@@ -2428,22 +2471,22 @@ _inicializaPajaros::
 	inc	a
 	ld	-2 (ix), a
 	ld	(hl), a
-;main.c:35: if (pajaros[i].frame > 1)
+;main.c:37: if (pajaros[i].frame > 1)
 	ld	a, #0x01
 	sub	a, -2 (ix)
 	jr	NC, 00102$
-;main.c:36: pajaros[i].frame = 0;
+;main.c:38: pajaros[i].frame = 0;
 	ld	(hl), #0x00
 00102$:
-;main.c:37: pajaros[i].lastChangeFrame = 0;
+;main.c:39: pajaros[i].lastChangeFrame = 0;
 	xor	a, a
 	ld	(bc), a
 00104$:
-;main.c:39: if(pajaros[i].initSprite == 255) {
+;main.c:41: if(pajaros[i].initSprite == 255) {
 	ld	a, (de)
 	inc	a
 	jr	NZ, 00109$
-;main.c:40: draw_entidad(&(pajaros[i]), &spritePajaro);
+;main.c:42: draw_entidad(&(pajaros[i]), &spritePajaro);
 	ld	de, #_spritePajaro
 	pop	hl
 	push	hl
@@ -2454,11 +2497,11 @@ _inicializaPajaros::
 	ld	a, -1 (ix)
 	sub	a, #0x13
 	jp	C, 00108$
-;main.c:43: }
+;main.c:45: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:45: void loadGrapVRAM()
+;main.c:47: void loadGrapVRAM()
 ;	---------------------------------
 ; Function loadGrapVRAM
 ; ---------------------------------
@@ -2469,23 +2512,23 @@ _loadGrapVRAM::
 	ld	hl, #-30
 	add	hl, sp
 	ld	sp, hl
-;main.c:47: SMS_init();
+;main.c:49: SMS_init();
 	call	_SMS_init
-;main.c:50: SMS_setSpriteMode(SPRITEMODE_TALL);
+;main.c:52: SMS_setSpriteMode(SPRITEMODE_TALL);
 	ld	l, #0x01
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setSpriteMode
-;main.c:51: SMS_displayOn();
+;main.c:53: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:52: SMS_loadBGPalette(sonicpalette_inc);
+;main.c:54: SMS_loadBGPalette(sonicpalette_inc);
 	ld	hl, #_sonicpalette_inc
 	call	_SMS_loadBGPalette
-;main.c:53: SMS_loadSpritePalette(palleteAlex_inc);
+;main.c:55: SMS_loadSpritePalette(palleteAlex_inc);
 	ld	hl, #_palleteAlex_inc
 	call	_SMS_loadSpritePalette
-;main.c:55: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
+;main.c:57: spriteAlex = generateSpriteNoRAM(2, 2, spriteAlex_inc_size, spriteAlex_inc);
 	ld	hl, #_spriteAlex_inc
 	push	hl
 	ld	hl, #0x1000
@@ -2509,7 +2552,7 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:56: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
+;main.c:58: spritePuno = generateSprite(1, 2, puno_inc_size, puno_inc);
 	ld	hl, #_puno_inc
 	push	hl
 	ld	hl, #0x0080
@@ -2533,7 +2576,7 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:57: spritePajaro = generateSpriteFlip(3, 1, spritePajaro_inc_size, spritePajaro_inc);
+;main.c:59: spritePajaro = generateSpriteFlip(3, 1, spritePajaro_inc_size, spritePajaro_inc);
 	ld	hl, #_spritePajaro_inc
 	push	hl
 	ld	hl, #0x0180
@@ -2557,47 +2600,47 @@ _loadGrapVRAM::
 	add	hl, sp
 	ld	bc, #0x000a
 	ldir
-;main.c:58: SMS_initSprites();
+;main.c:60: SMS_initSprites();
 	call	_SMS_initSprites
-;main.c:59: alex.initSprite = 255;
+;main.c:61: alex.initSprite = 255;
 	ld	hl, #_alex + 6
 	ld	(hl), #0xff
-;main.c:60: draw_entidad(&alex, &spriteAlex);
+;main.c:62: draw_entidad(&alex, &spriteAlex);
 	ld	de, #_spriteAlex
 	ld	hl, #_alex
 	call	_draw_entidad
-;main.c:61: SMS_addSprite (0, 0, 9); // puno
+;main.c:63: SMS_addSprite (0, 0, 9); // puno
 	ld	de, #0x0009
 	ld	hl, #0x0000
 	call	_SMS_addSprite_f
-;main.c:62: inicializaPajaros();
+;main.c:64: inicializaPajaros();
 	call	_inicializaPajaros
-;main.c:67: SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
+;main.c:69: SMS_loadTiles(tiles_de_prueba2_inc, 0, tiles_de_prueba2_inc_size);
 	ld	hl, #0x00a0
 	push	hl
 	ld	de, #_tiles_de_prueba2_inc
 	ld	hl, #0x4000
 	call	_SMS_VRAMmemcpy
-;main.c:68: SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
+;main.c:70: SMS_loadTileMap(0, 0, tilemap_de_prueba2_inc, tilemap_de_prueba2_inc_size);
 	ld	hl, #0x0780
 	push	hl
 	ld	de, #_tilemap_de_prueba2_inc
 	ld	hl, #0x7800
 	call	_SMS_VRAMmemcpy
-;main.c:69: SMS_loadBGPalette(paleta_de_prueba2_inc);
+;main.c:71: SMS_loadBGPalette(paleta_de_prueba2_inc);
 	ld	hl, #_paleta_de_prueba2_inc
 	call	_SMS_loadBGPalette
-;main.c:70: SMS_setSpritePaletteColor(0,0);
+;main.c:72: SMS_setSpritePaletteColor(0,0);
 ;	spillPairReg hl
 ;	spillPairReg hl
 	xor	a, a
 	ld	l, a
 	call	_SMS_setSpritePaletteColor
-;main.c:71: }
+;main.c:73: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:73: void dibujaPajaros()
+;main.c:75: void dibujaPajaros()
 ;	---------------------------------
 ; Function dibujaPajaros
 ; ---------------------------------
@@ -2605,230 +2648,307 @@ _dibujaPajaros::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	ld	hl, #-10
+	ld	hl, #-15
 	add	hl, sp
 	ld	sp, hl
-;main.c:78: unsigned char initPajaros = pajaros[0].initSprite;
+;main.c:80: unsigned char initPajaros = pajaros[0].initSprite;
 	ld	a,(#_pajaros + 6)
-	ld	-6 (ix), a
-;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
+	ld	-15 (ix), a
+;main.c:81: for (i = 0; i < NUM_PAJAROS; i++)
 	ld	-2 (ix), #0x00
-00119$:
-;main.c:81: T_entidad *p = &pajaros[i];
+00126$:
+;main.c:83: T_entidad *p = &pajaros[i];
 	ld	c, -2 (ix)
 	ld	b, #0x00
 	ld	l, c
 	ld	h, b
 	add	hl, hl
+	add	hl, bc
 	add	hl, hl
 	add	hl, bc
 	add	hl, hl
 	ld	de, #_pajaros
 	add	hl, de
-;main.c:82: p->x++;
-	ld	-5 (ix), l
-	ld	-4 (ix), h
-	ld	a, (hl)
+	ld	c, l
+	ld	b, h
+;main.c:84: p->x++;
+	ld	a, (bc)
 	inc	a
-	ld	l, -5 (ix)
-	ld	h, -4 (ix)
-	ld	(hl), a
-;main.c:83: p->lastChangeFrame++;
-	ld	a, -5 (ix)
-	add	a, #0x03
-	ld	-10 (ix), a
-	ld	a, -4 (ix)
-	adc	a, #0x00
-	ld	-9 (ix), a
-	pop	hl
-	push	hl
-	ld	a, (hl)
-	inc	a
-	pop	hl
-	push	hl
-	ld	(hl), a
-;main.c:85: if (p->lastChangeFrame == 20)
-	sub	a, #0x14
-	jp	NZ,00108$
-;main.c:87: p->frame++;
-	ld	a, -5 (ix)
-	add	a, #0x02
-	ld	-8 (ix), a
-	ld	a, -4 (ix)
-	adc	a, #0x00
-	ld	-7 (ix), a
-	ld	l, -8 (ix)
-	ld	h, -7 (ix)
-	ld	c, (hl)
-	inc	c
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	ld	(hl), c
-;main.c:88: if (p->frame > 1)
-	ld	a, #0x01
-	sub	a, c
-	jr	NC, 00104$
-;main.c:89: p->frame = 0;
-	pop	bc
-	pop	hl
-	push	hl
-	push	bc
-	ld	(hl), #0x00
-00104$:
-;main.c:90: p->lastChangeFrame = 0;
-	pop	hl
-	ld	(hl), #0x00
-	push	hl
-;main.c:91: int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
-	ld	hl, #_spritePajaro + 2
+	ld	(bc), a
+;main.c:85: p->lastChangeFrame++;
+	ld	hl, #0x0003
+	add	hl, bc
+	ld	-14 (ix), l
+	ld	-13 (ix), h
 	ld	e, (hl)
-	ld	l, -8 (ix)
-	ld	h, -7 (ix)
+	inc	e
+	ld	l, -14 (ix)
+	ld	h, -13 (ix)
+	ld	(hl), e
+;main.c:94: for(j=0;j<spritePajaro.alto;j++) {
+	ld	hl, #0x0008
+	add	hl, bc
+	ld	-12 (ix), l
+	ld	-11 (ix), h
+;main.c:87: if (p->lastChangeFrame == 20)
+	ld	a, e
+	sub	a, #0x14
+	jp	NZ,00110$
+;main.c:89: p->frame++;
+	ld	e, c
+	ld	d, b
+	inc	de
+	inc	de
+	ld	a, (de)
+	inc	a
+	ld	-1 (ix), a
+	ld	(de), a
+;main.c:90: if (p->frame > 1)
+	ld	a, #0x01
+	sub	a, -1 (ix)
+	jr	NC, 00104$
+;main.c:91: p->frame = 0;
+	xor	a, a
+	ld	(de), a
+00104$:
+;main.c:92: p->lastChangeFrame = 0;
+	ld	l, -14 (ix)
+	ld	h, -13 (ix)
+	ld	(hl), #0x00
+;main.c:93: int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
+	ld	hl, #_spritePajaro + 2
 	ld	h, (hl)
 ;	spillPairReg hl
+	ld	a, (de)
+	push	bc
+	ld	e, a
 	ld	l, #0x00
 	ld	d, l
 	ld	b, #0x08
-00191$:
+00219$:
 	add	hl, hl
-	jr	NC, 00192$
+	jr	NC, 00220$
 	add	hl, de
-00192$:
-	djnz	00191$
-	ld	c, l
+00220$:
+	djnz	00219$
+	pop	bc
+	ld	e, l
 	ld	a, (#_spritePajaro + 4)
-	add	a, c
-	ld	-3 (ix), a
-;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
-	ld	-1 (ix), #0x00
-00117$:
+	add	a, e
+	ld	-10 (ix), a
+;main.c:94: for(j=0;j<spritePajaro.alto;j++) {
+	ld	a, -12 (ix)
+	ld	-9 (ix), a
+	ld	a, -11 (ix)
+	ld	-8 (ix), a
+	ld	d, #0x00
+00124$:
 	ld	hl, #_spritePajaro
+	ld	e, (hl)
+;main.c:95: unsigned char desplazado = (j<<2);
+	ld	a,d
+	cp	a,e
+	jp	NC,00110$
+	add	a, a
+	add	a, a
+;main.c:96: unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
+	add	a, -10 (ix)
+	ld	-7 (ix), a
+;main.c:97: for(i2=0;i2<spritePajaro.ancho;i2++) {
+	ld	-1 (ix), #0x00
+00121$:
+	ld	hl, #_spritePajaro + 1
 	ld	a,-1 (ix)
 	sub	a,(hl)
-	jr	NC, 00108$
-;main.c:93: unsigned char desplazado = (j<<2);
+	jr	NC, 00125$
+;main.c:98: SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1) /*+ 12*/;
 	ld	a, -1 (ix)
-	add	a, a
-	add	a, a
-;main.c:94: unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
-	add	a, -3 (ix)
-	ld	e, a
-;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
-	ld	d, #0x00
-00114$:
-	ld	hl, #_spritePajaro + 1
-	ld	c, (hl)
-	ld	a, d
-	sub	a, c
-	jr	NC, 00118$
-;main.c:96: SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
-	ld	c, d
-	ld	b, #0x00
-	ld	l, -6 (ix)
+	ld	e, #0x00
+	ld	l, -15 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	h, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
-	add	hl, bc
+	add	a, l
+	ld	l, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, e
+	adc	a, h
+	ld	h, a
+;	spillPairReg hl
+;	spillPairReg hl
 	add	hl, hl
 	inc	hl
-	ld	c, l
-	ld	b, h
-	ld	a, c
-	ld	iy, #_SpriteTableXN2
-	add	a, 0 (iy)
-	ld	c, a
-	ld	a, b
-	adc	a, 1 (iy)
-	ld	b, a
-	ld	a, d
+	ld	-6 (ix), l
+	ld	-5 (ix), h
+	ld	a, (_SpriteTableXN2+0)
+	add	a, -6 (ix)
+	ld	-4 (ix), a
+	ld	a, (_SpriteTableXN2+1)
+	adc	a, -5 (ix)
+	ld	-3 (ix), a
+	ld	a, -1 (ix)
 	add	a, a
-	ld	l, e
+	ld	e, -7 (ix)
+	add	a, e
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), a
+;main.c:99: if(p->vx < 0)
+	ld	l, -9 (ix)
+	ld	h, -8 (ix)
+	inc	hl
 ;	spillPairReg hl
-;	spillPairReg hl
-	add	a, l
-	ld	(bc), a
-;main.c:95: for(i2=0;i2<spritePajaro.ancho;i2++) {
-	inc	d
-	jr	00114$
-00118$:
-;main.c:92: for(j=0;j<spritePajaro.alto;j++) {
-	inc	-1 (ix)
-	jr	00117$
-00108$:
-;main.c:100: initPajaros +=3;
+	bit	7, (hl)
+	jr	Z, 00122$
+;main.c:100: SpriteTableXN2[(i2+initPajaros)*2+1] += 12;
 	ld	a, -6 (ix)
+	ld	hl, #_SpriteTableXN2
+	add	a, (hl)
+	ld	-4 (ix), a
+	ld	a, -5 (ix)
+	inc	hl
+	adc	a, (hl)
+	ld	-3 (ix), a
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	a, (hl)
+	add	a, #0x0c
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	(hl), a
+00122$:
+;main.c:97: for(i2=0;i2<spritePajaro.ancho;i2++) {
+	inc	-1 (ix)
+	jr	00121$
+00125$:
+;main.c:94: for(j=0;j<spritePajaro.alto;j++) {
+	inc	d
+	jp	00124$
+00110$:
+;main.c:104: initPajaros +=3;
+	ld	a, -15 (ix)
 	add	a, #0x03
-	ld	-6 (ix), a
-;main.c:101: end = p->len;
-	ld	c, -5 (ix)
-	ld	b, -4 (ix)
+	ld	-15 (ix), a
+;main.c:105: end = p->len;
+	ld	e, c
+	ld	d, b
 	ld	hl, #7
-	add	hl, bc
-	ld	c, (hl)
-;main.c:102: i2 = p->initSprite << 1;
-	ld	e, -5 (ix)
-	ld	d, -4 (ix)
+	add	hl, de
+	ld	a, (hl)
+	ld	-5 (ix), a
+;main.c:106: i2 = p->initSprite << 1;
+	ld	e, c
+	ld	d, b
 	ld	hl, #6
 	add	hl, de
 	ld	a, (hl)
 	add	a, a
-	ld	b, a
-;main.c:103: while(i2<end) {
-00109$:
-;main.c:104: SpriteTableXN2[i2] += 1;
-	ld	a,b
-	cp	a,c
-	jr	NC, 00120$
-	ld	hl, #_SpriteTableXN2
-	add	a, (hl)
-	inc	hl
+	ld	-1 (ix), a
+;main.c:107: p->x = (int)p->x + p->vx;
+	ld	a, (bc)
 	ld	e, a
-	ld	a, #0x00
-	adc	a, (hl)
-	ld	d, a
-	ld	a, (de)
-	inc	a
-	ld	(de), a
-;main.c:105: i2 +=2;
-	inc	b
-	inc	b
-	jr	00109$
-00120$:
-;main.c:79: for (i = 0; i < NUM_PAJAROS; i++)
+	ld	a, -12 (ix)
+	ld	-4 (ix), a
+	ld	a, -11 (ix)
+	ld	-3 (ix), a
+	ld	l, -12 (ix)
+	ld	h, -11 (ix)
+	ld	a, (hl)
+	add	a, e
+	ld	(bc), a
+;main.c:108: if (SpriteTableXN2[i2] >= 230) {
+	ld	a, (_SpriteTableXN2+0)
+	add	a, -1 (ix)
+	ld	c, a
+	ld	a, (_SpriteTableXN2+1)
+	adc	a, #0x00
+	ld	b, a
+	ld	a, (bc)
+	cp	a, #0xe6
+	jr	C, 00114$
+;main.c:109: p->vx = -1;
+	ld	l, -12 (ix)
+	ld	h, -11 (ix)
+	ld	(hl), #0xff
+	inc	hl
+	ld	(hl), #0xff
+;main.c:110: p->lastChangeFrame = 19;
+	ld	l, -14 (ix)
+	ld	h, -13 (ix)
+	ld	(hl), #0x13
+	jr	00116$
+00114$:
+;main.c:112: else if(SpriteTableXN2[i2] < 10) {
+	sub	a, #0x0a
+	jr	NC, 00116$
+;main.c:113: p->vx = 1;
+	ld	l, -12 (ix)
+	ld	h, -11 (ix)
+	ld	(hl), #0x01
+	inc	hl
+	ld	(hl), #0x00
+;main.c:114: p->lastChangeFrame = 19;
+	ld	l, -14 (ix)
+	ld	h, -13 (ix)
+	ld	(hl), #0x13
+;main.c:116: while(i2<end) {
+00116$:
+	ld	a, -1 (ix)
+	sub	a, -5 (ix)
+	jr	NC, 00127$
+;main.c:117: SpriteTableXN2[i2] = (int)SpriteTableXN2[i2] + p->vx;
+	ld	a, (_SpriteTableXN2+0)
+	add	a, -1 (ix)
+	ld	c, a
+	ld	a, (_SpriteTableXN2+1)
+	adc	a, #0x00
+	ld	b, a
+	ld	a, (bc)
+	ld	l, -4 (ix)
+	ld	h, -3 (ix)
+	ld	e, (hl)
+	add	a, e
+	ld	(bc), a
+;main.c:118: i2 +=2;
+	ld	a, -1 (ix)
+	add	a, #0x02
+	ld	-1 (ix), a
+	jr	00116$
+00127$:
+;main.c:81: for (i = 0; i < NUM_PAJAROS; i++)
 	inc	-2 (ix)
 	ld	a, -2 (ix)
 	sub	a, #0x13
-	jp	C, 00119$
-;main.c:110: }
+	jp	C, 00126$
+;main.c:123: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:112: void playMusic() {
+;main.c:125: void playMusic() {
 ;	---------------------------------
 ; Function playMusic
 ; ---------------------------------
 _playMusic::
-;main.c:113: PSGFrame();
+;main.c:126: PSGFrame();
 	call	_PSGFrame
-;main.c:114: PSGSFXFrame();
-;main.c:115: }
+;main.c:127: PSGSFXFrame();
+;main.c:128: }
 	jp	_PSGSFXFrame
-;main.c:117: void disableSprites() {
+;main.c:130: void disableSprites() {
 ;	---------------------------------
 ; Function disableSprites
 ; ---------------------------------
 _disableSprites::
-;main.c:120: while (i < 64) {
+;main.c:133: while (i < 64) {
 	ld	c, #0x00
 00101$:
 	ld	a, c
 	sub	a, #0x40
 	jr	NC, 00103$
-;main.c:121: SMS_updateSpritePosition(i,10,240); 
+;main.c:134: SMS_updateSpritePosition(i,10,240); 
 	ld	b, c
 	push	bc
 	ld	a, #0xf0
@@ -2840,16 +2960,16 @@ _disableSprites::
 	ld	a, b
 	call	_SMS_updateSpritePosition
 	pop	bc
-;main.c:122: i++;
+;main.c:135: i++;
 	inc	c
 	jr	00101$
 00103$:
-;main.c:124: numSprites = 0;
+;main.c:137: numSprites = 0;
 	ld	hl, #0x0000
 	ld	(_numSprites), hl
-;main.c:125: }
+;main.c:138: }
 	ret
-;main.c:127: void main(void)
+;main.c:140: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
@@ -2858,7 +2978,7 @@ _main::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:132: SMS_VRAMmemsetW(0, 0x0000, 16384);
+;main.c:145: SMS_VRAMmemsetW(0, 0x0000, 16384);
 	ld	-1 (ix), #0x00
 	ld	-2 (ix), #0x00
 	ld	hl, #0x4000
@@ -2866,94 +2986,94 @@ _main::
 	ld	de, #0x0000
 	ld	h, l
 	call	_SMS_VRAMmemsetW
-;main.c:142: printf("Hello, World! [1/3]");
+;main.c:155: printf("Hello, World! [1/3]");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	pop	af
-;main.c:147: SMS_displayOn();
+;main.c:160: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:148: SMS_setBGScrollX(scroll_x);
+;main.c:161: SMS_setBGScrollX(scroll_x);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:149: SMS_setBGScrollY(scroll_y);
+;main.c:162: SMS_setBGScrollY(scroll_y);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollY
-;main.c:150: SMS_init();
+;main.c:163: SMS_init();
 	call	_SMS_init
-;main.c:151: initSpritesVariables();
+;main.c:164: initSpritesVariables();
 	call	_initSpritesVariables
-;main.c:152: loadGrapVRAM();
+;main.c:165: loadGrapVRAM();
 	call	_loadGrapVRAM
-;main.c:158: PSGPlay(special_psg);
+;main.c:171: PSGPlay(special_psg);
 	ld	hl, #_special_psg
 	call	_PSGPlay
-;main.c:159: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+;main.c:172: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
 	ld	hl, #0x0020
 	call	_SMS_VDPturnOnFeature
-;main.c:160: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
 	ld	hl, #0x0002
 	call	_SMS_VDPturnOnFeature
-;main.c:162: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+;main.c:175: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
 	ld	hl, #0x0108
 	call	_SMS_VDPturnOnFeature
-;main.c:163: SMS_setFrameInterruptHandler(playMusic);
+;main.c:176: SMS_setFrameInterruptHandler(playMusic);
 	ld	hl, #_playMusic
 	call	_SMS_setFrameInterruptHandler
 00115$:
-;main.c:168: if (SMS_queryPauseRequested())
+;main.c:181: if (SMS_queryPauseRequested())
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	Z, 00105$
-;main.c:170: PSGPlay(emeraldhill_psg);
+;main.c:183: PSGPlay(emeraldhill_psg);
 	ld	hl, #_emeraldhill_psg
 	call	_PSGPlay
-;main.c:171: SMS_resetPauseRequest();
+;main.c:184: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:172: while (!SMS_queryPauseRequested())
+;main.c:185: while (!SMS_queryPauseRequested())
 00101$:
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	NZ, 00103$
-;main.c:174: SMS_waitForVBlank();
+;main.c:187: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
 	jr	00101$
 00103$:
-;main.c:178: SMS_resetPauseRequest();
+;main.c:191: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:179: PSGPlay(titulo_psg);
+;main.c:192: PSGPlay(titulo_psg);
 	ld	hl, #_titulo_psg
 	call	_PSGPlay
 00105$:
-;main.c:183: int keys = SMS_getKeysHeld();
+;main.c:196: int keys = SMS_getKeysHeld();
 	call	_SMS_getKeysHeld
 	ex	de, hl
-;main.c:184: if(keys & PORT_A_KEY_2)
+;main.c:197: if(keys & PORT_A_KEY_2)
 	bit	5, l
 	jr	Z, 00107$
-;main.c:185: keys = keys  ^ PORT_A_KEY_2;
+;main.c:198: keys = keys  ^ PORT_A_KEY_2;
 	ld	a, l
 	xor	a, #0x20
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
 00107$:
-;main.c:186: if(keys & PORT_A_KEY_1)
+;main.c:199: if(keys & PORT_A_KEY_1)
 	bit	4, l
 	jr	Z, 00109$
-;main.c:187: keys = keys  ^ PORT_A_KEY_1;
+;main.c:200: keys = keys  ^ PORT_A_KEY_1;
 	ld	a, l
 	xor	a, #0x10
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
 00109$:
-;main.c:189: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
 	push	hl
 	call	_SMS_getKeysPressed
 	pop	hl
@@ -2963,38 +3083,38 @@ _main::
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
-;main.c:192: moveAlex(keys);
+;main.c:205: moveAlex(keys);
 	call	_moveAlex
-;main.c:194: dibujaPajaros();
+;main.c:207: dibujaPajaros();
 	call	_dibujaPajaros
-;main.c:199: SMS_waitForVBlank();
+;main.c:212: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
-;main.c:205: copySpritestoSAT();
+;main.c:218: copySpritestoSAT();
 	call	_copySpritestoSAT
-;main.c:212: if (scroll_y % 2 == 0)
+;main.c:225: if (scroll_y % 2 == 0)
 	bit	0, -1 (ix)
 	jr	NZ, 00111$
-;main.c:213: scroll_x += 1;
+;main.c:226: scroll_x += 1;
 	inc	-2 (ix)
 00111$:
-;main.c:214: scroll_y++;
+;main.c:227: scroll_y++;
 	inc	-1 (ix)
-;main.c:215: if (scroll_y == 224)
+;main.c:228: if (scroll_y == 224)
 	ld	a, -1 (ix)
 	sub	a, #0xe0
 	jr	NZ, 00113$
-;main.c:216: scroll_y = 0;
+;main.c:229: scroll_y = 0;
 	ld	-1 (ix), #0x00
 00113$:
-;main.c:218: SMS_setBGScrollX(scroll_x);
+;main.c:231: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:220: SMS_displayOn();
+;main.c:233: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:222: }
+;main.c:235: }
 	jr	00115$
 ___str_0:
 	.ascii "Hello, World! [1/3]"
@@ -3280,6 +3400,8 @@ __xinit__alex:
 	.db #0x00	; 0
 	.db #0xff	; 255
 	.db #0x00	; 0
+	.dw #0x0000
+	.dw #0x0000
 	.dw #0x0000
 __xinit__lastFrame:
 	.db #0xff	; 255

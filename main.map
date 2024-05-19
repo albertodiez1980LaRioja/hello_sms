@@ -96,21 +96,21 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000010  l__HEADER8                      
      00000011  l__CABS3                        
      00000025  l__GSINIT                       
-     0000012C  l__INITIALIZED                  
-     0000012C  l__INITIALIZER                  
+     00000130  l__INITIALIZED                  
+     00000130  l__INITIALIZER                  
      00000200  s__CODE                         
-     00000406  l__DATA                         
-     00001DF7  l__CODE                         
-     00001FF7  s__HOME                         
-     00001FF9  s__INITIALIZER                  
-     00002125  s__GSINIT                       
-     0000214A  s__GSFINAL                      
+     00000452  l__DATA                         
+     00001EEA  l__CODE                         
+     000020EA  s__HOME                         
+     000020EC  s__INITIALIZER                  
+     0000221C  s__GSINIT                       
+     00002241  s__GSFINAL                      
      00008000  _SMS_SRAM                          main
      00008000  s__DATA                         
-     00008406  s__INITIALIZED                  
-     00008532  s__BSEG                         
-     00008532  s__BSS                          
-     00008532  s__HEAP                         
+     00008452  s__INITIALIZED                  
+     00008582  s__BSEG                         
+     00008582  s__BSS                          
+     00008582  s__HEAP                         
      0000FFFC  _SRAM_bank_to_be_mapped_on_slot2   main
      0000FFFD  _ROM_bank_to_be_mapped_on_slot0    main
      0000FFFE  _ROM_bank_to_be_mapped_on_slot1    main
@@ -120,7 +120,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00001DF7 =        7671. bytes (REL,CON)
+_CODE                               00000200    00001EEA =        7914. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -142,29 +142,30 @@ _CODE                               00000200    00001DF7 =        7671. bytes (R
      00000F42  _drawAlex                          main
      00000FC3  _moveAlex                          main
      00000FFD  _inicializaPajaros                 main
-     000010BF  _loadGrapVRAM                      main
-     0000119E  _dibujaPajaros                     main
-     000012C6  _playMusic                         main
-     000012CC  _disableSprites                    main
-     000012EA  _main                              main
-     000013F1  __mulint                           
-     000013F3  __mul16                            
-     0000140E  _vprintf                           vprintf
-     0000141A  _printf                            vprintf
-     00001431  __divschar                         
-     00001433  __div8                             
-     00001437  __div_signexte                     
-     0000143B  __div16                            
-     0000143B  __divsint                          
-     00001461  __get_remainder                    
-     0000154A  __print_format                     printf_large
-     00001FB6  __divuchar                         
-     00001FB8  __divu8                            
-     00001FBB  __divu16                           
-     00001FBB  __divuint                          
-     00001FEA  ___sdcc_call_hl                    
-     00001FEB  _strlen                            
-
+     00001102  _loadGrapVRAM                      main
+     000011E1  _dibujaPajaros                     main
+     000013AB  _playMusic                         main
+     000013B1  _disableSprites                    main
+     000013CF  _main                              main
+     000014D6  __mulint                           
+     000014D8  __mul16                            
+     000014F3  _vprintf                           vprintf
+     000014FF  _printf                            vprintf
+     00001516  __modschar                         
+     0000151E  __modsint                          
+     00001524  __divschar                         
+     00001526  __div8                             
+     0000152A  __div_signexte                     
+     0000152E  __div16                            
+     0000152E  __divsint                          
+     00001554  __get_remainder                    
+     0000163D  __print_format                     printf_large
+     000020A9  __divuchar                         
+     000020AB  __divu8                            
+     000020AE  __divu16                           
+     000020AE  __divuint                          
+     000020DD  ___sdcc_call_hl                    
+     000020DE  _strlen                            
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -251,18 +252,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00001FF7    00000002 =           2. bytes (REL,CON)
+_HOME                               000020EA    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00001FF7  ___sdcc_external_startup           _startup
+     000020EA  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00001FF9    0000012C =         300. bytes (REL,CON)
+_INITIALIZER                        000020EC    00000130 =         304. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -271,18 +272,18 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             00002125    00000025 =          37. bytes (REL,CON)
+_GSINIT                             0000221C    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00002125  gsinit                             crt0
+     0000221C  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            0000214A    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00002241    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -291,7 +292,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               00008000    00000406 =        1030. bytes (REL,CON)
+_DATA                               00008000    00000452 =        1106. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -301,25 +302,25 @@ _DATA                               00008000    00000406 =        1030. bytes (R
      00008342  _SpriteTableXN2                    main
      00008344  _SpriteNextFree2                   main
      00008346  _pajaros                           main
-     00008404  _numSprites                        main
+     00008450  _numSprites                        main
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 18.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        00008406    0000012C =         300. bytes (REL,CON)
+_INITIALIZED                        00008452    00000130 =         304. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00008406  _nextVRAMsprites                   main
-     00008408  _flipArray                         main
-     00008508  _maxSalto                          main
-     00008509  _alex                              main
-     00008513  _lastFrame                         main
-     00008514  _spriteAlex                        main
-     0000851E  _spritePajaro                      main
-     00008528  _spritePuno                        main
+     00008452  _nextVRAMsprites                   main
+     00008454  _flipArray                         main
+     00008554  _maxSalto                          main
+     00008555  _alex                              main
+     00008563  _lastFrame                         main
+     00008564  _spriteAlex                        main
+     0000856E  _spritePajaro                      main
+     00008578  _spritePuno                        main
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 19.
 Hexadecimal  [32-Bits]
@@ -390,6 +391,7 @@ Libraries Linked                          [ object file ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ mul.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ _startup.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ vprintf.rel ]
+./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ modsigned.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ divsigned.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ printf_large.rel ]
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ divunsigned.rel ]

@@ -22,13 +22,15 @@ void inicializaPajaros()
   unsigned char i;
   for (i = 0; i < NUM_PAJAROS; i++)
   {
-    pajaros[i].x = 15 + 32 * i;
+    pajaros[i].x = 15 + (32 * i) % 200;
     pajaros[i].y = 16 * (i / 2);
     pajaros[i].lastChangeFrame = i * 3;
     pajaros[i].initSprite = 255;
     //draw_entidad(&(pajaros[i]), &spritePajaro);
     pajaros[i].x++;
     pajaros[i].lastChangeFrame++;
+    pajaros[i].vx = 1;
+    pajaros[i].vy = 0;
     if (pajaros[i].lastChangeFrame == 20)
     {
       pajaros[i].frame++;
@@ -93,15 +95,26 @@ void dibujaPajaros()
         unsigned char desplazado = (j<<2);
         unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
         for(i2=0;i2<spritePajaro.ancho;i2++) {
-          SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
+          SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1) /*+ 12*/;
+          if(p->vx < 0)
+            SpriteTableXN2[(i2+initPajaros)*2+1] += 12;
         }
       } 
     }
     initPajaros +=3;
     end = p->len;
     i2 = p->initSprite << 1;
+    p->x = (int)p->x + p->vx;
+    if (SpriteTableXN2[i2] >= 230) {
+      p->vx = -1;
+      p->lastChangeFrame = 19;
+    }
+    else if(SpriteTableXN2[i2] < 10) {
+      p->vx = 1;
+      p->lastChangeFrame = 19;
+    }
     while(i2<end) {
-      SpriteTableXN2[i2] += 1;
+      SpriteTableXN2[i2] = (int)SpriteTableXN2[i2] + p->vx;
       i2 +=2;
       //SpriteTableXN2[i] = 14;
       //i2++;
