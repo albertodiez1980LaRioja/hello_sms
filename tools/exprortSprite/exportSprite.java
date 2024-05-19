@@ -33,12 +33,12 @@ public class exportSprite {
         return false;
     }
 
-    private static void exportPallete() {
+    private static void exportPallete(String name) {
         try {
             Set<String> files = listFilesUsingFilesList(".");
             for (String element : files) {
                 if (element.charAt(element.length() - 1) == 'p' && element.charAt(element.length() - 2) == 'm'
-                        && element.charAt(element.length() - 3) == 'b') {
+                        && element.charAt(element.length() - 3) == 'b' && name.equals(element)) {
                     System.out.println(element);
                     exportFilePallete(element);
                 }
@@ -56,11 +56,9 @@ public class exportSprite {
         } catch (IOException e) {
             System.out.println("File no encontrado");
         }
-        // img= new BufferedImage(original.getWidth(), original.getHeight(),
-        // BufferedImage.TYPE_3BYTE_BGR);
         int height = img.getHeight();
         int width = img.getWidth();
-        System.out.print("Imagen cargada");
+        System.out.println("Imagen cargada");
         int amountPixel = 0;
         int amountBlackPixel = 0;
 
@@ -90,8 +88,6 @@ public class exportSprite {
                 red = (rgb >> 16) & 0x000000FF;
                 green = (rgb >> 8) & 0x000000FF;
                 blue = (rgb) & 0x000000FF;
-                if (red == 255 && green == 255 && blue == 255)
-                    System.out.println("color blanco " + Integer.toString(rgb));
                 if (/* red == 0 && green == 0 && blue == 0 */ rgb == colors[0]) {
                     amountBlackPixel++;
                 }
@@ -112,20 +108,26 @@ public class exportSprite {
             System.out.println("color: " + i + " " + red + " " + green + " " + blue);
         }
         try {
-            FileWriter myWriter = new FileWriter("pallete.inc");
-            FileWriter myWriterHex = new FileWriter("pallete.hex");
+            String pallete = "";
+            String fileOutput = filename;
+            fileOutput = fileOutput.substring(0, fileOutput.length() - 4);
+            FileWriter myWriter = new FileWriter(fileOutput + "_pallete.inc");
+            FileWriter myWriterHex = new FileWriter(fileOutput + "_pallete.hex");
             myWriter.write(".db");
             for (int i = 0; i < indexColor; i++) {
                 rgb = colors[i];
                 red = normalizeColor((rgb >> 16) & 0x000000FF);
                 green = normalizeColor((rgb >> 8) & 0x000000FF);
                 blue = normalizeColor((rgb) & 0x000000FF);
+                if (pallete.length() != 0)
+                    pallete += ",";
+                pallete += "0x" + colorSMS(red, green, blue);
                 myWriter.write(" $" + colorSMS(red, green, blue));
                 myWriterHex.write(" $" + colorSMS(red, green, blue));
             }
             myWriter.close();
             myWriterHex.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("Successfully wrote to the file. " + pallete);
         } catch (Exception e) {
 
         }
@@ -135,7 +137,6 @@ public class exportSprite {
         int c = r / 85;
         c += (g / 85) * 4;
         c += (b / 85) * 16;
-        System.out.println("" + c + " " + r + " " + g + " " + b);
         return String.format("%02x", c);
     }
 
@@ -203,11 +204,9 @@ public class exportSprite {
         } catch (IOException e) {
             System.out.println("File no encontrado");
         }
-        // img= new BufferedImage(original.getWidth(), original.getHeight(),
-        // BufferedImage.TYPE_3BYTE_BGR);
         int height = img.getHeight();
         int width = img.getWidth();
-        System.out.print("Imagen cargada");
+        System.out.println("Imagen cargada");
         if (height % 16 != 0) {
             System.out.println("El alto no es multiplo de 16 " + height);
             return;
@@ -217,7 +216,9 @@ public class exportSprite {
             return;
         }
         try {
-            FileWriter myWriter2 = new FileWriter("puno.inc");
+            String nameOutput = filename;
+            nameOutput = nameOutput.substring(0, nameOutput.length() - 4);
+            FileWriter myWriter2 = new FileWriter(nameOutput + "_tiles.inc");
             height = height / 16;
             width = width / 8;
             int tileIndex = 0;
@@ -281,7 +282,7 @@ public class exportSprite {
             }
             exportSpriteFile(args[0], colorsNumber);
         } else if (args.length == 1) {
-            exportPallete();
+            exportPallete(args[0].toString());
         }
 
     }
