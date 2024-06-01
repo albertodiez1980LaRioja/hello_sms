@@ -225,5 +225,5 @@ void main(void)
   }
 }
 
-SMS_EMBED_SEGA_ROM_HEADER(999, 0);
+SMS_EMBED_SEGA_ROM_HEADER(9999, 0);
 SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "SEGA", "basic example", "A simple example");

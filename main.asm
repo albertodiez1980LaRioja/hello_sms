@@ -2899,7 +2899,7 @@ _dibujaPajaros::
 	ld	a, -1 (ix)
 	sub	a, -5 (ix)
 	jr	NC, 00127$
-;main.c:117: SpriteTableXN2[i2] = /*(int)*/SpriteTableXN2[i2] + p->vx;
+;main.c:117: SpriteTableXN2[i2] = SpriteTableXN2[i2] + p->vx;
 	ld	a, (_SpriteTableXN2+0)
 	add	a, -1 (ix)
 	ld	c, a
@@ -2923,32 +2923,32 @@ _dibujaPajaros::
 	ld	a, -2 (ix)
 	sub	a, #0x13
 	jp	C, 00126$
-;main.c:123: }
+;main.c:121: }
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:125: void playMusic() {
+;main.c:123: void playMusic() {
 ;	---------------------------------
 ; Function playMusic
 ; ---------------------------------
 _playMusic::
-;main.c:126: PSGFrame();
+;main.c:124: PSGFrame();
 	call	_PSGFrame
-;main.c:127: PSGSFXFrame();
-;main.c:128: }
+;main.c:125: PSGSFXFrame();
+;main.c:126: }
 	jp	_PSGSFXFrame
-;main.c:130: void disableSprites() {
+;main.c:128: void disableSprites() {
 ;	---------------------------------
 ; Function disableSprites
 ; ---------------------------------
 _disableSprites::
-;main.c:133: while (i < 64) {
+;main.c:131: while (i < 64) {
 	ld	c, #0x00
 00101$:
 	ld	a, c
 	sub	a, #0x40
 	jr	NC, 00103$
-;main.c:134: SMS_updateSpritePosition(i,10,240); 
+;main.c:132: SMS_updateSpritePosition(i,10,240); 
 	ld	b, c
 	push	bc
 	ld	a, #0xf0
@@ -2960,16 +2960,16 @@ _disableSprites::
 	ld	a, b
 	call	_SMS_updateSpritePosition
 	pop	bc
-;main.c:135: i++;
+;main.c:133: i++;
 	inc	c
 	jr	00101$
 00103$:
-;main.c:137: numSprites = 0;
+;main.c:135: numSprites = 0;
 	ld	hl, #0x0000
 	ld	(_numSprites), hl
-;main.c:138: }
+;main.c:136: }
 	ret
-;main.c:140: void main(void)
+;main.c:138: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
@@ -2978,97 +2978,97 @@ _main::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;main.c:145: SMS_VRAMmemsetW(0, 0x0000, 16384);
+;main.c:143: SMS_VRAMmemsetW(0, 0x0000, 16384);
 	ld	hl, #0x4000
 	push	hl
 	ld	de, #0x0000
 	ld	h, l
 	call	_SMS_VRAMmemsetW
-;main.c:155: printf("Hello, World! [1/3]");
+;main.c:153: printf("Hello, World! [1/3]");
 	ld	hl, #___str_0
 	push	hl
 	call	_printf
 	pop	af
-;main.c:160: SMS_displayOn();
+;main.c:158: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:161: SMS_setBGScrollX(scroll_x);
+;main.c:159: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:162: SMS_setBGScrollY(scroll_y);
+;main.c:160: SMS_setBGScrollY(scroll_y);
 	ld	l, -1 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollY
-;main.c:163: SMS_init();
+;main.c:161: SMS_init();
 	call	_SMS_init
-;main.c:164: initSpritesVariables();
+;main.c:162: initSpritesVariables();
 	call	_initSpritesVariables
-;main.c:165: loadGrapVRAM();
+;main.c:163: loadGrapVRAM();
 	call	_loadGrapVRAM
-;main.c:171: PSGPlay(special_psg);
+;main.c:169: PSGPlay(special_psg);
 	ld	hl, #_special_psg
 	call	_PSGPlay
-;main.c:172: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+;main.c:170: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
 	ld	hl, #0x0020
 	call	_SMS_VDPturnOnFeature
-;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+;main.c:171: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
 	ld	hl, #0x0002
 	call	_SMS_VDPturnOnFeature
-;main.c:175: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
 	ld	hl, #0x0108
 	call	_SMS_VDPturnOnFeature
-;main.c:176: SMS_setFrameInterruptHandler(playMusic);
+;main.c:174: SMS_setFrameInterruptHandler(playMusic);
 	ld	hl, #_playMusic
 	call	_SMS_setFrameInterruptHandler
 00111$:
-;main.c:181: if (SMS_queryPauseRequested())
+;main.c:179: if (SMS_queryPauseRequested())
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	Z, 00105$
-;main.c:183: PSGPlay(emeraldhill_psg);
+;main.c:181: PSGPlay(emeraldhill_psg);
 	ld	hl, #_emeraldhill_psg
 	call	_PSGPlay
-;main.c:184: SMS_resetPauseRequest();
+;main.c:182: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:185: while (!SMS_queryPauseRequested())
+;main.c:183: while (!SMS_queryPauseRequested())
 00101$:
 	call	_SMS_queryPauseRequested
 	bit	0,a
 	jr	NZ, 00103$
-;main.c:187: SMS_waitForVBlank();
+;main.c:185: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
 	jr	00101$
 00103$:
-;main.c:191: SMS_resetPauseRequest();
+;main.c:189: SMS_resetPauseRequest();
 	call	_SMS_resetPauseRequest
-;main.c:192: PSGPlay(titulo_psg);
+;main.c:190: PSGPlay(titulo_psg);
 	ld	hl, #_titulo_psg
 	call	_PSGPlay
 00105$:
-;main.c:196: int keys = SMS_getKeysHeld();
+;main.c:194: int keys = SMS_getKeysHeld();
 	call	_SMS_getKeysHeld
 	ld	c, e
 	ld	b, d
-;main.c:197: if(keys & PORT_A_KEY_2)
+;main.c:195: if(keys & PORT_A_KEY_2)
 	bit	5, c
 	jr	Z, 00107$
-;main.c:198: keys = keys  ^ PORT_A_KEY_2;
+;main.c:196: keys = keys  ^ PORT_A_KEY_2;
 	ld	a, c
 	xor	a, #0x20
 	ld	c, a
 00107$:
-;main.c:199: if(keys & PORT_A_KEY_1)
+;main.c:197: if(keys & PORT_A_KEY_1)
 	bit	4, c
 	jr	Z, 00109$
-;main.c:200: keys = keys  ^ PORT_A_KEY_1;
+;main.c:198: keys = keys  ^ PORT_A_KEY_1;
 	ld	a, c
 	xor	a, #0x10
 	ld	c, a
 00109$:
-;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+;main.c:200: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
 	push	bc
 	call	_SMS_getKeysPressed
 	pop	bc
@@ -3081,23 +3081,23 @@ _main::
 	ld	h, b
 ;	spillPairReg hl
 ;	spillPairReg hl
-;main.c:205: moveAlex(keys);
+;main.c:203: moveAlex(keys);
 	call	_moveAlex
-;main.c:207: dibujaPajaros();
+;main.c:205: dibujaPajaros();
 	call	_dibujaPajaros
-;main.c:212: SMS_waitForVBlank();
+;main.c:210: SMS_waitForVBlank();
 	call	_SMS_waitForVBlank
-;main.c:218: copySpritestoSAT();
+;main.c:216: copySpritestoSAT();
 	call	_copySpritestoSAT
-;main.c:224: SMS_setBGScrollX(scroll_x);
+;main.c:222: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:226: SMS_displayOn();
+;main.c:224: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:228: }
+;main.c:226: }
 	jr	00111$
 ___str_0:
 	.ascii "Hello, World! [1/3]"
@@ -3431,7 +3431,7 @@ ___SMS__SEGA_signature:
 	.db #0xff	; 255
 	.db #0xff	; 255
 	.db #0x99	; 153
-	.db #0x09	; 9
+	.db #0x99	; 153
 	.db #0x00	; 0
 	.db #0x4c	; 76	'L'
 	.org 0x7FDB

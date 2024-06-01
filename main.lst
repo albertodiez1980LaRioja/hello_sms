@@ -2899,7 +2899,7 @@
       001168 DD 7E FF         [19] 2899 	ld	a, -1 (ix)
       00116B DD 96 FB         [19] 2900 	sub	a, -5 (ix)
       00116E 30 21            [12] 2901 	jr	NC, 00127$
-                                   2902 ;main.c:117: SpriteTableXN2[i2] = /*(int)*/SpriteTableXN2[i2] + p->vx;
+                                   2902 ;main.c:117: SpriteTableXN2[i2] = SpriteTableXN2[i2] + p->vx;
       001170 3Ar42r03         [13] 2903 	ld	a, (_SpriteTableXN2+0)
       001173 DD 86 FF         [19] 2904 	add	a, -1 (ix)
       001176 4F               [ 4] 2905 	ld	c, a
@@ -2923,32 +2923,32 @@
       001194 DD 7E FE         [19] 2923 	ld	a, -2 (ix)
       001197 D6 13            [ 7] 2924 	sub	a, #0x13
       001199 DArEEr0F         [10] 2925 	jp	C, 00126$
-                                   2926 ;main.c:123: }
+                                   2926 ;main.c:121: }
       00119C DD F9            [10] 2927 	ld	sp, ix
       00119E DD E1            [14] 2928 	pop	ix
       0011A0 C9               [10] 2929 	ret
-                                   2930 ;main.c:125: void playMusic() {
+                                   2930 ;main.c:123: void playMusic() {
                                    2931 ;	---------------------------------
                                    2932 ; Function playMusic
                                    2933 ; ---------------------------------
       0011A1                       2934 _playMusic::
-                                   2935 ;main.c:126: PSGFrame();
+                                   2935 ;main.c:124: PSGFrame();
       0011A1 CDr00r00         [17] 2936 	call	_PSGFrame
-                                   2937 ;main.c:127: PSGSFXFrame();
-                                   2938 ;main.c:128: }
+                                   2937 ;main.c:125: PSGSFXFrame();
+                                   2938 ;main.c:126: }
       0011A4 C3r00r00         [10] 2939 	jp	_PSGSFXFrame
-                                   2940 ;main.c:130: void disableSprites() {
+                                   2940 ;main.c:128: void disableSprites() {
                                    2941 ;	---------------------------------
                                    2942 ; Function disableSprites
                                    2943 ; ---------------------------------
       0011A7                       2944 _disableSprites::
-                                   2945 ;main.c:133: while (i < 64) {
+                                   2945 ;main.c:131: while (i < 64) {
       0011A7 0E 00            [ 7] 2946 	ld	c, #0x00
       0011A9                       2947 00101$:
       0011A9 79               [ 4] 2948 	ld	a, c
       0011AA D6 40            [ 7] 2949 	sub	a, #0x40
       0011AC 30 10            [12] 2950 	jr	NC, 00103$
-                                   2951 ;main.c:134: SMS_updateSpritePosition(i,10,240); 
+                                   2951 ;main.c:132: SMS_updateSpritePosition(i,10,240); 
       0011AE 41               [ 4] 2952 	ld	b, c
       0011AF C5               [11] 2953 	push	bc
       0011B0 3E F0            [ 7] 2954 	ld	a, #0xf0
@@ -2960,16 +2960,16 @@
       0011B6 78               [ 4] 2960 	ld	a, b
       0011B7 CDr00r00         [17] 2961 	call	_SMS_updateSpritePosition
       0011BA C1               [10] 2962 	pop	bc
-                                   2963 ;main.c:135: i++;
+                                   2963 ;main.c:133: i++;
       0011BB 0C               [ 4] 2964 	inc	c
       0011BC 18 EB            [12] 2965 	jr	00101$
       0011BE                       2966 00103$:
-                                   2967 ;main.c:137: numSprites = 0;
+                                   2967 ;main.c:135: numSprites = 0;
       0011BE 21 00 00         [10] 2968 	ld	hl, #0x0000
       0011C1 22r50r04         [16] 2969 	ld	(_numSprites), hl
-                                   2970 ;main.c:138: }
+                                   2970 ;main.c:136: }
       0011C4 C9               [10] 2971 	ret
-                                   2972 ;main.c:140: void main(void)
+                                   2972 ;main.c:138: void main(void)
                                    2973 ;	---------------------------------
                                    2974 ; Function main
                                    2975 ; ---------------------------------
@@ -2978,97 +2978,97 @@
       0011C7 DD 21 00 00      [14] 2978 	ld	ix,#0
       0011CB DD 39            [15] 2979 	add	ix,sp
       0011CD F5               [11] 2980 	push	af
-                                   2981 ;main.c:145: SMS_VRAMmemsetW(0, 0x0000, 16384);
+                                   2981 ;main.c:143: SMS_VRAMmemsetW(0, 0x0000, 16384);
       0011CE 21 00 40         [10] 2982 	ld	hl, #0x4000
       0011D1 E5               [11] 2983 	push	hl
       0011D2 11 00 00         [10] 2984 	ld	de, #0x0000
       0011D5 65               [ 4] 2985 	ld	h, l
       0011D6 CDr00r00         [17] 2986 	call	_SMS_VRAMmemsetW
-                                   2987 ;main.c:155: printf("Hello, World! [1/3]");
+                                   2987 ;main.c:153: printf("Hello, World! [1/3]");
       0011D9 21r79r12         [10] 2988 	ld	hl, #___str_0
       0011DC E5               [11] 2989 	push	hl
       0011DD CDr00r00         [17] 2990 	call	_printf
       0011E0 F1               [10] 2991 	pop	af
-                                   2992 ;main.c:160: SMS_displayOn();
+                                   2992 ;main.c:158: SMS_displayOn();
       0011E1 21 40 01         [10] 2993 	ld	hl, #0x0140
       0011E4 CDr00r00         [17] 2994 	call	_SMS_VDPturnOnFeature
-                                   2995 ;main.c:161: SMS_setBGScrollX(scroll_x);
+                                   2995 ;main.c:159: SMS_setBGScrollX(scroll_x);
       0011E7 DD 6E FE         [19] 2996 	ld	l, -2 (ix)
                                    2997 ;	spillPairReg hl
                                    2998 ;	spillPairReg hl
       0011EA CDr00r00         [17] 2999 	call	_SMS_setBGScrollX
-                                   3000 ;main.c:162: SMS_setBGScrollY(scroll_y);
+                                   3000 ;main.c:160: SMS_setBGScrollY(scroll_y);
       0011ED DD 6E FF         [19] 3001 	ld	l, -1 (ix)
                                    3002 ;	spillPairReg hl
                                    3003 ;	spillPairReg hl
       0011F0 CDr00r00         [17] 3004 	call	_SMS_setBGScrollY
-                                   3005 ;main.c:163: SMS_init();
+                                   3005 ;main.c:161: SMS_init();
       0011F3 CDr00r00         [17] 3006 	call	_SMS_init
-                                   3007 ;main.c:164: initSpritesVariables();
+                                   3007 ;main.c:162: initSpritesVariables();
       0011F6 CDr79r05         [17] 3008 	call	_initSpritesVariables
-                                   3009 ;main.c:165: loadGrapVRAM();
+                                   3009 ;main.c:163: loadGrapVRAM();
       0011F9 CDrF8r0E         [17] 3010 	call	_loadGrapVRAM
-                                   3011 ;main.c:171: PSGPlay(special_psg);
+                                   3011 ;main.c:169: PSGPlay(special_psg);
       0011FC 21r00r00         [10] 3012 	ld	hl, #_special_psg
       0011FF CDr00r00         [17] 3013 	call	_PSGPlay
-                                   3014 ;main.c:172: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+                                   3014 ;main.c:170: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
       001202 21 20 00         [10] 3015 	ld	hl, #0x0020
       001205 CDr00r00         [17] 3016 	call	_SMS_VDPturnOnFeature
-                                   3017 ;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+                                   3017 ;main.c:171: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
       001208 21 02 00         [10] 3018 	ld	hl, #0x0002
       00120B CDr00r00         [17] 3019 	call	_SMS_VDPturnOnFeature
-                                   3020 ;main.c:175: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+                                   3020 ;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
       00120E 21 08 01         [10] 3021 	ld	hl, #0x0108
       001211 CDr00r00         [17] 3022 	call	_SMS_VDPturnOnFeature
-                                   3023 ;main.c:176: SMS_setFrameInterruptHandler(playMusic);
+                                   3023 ;main.c:174: SMS_setFrameInterruptHandler(playMusic);
       001214 21rA1r11         [10] 3024 	ld	hl, #_playMusic
       001217 CDr00r00         [17] 3025 	call	_SMS_setFrameInterruptHandler
       00121A                       3026 00111$:
-                                   3027 ;main.c:181: if (SMS_queryPauseRequested())
+                                   3027 ;main.c:179: if (SMS_queryPauseRequested())
       00121A CDr00r00         [17] 3028 	call	_SMS_queryPauseRequested
       00121D CB 47            [ 8] 3029 	bit	0,a
       00121F 28 1E            [12] 3030 	jr	Z, 00105$
-                                   3031 ;main.c:183: PSGPlay(emeraldhill_psg);
+                                   3031 ;main.c:181: PSGPlay(emeraldhill_psg);
       001221 21r00r00         [10] 3032 	ld	hl, #_emeraldhill_psg
       001224 CDr00r00         [17] 3033 	call	_PSGPlay
-                                   3034 ;main.c:184: SMS_resetPauseRequest();
+                                   3034 ;main.c:182: SMS_resetPauseRequest();
       001227 CDr00r00         [17] 3035 	call	_SMS_resetPauseRequest
-                                   3036 ;main.c:185: while (!SMS_queryPauseRequested())
+                                   3036 ;main.c:183: while (!SMS_queryPauseRequested())
       00122A                       3037 00101$:
       00122A CDr00r00         [17] 3038 	call	_SMS_queryPauseRequested
       00122D CB 47            [ 8] 3039 	bit	0,a
       00122F 20 05            [12] 3040 	jr	NZ, 00103$
-                                   3041 ;main.c:187: SMS_waitForVBlank();
+                                   3041 ;main.c:185: SMS_waitForVBlank();
       001231 CDr00r00         [17] 3042 	call	_SMS_waitForVBlank
       001234 18 F4            [12] 3043 	jr	00101$
       001236                       3044 00103$:
-                                   3045 ;main.c:191: SMS_resetPauseRequest();
+                                   3045 ;main.c:189: SMS_resetPauseRequest();
       001236 CDr00r00         [17] 3046 	call	_SMS_resetPauseRequest
-                                   3047 ;main.c:192: PSGPlay(titulo_psg);
+                                   3047 ;main.c:190: PSGPlay(titulo_psg);
       001239 21r00r00         [10] 3048 	ld	hl, #_titulo_psg
       00123C CDr00r00         [17] 3049 	call	_PSGPlay
       00123F                       3050 00105$:
-                                   3051 ;main.c:196: int keys = SMS_getKeysHeld();
+                                   3051 ;main.c:194: int keys = SMS_getKeysHeld();
       00123F CDr00r00         [17] 3052 	call	_SMS_getKeysHeld
       001242 4B               [ 4] 3053 	ld	c, e
       001243 42               [ 4] 3054 	ld	b, d
-                                   3055 ;main.c:197: if(keys & PORT_A_KEY_2)
+                                   3055 ;main.c:195: if(keys & PORT_A_KEY_2)
       001244 CB 69            [ 8] 3056 	bit	5, c
       001246 28 04            [12] 3057 	jr	Z, 00107$
-                                   3058 ;main.c:198: keys = keys  ^ PORT_A_KEY_2;
+                                   3058 ;main.c:196: keys = keys  ^ PORT_A_KEY_2;
       001248 79               [ 4] 3059 	ld	a, c
       001249 EE 20            [ 7] 3060 	xor	a, #0x20
       00124B 4F               [ 4] 3061 	ld	c, a
       00124C                       3062 00107$:
-                                   3063 ;main.c:199: if(keys & PORT_A_KEY_1)
+                                   3063 ;main.c:197: if(keys & PORT_A_KEY_1)
       00124C CB 61            [ 8] 3064 	bit	4, c
       00124E 28 04            [12] 3065 	jr	Z, 00109$
-                                   3066 ;main.c:200: keys = keys  ^ PORT_A_KEY_1;
+                                   3066 ;main.c:198: keys = keys  ^ PORT_A_KEY_1;
       001250 79               [ 4] 3067 	ld	a, c
       001251 EE 10            [ 7] 3068 	xor	a, #0x10
       001253 4F               [ 4] 3069 	ld	c, a
       001254                       3070 00109$:
-                                   3071 ;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+                                   3071 ;main.c:200: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
       001254 C5               [11] 3072 	push	bc
       001255 CDr00r00         [17] 3073 	call	_SMS_getKeysPressed
       001258 C1               [10] 3074 	pop	bc
@@ -3081,23 +3081,23 @@
       00125E 60               [ 4] 3081 	ld	h, b
                                    3082 ;	spillPairReg hl
                                    3083 ;	spillPairReg hl
-                                   3084 ;main.c:205: moveAlex(keys);
+                                   3084 ;main.c:203: moveAlex(keys);
       00125F CDrB9r0D         [17] 3085 	call	_moveAlex
-                                   3086 ;main.c:207: dibujaPajaros();
+                                   3086 ;main.c:205: dibujaPajaros();
       001262 CDrD7r0F         [17] 3087 	call	_dibujaPajaros
-                                   3088 ;main.c:212: SMS_waitForVBlank();
+                                   3088 ;main.c:210: SMS_waitForVBlank();
       001265 CDr00r00         [17] 3089 	call	_SMS_waitForVBlank
-                                   3090 ;main.c:218: copySpritestoSAT();
+                                   3090 ;main.c:216: copySpritestoSAT();
       001268 CDrA8r05         [17] 3091 	call	_copySpritestoSAT
-                                   3092 ;main.c:224: SMS_setBGScrollX(scroll_x);
+                                   3092 ;main.c:222: SMS_setBGScrollX(scroll_x);
       00126B DD 6E FE         [19] 3093 	ld	l, -2 (ix)
                                    3094 ;	spillPairReg hl
                                    3095 ;	spillPairReg hl
       00126E CDr00r00         [17] 3096 	call	_SMS_setBGScrollX
-                                   3097 ;main.c:226: SMS_displayOn();
+                                   3097 ;main.c:224: SMS_displayOn();
       001271 21 40 01         [10] 3098 	ld	hl, #0x0140
       001274 CDr00r00         [17] 3099 	call	_SMS_VDPturnOnFeature
-                                   3100 ;main.c:228: }
+                                   3100 ;main.c:226: }
       001277 18 A1            [12] 3101 	jr	00111$
       001279                       3102 ___str_0:
       001279 48 65 6C 6C 6F 2C 20  3103 	.ascii "Hello, World! [1/3]"
@@ -3436,7 +3436,7 @@
       007FFA FF                    3431 	.db #0xff	; 255
       007FFB FF                    3432 	.db #0xff	; 255
       007FFC 99                    3433 	.db #0x99	; 153
-      007FFD 09                    3434 	.db #0x09	; 9
+      007FFD 99                    3434 	.db #0x99	; 153
       007FFE 00                    3435 	.db #0x00	; 0
       007FFF 4C                    3436 	.db #0x4c	; 76	'L'
       007FDB                       3437 	.org 0x7FDB

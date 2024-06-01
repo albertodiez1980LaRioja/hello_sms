@@ -40,37 +40,32 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000003  l__HEADER5                      
      00000003  l__HEADER6                      
      00000003  l__HEADER7                      
+     0000000A  l__CODE                         
      00000010  l__HEADER8                      
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     00003E09  l__CODE                         
-     00004009  s__HOME                         
-     0000400B  s__GSINIT                       
-     0000400B  s__INITIALIZER                  
-     00004030  s__GSFINAL                      
+     0000020A  s__HOME                         
+     0000020C  s__GSINIT                       
+     0000020C  s__INITIALIZER                  
+     00000231  s__GSFINAL                      
+     00003DFF  l__BANK3                        
+     00008000  s__BANK3                        
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
      00008000  s__HEAP                         
      00008000  s__INITIALIZED                  
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    00003E09 =       15881. bytes (REL,CON)
+_CODE                               00000200    0000000A =          10. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000200  __clock                            crt0
      00000204  _exit                              crt0
-     0000020A  _emeraldhill_psg                   bank2
-     000004F0  _special_psg                       bank2
-     00002DD9  _salto_psg                         bank2
-     00002E18  _nuestro_psg                       bank2
-     00003263  _greenhill_psg                     bank2
-     0000369E  _titulo_psg                        bank2
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -158,33 +153,48 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               00004009    00000002 =           2. bytes (REL,CON)
+_HOME                               0000020A    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004009  ___sdcc_external_startup           _startup
+     0000020A  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             0000400B    00000025 =          37. bytes (REL,CON)
+_GSINIT                             0000020C    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000400B  gsinit                             crt0
+     0000020C  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            00004030    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00000231    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_BANK3                              00008000    00003DFF =       15871. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008000  _emeraldhill_psg                   bank2
+     000082E6  _special_psg                       bank2
+     0000ABCF  _salto_psg                         bank2
+     0000AC0E  _nuestro_psg                       bank2
+     0000B059  _greenhill_psg                     bank2
+     0000B494  _titulo_psg                        bank2
+ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 
 Files Linked                              [ module(s) ]
 
@@ -197,7 +207,7 @@ Libraries Linked                          [ object file ]
 
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ _startup.rel ]
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
 
 User Base Address Definitions
 

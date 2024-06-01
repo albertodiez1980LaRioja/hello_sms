@@ -7,16 +7,16 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000000 L
-  0 _paleta_de_prueba2_inc                                         003336 GR
-  0 _palleteAlex_inc                                               002B4E GR
-  0 _puno_inc                                                      00060E GR
-  0 _sonicpalette_inc                                              000000 GR
-  0 _sonictilemap_inc                                              00000E GR
-  0 _sonictiles_inc                                                00168E GR
-  0 _spriteAlex_inc                                                00068E GR
-  0 _spritePajaro_inc                                              00333B GR
-  0 _tilemap_de_prueba2_inc                                        002BF6 GR
-  0 _tiles_de_prueba2_inc                                          002B56 GR
+  7 _paleta_de_prueba2_inc                                         003336 GR
+  7 _palleteAlex_inc                                               002B4E GR
+  7 _puno_inc                                                      00060E GR
+  7 _sonicpalette_inc                                              000000 GR
+  7 _sonictilemap_inc                                              00000E GR
+  7 _sonictiles_inc                                                00168E GR
+  7 _spriteAlex_inc                                                00068E GR
+  7 _spritePajaro_inc                                              00333B GR
+  7 _tilemap_de_prueba2_inc                                        002BF6 GR
+  7 _tiles_de_prueba2_inc                                          002B56 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
@@ -24,13 +24,14 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size   34BB   flags    0
+   0 _CODE                                      size      0   flags    0
    1 _DATA                                      size      0   flags    0
    2 _INITIALIZED                               size      0   flags    0
    3 _DABS                                      size      0   flags    8
    4 _HOME                                      size      0   flags    0
    5 _GSINIT                                    size      0   flags    0
    6 _GSFINAL                                   size      0   flags    0
-   7 _INITIALIZER                               size      0   flags    0
-   8 _CABS                                      size      0   flags    8
+   7 _BANK2                                     size   34BB   flags    0
+   8 _INITIALIZER                               size      0   flags    0
+   9 _CABS                                      size      0   flags    8
 

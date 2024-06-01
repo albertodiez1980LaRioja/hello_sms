@@ -46,6 +46,7 @@
 ;--------------------------------------------------------
 	.area _CODE
 	.area _CODE
+	.area _BANK3
 _emeraldhill_psg:
 	.db #0x86	; 134
 	.db #0x4d	; 77	'M'

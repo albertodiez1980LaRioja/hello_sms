@@ -40,41 +40,33 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000003  l__HEADER5                      
      00000003  l__HEADER6                      
      00000003  l__HEADER7                      
+     0000000A  l__CODE                         
      00000010  l__HEADER8                      
      00000025  l__GSINIT                       
      00000200  s__CODE                         
-     000034C5  l__CODE                         
-     000036C5  s__HOME                         
-     000036C7  s__GSINIT                       
-     000036C7  s__INITIALIZER                  
-     000036EC  s__GSFINAL                      
+     0000020A  s__HOME                         
+     0000020C  s__GSINIT                       
+     0000020C  s__INITIALIZER                  
+     00000231  s__GSFINAL                      
+     000034BB  l__BANK2                        
+     00008000  s__BANK2                        
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
      00008000  s__HEAP                         
      00008000  s__INITIALIZED                  
-
 ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000200    000034C5 =       13509. bytes (REL,CON)
+_CODE                               00000200    0000000A =          10. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000200  __clock                            crt0
      00000204  _exit                              crt0
-     0000020A  _sonicpalette_inc                  bank1
-     00000218  _sonictilemap_inc                  bank1
-     00000818  _puno_inc                          bank1
-     00000898  _spriteAlex_inc                    bank1
-     00001898  _sonictiles_inc                    bank1
-     00002D58  _palleteAlex_inc                   bank1
-     00002D60  _tiles_de_prueba2_inc              bank1
-     00002E00  _tilemap_de_prueba2_inc            bank1
-     00003540  _paleta_de_prueba2_inc             bank1
-     00003545  _spritePajaro_inc                  bank1
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
@@ -161,33 +153,53 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_HOME                               000036C5    00000002 =           2. bytes (REL,CON)
+_HOME                               0000020A    00000002 =           2. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000036C5  ___sdcc_external_startup           _startup
+     0000020A  ___sdcc_external_startup           _startup
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSINIT                             000036C7    00000025 =          37. bytes (REL,CON)
+_GSINIT                             0000020C    00000025 =          37. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000036C7  gsinit                             crt0
+     0000020C  gsinit                             crt0
 
 ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_GSFINAL                            000036EC    00000001 =           1. bytes (REL,CON)
+_GSFINAL                            00000231    00000001 =           1. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_BANK2                              00008000    000034BB =       13499. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00008000  _sonicpalette_inc                  bank1
+     0000800E  _sonictilemap_inc                  bank1
+     0000860E  _puno_inc                          bank1
+     0000868E  _spriteAlex_inc                    bank1
+     0000968E  _sonictiles_inc                    bank1
+     0000AB4E  _palleteAlex_inc                   bank1
+     0000AB56  _tiles_de_prueba2_inc              bank1
+     0000ABF6  _tilemap_de_prueba2_inc            bank1
+     0000B336  _paleta_de_prueba2_inc             bank1
+     0000B33B  _spritePajaro_inc                  bank1
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 
 Files Linked                              [ module(s) ]
 
@@ -200,7 +212,7 @@ Libraries Linked                          [ object file ]
 
 ./sdcc/bin/../share/sdcc/lib/z80/z80.lib  [ _startup.rel ]
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
+ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
 
 User Base Address Definitions
 

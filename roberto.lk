@@ -1,5 +1,5 @@
 -mjwx
--i output.ihx
+-i roberto.ihx
 -b _CODE = 0x0200
 -b _DATA = 0xc000
 -b_BANK2=0X8000
