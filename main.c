@@ -114,10 +114,8 @@ void dibujaPajaros()
       p->lastChangeFrame = 19;
     }
     while(i2<end) {
-      SpriteTableXN2[i2] = (int)SpriteTableXN2[i2] + p->vx;
+      SpriteTableXN2[i2] = SpriteTableXN2[i2] + p->vx;
       i2 +=2;
-      //SpriteTableXN2[i] = 14;
-      //i2++;
     }
   }
 }
@@ -221,13 +219,6 @@ void main(void)
     //disableSprites();
     //PSGFrame();
     //PSGSFXFrame();
-    
-    if (scroll_y % 2 == 0)
-      scroll_x += 1;
-    scroll_y++;
-    if (scroll_y == 224)
-      scroll_y = 0;
-
     SMS_setBGScrollX(scroll_x);
     // SMS_setBGScrollY(scroll_y);
     SMS_displayOn();

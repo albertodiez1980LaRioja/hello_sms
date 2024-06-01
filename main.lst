@@ -2899,7 +2899,7 @@
       001168 DD 7E FF         [19] 2899 	ld	a, -1 (ix)
       00116B DD 96 FB         [19] 2900 	sub	a, -5 (ix)
       00116E 30 21            [12] 2901 	jr	NC, 00127$
-                                   2902 ;main.c:117: SpriteTableXN2[i2] = (int)SpriteTableXN2[i2] + p->vx;
+                                   2902 ;main.c:117: SpriteTableXN2[i2] = /*(int)*/SpriteTableXN2[i2] + p->vx;
       001170 3Ar42r03         [13] 2903 	ld	a, (_SpriteTableXN2+0)
       001173 DD 86 FF         [19] 2904 	add	a, -1 (ix)
       001176 4F               [ 4] 2905 	ld	c, a
@@ -2979,513 +2979,496 @@
       0011CB DD 39            [15] 2979 	add	ix,sp
       0011CD F5               [11] 2980 	push	af
                                    2981 ;main.c:145: SMS_VRAMmemsetW(0, 0x0000, 16384);
-      0011CE DD 36 FF 00      [19] 2982 	ld	-1 (ix), #0x00
-      0011D2 DD 36 FE 00      [19] 2983 	ld	-2 (ix), #0x00
-      0011D6 21 00 40         [10] 2984 	ld	hl, #0x4000
-      0011D9 E5               [11] 2985 	push	hl
-      0011DA 11 00 00         [10] 2986 	ld	de, #0x0000
-      0011DD 65               [ 4] 2987 	ld	h, l
-      0011DE CDr00r00         [17] 2988 	call	_SMS_VRAMmemsetW
-                                   2989 ;main.c:155: printf("Hello, World! [1/3]");
-      0011E1 21r94r12         [10] 2990 	ld	hl, #___str_0
-      0011E4 E5               [11] 2991 	push	hl
-      0011E5 CDr00r00         [17] 2992 	call	_printf
-      0011E8 F1               [10] 2993 	pop	af
-                                   2994 ;main.c:160: SMS_displayOn();
-      0011E9 21 40 01         [10] 2995 	ld	hl, #0x0140
-      0011EC CDr00r00         [17] 2996 	call	_SMS_VDPturnOnFeature
-                                   2997 ;main.c:161: SMS_setBGScrollX(scroll_x);
-      0011EF 2E 00            [ 7] 2998 	ld	l, #0x00
-                                   2999 ;	spillPairReg hl
-                                   3000 ;	spillPairReg hl
-      0011F1 CDr00r00         [17] 3001 	call	_SMS_setBGScrollX
-                                   3002 ;main.c:162: SMS_setBGScrollY(scroll_y);
-      0011F4 2E 00            [ 7] 3003 	ld	l, #0x00
-                                   3004 ;	spillPairReg hl
-                                   3005 ;	spillPairReg hl
-      0011F6 CDr00r00         [17] 3006 	call	_SMS_setBGScrollY
-                                   3007 ;main.c:163: SMS_init();
-      0011F9 CDr00r00         [17] 3008 	call	_SMS_init
-                                   3009 ;main.c:164: initSpritesVariables();
-      0011FC CDr79r05         [17] 3010 	call	_initSpritesVariables
-                                   3011 ;main.c:165: loadGrapVRAM();
-      0011FF CDrF8r0E         [17] 3012 	call	_loadGrapVRAM
-                                   3013 ;main.c:171: PSGPlay(special_psg);
-      001202 21r00r00         [10] 3014 	ld	hl, #_special_psg
-      001205 CDr00r00         [17] 3015 	call	_PSGPlay
-                                   3016 ;main.c:172: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-      001208 21 20 00         [10] 3017 	ld	hl, #0x0020
-      00120B CDr00r00         [17] 3018 	call	_SMS_VDPturnOnFeature
-                                   3019 ;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
-      00120E 21 02 00         [10] 3020 	ld	hl, #0x0002
-      001211 CDr00r00         [17] 3021 	call	_SMS_VDPturnOnFeature
-                                   3022 ;main.c:175: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
-      001214 21 08 01         [10] 3023 	ld	hl, #0x0108
-      001217 CDr00r00         [17] 3024 	call	_SMS_VDPturnOnFeature
-                                   3025 ;main.c:176: SMS_setFrameInterruptHandler(playMusic);
-      00121A 21rA1r11         [10] 3026 	ld	hl, #_playMusic
-      00121D CDr00r00         [17] 3027 	call	_SMS_setFrameInterruptHandler
-      001220                       3028 00115$:
-                                   3029 ;main.c:181: if (SMS_queryPauseRequested())
-      001220 CDr00r00         [17] 3030 	call	_SMS_queryPauseRequested
-      001223 CB 47            [ 8] 3031 	bit	0,a
-      001225 28 1E            [12] 3032 	jr	Z, 00105$
-                                   3033 ;main.c:183: PSGPlay(emeraldhill_psg);
-      001227 21r00r00         [10] 3034 	ld	hl, #_emeraldhill_psg
-      00122A CDr00r00         [17] 3035 	call	_PSGPlay
-                                   3036 ;main.c:184: SMS_resetPauseRequest();
-      00122D CDr00r00         [17] 3037 	call	_SMS_resetPauseRequest
-                                   3038 ;main.c:185: while (!SMS_queryPauseRequested())
-      001230                       3039 00101$:
-      001230 CDr00r00         [17] 3040 	call	_SMS_queryPauseRequested
-      001233 CB 47            [ 8] 3041 	bit	0,a
-      001235 20 05            [12] 3042 	jr	NZ, 00103$
-                                   3043 ;main.c:187: SMS_waitForVBlank();
-      001237 CDr00r00         [17] 3044 	call	_SMS_waitForVBlank
-      00123A 18 F4            [12] 3045 	jr	00101$
-      00123C                       3046 00103$:
-                                   3047 ;main.c:191: SMS_resetPauseRequest();
-      00123C CDr00r00         [17] 3048 	call	_SMS_resetPauseRequest
-                                   3049 ;main.c:192: PSGPlay(titulo_psg);
-      00123F 21r00r00         [10] 3050 	ld	hl, #_titulo_psg
-      001242 CDr00r00         [17] 3051 	call	_PSGPlay
-      001245                       3052 00105$:
-                                   3053 ;main.c:196: int keys = SMS_getKeysHeld();
-      001245 CDr00r00         [17] 3054 	call	_SMS_getKeysHeld
-      001248 EB               [ 4] 3055 	ex	de, hl
-                                   3056 ;main.c:197: if(keys & PORT_A_KEY_2)
-      001249 CB 6D            [ 8] 3057 	bit	5, l
-      00124B 28 04            [12] 3058 	jr	Z, 00107$
-                                   3059 ;main.c:198: keys = keys  ^ PORT_A_KEY_2;
-      00124D 7D               [ 4] 3060 	ld	a, l
-      00124E EE 20            [ 7] 3061 	xor	a, #0x20
-      001250 6F               [ 4] 3062 	ld	l, a
-                                   3063 ;	spillPairReg hl
-                                   3064 ;	spillPairReg hl
-      001251                       3065 00107$:
-                                   3066 ;main.c:199: if(keys & PORT_A_KEY_1)
-      001251 CB 65            [ 8] 3067 	bit	4, l
-      001253 28 04            [12] 3068 	jr	Z, 00109$
-                                   3069 ;main.c:200: keys = keys  ^ PORT_A_KEY_1;
-      001255 7D               [ 4] 3070 	ld	a, l
-      001256 EE 10            [ 7] 3071 	xor	a, #0x10
-      001258 6F               [ 4] 3072 	ld	l, a
-                                   3073 ;	spillPairReg hl
-                                   3074 ;	spillPairReg hl
-      001259                       3075 00109$:
-                                   3076 ;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
-      001259 E5               [11] 3077 	push	hl
-      00125A CDr00r00         [17] 3078 	call	_SMS_getKeysPressed
-      00125D E1               [10] 3079 	pop	hl
-      00125E 7B               [ 4] 3080 	ld	a, e
-      00125F E6 30            [ 7] 3081 	and	a, #0x30
-      001261 B5               [ 4] 3082 	or	a, l
-      001262 6F               [ 4] 3083 	ld	l, a
-                                   3084 ;	spillPairReg hl
-                                   3085 ;	spillPairReg hl
-                                   3086 ;main.c:205: moveAlex(keys);
-      001263 CDrB9r0D         [17] 3087 	call	_moveAlex
-                                   3088 ;main.c:207: dibujaPajaros();
-      001266 CDrD7r0F         [17] 3089 	call	_dibujaPajaros
-                                   3090 ;main.c:212: SMS_waitForVBlank();
-      001269 CDr00r00         [17] 3091 	call	_SMS_waitForVBlank
-                                   3092 ;main.c:218: copySpritestoSAT();
-      00126C CDrA8r05         [17] 3093 	call	_copySpritestoSAT
-                                   3094 ;main.c:225: if (scroll_y % 2 == 0)
-      00126F DD CB FF 46      [20] 3095 	bit	0, -1 (ix)
-      001273 20 03            [12] 3096 	jr	NZ, 00111$
-                                   3097 ;main.c:226: scroll_x += 1;
-      001275 DD 34 FE         [23] 3098 	inc	-2 (ix)
-      001278                       3099 00111$:
-                                   3100 ;main.c:227: scroll_y++;
-      001278 DD 34 FF         [23] 3101 	inc	-1 (ix)
-                                   3102 ;main.c:228: if (scroll_y == 224)
-      00127B DD 7E FF         [19] 3103 	ld	a, -1 (ix)
-      00127E D6 E0            [ 7] 3104 	sub	a, #0xe0
-      001280 20 04            [12] 3105 	jr	NZ, 00113$
-                                   3106 ;main.c:229: scroll_y = 0;
-      001282 DD 36 FF 00      [19] 3107 	ld	-1 (ix), #0x00
-      001286                       3108 00113$:
-                                   3109 ;main.c:231: SMS_setBGScrollX(scroll_x);
-      001286 DD 6E FE         [19] 3110 	ld	l, -2 (ix)
-                                   3111 ;	spillPairReg hl
-                                   3112 ;	spillPairReg hl
-      001289 CDr00r00         [17] 3113 	call	_SMS_setBGScrollX
-                                   3114 ;main.c:233: SMS_displayOn();
-      00128C 21 40 01         [10] 3115 	ld	hl, #0x0140
-      00128F CDr00r00         [17] 3116 	call	_SMS_VDPturnOnFeature
-                                   3117 ;main.c:235: }
-      001292 18 8C            [12] 3118 	jr	00115$
-      001294                       3119 ___str_0:
-      001294 48 65 6C 6C 6F 2C 20  3120 	.ascii "Hello, World! [1/3]"
+      0011CE 21 00 40         [10] 2982 	ld	hl, #0x4000
+      0011D1 E5               [11] 2983 	push	hl
+      0011D2 11 00 00         [10] 2984 	ld	de, #0x0000
+      0011D5 65               [ 4] 2985 	ld	h, l
+      0011D6 CDr00r00         [17] 2986 	call	_SMS_VRAMmemsetW
+                                   2987 ;main.c:155: printf("Hello, World! [1/3]");
+      0011D9 21r79r12         [10] 2988 	ld	hl, #___str_0
+      0011DC E5               [11] 2989 	push	hl
+      0011DD CDr00r00         [17] 2990 	call	_printf
+      0011E0 F1               [10] 2991 	pop	af
+                                   2992 ;main.c:160: SMS_displayOn();
+      0011E1 21 40 01         [10] 2993 	ld	hl, #0x0140
+      0011E4 CDr00r00         [17] 2994 	call	_SMS_VDPturnOnFeature
+                                   2995 ;main.c:161: SMS_setBGScrollX(scroll_x);
+      0011E7 DD 6E FE         [19] 2996 	ld	l, -2 (ix)
+                                   2997 ;	spillPairReg hl
+                                   2998 ;	spillPairReg hl
+      0011EA CDr00r00         [17] 2999 	call	_SMS_setBGScrollX
+                                   3000 ;main.c:162: SMS_setBGScrollY(scroll_y);
+      0011ED DD 6E FF         [19] 3001 	ld	l, -1 (ix)
+                                   3002 ;	spillPairReg hl
+                                   3003 ;	spillPairReg hl
+      0011F0 CDr00r00         [17] 3004 	call	_SMS_setBGScrollY
+                                   3005 ;main.c:163: SMS_init();
+      0011F3 CDr00r00         [17] 3006 	call	_SMS_init
+                                   3007 ;main.c:164: initSpritesVariables();
+      0011F6 CDr79r05         [17] 3008 	call	_initSpritesVariables
+                                   3009 ;main.c:165: loadGrapVRAM();
+      0011F9 CDrF8r0E         [17] 3010 	call	_loadGrapVRAM
+                                   3011 ;main.c:171: PSGPlay(special_psg);
+      0011FC 21r00r00         [10] 3012 	ld	hl, #_special_psg
+      0011FF CDr00r00         [17] 3013 	call	_PSGPlay
+                                   3014 ;main.c:172: SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+      001202 21 20 00         [10] 3015 	ld	hl, #0x0020
+      001205 CDr00r00         [17] 3016 	call	_SMS_VDPturnOnFeature
+                                   3017 ;main.c:173: SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+      001208 21 02 00         [10] 3018 	ld	hl, #0x0002
+      00120B CDr00r00         [17] 3019 	call	_SMS_VDPturnOnFeature
+                                   3020 ;main.c:175: SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+      00120E 21 08 01         [10] 3021 	ld	hl, #0x0108
+      001211 CDr00r00         [17] 3022 	call	_SMS_VDPturnOnFeature
+                                   3023 ;main.c:176: SMS_setFrameInterruptHandler(playMusic);
+      001214 21rA1r11         [10] 3024 	ld	hl, #_playMusic
+      001217 CDr00r00         [17] 3025 	call	_SMS_setFrameInterruptHandler
+      00121A                       3026 00111$:
+                                   3027 ;main.c:181: if (SMS_queryPauseRequested())
+      00121A CDr00r00         [17] 3028 	call	_SMS_queryPauseRequested
+      00121D CB 47            [ 8] 3029 	bit	0,a
+      00121F 28 1E            [12] 3030 	jr	Z, 00105$
+                                   3031 ;main.c:183: PSGPlay(emeraldhill_psg);
+      001221 21r00r00         [10] 3032 	ld	hl, #_emeraldhill_psg
+      001224 CDr00r00         [17] 3033 	call	_PSGPlay
+                                   3034 ;main.c:184: SMS_resetPauseRequest();
+      001227 CDr00r00         [17] 3035 	call	_SMS_resetPauseRequest
+                                   3036 ;main.c:185: while (!SMS_queryPauseRequested())
+      00122A                       3037 00101$:
+      00122A CDr00r00         [17] 3038 	call	_SMS_queryPauseRequested
+      00122D CB 47            [ 8] 3039 	bit	0,a
+      00122F 20 05            [12] 3040 	jr	NZ, 00103$
+                                   3041 ;main.c:187: SMS_waitForVBlank();
+      001231 CDr00r00         [17] 3042 	call	_SMS_waitForVBlank
+      001234 18 F4            [12] 3043 	jr	00101$
+      001236                       3044 00103$:
+                                   3045 ;main.c:191: SMS_resetPauseRequest();
+      001236 CDr00r00         [17] 3046 	call	_SMS_resetPauseRequest
+                                   3047 ;main.c:192: PSGPlay(titulo_psg);
+      001239 21r00r00         [10] 3048 	ld	hl, #_titulo_psg
+      00123C CDr00r00         [17] 3049 	call	_PSGPlay
+      00123F                       3050 00105$:
+                                   3051 ;main.c:196: int keys = SMS_getKeysHeld();
+      00123F CDr00r00         [17] 3052 	call	_SMS_getKeysHeld
+      001242 4B               [ 4] 3053 	ld	c, e
+      001243 42               [ 4] 3054 	ld	b, d
+                                   3055 ;main.c:197: if(keys & PORT_A_KEY_2)
+      001244 CB 69            [ 8] 3056 	bit	5, c
+      001246 28 04            [12] 3057 	jr	Z, 00107$
+                                   3058 ;main.c:198: keys = keys  ^ PORT_A_KEY_2;
+      001248 79               [ 4] 3059 	ld	a, c
+      001249 EE 20            [ 7] 3060 	xor	a, #0x20
+      00124B 4F               [ 4] 3061 	ld	c, a
+      00124C                       3062 00107$:
+                                   3063 ;main.c:199: if(keys & PORT_A_KEY_1)
+      00124C CB 61            [ 8] 3064 	bit	4, c
+      00124E 28 04            [12] 3065 	jr	Z, 00109$
+                                   3066 ;main.c:200: keys = keys  ^ PORT_A_KEY_1;
+      001250 79               [ 4] 3067 	ld	a, c
+      001251 EE 10            [ 7] 3068 	xor	a, #0x10
+      001253 4F               [ 4] 3069 	ld	c, a
+      001254                       3070 00109$:
+                                   3071 ;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+      001254 C5               [11] 3072 	push	bc
+      001255 CDr00r00         [17] 3073 	call	_SMS_getKeysPressed
+      001258 C1               [10] 3074 	pop	bc
+      001259 7B               [ 4] 3075 	ld	a, e
+      00125A E6 30            [ 7] 3076 	and	a, #0x30
+      00125C B1               [ 4] 3077 	or	a, c
+      00125D 6F               [ 4] 3078 	ld	l, a
+                                   3079 ;	spillPairReg hl
+                                   3080 ;	spillPairReg hl
+      00125E 60               [ 4] 3081 	ld	h, b
+                                   3082 ;	spillPairReg hl
+                                   3083 ;	spillPairReg hl
+                                   3084 ;main.c:205: moveAlex(keys);
+      00125F CDrB9r0D         [17] 3085 	call	_moveAlex
+                                   3086 ;main.c:207: dibujaPajaros();
+      001262 CDrD7r0F         [17] 3087 	call	_dibujaPajaros
+                                   3088 ;main.c:212: SMS_waitForVBlank();
+      001265 CDr00r00         [17] 3089 	call	_SMS_waitForVBlank
+                                   3090 ;main.c:218: copySpritestoSAT();
+      001268 CDrA8r05         [17] 3091 	call	_copySpritestoSAT
+                                   3092 ;main.c:224: SMS_setBGScrollX(scroll_x);
+      00126B DD 6E FE         [19] 3093 	ld	l, -2 (ix)
+                                   3094 ;	spillPairReg hl
+                                   3095 ;	spillPairReg hl
+      00126E CDr00r00         [17] 3096 	call	_SMS_setBGScrollX
+                                   3097 ;main.c:226: SMS_displayOn();
+      001271 21 40 01         [10] 3098 	ld	hl, #0x0140
+      001274 CDr00r00         [17] 3099 	call	_SMS_VDPturnOnFeature
+                                   3100 ;main.c:228: }
+      001277 18 A1            [12] 3101 	jr	00111$
+      001279                       3102 ___str_0:
+      001279 48 65 6C 6C 6F 2C 20  3103 	.ascii "Hello, World! [1/3]"
              57 6F 72 6C 64 21 20
              5B 31 2F 33 5D
-      0012A7 00                    3121 	.db 0x00
-                                   3122 	.area _CODE
-      0012A8                       3123 __str_1:
-      0012A8 53 45 47 41           3124 	.ascii "SEGA"
-      0012AC 00                    3125 	.db 0x00
-      0012AD                       3126 __str_2:
-      0012AD 62 61 73 69 63 20 65  3127 	.ascii "basic example"
+      00128C 00                    3104 	.db 0x00
+                                   3105 	.area _CODE
+      00128D                       3106 __str_1:
+      00128D 53 45 47 41           3107 	.ascii "SEGA"
+      001291 00                    3108 	.db 0x00
+      001292                       3109 __str_2:
+      001292 62 61 73 69 63 20 65  3110 	.ascii "basic example"
              78 61 6D 70 6C 65
-      0012BA 00                    3128 	.db 0x00
-      0012BB                       3129 __str_3:
-      0012BB 41 20 73 69 6D 70 6C  3130 	.ascii "A simple example"
+      00129F 00                    3111 	.db 0x00
+      0012A0                       3112 __str_3:
+      0012A0 41 20 73 69 6D 70 6C  3113 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      0012CB 00                    3131 	.db 0x00
-                                   3132 	.area _INITIALIZER
-      000000                       3133 __xinit__nextVRAMsprites:
-      000000 00 01                 3134 	.dw #0x0100
-      000002                       3135 __xinit__flipArray:
-      000002 00                    3136 	.db #0x00	; 0
-      000003 80                    3137 	.db #0x80	; 128
-      000004 40                    3138 	.db #0x40	; 64
-      000005 C0                    3139 	.db #0xc0	; 192
-      000006 20                    3140 	.db #0x20	; 32
-      000007 A0                    3141 	.db #0xa0	; 160
-      000008 60                    3142 	.db #0x60	; 96
-      000009 E0                    3143 	.db #0xe0	; 224
-      00000A 10                    3144 	.db #0x10	; 16
-      00000B 90                    3145 	.db #0x90	; 144
-      00000C 50                    3146 	.db #0x50	; 80	'P'
-      00000D D0                    3147 	.db #0xd0	; 208
-      00000E 30                    3148 	.db #0x30	; 48	'0'
-      00000F B0                    3149 	.db #0xb0	; 176
-      000010 70                    3150 	.db #0x70	; 112	'p'
-      000011 F0                    3151 	.db #0xf0	; 240
-      000012 08                    3152 	.db #0x08	; 8
-      000013 88                    3153 	.db #0x88	; 136
-      000014 48                    3154 	.db #0x48	; 72	'H'
-      000015 C8                    3155 	.db #0xc8	; 200
-      000016 28                    3156 	.db #0x28	; 40
-      000017 A8                    3157 	.db #0xa8	; 168
-      000018 68                    3158 	.db #0x68	; 104	'h'
-      000019 E8                    3159 	.db #0xe8	; 232
-      00001A 18                    3160 	.db #0x18	; 24
-      00001B 98                    3161 	.db #0x98	; 152
-      00001C 58                    3162 	.db #0x58	; 88	'X'
-      00001D D8                    3163 	.db #0xd8	; 216
-      00001E 38                    3164 	.db #0x38	; 56	'8'
-      00001F B8                    3165 	.db #0xb8	; 184
-      000020 78                    3166 	.db #0x78	; 120	'x'
-      000021 F8                    3167 	.db #0xf8	; 248
-      000022 04                    3168 	.db #0x04	; 4
-      000023 84                    3169 	.db #0x84	; 132
-      000024 44                    3170 	.db #0x44	; 68	'D'
-      000025 C4                    3171 	.db #0xc4	; 196
-      000026 24                    3172 	.db #0x24	; 36
-      000027 A4                    3173 	.db #0xa4	; 164
-      000028 64                    3174 	.db #0x64	; 100	'd'
-      000029 E4                    3175 	.db #0xe4	; 228
-      00002A 14                    3176 	.db #0x14	; 20
-      00002B 94                    3177 	.db #0x94	; 148
-      00002C 54                    3178 	.db #0x54	; 84	'T'
-      00002D D4                    3179 	.db #0xd4	; 212
-      00002E 34                    3180 	.db #0x34	; 52	'4'
-      00002F B4                    3181 	.db #0xb4	; 180
-      000030 74                    3182 	.db #0x74	; 116	't'
-      000031 F4                    3183 	.db #0xf4	; 244
-      000032 0C                    3184 	.db #0x0c	; 12
-      000033 8C                    3185 	.db #0x8c	; 140
-      000034 4C                    3186 	.db #0x4c	; 76	'L'
-      000035 CC                    3187 	.db #0xcc	; 204
-      000036 2C                    3188 	.db #0x2c	; 44
-      000037 AC                    3189 	.db #0xac	; 172
-      000038 6C                    3190 	.db #0x6c	; 108	'l'
-      000039 EC                    3191 	.db #0xec	; 236
-      00003A 1C                    3192 	.db #0x1c	; 28
-      00003B 9C                    3193 	.db #0x9c	; 156
-      00003C 5C                    3194 	.db #0x5c	; 92
-      00003D DC                    3195 	.db #0xdc	; 220
-      00003E 3C                    3196 	.db #0x3c	; 60
-      00003F BC                    3197 	.db #0xbc	; 188
-      000040 7C                    3198 	.db #0x7c	; 124
-      000041 FC                    3199 	.db #0xfc	; 252
-      000042 02                    3200 	.db #0x02	; 2
-      000043 82                    3201 	.db #0x82	; 130
-      000044 42                    3202 	.db #0x42	; 66	'B'
-      000045 C2                    3203 	.db #0xc2	; 194
-      000046 22                    3204 	.db #0x22	; 34
-      000047 A2                    3205 	.db #0xa2	; 162
-      000048 62                    3206 	.db #0x62	; 98	'b'
-      000049 E2                    3207 	.db #0xe2	; 226
-      00004A 12                    3208 	.db #0x12	; 18
-      00004B 92                    3209 	.db #0x92	; 146
-      00004C 52                    3210 	.db #0x52	; 82	'R'
-      00004D D2                    3211 	.db #0xd2	; 210
-      00004E 32                    3212 	.db #0x32	; 50	'2'
-      00004F B2                    3213 	.db #0xb2	; 178
-      000050 72                    3214 	.db #0x72	; 114	'r'
-      000051 F2                    3215 	.db #0xf2	; 242
-      000052 0A                    3216 	.db #0x0a	; 10
-      000053 8A                    3217 	.db #0x8a	; 138
-      000054 4A                    3218 	.db #0x4a	; 74	'J'
-      000055 CA                    3219 	.db #0xca	; 202
-      000056 2A                    3220 	.db #0x2a	; 42
-      000057 AA                    3221 	.db #0xaa	; 170
-      000058 6A                    3222 	.db #0x6a	; 106	'j'
-      000059 EA                    3223 	.db #0xea	; 234
-      00005A 1A                    3224 	.db #0x1a	; 26
-      00005B 9A                    3225 	.db #0x9a	; 154
-      00005C 5A                    3226 	.db #0x5a	; 90	'Z'
-      00005D DA                    3227 	.db #0xda	; 218
-      00005E 3A                    3228 	.db #0x3a	; 58
-      00005F BA                    3229 	.db #0xba	; 186
-      000060 7A                    3230 	.db #0x7a	; 122	'z'
-      000061 FA                    3231 	.db #0xfa	; 250
-      000062 06                    3232 	.db #0x06	; 6
-      000063 86                    3233 	.db #0x86	; 134
-      000064 46                    3234 	.db #0x46	; 70	'F'
-      000065 C6                    3235 	.db #0xc6	; 198
-      000066 26                    3236 	.db #0x26	; 38
-      000067 A6                    3237 	.db #0xa6	; 166
-      000068 66                    3238 	.db #0x66	; 102	'f'
-      000069 E6                    3239 	.db #0xe6	; 230
-      00006A 16                    3240 	.db #0x16	; 22
-      00006B 96                    3241 	.db #0x96	; 150
-      00006C 56                    3242 	.db #0x56	; 86	'V'
-      00006D D6                    3243 	.db #0xd6	; 214
-      00006E 36                    3244 	.db #0x36	; 54	'6'
-      00006F B6                    3245 	.db #0xb6	; 182
-      000070 76                    3246 	.db #0x76	; 118	'v'
-      000071 F6                    3247 	.db #0xf6	; 246
-      000072 0E                    3248 	.db #0x0e	; 14
-      000073 8E                    3249 	.db #0x8e	; 142
-      000074 4E                    3250 	.db #0x4e	; 78	'N'
-      000075 CE                    3251 	.db #0xce	; 206
-      000076 2E                    3252 	.db #0x2e	; 46
-      000077 AE                    3253 	.db #0xae	; 174
-      000078 6E                    3254 	.db #0x6e	; 110	'n'
-      000079 EE                    3255 	.db #0xee	; 238
-      00007A 1E                    3256 	.db #0x1e	; 30
-      00007B 9E                    3257 	.db #0x9e	; 158
-      00007C 5E                    3258 	.db #0x5e	; 94
-      00007D DE                    3259 	.db #0xde	; 222
-      00007E 3E                    3260 	.db #0x3e	; 62
-      00007F BE                    3261 	.db #0xbe	; 190
-      000080 7E                    3262 	.db #0x7e	; 126
-      000081 FE                    3263 	.db #0xfe	; 254
-      000082 01                    3264 	.db #0x01	; 1
-      000083 81                    3265 	.db #0x81	; 129
-      000084 41                    3266 	.db #0x41	; 65	'A'
-      000085 C1                    3267 	.db #0xc1	; 193
-      000086 21                    3268 	.db #0x21	; 33
-      000087 A1                    3269 	.db #0xa1	; 161
-      000088 61                    3270 	.db #0x61	; 97	'a'
-      000089 E1                    3271 	.db #0xe1	; 225
-      00008A 11                    3272 	.db #0x11	; 17
-      00008B 91                    3273 	.db #0x91	; 145
-      00008C 51                    3274 	.db #0x51	; 81	'Q'
-      00008D D1                    3275 	.db #0xd1	; 209
-      00008E 31                    3276 	.db #0x31	; 49	'1'
-      00008F B1                    3277 	.db #0xb1	; 177
-      000090 71                    3278 	.db #0x71	; 113	'q'
-      000091 F1                    3279 	.db #0xf1	; 241
-      000092 09                    3280 	.db #0x09	; 9
-      000093 89                    3281 	.db #0x89	; 137
-      000094 49                    3282 	.db #0x49	; 73	'I'
-      000095 C9                    3283 	.db #0xc9	; 201
-      000096 29                    3284 	.db #0x29	; 41
-      000097 A9                    3285 	.db #0xa9	; 169
-      000098 69                    3286 	.db #0x69	; 105	'i'
-      000099 E9                    3287 	.db #0xe9	; 233
-      00009A 19                    3288 	.db #0x19	; 25
-      00009B 99                    3289 	.db #0x99	; 153
-      00009C 59                    3290 	.db #0x59	; 89	'Y'
-      00009D D9                    3291 	.db #0xd9	; 217
-      00009E 39                    3292 	.db #0x39	; 57	'9'
-      00009F B9                    3293 	.db #0xb9	; 185
-      0000A0 79                    3294 	.db #0x79	; 121	'y'
-      0000A1 F9                    3295 	.db #0xf9	; 249
-      0000A2 05                    3296 	.db #0x05	; 5
-      0000A3 85                    3297 	.db #0x85	; 133
-      0000A4 45                    3298 	.db #0x45	; 69	'E'
-      0000A5 C5                    3299 	.db #0xc5	; 197
-      0000A6 25                    3300 	.db #0x25	; 37
-      0000A7 A5                    3301 	.db #0xa5	; 165
-      0000A8 65                    3302 	.db #0x65	; 101	'e'
-      0000A9 E5                    3303 	.db #0xe5	; 229
-      0000AA 15                    3304 	.db #0x15	; 21
-      0000AB 95                    3305 	.db #0x95	; 149
-      0000AC 55                    3306 	.db #0x55	; 85	'U'
-      0000AD D5                    3307 	.db #0xd5	; 213
-      0000AE 35                    3308 	.db #0x35	; 53	'5'
-      0000AF B5                    3309 	.db #0xb5	; 181
-      0000B0 75                    3310 	.db #0x75	; 117	'u'
-      0000B1 F5                    3311 	.db #0xf5	; 245
-      0000B2 0D                    3312 	.db #0x0d	; 13
-      0000B3 8D                    3313 	.db #0x8d	; 141
-      0000B4 4D                    3314 	.db #0x4d	; 77	'M'
-      0000B5 CD                    3315 	.db #0xcd	; 205
-      0000B6 2D                    3316 	.db #0x2d	; 45
-      0000B7 AD                    3317 	.db #0xad	; 173
-      0000B8 6D                    3318 	.db #0x6d	; 109	'm'
-      0000B9 ED                    3319 	.db #0xed	; 237
-      0000BA 1D                    3320 	.db #0x1d	; 29
-      0000BB 9D                    3321 	.db #0x9d	; 157
-      0000BC 5D                    3322 	.db #0x5d	; 93
-      0000BD DD                    3323 	.db #0xdd	; 221
-      0000BE 3D                    3324 	.db #0x3d	; 61
-      0000BF BD                    3325 	.db #0xbd	; 189
-      0000C0 7D                    3326 	.db #0x7d	; 125
-      0000C1 FD                    3327 	.db #0xfd	; 253
-      0000C2 03                    3328 	.db #0x03	; 3
-      0000C3 83                    3329 	.db #0x83	; 131
-      0000C4 43                    3330 	.db #0x43	; 67	'C'
-      0000C5 C3                    3331 	.db #0xc3	; 195
-      0000C6 23                    3332 	.db #0x23	; 35
-      0000C7 A3                    3333 	.db #0xa3	; 163
-      0000C8 63                    3334 	.db #0x63	; 99	'c'
-      0000C9 E3                    3335 	.db #0xe3	; 227
-      0000CA 13                    3336 	.db #0x13	; 19
-      0000CB 93                    3337 	.db #0x93	; 147
-      0000CC 53                    3338 	.db #0x53	; 83	'S'
-      0000CD D3                    3339 	.db #0xd3	; 211
-      0000CE 33                    3340 	.db #0x33	; 51	'3'
-      0000CF B3                    3341 	.db #0xb3	; 179
-      0000D0 73                    3342 	.db #0x73	; 115	's'
-      0000D1 F3                    3343 	.db #0xf3	; 243
-      0000D2 0B                    3344 	.db #0x0b	; 11
-      0000D3 8B                    3345 	.db #0x8b	; 139
-      0000D4 4B                    3346 	.db #0x4b	; 75	'K'
-      0000D5 CB                    3347 	.db #0xcb	; 203
-      0000D6 2B                    3348 	.db #0x2b	; 43
-      0000D7 AB                    3349 	.db #0xab	; 171
-      0000D8 6B                    3350 	.db #0x6b	; 107	'k'
-      0000D9 EB                    3351 	.db #0xeb	; 235
-      0000DA 1B                    3352 	.db #0x1b	; 27
-      0000DB 9B                    3353 	.db #0x9b	; 155
-      0000DC 5B                    3354 	.db #0x5b	; 91
-      0000DD DB                    3355 	.db #0xdb	; 219
-      0000DE 3B                    3356 	.db #0x3b	; 59
-      0000DF BB                    3357 	.db #0xbb	; 187
-      0000E0 7B                    3358 	.db #0x7b	; 123
-      0000E1 FB                    3359 	.db #0xfb	; 251
-      0000E2 07                    3360 	.db #0x07	; 7
-      0000E3 87                    3361 	.db #0x87	; 135
-      0000E4 47                    3362 	.db #0x47	; 71	'G'
-      0000E5 C7                    3363 	.db #0xc7	; 199
-      0000E6 27                    3364 	.db #0x27	; 39
-      0000E7 A7                    3365 	.db #0xa7	; 167
-      0000E8 67                    3366 	.db #0x67	; 103	'g'
-      0000E9 E7                    3367 	.db #0xe7	; 231
-      0000EA 17                    3368 	.db #0x17	; 23
-      0000EB 97                    3369 	.db #0x97	; 151
-      0000EC 57                    3370 	.db #0x57	; 87	'W'
-      0000ED D7                    3371 	.db #0xd7	; 215
-      0000EE 37                    3372 	.db #0x37	; 55	'7'
-      0000EF B7                    3373 	.db #0xb7	; 183
-      0000F0 77                    3374 	.db #0x77	; 119	'w'
-      0000F1 F7                    3375 	.db #0xf7	; 247
-      0000F2 0F                    3376 	.db #0x0f	; 15
-      0000F3 8F                    3377 	.db #0x8f	; 143
-      0000F4 4F                    3378 	.db #0x4f	; 79	'O'
-      0000F5 CF                    3379 	.db #0xcf	; 207
-      0000F6 2F                    3380 	.db #0x2f	; 47
-      0000F7 AF                    3381 	.db #0xaf	; 175
-      0000F8 6F                    3382 	.db #0x6f	; 111	'o'
-      0000F9 EF                    3383 	.db #0xef	; 239
-      0000FA 1F                    3384 	.db #0x1f	; 31
-      0000FB 9F                    3385 	.db #0x9f	; 159
-      0000FC 5F                    3386 	.db #0x5f	; 95
-      0000FD DF                    3387 	.db #0xdf	; 223
-      0000FE 3F                    3388 	.db #0x3f	; 63
-      0000FF BF                    3389 	.db #0xbf	; 191
-      000100 7F                    3390 	.db #0x7f	; 127
-      000101 FF                    3391 	.db #0xff	; 255
-      000102                       3392 __xinit__maxSalto:
-      000102 FF                    3393 	.db #0xff	; 255
-      000103                       3394 __xinit__alex:
-      000103 1E                    3395 	.db #0x1e	; 30
-      000104 96                    3396 	.db #0x96	; 150
-      000105 00                    3397 	.db #0x00	; 0
-      000106 00                    3398 	.db #0x00	; 0
-      000107 00                    3399 	.db #0x00	; 0
-      000108 00                    3400 	.db #0x00	; 0
-      000109 FF                    3401 	.db #0xff	; 255
-      00010A 00                    3402 	.db #0x00	; 0
-      00010B 00 00                 3403 	.dw #0x0000
-      00010D 00 00                 3404 	.dw #0x0000
-      00010F 00 00                 3405 	.dw #0x0000
-      000111                       3406 __xinit__lastFrame:
-      000111 FF                    3407 	.db #0xff	; 255
-      000112                       3408 __xinit__spriteAlex:
-      000112 02                    3409 	.db #0x02	; 2
-      000113 02                    3410 	.db #0x02	; 2
-      000114 08                    3411 	.db #0x08	; 8
-      000115 00                    3412 	.db #0x00	; 0
-      000116 00 00                 3413 	.dw #0x0000
-      000118 00                    3414 	.db #0x00	; 0
-      000119 00 00                 3415 	.dw #0x0000
-      00011B 00                    3416 	.db #0x00	; 0
-      00011C                       3417 __xinit__spritePajaro:
-      00011C 02                    3418 	.db #0x02	; 2
-      00011D 02                    3419 	.db #0x02	; 2
-      00011E 08                    3420 	.db #0x08	; 8
-      00011F 00                    3421 	.db #0x00	; 0
-      000120 00 00                 3422 	.dw #0x0000
-      000122 00                    3423 	.db #0x00	; 0
-      000123 00 00                 3424 	.dw #0x0000
-      000125 00                    3425 	.db #0x00	; 0
-      000126                       3426 __xinit__spritePuno:
-      000126 02                    3427 	.db #0x02	; 2
-      000127 02                    3428 	.db #0x02	; 2
-      000128 08                    3429 	.db #0x08	; 8
-      000129 00                    3430 	.db #0x00	; 0
-      00012A 00 00                 3431 	.dw #0x0000
-      00012C 00                    3432 	.db #0x00	; 0
-      00012D 00 00                 3433 	.dw #0x0000
-      00012F 00                    3434 	.db #0x00	; 0
-                                   3435 	.area _CABS (ABS)
-      007FF0                       3436 	.org 0x7FF0
-      007FF0                       3437 ___SMS__SEGA_signature:
-      007FF0 54                    3438 	.db #0x54	; 84	'T'
-      007FF1 4D                    3439 	.db #0x4d	; 77	'M'
-      007FF2 52                    3440 	.db #0x52	; 82	'R'
-      007FF3 20                    3441 	.db #0x20	; 32
-      007FF4 53                    3442 	.db #0x53	; 83	'S'
-      007FF5 45                    3443 	.db #0x45	; 69	'E'
-      007FF6 47                    3444 	.db #0x47	; 71	'G'
-      007FF7 41                    3445 	.db #0x41	; 65	'A'
-      007FF8 FF                    3446 	.db #0xff	; 255
-      007FF9 FF                    3447 	.db #0xff	; 255
-      007FFA FF                    3448 	.db #0xff	; 255
-      007FFB FF                    3449 	.db #0xff	; 255
-      007FFC 99                    3450 	.db #0x99	; 153
-      007FFD 09                    3451 	.db #0x09	; 9
-      007FFE 00                    3452 	.db #0x00	; 0
-      007FFF 4C                    3453 	.db #0x4c	; 76	'L'
-      007FDB                       3454 	.org 0x7FDB
-      007FDB                       3455 ___SMS__SDSC_author:
-      007FDB 53 45 47 41           3456 	.ascii "SEGA"
-      007FDF 00                    3457 	.db 0x00
-      007FCD                       3458 	.org 0x7FCD
-      007FCD                       3459 ___SMS__SDSC_name:
-      007FCD 62 61 73 69 63 20 65  3460 	.ascii "basic example"
+      0012B0 00                    3114 	.db 0x00
+                                   3115 	.area _INITIALIZER
+      000000                       3116 __xinit__nextVRAMsprites:
+      000000 00 01                 3117 	.dw #0x0100
+      000002                       3118 __xinit__flipArray:
+      000002 00                    3119 	.db #0x00	; 0
+      000003 80                    3120 	.db #0x80	; 128
+      000004 40                    3121 	.db #0x40	; 64
+      000005 C0                    3122 	.db #0xc0	; 192
+      000006 20                    3123 	.db #0x20	; 32
+      000007 A0                    3124 	.db #0xa0	; 160
+      000008 60                    3125 	.db #0x60	; 96
+      000009 E0                    3126 	.db #0xe0	; 224
+      00000A 10                    3127 	.db #0x10	; 16
+      00000B 90                    3128 	.db #0x90	; 144
+      00000C 50                    3129 	.db #0x50	; 80	'P'
+      00000D D0                    3130 	.db #0xd0	; 208
+      00000E 30                    3131 	.db #0x30	; 48	'0'
+      00000F B0                    3132 	.db #0xb0	; 176
+      000010 70                    3133 	.db #0x70	; 112	'p'
+      000011 F0                    3134 	.db #0xf0	; 240
+      000012 08                    3135 	.db #0x08	; 8
+      000013 88                    3136 	.db #0x88	; 136
+      000014 48                    3137 	.db #0x48	; 72	'H'
+      000015 C8                    3138 	.db #0xc8	; 200
+      000016 28                    3139 	.db #0x28	; 40
+      000017 A8                    3140 	.db #0xa8	; 168
+      000018 68                    3141 	.db #0x68	; 104	'h'
+      000019 E8                    3142 	.db #0xe8	; 232
+      00001A 18                    3143 	.db #0x18	; 24
+      00001B 98                    3144 	.db #0x98	; 152
+      00001C 58                    3145 	.db #0x58	; 88	'X'
+      00001D D8                    3146 	.db #0xd8	; 216
+      00001E 38                    3147 	.db #0x38	; 56	'8'
+      00001F B8                    3148 	.db #0xb8	; 184
+      000020 78                    3149 	.db #0x78	; 120	'x'
+      000021 F8                    3150 	.db #0xf8	; 248
+      000022 04                    3151 	.db #0x04	; 4
+      000023 84                    3152 	.db #0x84	; 132
+      000024 44                    3153 	.db #0x44	; 68	'D'
+      000025 C4                    3154 	.db #0xc4	; 196
+      000026 24                    3155 	.db #0x24	; 36
+      000027 A4                    3156 	.db #0xa4	; 164
+      000028 64                    3157 	.db #0x64	; 100	'd'
+      000029 E4                    3158 	.db #0xe4	; 228
+      00002A 14                    3159 	.db #0x14	; 20
+      00002B 94                    3160 	.db #0x94	; 148
+      00002C 54                    3161 	.db #0x54	; 84	'T'
+      00002D D4                    3162 	.db #0xd4	; 212
+      00002E 34                    3163 	.db #0x34	; 52	'4'
+      00002F B4                    3164 	.db #0xb4	; 180
+      000030 74                    3165 	.db #0x74	; 116	't'
+      000031 F4                    3166 	.db #0xf4	; 244
+      000032 0C                    3167 	.db #0x0c	; 12
+      000033 8C                    3168 	.db #0x8c	; 140
+      000034 4C                    3169 	.db #0x4c	; 76	'L'
+      000035 CC                    3170 	.db #0xcc	; 204
+      000036 2C                    3171 	.db #0x2c	; 44
+      000037 AC                    3172 	.db #0xac	; 172
+      000038 6C                    3173 	.db #0x6c	; 108	'l'
+      000039 EC                    3174 	.db #0xec	; 236
+      00003A 1C                    3175 	.db #0x1c	; 28
+      00003B 9C                    3176 	.db #0x9c	; 156
+      00003C 5C                    3177 	.db #0x5c	; 92
+      00003D DC                    3178 	.db #0xdc	; 220
+      00003E 3C                    3179 	.db #0x3c	; 60
+      00003F BC                    3180 	.db #0xbc	; 188
+      000040 7C                    3181 	.db #0x7c	; 124
+      000041 FC                    3182 	.db #0xfc	; 252
+      000042 02                    3183 	.db #0x02	; 2
+      000043 82                    3184 	.db #0x82	; 130
+      000044 42                    3185 	.db #0x42	; 66	'B'
+      000045 C2                    3186 	.db #0xc2	; 194
+      000046 22                    3187 	.db #0x22	; 34
+      000047 A2                    3188 	.db #0xa2	; 162
+      000048 62                    3189 	.db #0x62	; 98	'b'
+      000049 E2                    3190 	.db #0xe2	; 226
+      00004A 12                    3191 	.db #0x12	; 18
+      00004B 92                    3192 	.db #0x92	; 146
+      00004C 52                    3193 	.db #0x52	; 82	'R'
+      00004D D2                    3194 	.db #0xd2	; 210
+      00004E 32                    3195 	.db #0x32	; 50	'2'
+      00004F B2                    3196 	.db #0xb2	; 178
+      000050 72                    3197 	.db #0x72	; 114	'r'
+      000051 F2                    3198 	.db #0xf2	; 242
+      000052 0A                    3199 	.db #0x0a	; 10
+      000053 8A                    3200 	.db #0x8a	; 138
+      000054 4A                    3201 	.db #0x4a	; 74	'J'
+      000055 CA                    3202 	.db #0xca	; 202
+      000056 2A                    3203 	.db #0x2a	; 42
+      000057 AA                    3204 	.db #0xaa	; 170
+      000058 6A                    3205 	.db #0x6a	; 106	'j'
+      000059 EA                    3206 	.db #0xea	; 234
+      00005A 1A                    3207 	.db #0x1a	; 26
+      00005B 9A                    3208 	.db #0x9a	; 154
+      00005C 5A                    3209 	.db #0x5a	; 90	'Z'
+      00005D DA                    3210 	.db #0xda	; 218
+      00005E 3A                    3211 	.db #0x3a	; 58
+      00005F BA                    3212 	.db #0xba	; 186
+      000060 7A                    3213 	.db #0x7a	; 122	'z'
+      000061 FA                    3214 	.db #0xfa	; 250
+      000062 06                    3215 	.db #0x06	; 6
+      000063 86                    3216 	.db #0x86	; 134
+      000064 46                    3217 	.db #0x46	; 70	'F'
+      000065 C6                    3218 	.db #0xc6	; 198
+      000066 26                    3219 	.db #0x26	; 38
+      000067 A6                    3220 	.db #0xa6	; 166
+      000068 66                    3221 	.db #0x66	; 102	'f'
+      000069 E6                    3222 	.db #0xe6	; 230
+      00006A 16                    3223 	.db #0x16	; 22
+      00006B 96                    3224 	.db #0x96	; 150
+      00006C 56                    3225 	.db #0x56	; 86	'V'
+      00006D D6                    3226 	.db #0xd6	; 214
+      00006E 36                    3227 	.db #0x36	; 54	'6'
+      00006F B6                    3228 	.db #0xb6	; 182
+      000070 76                    3229 	.db #0x76	; 118	'v'
+      000071 F6                    3230 	.db #0xf6	; 246
+      000072 0E                    3231 	.db #0x0e	; 14
+      000073 8E                    3232 	.db #0x8e	; 142
+      000074 4E                    3233 	.db #0x4e	; 78	'N'
+      000075 CE                    3234 	.db #0xce	; 206
+      000076 2E                    3235 	.db #0x2e	; 46
+      000077 AE                    3236 	.db #0xae	; 174
+      000078 6E                    3237 	.db #0x6e	; 110	'n'
+      000079 EE                    3238 	.db #0xee	; 238
+      00007A 1E                    3239 	.db #0x1e	; 30
+      00007B 9E                    3240 	.db #0x9e	; 158
+      00007C 5E                    3241 	.db #0x5e	; 94
+      00007D DE                    3242 	.db #0xde	; 222
+      00007E 3E                    3243 	.db #0x3e	; 62
+      00007F BE                    3244 	.db #0xbe	; 190
+      000080 7E                    3245 	.db #0x7e	; 126
+      000081 FE                    3246 	.db #0xfe	; 254
+      000082 01                    3247 	.db #0x01	; 1
+      000083 81                    3248 	.db #0x81	; 129
+      000084 41                    3249 	.db #0x41	; 65	'A'
+      000085 C1                    3250 	.db #0xc1	; 193
+      000086 21                    3251 	.db #0x21	; 33
+      000087 A1                    3252 	.db #0xa1	; 161
+      000088 61                    3253 	.db #0x61	; 97	'a'
+      000089 E1                    3254 	.db #0xe1	; 225
+      00008A 11                    3255 	.db #0x11	; 17
+      00008B 91                    3256 	.db #0x91	; 145
+      00008C 51                    3257 	.db #0x51	; 81	'Q'
+      00008D D1                    3258 	.db #0xd1	; 209
+      00008E 31                    3259 	.db #0x31	; 49	'1'
+      00008F B1                    3260 	.db #0xb1	; 177
+      000090 71                    3261 	.db #0x71	; 113	'q'
+      000091 F1                    3262 	.db #0xf1	; 241
+      000092 09                    3263 	.db #0x09	; 9
+      000093 89                    3264 	.db #0x89	; 137
+      000094 49                    3265 	.db #0x49	; 73	'I'
+      000095 C9                    3266 	.db #0xc9	; 201
+      000096 29                    3267 	.db #0x29	; 41
+      000097 A9                    3268 	.db #0xa9	; 169
+      000098 69                    3269 	.db #0x69	; 105	'i'
+      000099 E9                    3270 	.db #0xe9	; 233
+      00009A 19                    3271 	.db #0x19	; 25
+      00009B 99                    3272 	.db #0x99	; 153
+      00009C 59                    3273 	.db #0x59	; 89	'Y'
+      00009D D9                    3274 	.db #0xd9	; 217
+      00009E 39                    3275 	.db #0x39	; 57	'9'
+      00009F B9                    3276 	.db #0xb9	; 185
+      0000A0 79                    3277 	.db #0x79	; 121	'y'
+      0000A1 F9                    3278 	.db #0xf9	; 249
+      0000A2 05                    3279 	.db #0x05	; 5
+      0000A3 85                    3280 	.db #0x85	; 133
+      0000A4 45                    3281 	.db #0x45	; 69	'E'
+      0000A5 C5                    3282 	.db #0xc5	; 197
+      0000A6 25                    3283 	.db #0x25	; 37
+      0000A7 A5                    3284 	.db #0xa5	; 165
+      0000A8 65                    3285 	.db #0x65	; 101	'e'
+      0000A9 E5                    3286 	.db #0xe5	; 229
+      0000AA 15                    3287 	.db #0x15	; 21
+      0000AB 95                    3288 	.db #0x95	; 149
+      0000AC 55                    3289 	.db #0x55	; 85	'U'
+      0000AD D5                    3290 	.db #0xd5	; 213
+      0000AE 35                    3291 	.db #0x35	; 53	'5'
+      0000AF B5                    3292 	.db #0xb5	; 181
+      0000B0 75                    3293 	.db #0x75	; 117	'u'
+      0000B1 F5                    3294 	.db #0xf5	; 245
+      0000B2 0D                    3295 	.db #0x0d	; 13
+      0000B3 8D                    3296 	.db #0x8d	; 141
+      0000B4 4D                    3297 	.db #0x4d	; 77	'M'
+      0000B5 CD                    3298 	.db #0xcd	; 205
+      0000B6 2D                    3299 	.db #0x2d	; 45
+      0000B7 AD                    3300 	.db #0xad	; 173
+      0000B8 6D                    3301 	.db #0x6d	; 109	'm'
+      0000B9 ED                    3302 	.db #0xed	; 237
+      0000BA 1D                    3303 	.db #0x1d	; 29
+      0000BB 9D                    3304 	.db #0x9d	; 157
+      0000BC 5D                    3305 	.db #0x5d	; 93
+      0000BD DD                    3306 	.db #0xdd	; 221
+      0000BE 3D                    3307 	.db #0x3d	; 61
+      0000BF BD                    3308 	.db #0xbd	; 189
+      0000C0 7D                    3309 	.db #0x7d	; 125
+      0000C1 FD                    3310 	.db #0xfd	; 253
+      0000C2 03                    3311 	.db #0x03	; 3
+      0000C3 83                    3312 	.db #0x83	; 131
+      0000C4 43                    3313 	.db #0x43	; 67	'C'
+      0000C5 C3                    3314 	.db #0xc3	; 195
+      0000C6 23                    3315 	.db #0x23	; 35
+      0000C7 A3                    3316 	.db #0xa3	; 163
+      0000C8 63                    3317 	.db #0x63	; 99	'c'
+      0000C9 E3                    3318 	.db #0xe3	; 227
+      0000CA 13                    3319 	.db #0x13	; 19
+      0000CB 93                    3320 	.db #0x93	; 147
+      0000CC 53                    3321 	.db #0x53	; 83	'S'
+      0000CD D3                    3322 	.db #0xd3	; 211
+      0000CE 33                    3323 	.db #0x33	; 51	'3'
+      0000CF B3                    3324 	.db #0xb3	; 179
+      0000D0 73                    3325 	.db #0x73	; 115	's'
+      0000D1 F3                    3326 	.db #0xf3	; 243
+      0000D2 0B                    3327 	.db #0x0b	; 11
+      0000D3 8B                    3328 	.db #0x8b	; 139
+      0000D4 4B                    3329 	.db #0x4b	; 75	'K'
+      0000D5 CB                    3330 	.db #0xcb	; 203
+      0000D6 2B                    3331 	.db #0x2b	; 43
+      0000D7 AB                    3332 	.db #0xab	; 171
+      0000D8 6B                    3333 	.db #0x6b	; 107	'k'
+      0000D9 EB                    3334 	.db #0xeb	; 235
+      0000DA 1B                    3335 	.db #0x1b	; 27
+      0000DB 9B                    3336 	.db #0x9b	; 155
+      0000DC 5B                    3337 	.db #0x5b	; 91
+      0000DD DB                    3338 	.db #0xdb	; 219
+      0000DE 3B                    3339 	.db #0x3b	; 59
+      0000DF BB                    3340 	.db #0xbb	; 187
+      0000E0 7B                    3341 	.db #0x7b	; 123
+      0000E1 FB                    3342 	.db #0xfb	; 251
+      0000E2 07                    3343 	.db #0x07	; 7
+      0000E3 87                    3344 	.db #0x87	; 135
+      0000E4 47                    3345 	.db #0x47	; 71	'G'
+      0000E5 C7                    3346 	.db #0xc7	; 199
+      0000E6 27                    3347 	.db #0x27	; 39
+      0000E7 A7                    3348 	.db #0xa7	; 167
+      0000E8 67                    3349 	.db #0x67	; 103	'g'
+      0000E9 E7                    3350 	.db #0xe7	; 231
+      0000EA 17                    3351 	.db #0x17	; 23
+      0000EB 97                    3352 	.db #0x97	; 151
+      0000EC 57                    3353 	.db #0x57	; 87	'W'
+      0000ED D7                    3354 	.db #0xd7	; 215
+      0000EE 37                    3355 	.db #0x37	; 55	'7'
+      0000EF B7                    3356 	.db #0xb7	; 183
+      0000F0 77                    3357 	.db #0x77	; 119	'w'
+      0000F1 F7                    3358 	.db #0xf7	; 247
+      0000F2 0F                    3359 	.db #0x0f	; 15
+      0000F3 8F                    3360 	.db #0x8f	; 143
+      0000F4 4F                    3361 	.db #0x4f	; 79	'O'
+      0000F5 CF                    3362 	.db #0xcf	; 207
+      0000F6 2F                    3363 	.db #0x2f	; 47
+      0000F7 AF                    3364 	.db #0xaf	; 175
+      0000F8 6F                    3365 	.db #0x6f	; 111	'o'
+      0000F9 EF                    3366 	.db #0xef	; 239
+      0000FA 1F                    3367 	.db #0x1f	; 31
+      0000FB 9F                    3368 	.db #0x9f	; 159
+      0000FC 5F                    3369 	.db #0x5f	; 95
+      0000FD DF                    3370 	.db #0xdf	; 223
+      0000FE 3F                    3371 	.db #0x3f	; 63
+      0000FF BF                    3372 	.db #0xbf	; 191
+      000100 7F                    3373 	.db #0x7f	; 127
+      000101 FF                    3374 	.db #0xff	; 255
+      000102                       3375 __xinit__maxSalto:
+      000102 FF                    3376 	.db #0xff	; 255
+      000103                       3377 __xinit__alex:
+      000103 1E                    3378 	.db #0x1e	; 30
+      000104 96                    3379 	.db #0x96	; 150
+      000105 00                    3380 	.db #0x00	; 0
+      000106 00                    3381 	.db #0x00	; 0
+      000107 00                    3382 	.db #0x00	; 0
+      000108 00                    3383 	.db #0x00	; 0
+      000109 FF                    3384 	.db #0xff	; 255
+      00010A 00                    3385 	.db #0x00	; 0
+      00010B 00 00                 3386 	.dw #0x0000
+      00010D 00 00                 3387 	.dw #0x0000
+      00010F 00 00                 3388 	.dw #0x0000
+      000111                       3389 __xinit__lastFrame:
+      000111 FF                    3390 	.db #0xff	; 255
+      000112                       3391 __xinit__spriteAlex:
+      000112 02                    3392 	.db #0x02	; 2
+      000113 02                    3393 	.db #0x02	; 2
+      000114 08                    3394 	.db #0x08	; 8
+      000115 00                    3395 	.db #0x00	; 0
+      000116 00 00                 3396 	.dw #0x0000
+      000118 00                    3397 	.db #0x00	; 0
+      000119 00 00                 3398 	.dw #0x0000
+      00011B 00                    3399 	.db #0x00	; 0
+      00011C                       3400 __xinit__spritePajaro:
+      00011C 02                    3401 	.db #0x02	; 2
+      00011D 02                    3402 	.db #0x02	; 2
+      00011E 08                    3403 	.db #0x08	; 8
+      00011F 00                    3404 	.db #0x00	; 0
+      000120 00 00                 3405 	.dw #0x0000
+      000122 00                    3406 	.db #0x00	; 0
+      000123 00 00                 3407 	.dw #0x0000
+      000125 00                    3408 	.db #0x00	; 0
+      000126                       3409 __xinit__spritePuno:
+      000126 02                    3410 	.db #0x02	; 2
+      000127 02                    3411 	.db #0x02	; 2
+      000128 08                    3412 	.db #0x08	; 8
+      000129 00                    3413 	.db #0x00	; 0
+      00012A 00 00                 3414 	.dw #0x0000
+      00012C 00                    3415 	.db #0x00	; 0
+      00012D 00 00                 3416 	.dw #0x0000
+      00012F 00                    3417 	.db #0x00	; 0
+                                   3418 	.area _CABS (ABS)
+      007FF0                       3419 	.org 0x7FF0
+      007FF0                       3420 ___SMS__SEGA_signature:
+      007FF0 54                    3421 	.db #0x54	; 84	'T'
+      007FF1 4D                    3422 	.db #0x4d	; 77	'M'
+      007FF2 52                    3423 	.db #0x52	; 82	'R'
+      007FF3 20                    3424 	.db #0x20	; 32
+      007FF4 53                    3425 	.db #0x53	; 83	'S'
+      007FF5 45                    3426 	.db #0x45	; 69	'E'
+      007FF6 47                    3427 	.db #0x47	; 71	'G'
+      007FF7 41                    3428 	.db #0x41	; 65	'A'
+      007FF8 FF                    3429 	.db #0xff	; 255
+      007FF9 FF                    3430 	.db #0xff	; 255
+      007FFA FF                    3431 	.db #0xff	; 255
+      007FFB FF                    3432 	.db #0xff	; 255
+      007FFC 99                    3433 	.db #0x99	; 153
+      007FFD 09                    3434 	.db #0x09	; 9
+      007FFE 00                    3435 	.db #0x00	; 0
+      007FFF 4C                    3436 	.db #0x4c	; 76	'L'
+      007FDB                       3437 	.org 0x7FDB
+      007FDB                       3438 ___SMS__SDSC_author:
+      007FDB 53 45 47 41           3439 	.ascii "SEGA"
+      007FDF 00                    3440 	.db 0x00
+      007FCD                       3441 	.org 0x7FCD
+      007FCD                       3442 ___SMS__SDSC_name:
+      007FCD 62 61 73 69 63 20 65  3443 	.ascii "basic example"
              78 61 6D 70 6C 65
-      007FDA 00                    3461 	.db 0x00
-      007FBC                       3462 	.org 0x7FBC
-      007FBC                       3463 ___SMS__SDSC_descr:
-      007FBC 41 20 73 69 6D 70 6C  3464 	.ascii "A simple example"
+      007FDA 00                    3444 	.db 0x00
+      007FBC                       3445 	.org 0x7FBC
+      007FBC                       3446 ___SMS__SDSC_descr:
+      007FBC 41 20 73 69 6D 70 6C  3447 	.ascii "A simple example"
              65 20 65 78 61 6D 70
              6C 65
-      007FCC 00                    3465 	.db 0x00
-      007FE0                       3466 	.org 0x7FE0
-      007FE0                       3467 ___SMS__SDSC_signature:
-      007FE0 53                    3468 	.db #0x53	; 83	'S'
-      007FE1 44                    3469 	.db #0x44	; 68	'D'
-      007FE2 53                    3470 	.db #0x53	; 83	'S'
-      007FE3 43                    3471 	.db #0x43	; 67	'C'
-      007FE4 01                    3472 	.db #0x01	; 1
-      007FE5 00                    3473 	.db #0x00	; 0
-      007FE6 00                    3474 	.db #0x00	; 0
-      007FE7 00                    3475 	.db #0x00	; 0
-      007FE8 00                    3476 	.db #0x00	; 0
-      007FE9 00                    3477 	.db #0x00	; 0
-      007FEA DB                    3478 	.db #0xdb	; 219
-      007FEB 7F                    3479 	.db #0x7f	; 127
-      007FEC CD                    3480 	.db #0xcd	; 205
-      007FED 7F                    3481 	.db #0x7f	; 127
-      007FEE BC                    3482 	.db #0xbc	; 188
-      007FEF 7F                    3483 	.db #0x7f	; 127
+      007FCC 00                    3448 	.db 0x00
+      007FE0                       3449 	.org 0x7FE0
+      007FE0                       3450 ___SMS__SDSC_signature:
+      007FE0 53                    3451 	.db #0x53	; 83	'S'
+      007FE1 44                    3452 	.db #0x44	; 68	'D'
+      007FE2 53                    3453 	.db #0x53	; 83	'S'
+      007FE3 43                    3454 	.db #0x43	; 67	'C'
+      007FE4 01                    3455 	.db #0x01	; 1
+      007FE5 00                    3456 	.db #0x00	; 0
+      007FE6 00                    3457 	.db #0x00	; 0
+      007FE7 00                    3458 	.db #0x00	; 0
+      007FE8 00                    3459 	.db #0x00	; 0
+      007FE9 00                    3460 	.db #0x00	; 0
+      007FEA DB                    3461 	.db #0xdb	; 219
+      007FEB 7F                    3462 	.db #0x7f	; 127
+      007FEC CD                    3463 	.db #0xcd	; 205
+      007FED 7F                    3464 	.db #0x7f	; 127
+      007FEE BC                    3465 	.db #0xbc	; 188
+      007FEF 7F                    3466 	.db #0x7f	; 127

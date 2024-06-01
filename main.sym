@@ -51,13 +51,13 @@ Symbol Table
   B ___SMS__SDSC_name                                              007FCD GR
   D ___SMS__SDSC_signature                                         007FE0 GR
   9 ___SMS__SEGA_signature                                         007FF0 GR
-  0 ___str_0                                                       001294 R
+  0 ___str_0                                                       001279 R
     __divsint                                                      ****** GX
     __modsint                                                      ****** GX
     __mulint                                                       ****** GX
-  0 __str_1                                                        0012A8 R
-  0 __str_2                                                        0012AD R
-  0 __str_3                                                        0012BB R
+  0 __str_1                                                        00128D R
+  0 __str_2                                                        001292 R
+  0 __str_3                                                        0012A0 R
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
 
@@ -133,7 +133,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size   12CC   flags    0
+   0 _CODE                                      size   12B1   flags    0
    1 _DATA                                      size    452   flags    0
    2 _INITIALIZED                               size    130   flags    0
    3 _DABS                                      size      0   flags    8

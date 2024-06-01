@@ -2899,7 +2899,7 @@ _dibujaPajaros::
 	ld	a, -1 (ix)
 	sub	a, -5 (ix)
 	jr	NC, 00127$
-;main.c:117: SpriteTableXN2[i2] = (int)SpriteTableXN2[i2] + p->vx;
+;main.c:117: SpriteTableXN2[i2] = /*(int)*/SpriteTableXN2[i2] + p->vx;
 	ld	a, (_SpriteTableXN2+0)
 	add	a, -1 (ix)
 	ld	c, a
@@ -2979,8 +2979,6 @@ _main::
 	add	ix,sp
 	push	af
 ;main.c:145: SMS_VRAMmemsetW(0, 0x0000, 16384);
-	ld	-1 (ix), #0x00
-	ld	-2 (ix), #0x00
 	ld	hl, #0x4000
 	push	hl
 	ld	de, #0x0000
@@ -2995,12 +2993,12 @@ _main::
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
 ;main.c:161: SMS_setBGScrollX(scroll_x);
-	ld	l, #0x00
+	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
 ;main.c:162: SMS_setBGScrollY(scroll_y);
-	ld	l, #0x00
+	ld	l, -1 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollY
@@ -3025,7 +3023,7 @@ _main::
 ;main.c:176: SMS_setFrameInterruptHandler(playMusic);
 	ld	hl, #_playMusic
 	call	_SMS_setFrameInterruptHandler
-00115$:
+00111$:
 ;main.c:181: if (SMS_queryPauseRequested())
 	call	_SMS_queryPauseRequested
 	bit	0,a
@@ -3052,35 +3050,35 @@ _main::
 00105$:
 ;main.c:196: int keys = SMS_getKeysHeld();
 	call	_SMS_getKeysHeld
-	ex	de, hl
+	ld	c, e
+	ld	b, d
 ;main.c:197: if(keys & PORT_A_KEY_2)
-	bit	5, l
+	bit	5, c
 	jr	Z, 00107$
 ;main.c:198: keys = keys  ^ PORT_A_KEY_2;
-	ld	a, l
+	ld	a, c
 	xor	a, #0x20
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
+	ld	c, a
 00107$:
 ;main.c:199: if(keys & PORT_A_KEY_1)
-	bit	4, l
+	bit	4, c
 	jr	Z, 00109$
 ;main.c:200: keys = keys  ^ PORT_A_KEY_1;
-	ld	a, l
+	ld	a, c
 	xor	a, #0x10
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
+	ld	c, a
 00109$:
 ;main.c:202: keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
-	push	hl
+	push	bc
 	call	_SMS_getKeysPressed
-	pop	hl
+	pop	bc
 	ld	a, e
 	and	a, #0x30
-	or	a, l
+	or	a, c
 	ld	l, a
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	h, b
 ;	spillPairReg hl
 ;	spillPairReg hl
 ;main.c:205: moveAlex(keys);
@@ -3091,31 +3089,16 @@ _main::
 	call	_SMS_waitForVBlank
 ;main.c:218: copySpritestoSAT();
 	call	_copySpritestoSAT
-;main.c:225: if (scroll_y % 2 == 0)
-	bit	0, -1 (ix)
-	jr	NZ, 00111$
-;main.c:226: scroll_x += 1;
-	inc	-2 (ix)
-00111$:
-;main.c:227: scroll_y++;
-	inc	-1 (ix)
-;main.c:228: if (scroll_y == 224)
-	ld	a, -1 (ix)
-	sub	a, #0xe0
-	jr	NZ, 00113$
-;main.c:229: scroll_y = 0;
-	ld	-1 (ix), #0x00
-00113$:
-;main.c:231: SMS_setBGScrollX(scroll_x);
+;main.c:224: SMS_setBGScrollX(scroll_x);
 	ld	l, -2 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_SMS_setBGScrollX
-;main.c:233: SMS_displayOn();
+;main.c:226: SMS_displayOn();
 	ld	hl, #0x0140
 	call	_SMS_VDPturnOnFeature
-;main.c:235: }
-	jr	00115$
+;main.c:228: }
+	jr	00111$
 ___str_0:
 	.ascii "Hello, World! [1/3]"
 	.db 0x00
