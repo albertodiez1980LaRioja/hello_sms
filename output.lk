@@ -2,8 +2,8 @@
 -i output.ihx
 -b _CODE = 0x0200
 -b _DATA = 0xc000
+-b_BANK1=0X8000
 -b_BANK2=0X8000
--b_BANK3=0X8000
 -k ./sdcc/bin/../share/sdcc/lib/z80
 -k /usr/local/share/sdcc/lib/z80
 -l SMSlib.lib

@@ -39,8 +39,8 @@ DEF s__HOME 0x20A
 DEF s__GSINIT 0x20C
 DEF s__INITIALIZER 0x20C
 DEF s__GSFINAL 0x231
-DEF l__BANK2 0x3DFF
-DEF s__BANK2 0x8000
+DEF l__BANK3 0x3519
+DEF s__BANK3 0x8000
 DEF s__BSEG 0x8000
 DEF s__BSS 0x8000
 DEF s__DATA 0x8000
@@ -50,10 +50,6 @@ DEF __clock 0x200
 DEF _exit 0x204
 DEF ___sdcc_external_startup 0x20A
 DEF gsinit 0x20C
-DEF _emeraldhill_psg 0x8000
-DEF _special_psg 0x82E6
-DEF _salto_psg 0xABCF
-DEF _nuestro_psg 0xAC0E
-DEF _greenhill_psg 0xB059
-DEF _titulo_psg 0xB494
-LOAD bank2.ihx
+DEF _B0_Final_psg 0x8000
+DEF _salto_psg 0xB4BE
+LOAD bank3.ihx

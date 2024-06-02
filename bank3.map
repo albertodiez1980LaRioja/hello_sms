@@ -48,8 +48,8 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000020C  s__GSINIT                       
      0000020C  s__INITIALIZER                  
      00000231  s__GSFINAL                      
-     00003DFF  l__BANK2                        
-     00008000  s__BANK2                        
+     00003519  l__BANK3                        
+     00008000  s__BANK3                        
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
@@ -184,23 +184,20 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_BANK2                              00008000    00003DFF =       15871. bytes (REL,CON)
+_BANK3                              00008000    00003519 =       13593. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00008000  _emeraldhill_psg                   bank2
-     000082E6  _special_psg                       bank2
-     0000ABCF  _salto_psg                         bank2
-     0000AC0E  _nuestro_psg                       bank2
-     0000B059  _greenhill_psg                     bank2
-     0000B494  _titulo_psg                        bank2
+     00008000  _B0_Final_psg                      bank3
+     0000B4BE  _salto_psg                         bank3
+
 ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
 
 Files Linked                              [ module(s) ]
 
 ./sdcc/bin/../share/sdcc/lib/z80/crt0.rel
                                           [ crt0 ]
-bank2.rel                                 [ bank2 ]
+bank3.rel                                 [ bank3 ]
 
 
 Libraries Linked                          [ object file ]

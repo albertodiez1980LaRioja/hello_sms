@@ -10,7 +10,7 @@ A _DABS size 0 flags 8 addr 0
 A _HOME size 0 flags 0 addr 0
 A _GSINIT size 0 flags 0 addr 0
 A _GSFINAL size 0 flags 0 addr 0
-A _BANK2 size 34BB flags 0 addr 0
+A _BANK1 size 34BB flags 0 addr 0
 S _sonictilemap_inc Def00000E
 S _sonicpalette_inc Def000000
 S _tiles_de_prueba2_inc Def002B56

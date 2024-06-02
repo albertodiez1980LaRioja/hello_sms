@@ -10,7 +10,7 @@ A _DABS size 0 flags 8 addr 0
 A _HOME size 0 flags 0 addr 0
 A _GSINIT size 0 flags 0 addr 0
 A _GSFINAL size 0 flags 0 addr 0
-A _BANK3 size 3DFF flags 0 addr 0
+A _BANK2 size 3DFF flags 0 addr 0
 S _greenhill_psg Def003059
 S _emeraldhill_psg Def000000
 S _nuestro_psg Def002C0E

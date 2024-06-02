@@ -50,7 +50,7 @@
 ;--------------------------------------------------------
 	.area _CODE
 	.area _CODE
-	.area _BANK2
+	.area _BANK1
 _sonicpalette_inc:
 	.db #0x00	; 0
 	.db #0x10	; 16

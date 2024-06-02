@@ -62,7 +62,10 @@ void moveAlexSuelo(int keys) {
       maxSalto = 0;
     alex.y--;
     alex.y--;
+    SMS_saveROMBank();
+    SMS_mapROMBank(3);
     PSGSFXPlay(salto_psg, SFX_CHANNEL1);
+    SMS_restoreROMBank();
     return;
   }
   else if (keys & PORT_A_KEY_1) {
@@ -92,7 +95,7 @@ void moveAlexSuelo(int keys) {
         alex.lastChangeFrame = 0;
         alex.frame++;
       }
-      if (alex.frame > 3 || alex.frame < 0)
+      if (alex.frame > 3)
           alex.frame = 0;
     }
     
@@ -208,5 +211,5 @@ void moveAlex(int keys) {
     moveAlexAire(keys, puedeSubir, puedeDerecha, puedeIzquierda);
   else
     moveAlexSuelo(keys);
-  drawAlex();
+  //drawAlex();
 }

@@ -4,6 +4,7 @@
 #include "PSGlib.h"
 #include "bank1.h"
 #include "bank2.h"
+//#include "bank3.h"
 #include "./lib/entities.c"
 #include "./alex.c"
 
@@ -16,33 +17,203 @@ T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
 T_sprite spritePuno = {2, 2, 8, 0, 0, 0};
 unsigned int numSprites;
 
+void inicializaPajaros();
 
-void inicializaPajaros()
+void loadGrapVRAM();
+
+void dibujaPajaros();
+
+void playMusic();
+
+void disableSprites();
+
+
+void main(void)
 {
-  unsigned char i;
+  unsigned char scroll_x = 0;
+  unsigned char scroll_y = 0;
+  /* Clear VRAM */
+  SMS_VRAMmemsetW(0, 0x0000, 16384);
+
+  /* load a standard font character set into tiles 0-95,
+   * set BG palette to B/W and turn on the screen */
+  // SMS_autoSetUpTextRenderer();
+
+  /* Set the target of the next background write */
+  // SMS_setNextTileatXY(4,5);
+
+  /* printf() is available */
+  printf("Hello, World! [1/3]");
+
+  // SMS_printatXY(4,12,"Hello, World! [3/3]");
+  
+  /* Turn on the display */
+  SMS_displayOn();
+  SMS_setBGScrollX(scroll_x);
+  SMS_setBGScrollY(scroll_y);
+  SMS_init();
+  initSpritesVariables();
+  loadGrapVRAM();
+  // SMS_setSpriteMode(SPRITEMODE_NORMAL);
+  // SMS_setSpriteMode(SPRITEMODE_TALL);
+  /* Do nothing */
+  // PSGPlay(titulo_psg);
+  // PSGPlay(nuestro_psg);
+  char banco = SMS_getROMBank();
+  SMS_mapROMBank(3);
+  PSGPlay(special_psg);
+  //PSGPlay(B0_Final_psg);
+  SMS_mapROMBank(banco);
+  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
+  SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
+  //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
+  SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
+  SMS_setFrameInterruptHandler(playMusic);
+  
+  for (;;)
+  {
+
+    if (SMS_queryPauseRequested())
+    {
+      char banco = SMS_getROMBank();
+      SMS_mapROMBank(3);
+      PSGPlay(emeraldhill_psg);
+      SMS_mapROMBank(banco);
+      SMS_resetPauseRequest();
+      while (!SMS_queryPauseRequested())
+      {
+        SMS_waitForVBlank();
+        //PSGFrame();
+        //PSGFXFrame();
+      }
+      SMS_resetPauseRequest();
+      //PSGPlay(titulo_psg);
+    }
+    unsigned int index = 0;
+
+    unsigned int keys = SMS_getKeysHeld();
+    if(keys & PORT_A_KEY_2)
+      keys = keys  ^ PORT_A_KEY_2;
+    if(keys & PORT_A_KEY_1)
+      keys = keys  ^ PORT_A_KEY_1;
+
+    keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
+    
+    //SMS_initSprites();
+    moveAlex(keys);
+    
+    dibujaPajaros();
+
+    // SMS_autoSetUpTextRenderer();
+    // SMS_printatXY(4,12,"Hello, World! [3/3]");
+    
+    SMS_waitForVBlank();
+    drawAlex();
+    //SMS_initSprites();
+    //SMS_displayOff();
+    //UNSAFE_SMS_copySpritestoSAT();
+    //SMS_displayOn();
+    copySpritestoSAT();
+    //SMS_copySpritestoSAT();
+    //copySpritestoSAT();
+    //disableSprites();
+    //PSGFrame();
+    //PSGSFXFrame();
+    SMS_setBGScrollX(scroll_x);
+    // SMS_setBGScrollY(scroll_y);
+    SMS_displayOn();
+  }
+}
+
+SMS_EMBED_SEGA_ROM_HEADER(9999, 0);
+SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "SEGA", "basic example", "A simple example");
+
+void disableSprites() {
+  unsigned int i = 0;
+  ///i = 10;
+  while (i < 64) {
+    SMS_updateSpritePosition(i,10,240); 
+    i++;
+  }
+  numSprites = 0;
+}
+
+
+void playMusic() {
+  char banco = SMS_getROMBank();
+  SMS_mapROMBank(3);
+  PSGFrame();
+  //SMS_mapROMBank(3);
+  PSGSFXFrame();
+  SMS_mapROMBank(banco);
+}
+
+void dibujaPajaros()
+{
+  unsigned char i, i2, j, desplazado, jCalculated, y;
+  T_entidad *p;
+  unsigned char initPajaros = pajaros[0].initSprite;
   for (i = 0; i < NUM_PAJAROS; i++)
   {
-    pajaros[i].x = 15 + (32 * i) % 200;
-    pajaros[i].y = 16 * (i / 2);
-    pajaros[i].lastChangeFrame = i * 3;
-    pajaros[i].initSprite = 255;
-    //draw_entidad(&(pajaros[i]), &spritePajaro);
-    pajaros[i].x++;
-    pajaros[i].lastChangeFrame++;
-    pajaros[i].vx = 1;
-    pajaros[i].vy = 0;
-    if (pajaros[i].lastChangeFrame == 20)
+    p = &pajaros[i];
+    p->lastChangeFrame++;
+    if (p->lastChangeFrame == 20)
     {
-      pajaros[i].frame++;
-      if (pajaros[i].frame > 1)
-        pajaros[i].frame = 0;
-      pajaros[i].lastChangeFrame = 0;
+      p->frame++;
+      if (p->frame > 1)
+        p->frame = 0;
+      p->lastChangeFrame = 0;
+      int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
+      for(j=0;j<spritePajaro.alto;j++) {
+        desplazado = (j<<2);
+        jCalculated = desplazado + frame;
+        y = p->y+(desplazado<<2);
+        for(i2=0;i2<spritePajaro.ancho;i2++) {
+          SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1);
+          if(p->vx < 0)
+            SpriteTableXN2[(i2+initPajaros)*2+1] += 12;
+        }
+      } 
     }
-    if(pajaros[i].initSprite == 255) {
-      draw_entidad(&(pajaros[i]), &spritePajaro);
+    
+    initPajaros +=3;
+    i2 = p->initSprite << 1;
+    p->x += p->vx;
+    if (SpriteTableXN2[i2] >= 230) {
+      p->vx = -1;
+      p->lastChangeFrame = 19;
+    }
+    else if(SpriteTableXN2[i2] < 10) {
+      p->vx = 1;
+      p->lastChangeFrame = 19;
+    }
+    while(i2<p->len) {
+      SpriteTableXN2[i2] += p->vx;
+      i2 +=2;
+    }
+    //alex.y = 50;
+    if (alex.state == PUÑETAZO_SALTANDO) {
+      unsigned char matar = 1;
+      if(SpriteTableXN2[8] > p->x + 24 )
+        matar = 0;
+      if (matar && (SpriteTableXN2[8] + 16 < p->x))
+        matar = 0;
+      if(matar && (SpriteTableY2[4] > p->y + 16))
+        matar = 0;
+      if (matar && (SpriteTableY2[4] + 12 < p->y))
+        matar = 0;
+      if (matar) {
+        // kill the bird
+        i2 = p->initSprite;
+        while(i2<(p->len>>1)) {
+          SpriteTableY2[i2] = 239;
+          i2 ++;
+        }
+      }
     }
   }
 }
+
 
 void loadGrapVRAM()
 {
@@ -72,158 +243,30 @@ void loadGrapVRAM()
   SMS_setSpritePaletteColor(0,0);
 }
 
-void dibujaPajaros()
+
+void inicializaPajaros()
 {
-  unsigned char i, i2, end, j;
-  if(NUM_PAJAROS == 0)
-    return;
-  unsigned char initPajaros = pajaros[0].initSprite;
+  unsigned char i;
   for (i = 0; i < NUM_PAJAROS; i++)
   {
-    T_entidad *p = &pajaros[i];
-    p->x++;
-    p->lastChangeFrame++;
-    
-    if (p->lastChangeFrame == 20)
+    pajaros[i].x = 15 + (32 * i) % 200;
+    pajaros[i].y = 16 * (i / 2);
+    pajaros[i].lastChangeFrame = i * 3;
+    pajaros[i].initSprite = 255;
+    //draw_entidad(&(pajaros[i]), &spritePajaro);
+    pajaros[i].x++;
+    pajaros[i].lastChangeFrame++;
+    pajaros[i].vx = 1;
+    pajaros[i].vy = 0;
+    if (pajaros[i].lastChangeFrame == 20)
     {
-      p->frame++;
-      if (p->frame > 1)
-        p->frame = 0;
-      p->lastChangeFrame = 0;
-      int frame = spritePajaro.tamano*p->frame + spritePajaro.beginVRAM;
-      for(j=0;j<spritePajaro.alto;j++) {
-        unsigned char desplazado = (j<<2);
-        unsigned char jCalculated = desplazado + frame, y = p->y+(desplazado<<2);
-        for(i2=0;i2<spritePajaro.ancho;i2++) {
-          SpriteTableXN2[(i2+initPajaros)*2+1] = jCalculated + (i2<<1) /*+ 12*/;
-          if(p->vx < 0)
-            SpriteTableXN2[(i2+initPajaros)*2+1] += 12;
-        }
-      } 
+      pajaros[i].frame++;
+      if (pajaros[i].frame > 1)
+        pajaros[i].frame = 0;
+      pajaros[i].lastChangeFrame = 0;
     }
-    initPajaros +=3;
-    end = p->len;
-    i2 = p->initSprite << 1;
-    p->x = (int)p->x + p->vx;
-    if (SpriteTableXN2[i2] >= 230) {
-      p->vx = -1;
-      p->lastChangeFrame = 19;
-    }
-    else if(SpriteTableXN2[i2] < 10) {
-      p->vx = 1;
-      p->lastChangeFrame = 19;
-    }
-    while(i2<end) {
-      SpriteTableXN2[i2] = SpriteTableXN2[i2] + p->vx;
-      i2 +=2;
+    if(pajaros[i].initSprite == 255) {
+      draw_entidad(&(pajaros[i]), &spritePajaro);
     }
   }
 }
-
-void playMusic() {
-  PSGFrame();
-  PSGSFXFrame();
-}
-
-void disableSprites() {
-  unsigned int i = 0;
-  ///i = 10;
-  while (i < 64) {
-    SMS_updateSpritePosition(i,10,240); 
-    i++;
-  }
-  numSprites = 0;
-}
-
-void main(void)
-{
-  unsigned char scroll_x;
-  unsigned char scroll_y;
-  /* Clear VRAM */
-  SMS_VRAMmemsetW(0, 0x0000, 16384);
-
-  /* load a standard font character set into tiles 0-95,
-   * set BG palette to B/W and turn on the screen */
-  // SMS_autoSetUpTextRenderer();
-
-  /* Set the target of the next background write */
-  // SMS_setNextTileatXY(4,5);
-
-  /* printf() is available */
-  printf("Hello, World! [1/3]");
-
-  // SMS_printatXY(4,12,"Hello, World! [3/3]");
-  
-  /* Turn on the display */
-  SMS_displayOn();
-  SMS_setBGScrollX(scroll_x);
-  SMS_setBGScrollY(scroll_y);
-  SMS_init();
-  initSpritesVariables();
-  loadGrapVRAM();
-  // SMS_setSpriteMode(SPRITEMODE_NORMAL);
-  // SMS_setSpriteMode(SPRITEMODE_TALL);
-  /* Do nothing */
-  // PSGPlay(titulo_psg);
-  // PSGPlay(nuestro_psg);
-  PSGPlay(special_psg);
-  SMS_VDPturnOnFeature(VDPFEATURE_LEFTCOLBLANK);
-  SMS_VDPturnOnFeature(VDPFEATURE_EXTRAHEIGHT);
-  //SMS_VDPturnOnFeature(VDPFEATURE_224LINES);
-  SMS_VDPturnOnFeature(VDPFEATURE_240LINES);
-  SMS_setFrameInterruptHandler(playMusic);
-  
-  for (;;)
-  {
-
-    if (SMS_queryPauseRequested())
-    {
-      PSGPlay(emeraldhill_psg);
-      SMS_resetPauseRequest();
-      while (!SMS_queryPauseRequested())
-      {
-        SMS_waitForVBlank();
-        //PSGFrame();
-        //PSGFXFrame();
-      }
-      SMS_resetPauseRequest();
-      PSGPlay(titulo_psg);
-    }
-    unsigned int index = 0;
-
-    int keys = SMS_getKeysHeld();
-    if(keys & PORT_A_KEY_2)
-      keys = keys  ^ PORT_A_KEY_2;
-    if(keys & PORT_A_KEY_1)
-      keys = keys  ^ PORT_A_KEY_1;
-
-    keys = keys | (SMS_getKeysPressed() & (PORT_A_KEY_2 | PORT_A_KEY_1));
-    
-    //SMS_initSprites();
-    moveAlex(keys);
-    
-    dibujaPajaros();
-
-    // SMS_autoSetUpTextRenderer();
-    // SMS_printatXY(4,12,"Hello, World! [3/3]");
-    
-    SMS_waitForVBlank();
-
-    //SMS_initSprites();
-    //SMS_displayOff();
-    //UNSAFE_SMS_copySpritestoSAT();
-    //SMS_displayOn();
-    copySpritestoSAT();
-    //SMS_copySpritestoSAT();
-    //copySpritestoSAT();
-    //disableSprites();
-    //PSGFrame();
-    //PSGSFXFrame();
-    SMS_setBGScrollX(scroll_x);
-    // SMS_setBGScrollY(scroll_y);
-    SMS_displayOn();
-  }
-}
-
-SMS_EMBED_SEGA_ROM_HEADER(9999, 0);
-SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "SEGA", "basic example", "A simple example");

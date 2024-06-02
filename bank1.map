@@ -48,8 +48,8 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000020C  s__GSINIT                       
      0000020C  s__INITIALIZER                  
      00000231  s__GSFINAL                      
-     000034BB  l__BANK2                        
-     00008000  s__BANK2                        
+     000034BB  l__BANK1                        
+     00008000  s__BANK1                        
      00008000  s__BSEG                         
      00008000  s__BSS                          
      00008000  s__DATA                         
@@ -184,7 +184,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_BANK2                              00008000    000034BB =       13499. bytes (REL,CON)
+_BANK1                              00008000    000034BB =       13499. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

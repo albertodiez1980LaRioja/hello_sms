@@ -7,17 +7,8 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000000 L
-  7 _paleta_de_prueba2_inc                                         003336 GR
-  7 _palleteAlex_inc                                               002B4E GR
-  7 _puno_inc                                                      00060E GR
-  7 _sonicpalette_inc                                              000000 GR
-  7 _sonictilemap_inc                                              00000E GR
-  7 _sonictiles_inc                                                00168E GR
-  7 _spriteAlex_inc                                                00068E GR
-  7 _spritePajaro_inc                                              00333B GR
-  7 _tilemap_de_prueba2_inc                                        002BF6 GR
-  7 _tiles_de_prueba2_inc                                          002B56 GR
-
+  7 _B0_Final_psg                                                  000000 GR
+  7 _salto_psg                                                     0034BE GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
 Hexadecimal [24-Bits]
@@ -31,7 +22,7 @@ Area Table
    4 _HOME                                      size      0   flags    0
    5 _GSINIT                                    size      0   flags    0
    6 _GSFINAL                                   size      0   flags    0
-   7 _BANK1                                     size   34BB   flags    0
+   7 _BANK3                                     size   3519   flags    0
    8 _INITIALIZER                               size      0   flags    0
    9 _CABS                                      size      0   flags    8
 
