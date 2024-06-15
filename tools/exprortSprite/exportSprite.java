@@ -270,13 +270,14 @@ public class exportSprite {
             System.out.println(args[i].toString());
         }
         if (args.length >= 2) {
-            // hay que convertirlo a una paleta lo mas cercana posible a una marter system,
+            // hay que convertirlo a una paleta lo mas cercana posible a una master system,
             // va de 85 en 85: 0,85,170,255. En el bmp de test no salen exactos
             String[] colors = args[1].split(",");
             int[] colorsNumber = new int[16];
             for (int i = 0; i < colors.length; i++) {
                 // int c = Integer.parseInt(colors[i].substring(2,3))*16;
                 // c += Integer.parseInt(colors[i].substring(3,4));
+                System.out.println(colors[i]);
                 colorsNumber[i] = Integer.parseInt(colors[i].substring(2, 4), 16);
                 System.out.println(colorsNumber[i]);
             }

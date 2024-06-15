@@ -1,41 +1,28 @@
-#include "SMSlib.h" 
-//#include "./lib/entities.c"
-#include "bank2.h"
-#include "PSGlib.h"
+
+#ifndef ALEX_INCLUDED
+  #include "alex.h"
+#endif
 
 
-
-#define PUÑETAZO 8
-#define PUÑETAZO_SALTANDO 16
-#define PUÑETAZO_SUELO 32
-
-
-
-
-
-unsigned char maxSalto = 255;
-T_entidad alex = {30, 150, 0, 0, 0,0, 255};
-
-
-unsigned char canUp(){
+unsigned char canUp(void){
   if (alex.x < 2)
     return 0;
   return 1;
 }
 
-unsigned char canDown() {
+unsigned char canDown(void) {
   if (alex.y > 153)
     return 0;
   return 1;
 }
 
-unsigned char canLeft() {
+unsigned char canLeft(void) {
   if (alex.x < 9)
     return 0;
   return 1;
 }
 
-unsigned char canRight() {
+unsigned char canRight(void) {
   if (alex.x > 238)
     return 0;
   return 1;
@@ -133,7 +120,7 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
   if (alex.y > maxSalto) {
     alex.y -= 2;
   }
-  else {
+  else if (puedeSubir) {
     alex.y += 2; // bajando
     maxSalto = 255;
   }
@@ -184,9 +171,7 @@ void moveAlexAire(int keys, unsigned char puedeSubir, unsigned char puedeDerecha
   
 }
 
-unsigned char lastFrame = 255;
-
-void drawAlex() {
+void drawAlex(void) {
   SpriteTableXN2[0] = alex.x;
   SpriteTableXN2[2] = alex.x + 8;
   SpriteTableXN2[4] = alex.x;
@@ -200,7 +185,6 @@ void drawAlex() {
     lastFrame = alex.frame;
   }
 }
-
 
 void moveAlex(int keys) {
   unsigned char puedeBajar = canDown();

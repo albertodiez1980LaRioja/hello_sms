@@ -9,9 +9,9 @@
 -l SMSlib.lib
 -l z80
 crt0_sms.rel
-main.rel
 bank1.rel
 bank2.rel
 PSGlib.rel
+main.rel
 
 -e

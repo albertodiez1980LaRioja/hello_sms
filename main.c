@@ -1,5 +1,9 @@
 #include <stdio.h>
-#include "SMSlib.h"
+#ifndef SMSlib_INCLUDED
+  #define SMSlib_INCLUDED
+  #include "SMSlib.h" 
+#endif
+
 
 #include "PSGlib.h"
 #include "bank1.h"
@@ -17,15 +21,15 @@ T_sprite spritePajaro = {2, 2, 8, 0, 0, 0};
 T_sprite spritePuno = {2, 2, 8, 0, 0, 0};
 unsigned int numSprites;
 
-void inicializaPajaros();
+void inicializaPajaros(void);
 
-void loadGrapVRAM();
+void loadGrapVRAM(void);
 
-void dibujaPajaros();
+void dibujaPajaros(void);
 
-void playMusic();
+void playMusic(void);
 
-void disableSprites();
+void disableSprites(void);
 
 
 void main(void)
@@ -128,7 +132,7 @@ void main(void)
 SMS_EMBED_SEGA_ROM_HEADER(9999, 0);
 SMS_EMBED_SDSC_HEADER_AUTO_DATE(1, 0, "SEGA", "basic example", "A simple example");
 
-void disableSprites() {
+void disableSprites(void) {
   unsigned int i = 0;
   ///i = 10;
   while (i < 64) {
@@ -139,7 +143,7 @@ void disableSprites() {
 }
 
 
-void playMusic() {
+void playMusic(void) {
   char banco = SMS_getROMBank();
   SMS_mapROMBank(3);
   PSGFrame();
@@ -148,7 +152,7 @@ void playMusic() {
   SMS_mapROMBank(banco);
 }
 
-void dibujaPajaros()
+void dibujaPajaros(void)
 {
   unsigned char i, i2, j, desplazado, jCalculated, y;
   T_entidad *p;
@@ -215,7 +219,7 @@ void dibujaPajaros()
 }
 
 
-void loadGrapVRAM()
+void loadGrapVRAM(void)
 {
   SMS_init();
   
@@ -244,7 +248,7 @@ void loadGrapVRAM()
 }
 
 
-void inicializaPajaros()
+void inicializaPajaros(void)
 {
   unsigned char i;
   for (i = 0; i < NUM_PAJAROS; i++)
